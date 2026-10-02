@@ -249,3 +249,76 @@ The methodological objective remains unchanged:
 
 > **Do not build around a semantic gap merely because the gap is inconvenient. Witness it first.**
 
+
+
+## 10.6 Gate 1 Progress Ledger — Session close 2026-10-02
+
+This section records repository-witnessed progress completed after the earlier stopping point. It is a session ledger, not a claim that Gate 1 has passed.
+
+### Witnesses completed
+
+| Case | Boundary tested | Ledger status |
+|---|---|---|
+| 01 | Player assertion vs coach assertion | WITNESSED GAP / NOT RATIFIED |
+| 02 | Conflicting guardian authority | WITNESSED GAP / NOT RATIFIED |
+| 03 | Consent revocation after approval | WITNESSED GAP / NOT RATIFIED |
+| 04 | Evidence expiry after verification | WITNESSED GAP / NOT RATIFIED |
+| 05 | Opportunity changes after readiness evaluation | WITNESSED GAP / NOT RATIFIED |
+| 06 | Unverified scout contacts minor | WITNESSED GAP / NOT RATIFIED |
+| 07 | Guardian authorizes trial but not media | WITNESSED GAP / NOT RATIFIED |
+| 08 | Child view vs guardian authorization | WITNESSED GAP / NOT RATIFIED |
+| 09 | Safeguarding concern vs verified organization user | WITNESSED GAP / NOT RATIFIED |
+| 10 | Institutional record vs ScoutSA assertion | WITNESSED GAP / NOT RATIFIED |
+| 11 | Public information proposed for republication | WITNESSED GAP / NOT RATIFIED |
+| 12 | Authentic but stale evidence | WITNESSED GAP / NOT RATIFIED |
+| 13 | Two legitimate authorities with incompatible assertions | WITNESSED GAP / NOT RATIFIED |
+| 14 | Derived readiness after material input withdrawal | WITNESSED GAP / NOT RATIFIED |
+
+### Exact recent witness evidence
+
+- Case 11 commit: c29ea655d9f2a3318d963f7df85865bf30f6230e; verified blob: 4cc2c44d1b59cd75fd6891417793c85739def1a5.
+- Case 12 commit: e037c0847bd487748a44933856cb01d7c08894f6; verified blob: f249072183c8cc34f7f0386f7bb8a4c461fae8bc.
+- Case 13 commit: 7586da0e531fec665160100667a1583f3aa82f97; verified blob: 95464f044abb2df673a2c5a5abecc7eb5ef5eec6.
+- Case 14 commit: 88e1588607d0ac0687480b0b357e3798fe821caf; verified blob: ffe67aa277b69bc65231d2a45d3ebc86085c1525.
+
+### Session achievement
+
+The Gate 1 adversarial program now has **14 completed witnesses**. Repeated boundaries have emerged around Assertion vs Evidence; Authority vs Consent; historical vs current authorization; Evidence/Verification temporal dependency; contextual and point-in-time Readiness; Discovery vs Contact Authorization; purpose-bound disclosure; child view vs guardian authority; Verification vs Safeguarding; source conflict and authority scope; public availability vs republication authority; authenticity vs currentness/applicability; legitimate authority conflict; and derived-state dependency and invalidation.
+
+No constitutional or Domain Model amendment has been ratified from these witnesses. No implementation has been started from these gaps. The work intentionally remains specification-first.
+
+### Current Gate state
+
+Gate 1: OPEN
+Cases witnessed: 14
+Witnessed gaps: ongoing
+Ratified amendments from cases: 0
+Implementation: NOT STARTED FROM THESE WITNESSES
+ERD/schema expansion: DEFERRED
+
+## 10.7 Next Session Plan — Monday 2026-10-05
+
+**Objective:** consolidate before expanding the model.
+
+1. Gate 1 Cases 1–14 synthesis — group duplicate findings, identify orthogonal gaps, and distinguish principles from implementation requirements.
+2. 33×3 cross-case audit — Existence → Coherence → Failure across the complete witness set.
+3. Legal/external-anchor research pass — review the already identified South African anchors, including Constitution, POPIA/Information Regulator material, Children’s Act/National Health Act where relevant, FIFA minor-transfer rules, safeguarding sources, and authoritative football-registration sources, before converting legal or institutional claims into domain rules.
+4. Evidence-source reconciliation — assess which external anchors can support the Constitution/research layer and which must remain hypotheses or legal-review items.
+5. Minimal semantic amendment set — only after synthesis/research; no automatic ratification of every candidate discovered by witnesses.
+6. Re-witness affected cases — adversarially test any proposed amendments before Gate 1 closure is considered.
+7. Gate decision — only then determine whether Gate 1 is ready to close or requires another witness cycle.
+
+### Explicitly deferred
+
+- ERD/schema design;
+- production implementation;
+- broad UI expansion;
+- premature compliance claims;
+- external integration claims;
+- investor-readiness claims;
+- importing rankings as truth;
+- architecture expansion by analogy.
+
+**Monday starting point:** Gate 1 synthesis, not new feature construction.
+
+> Do not build around a semantic gap merely because the gap is inconvenient. Witness it, synthesize it, research it, amend minimally, and re-witness it first.
