@@ -94,3 +94,158 @@ Gate 1 remains OPEN.
 Current witness sequence: 01 Player vs Coach; 02 Guardian Authority Conflict; 03 Consent Revoked After Approval; 04 Evidence Expires After Verification; 05 Opportunity Changes After Readiness; 06 Unverified Scout Contacts Minor; 07 Guardian Authorizes Trial But Not Media; 08 Child View Conflicts With Guardian Authorization.
 
 The next step remains adversarial witnessing rather than broad architectural expansion.
+
+## 10. 2026-10-02 Progress Ledger — Gate 1 Adversarial Witnessing
+
+### 10.1 Current witnessed progress
+
+As of this ledger entry, the active Gate 1 sequence has reached **Case 9**.
+
+| Case | Boundary tested | Result | Ledger effect |
+|---|---|---|---|
+| 6 | Unverified Scout → minor contact | RED / MATERIAL DOMAIN GAP | SCOUTSA-026 |
+| 7 | Trial consent ≠ media authorization | RED / MATERIAL DOMAIN GAP | SCOUTSA-027 |
+| 8 | Historical consent vs changed GuardianLink authority | RED / MATERIAL DOMAIN GAP | SCOUTSA-028 |
+| 9 | Multiple legitimate Guardians with incompatible authority scopes | RED / MATERIAL DOMAIN GAP | SCOUTSA-029 |
+
+Case 9 was committed directly to `main` as:
+
+```
+Commit: a13a0657fce0afe90aa48b4ab569a6771af85eb6
+Path: docs/research/witnesses/gate-1-case-09-multi-guardian-authority-conflict.md
+Blob: 0c2b3120dc7ede30eae78870b12b0a9ac18ded61
+```
+
+The file was independently re-fetched from `main` after commit and matched the intended witness content.
+
+### 10.2 Gate position
+
+**Gate 1 remains OPEN.**
+
+No Constitution amendment has been ratified from Cases 6–9.
+
+No Domain Model amendment has been ratified from Cases 6–9.
+
+No schema, ERD, RLS policy, API contract, or application implementation is introduced by these witnesses.
+
+The current evidence supports a stronger methodological chain, not a completed implementation:
+
+```
+Authority
+  ↓
+Purpose
+  ↓
+Scope
+  ↓
+Time
+  ↓
+Action
+  ↓
+Current applicability
+  ↓
+Conflict state
+  ↓
+Disclosure
+  ↓
+Audit
+```
+
+The current unresolved seams include individual Scout contact authority, media-purpose granularity, temporal authority/consent precedence, and multi-Guardian conflict semantics.
+
+### 10.3 Investor-readiness roadmap — retained as planning hypothesis
+
+The following timeline is recorded as a **planning hypothesis**, not a repository fact, commitment, funding forecast, or prediction of investor response.
+
+**Phase 1 — Foundation & Domain Specification: approximately Weeks 1–4**
+
+Focus:
+- complete the remaining Gate 1 adversarial witnesses;
+- address public-data, stale-evidence, authority-conflict and related domain seams;
+- translate evidenced research into formal domain specifications;
+- keep POPIA, child-protection law, institutional requirements, and external integrations as evidence-backed constraints rather than compliance claims.
+
+Exit evidence sought:
+- Gate 1 disposition earned from the witness sequence;
+- ratified domain rules only where supported by evidence;
+- explicit unresolved items retained rather than hidden.
+
+**Phase 2 — Core Verified MVP: approximately Weeks 5–12**
+
+Focus:
+- only after the specification gates permit implementation;
+- Player Passport;
+- bounded verification/provenance;
+- opportunity and application flow;
+- opportunity-specific readiness/feasibility;
+- narrow launch-node scope, with Vaal/Sedibeng treated as a proposed pilot context rather than an established market claim.
+
+Exit evidence sought:
+- working software;
+- reproducible tests;
+- traceable authorization and safeguarding behavior;
+- deployment evidence;
+- observed rather than asserted product outcomes.
+
+**Phase 3 — Pilot & Local Validation: approximately Weeks 13–16**
+
+Focus:
+- controlled pilot with appropriately authorized players, guardians and football stakeholders;
+- test consent revocation, trial visibility, contact boundaries, authority conflict and feasibility in real workflows;
+- collect outcome and usability evidence.
+
+Exit evidence sought:
+- observed adoption/use;
+- observed workflow outcomes;
+- recorded defects and remediation;
+- evidence that actual users can operate the intended safeguards.
+
+**Timeline status:** The 3–4 month fast-track and 4–6 month realistic range supplied in the external assessment remain **planning estimates only**. They are not verified schedules and should not be presented to investors as guaranteed delivery dates.
+
+### 10.4 Investor-readiness evidence model
+
+For ScoutSA, "investor-ready" should remain an evidence-backed state rather than a label produced by architecture alone.
+
+A future investor-readiness package should be able to show, separately:
+
+```
+Domain integrity
++
+Legal / regulatory analysis
++
+Working MVP evidence
++
+Security / safeguarding evidence
++
+Real-user pilot evidence
++
+Market / economic evidence
++
+Operational readiness
+```
+
+Architecture and methodology can reduce uncertainty, but they do not by themselves establish:
+- legal compliance;
+- product-market fit;
+- commercial viability;
+- institutional integration;
+- user adoption;
+- safeguarding effectiveness;
+- investment attractiveness.
+
+### 10.5 Today's stopping point
+
+**End-of-session position — 2026-10-02**
+
+```
+Gate 1: OPEN
+Case 9: WITNESSED
+SCOUTSA-026 → 029: WITNESSED GAPS / NOT RATIFIED
+Implementation: NOT STARTED FROM THESE WITNESSES
+Premature schema/ERD expansion: AVOIDED
+Next planned adversarial direction: Case 10
+```
+
+The methodological objective remains unchanged:
+
+> **Do not build around a semantic gap merely because the gap is inconvenient. Witness it first.**
+
