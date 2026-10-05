@@ -1,7 +1,7 @@
 # ScoutSA Domain Model
 
 **Document:** `docs/01-domain-model.md`  
-**Status:** Draft — Gate 1 (Domain Integrity); M1–M9 semantic baseline ratified 2026-10-05  
+**Status:** Gate 1 — Domain Integrity CLOSED 2026-10-05; M1–M9 semantic baseline ratified  
 **Governing Principle:** Strength of claim must never exceed strength of evidence.
 
 ---
@@ -822,24 +822,28 @@ Gate 1 should not be considered closed merely because this file exists.
 
 Candidate exit criteria:
 
-- [ ] Entity boundaries reviewed against the Constitution.
-- [ ] Ownership and authority reviewed.
-- [ ] Evidence model accepted.
-- [ ] Temporal behavior accepted.
-- [ ] Visibility classes accepted.
+- [x] Entity boundaries reviewed against the Constitution.
+- [x] Ownership and authority reviewed.
+- [x] Evidence model accepted.
+- [x] Temporal behavior accepted.
+- [x] Visibility classes accepted.
 - [x] Minor/guardian semantic boundary accepted.
 - [x] Readiness semantics accepted.
 - [x] Global semantic invariants accepted.
 - [x] Unresolved decisions assigned to later gates.
 - [ ] ERD can be derived without inventing missing domain concepts.
 
-**Current status: RATIFIED SEMANTIC BASELINE / GATE 1 CLOSURE STILL PENDING.**
+**Current status: GATE 1 CLOSED — DOMAIN INTEGRITY BASELINE ACCEPTED 2026-10-05.**
+
+Closure is based on the dedicated Gate 1 Closure Review. Remaining legal, operational, authorization, and implementation questions are explicitly deferred and must not be treated as implicitly decided.
 
 ---
 
 ## 15. Next Gate
 
-Gate 1 closure requires the remaining legal/product/operational boundaries to be explicitly dispositioned. Once Gate 1 is closed:
+Gate 1 closure was recorded on 2026-10-05 after explicit disposition of the remaining legal/product/operational boundaries as later-gate work. The closure review found no semantic blocker and does not authorize implementation by itself.
+
+Once Gate 1 is closed:
 
 
 
