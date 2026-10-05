@@ -666,3 +666,47 @@ Gate 1: OPEN
 ```
 
 The evidence now supports a future M1–M9 semantic amendment package, but M8/M9 legal/product wording and the final witness identity convention remain review boundaries. Next step is ratification review, not coding.
+
+## 10.16 Gate 1 Ratification Review — 2026-10-05
+
+**Document:** docs/research/gate-1-ratification-review-2026-10-05.md  
+**Commit:** 2cfc946cbf2de90c3c533fb60b949b2faa534f55  
+**Status:** Ratification review packet — NOT YET RATIFIED.
+
+The current Constitution and Domain Model were re-fetched from main and reviewed against the final M1–M9 candidate set. The evidence supports M1–M9 as semantic principles, with explicit legal/product boundaries around M2, M6, M7, M8 and M9.
+
+### Ratification disposition
+
+| Candidate | Disposition |
+|---|---|
+| M1 Epistemic Object Separation | ELIGIBLE |
+| M2 Scoped Authority / Conflict Preservation | ELIGIBLE WITH LEGAL BOUNDARY |
+| M3 Purpose-Bound Authorization | ELIGIBLE |
+| M4 Temporal Applicability / Freshness | ELIGIBLE |
+| M5 Derived-State Dependency / Reassessment | ELIGIBLE |
+| M6 Safeguarding ≠ Verification | ELIGIBLE WITH OPERATIONAL BOUNDARY |
+| M7 Disclosure / Republication Boundary | ELIGIBLE WITH CONTEXT BOUNDARY |
+| M8 Child Participation / Voice | ELIGIBLE AS SEMANTIC PRINCIPLE ONLY |
+| M9 Safeguarding Concern / Response | ELIGIBLE AS SEMANTIC PRINCIPLE ONLY |
+
+### Explicit non-ratifications
+
+Even if M1–M9 are subsequently accepted, that acceptance does not create universal Guardian precedence, a universal child veto, fixed age/capacity thresholds, fixed freshness or retention periods, safeguarding clearance, allegation-as-guilt, automatic exclusion, blanket republication permission, AI adjudication, compliance certification, or schema/RLS/API/UI mechanics.
+
+### Governance state
+
+```
+Ratification package prepared: YES
+M1–M9 semantic eligibility: SUPPORTED
+Constitution changed: NO
+Domain Model changed: NO
+Ratified amendments recorded in governing documents: NO
+ERD/schema: DEFERRED
+RLS/API/UI: DEFERRED
+Implementation: DEFERRED
+Compliance claim: NONE
+Investor-ready claim: NONE
+Gate 1: OPEN PENDING EXPLICIT RATIFICATION
+```
+
+The next transition is explicit acceptance or rejection of the M1–M9 semantic package. If accepted, only then should minimal Constitution and Domain Model reconciliation occur, followed by re-fetch/contradiction audit and a Gate 1 closure decision.
