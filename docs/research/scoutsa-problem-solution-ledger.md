@@ -940,3 +940,37 @@ No single permanent `user.organization_id`, role-implied authority, immutable Co
 **Implementation:** DEFERRED
 
 Next seam: **GuardianLink authority scope and its relationship to ConsentRecord.**
+
+
+## 10.22 Gate 2 Adversarial Seam G2-SEAM-03 — GuardianLink ↔ ConsentRecord — 2026-10-05
+
+**Relationship Model commit:** `9102a9c33ac4f02324c2de49f1ec9559fb6d575f`
+
+Third Gate 2 seam: the relationship between Player-specific Guardian authority scope and purpose-specific consent was interrogated without creating universal Guardian precedence.
+
+### Findings
+
+- GuardianLink already carries relationship, authority scope, status, effective period, evidence reference, and verification status — **DERIVABLE / SAFE**.
+- ConsentRecord already represents purpose-specific, versioned authorisation with scope, timing, expiry/revocation and relevant context — **DERIVABLE / SAFE**.
+- An authorising-person reference identifies who acted but does **not** by itself prove that the person was authorised for that purpose at that time — **DERIVABLE / SAFE**.
+- Consent cannot expand the legitimate authority scope of its grantor — **DERIVABLE / SAFE**.
+- GuardianLink does not automatically equal consent, and consent cannot silently cover unrelated purposes — **DERIVABLE / SAFE**.
+- Authority changes, consent revocation, and opportunity/context changes remain distinct temporal events; current applicability may require reassessment while historical records remain preserved — **DERIVABLE / SAFE**.
+- Multiple GuardianLinks may create conflicting authorisations, but the repository does not currently establish a legal or product precedence rule — **NEEDS LEGAL / OPERATIONAL DECISION**.
+- Exact authorising-person relationship across User / Guardian / Player remains unresolved from G2-SEAM-01/02 — **NEEDS DOMAIN DECISION**.
+
+### Rejected assumptions
+
+No latest-wins, first-wins, majority-wins, universal Guardian precedence, role-implied authority, or consent-as-authority-expansion rule was promoted into the relationship model.
+
+### Gate consequence
+
+**G2-SEAM-03 remains an ERD blocker.** No new semantic amendment is required: the ratified M1–M5 boundaries are sufficient to represent the seam without inventing a new authority hierarchy.
+
+**Gate 2:** OPEN  
+**ERD:** HOLD  
+**Schema:** HOLD  
+**RLS/API/UI:** DEFERRED  
+**Implementation:** DEFERRED
+
+Next seam: **Assertion / Claim ↔ Evidence representation.**
