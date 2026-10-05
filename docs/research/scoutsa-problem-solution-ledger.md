@@ -710,3 +710,45 @@ Gate 1: OPEN PENDING EXPLICIT RATIFICATION
 ```
 
 The next transition is explicit acceptance or rejection of the M1–M9 semantic package. If accepted, only then should minimal Constitution and Domain Model reconciliation occur, followed by re-fetch/contradiction audit and a Gate 1 closure decision.
+
+
+## 10.17 M1–M9 Explicit Ratification and Governing-Document Reconciliation — 2026-10-05
+
+**Decision:** M1–M9 explicitly accepted as ScoutSA semantic principles.
+
+This transition follows the final re-witness and the ratification review. The governing documents were changed only at the semantic level; no schema, RLS, API, UI, retention duration, freshness duration, authority hierarchy, safeguarding-clearance mechanism, or implementation rule was introduced.
+
+### Constitution
+- Commit: 1bc29555e32cdcf6aec30924844f6bcecc75634e
+- Blob: 9a5426288d4ae46286cf6d9461fd717c896dd547
+- M1–M9 semantic boundaries recorded.
+- Explicit non-overreach boundary retained: no universal Guardian precedence, child veto, AI adjudication, compliance certification, or fixed operational thresholds.
+
+### Domain Model
+- Commit: 8cba8123fd7e3fb98093e1601d388ab3d3367bd5
+- Blob: c7e3046f02677d23055ef77e9e4bad504be02a7a
+- Ratified semantic distinctions and invariants reconciled.
+- Child voice, safeguarding response separation, purpose boundary, temporal applicability, conflict preservation, and derived-state reassessment are now explicit.
+- Operational/legal unresolved items remain open and are not silently invented.
+
+### Post-ratification verification
+
+Both governing documents were re-fetched from main after mutation. The expected M1–M9 semantic material is present, and the Domain Model still explicitly defers ERD/schema/RLS/implementation mechanics.
+
+### Current Gate position
+
+```
+M1–M9: RATIFIED AS SEMANTIC PRINCIPLES
+Constitution: RECONCILED
+Domain Model: RECONCILED
+Constitution contradiction: NONE FOUND
+Domain Model contradiction: NONE FOUND
+ERD/schema: DEFERRED
+RLS/API/UI: DEFERRED
+Implementation: DEFERRED
+Compliance claim: NONE
+Investor-ready claim: NONE
+Gate 1: OPEN — CLOSURE REVIEW REMAINS
+```
+
+The next work is not feature construction. It is a final Gate 1 closure review focused on the remaining explicit boundaries: jurisdiction-specific child participation/capacity effects, safeguarding response authority/procedure, disclosure/republication context, exact authority-resolution process, and whether the remaining unresolved domain decisions can be closed without inventing unsupported rules.
