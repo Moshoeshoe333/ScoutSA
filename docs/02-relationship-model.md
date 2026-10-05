@@ -266,6 +266,107 @@ No new semantic amendment is presently required. The unresolved issue is the exa
 
 **No schema implementation is authorized from this seam.**
 
+## 6.3 Adversarial Seam C — GuardianLink authority scope ↔ ConsentRecord
+
+**Seam ID:** G2-SEAM-03  
+**Status:** NEEDS DOMAIN / LEGAL-OPERATIONAL DECISION — ERD BLOCKER
+
+### Question
+
+Can ScoutSA relate a Guardian's Player-specific relationship and authority scope to a ConsentRecord without treating the Guardian relationship itself as universal permission or treating the existence of an authorising-person reference as proof of authority?
+
+### Adversarial test
+
+The ratified Domain Model already separates:
+
+- **GuardianLink** — the Player ↔ Guardian relationship, including relationship type, authority scope, status, effective period, evidence reference, and verification status.
+- **ConsentRecord** — a versioned, purpose-specific permission granted by an authorised person, with scope, purpose, status, timing, expiry/revocation, and relevant organisation/opportunity where applicable.
+
+The Consent Model further requires the system to record **who** authorised, **what** was authorised, **for what purpose**, **when**, and under **which version**.
+
+Therefore the relationship model can safely preserve the following distinction:
+
+> **GuardianLink establishes a relationship and records an authority scope; ConsentRecord records a purpose-specific authorisation. Neither object alone should be treated as universal permission.**
+
+### Authority / consent test
+
+| Proposition | Disposition | Reason |
+|---|---|---|
+| GuardianLink may carry an authority scope | **DERIVABLE / SAFE** | Already explicit in the Domain Model. |
+| ConsentRecord may identify an authorising person | **DERIVABLE / SAFE** | Already explicit in the Consent Model. |
+| Authorising-person reference alone proves authority | **REJECTED** | A reference identifies who acted; it does not establish that the person was authorised for that purpose at that time. |
+| Consent purpose/scope must be evaluated against the grantor's legitimate authority scope | **DERIVABLE / SAFE** | Explicit ConsentRecord invariant: consent cannot exceed the grantor's legitimate scope. |
+| Consent can expand GuardianLink authority | **REJECTED** | Consent cannot grant more authority than the grantor legitimately possesses. |
+| GuardianLink automatically grants consent | **REJECTED** | Relationship/authority scope is not itself a purpose-specific consent record. |
+| One consent can silently cover unrelated purposes | **REJECTED** | Conflicts with purpose-bound authorisation. |
+| Revocation removes the historical fact that consent existed | **REJECTED** | Consent history must remain auditable; current authorisation is recalculated. |
+| Authority-scope change may affect current applicability of an existing consent | **DERIVABLE / SAFE** | Consistent with temporal applicability and derived-state reassessment. |
+| Exact legal effect of multiple GuardianLinks on one consent decision | **NEEDS LEGAL / OPERATIONAL DECISION** | The domain deliberately does not establish universal Guardian precedence, latest-wins, majority-wins, or another invented conflict rule. |
+| Exact identity/cardinality between authorising person, User, Guardian, and Player | **NEEDS DOMAIN DECISION** | G2-SEAM-01 and G2-SEAM-02 remain unresolved. |
+
+### Multiple-Guardian adversarial case
+
+Assume a Player has two active GuardianLinks with different authority scopes.
+
+Guardian A authorises **Trial-Specific Approval** for Opportunity X.
+
+Guardian B has a different authority scope and later submits a conflicting authorisation.
+
+The model must **not** infer:
+
+- Guardian A wins because they acted first;
+- Guardian B wins because they acted later;
+- the latest consent wins automatically;
+- the majority of guardians wins;
+- any Guardian can override another;
+- a broader role label creates precedence.
+
+The records must remain separately attributable and time-scoped until an applicable legal/product/operational rule determines their effect.
+
+### Revocation / authority-change test
+
+Three distinct events must remain distinguishable:
+
+1. **Consent revocation** — the authorising person withdraws a previously recorded permission where revocation is legally applicable.
+2. **GuardianLink authority change** — the relationship, authority scope, status, or effective period changes.
+3. **Opportunity/context change** — the consent's purpose or relevant organisation/opportunity no longer matches the current action.
+
+These events must not be collapsed into a single mutable "consent = true/false" fact.
+
+The current state may therefore require reassessment when a material authority, consent, purpose, or opportunity input changes, while historical records remain preserved.
+
+### Disposition
+
+**G2-03A — GuardianLink relationship + scoped authority: DERIVABLE / SAFE.**
+
+**G2-03B — ConsentRecord as purpose-specific authorisation: DERIVABLE / SAFE.**
+
+**G2-03C — Authorising-person reference ≠ proof of authority: DERIVABLE / SAFE.**
+
+**G2-03D — Consent validity requires scoped authority evaluation: DERIVABLE / SAFE.**
+
+**G2-03E — Multiple-Guardian conflict effect: NEEDS LEGAL / OPERATIONAL DECISION.**
+
+**G2-03F — Authorising person ↔ User / Guardian / Player identity cardinality: NEEDS DOMAIN DECISION.**
+
+**G2-03G — Exact authority-resolution process: NEEDS LEGAL / OPERATIONAL DECISION.**
+
+### Gate consequence
+
+No new semantic amendment is required.
+
+The existing M1–M5 boundaries are sufficient to express the seam without inventing a new authority hierarchy:
+
+- scoped authority;
+- purpose-bound authorisation;
+- temporal applicability;
+- conflict preservation;
+- derived-state reassessment.
+
+However, **G2-SEAM-03 remains an ERD blocker** because the exact authoriser identity relationship and conflict/authority-resolution behavior are not yet ratified.
+
+No schema, RLS, API, or UI rule may be derived from an assumed Guardian precedence rule.
+
 ## 7. Gate 2 Findings
 
 **G2-01 — Relationship derivability: PASS.** Core Gate 1 entities can be related without changing the ratified semantic baseline.
