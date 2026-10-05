@@ -1112,3 +1112,29 @@ No Constitution or Domain Model change has been made.
 **ERD:** HOLD  
 **Schema:** HOLD  
 **Implementation:** DEFERRED
+
+## 10.26 Gate 2 G2-SEAM-04 Assertion Concept — RATIFIED — 2026-10-05
+
+**Ratification record:** `docs/research/gate-2-assertion-ratification-record-2026-10-05.md`  
+**Commit:** 4171e261c31ec5291895338653fade0c656111fd
+
+Explicit acceptance has now ratified **Assertion** as a first-class semantic domain concept.
+
+### Reconciliation
+
+- Constitution updated: commit `9c16f1797d61a971fa95c493149a6f4e1407b6e9`
+- Domain Model updated: commit `dc6e3556d91cedcf1eb77a52626316caea122ec6`
+- Relationship Model updated: commit `818287333221cd0213fd18be01bc58d5340bcf47`
+
+The ratified concept closes the witnessed semantic gap without creating truth-by-record, universal authority, automatic verification, automatic conflict resolution, safeguarding clearance, public disclosure permission, or implementation mechanics.
+
+### Gate consequence
+
+**G2-SEAM-04:** CLOSED — semantic concept ratified.  
+**Gate 2:** OPEN — remaining seams unresolved.  
+**ERD:** HOLD pending remaining seam interrogation.  
+**Schema:** HOLD.  
+**RLS/API/UI:** DEFERRED.  
+**Implementation:** DEFERRED.
+
+Next authorized work: continue adversarial interrogation of the next Gate 2 seam. Do not freeze the ERD until all required seams are resolved.
