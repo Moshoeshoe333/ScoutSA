@@ -124,6 +124,73 @@ The following require explicit resolution before schema work:
 
 These are **deferred decisions, not hidden assumptions**.
 
+
+
+## 6.1 Adversarial Seam A — User ↔ Player / Actor Identity
+
+**Seam ID:** G2-SEAM-01  
+**Status:** NEEDS DOMAIN DECISION — ERD BLOCKER
+
+### Question
+
+Does a `User` represent the same domain person as a `Player`, and if so, what cardinality and lifecycle are guaranteed?
+
+### Adversarial test
+
+The current Domain Model deliberately separates:
+
+- `User` — authentication identity for a human actor;
+- `Player` — persistent football identity / Player Passport.
+
+The following tempting shortcuts are **not authorized** by the current domain:
+
+- `User = Player`;
+- every Player must have a User account;
+- every User must have a Player;
+- one User may represent multiple Players;
+- multiple Users may represent the same Player;
+- deleting/deactivating a User deletes the Player Passport;
+- a User role automatically proves the person's football identity.
+
+### Evidence from the ratified domain
+
+The Domain Model states that authentication identity is distinct from football identity and that a role assignment does not itself verify external professional status.
+
+The Player Passport is also required to be persistent and club-independent.
+
+Therefore the safest current conclusion is:
+
+> **User and Player are distinct domain concepts. Their exact cardinality is not yet ratified.**
+
+### Candidate relationship shapes considered
+
+| Candidate | Result | Reason |
+|---|---|---|
+| User 1:1 Player | REJECTED FOR NOW | Assumes every player must have an account and every account is a player. |
+| User 0..1 : 0..1 Player | PLAUSIBLE, NOT RATIFIED | Preserves optional account linkage but still imposes one-account/one-player semantics. |
+| User 1 : many Players | NOT SUPPORTED | Would permit account-level identity ambiguity without an explicit delegation model. |
+| Many Users : one Player | NOT SUPPORTED | Could be valid operationally for delegated/guardian-managed access, but no such domain concept or authorization rule is ratified. |
+| Player with no User | SUPPORTED | Does not conflict with the persistent Player Passport concept. |
+| User with no Player | SUPPORTED | Users may be Guardian, Coach, Scout, administrator, or another authorized role. |
+
+### Disposition
+
+**G2-01A — Player may exist independently of a User account: DERIVABLE / SAFE.**
+
+**G2-01B — User may exist without being a Player: DERIVABLE / SAFE.**
+
+**G2-01C — Exact User ↔ Player cardinality: NEEDS DOMAIN DECISION.**
+
+**G2-01D — Delegated/shared access to a Player Passport: NEEDS DOMAIN + AUTHORIZATION DECISION.**
+
+### Gate consequence
+
+Do **not** freeze a User↔Player foreign-key cardinality into the ERD yet.
+
+This seam does not require a new semantic amendment at present. It requires an explicit domain decision about account ownership/delegation.
+
+**No schema implementation is authorized from this seam.**
+
 ## 7. Gate 2 Findings
 
 **G2-01 — Relationship derivability: PASS.** Core Gate 1 entities can be related without changing the ratified semantic baseline.
