@@ -858,3 +858,52 @@ No schema, RLS, API, UI, or implementation work is authorized from an unresolved
 **Schema:** HOLD  
 **Implementation:** DEFERRED
 
+
+
+## 10.20 Gate 2 Adversarial Seam G2-SEAM-01 — User ↔ Player Identity — 2026-10-05
+
+**Relationship Model commit:** `10d1971284809782ac882b93cbb9f7060ebf8188`
+
+The first Gate 2 seam was adversarially interrogated rather than forced into a convenient one-to-one ERD relationship.
+
+### Finding
+
+The ratified Domain Model explicitly distinguishes:
+
+- `User` — authentication identity for a human actor.
+- `Player` — persistent football identity / Player Passport.
+
+Therefore:
+
+- Player may exist independently of a User account — **DERIVABLE / SAFE**.
+- User may exist without being a Player — **DERIVABLE / SAFE**.
+- Exact User ↔ Player cardinality — **NEEDS DOMAIN DECISION**.
+- Delegated/shared access to a Player Passport — **NEEDS DOMAIN + AUTHORIZATION DECISION**.
+
+### Rejected assumptions
+
+The following were not promoted into the ERD:
+
+- User = Player.
+- Every Player must have a User.
+- Every User must be a Player.
+- One User may represent multiple Players.
+- Multiple Users may represent one Player.
+- User deactivation/deletion implies Player deletion.
+- A User role proves football identity.
+
+### Gate consequence
+
+**G2-SEAM-01 is an ERD blocker, not an implementation invitation.**
+
+No foreign-key cardinality or delegation mechanism was frozen from this seam.
+
+No new semantic amendment is currently required. The issue is an explicit domain/account-ownership decision.
+
+**Gate 2:** OPEN  
+**ERD:** HOLD  
+**Schema:** HOLD  
+**RLS/API/UI:** DEFERRED  
+**Implementation:** DEFERRED
+
+Next seam: **User ↔ Guardian / Coach / Scout affiliation and identity relationship.**
