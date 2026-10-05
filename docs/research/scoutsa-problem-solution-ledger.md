@@ -617,3 +617,52 @@ Gate 1: OPEN
 
 Targeted evidence/legal/safeguarding research for R-01 and R-02, plus explicit provenance reconciliation for R-03, followed by a final Gate 1 re-witness.
 
+
+## 10.13 Residual Gap Research — R-01 / R-02 / R-03 — 2026-10-05
+
+**Document:** `docs/research/gate-1-residual-gap-research-2026-10-05.md`  
+**Commit:** `4f3e2e2921d17d06478ffef865e59cf2695e5e5f`
+
+External research narrowed the two substantive residual gaps:
+- South African Children's Act section 10 supports age/maturity/development-based child participation and due consideration of the child's views; section 9 makes best interests paramount. This supports a distinct Child Voice boundary without establishing a universal child veto or Guardian override.
+- Current FIFA safeguarding policy supports distinct prevention, reporting, investigation, resolution/remedy and governance layers; South African child-protection material supports specified reporting duties. This supports a distinct Safeguarding Concern / Response boundary without creating an automatic guilt or exclusion rule.
+
+Two new candidates were therefore retained for formal review:
+- M8 Child Participation and Voice Boundary.
+- M9 Safeguarding Concern / Response Boundary.
+
+R-03 remained a provenance issue pending explicit mapping.
+
+## 10.14 Witness Provenance Map — 2026-10-05
+
+**Document:** `docs/research/gate-1-witness-provenance-map-2026-10-05.md`  
+**Commit:** `7b7917c9fbe12a3b126cba8521cd62dd6c0835b6`
+
+Provenance review established that Cases 07, 08 and 09 do not merely contain duplicate copies. Each numeric ID has two distinct witnesses introduced by distinct commits. The canonical 01–14 sequence remains unchanged; supplemental witnesses are preserved as evidence.
+
+R-03 is therefore narrowed from missing provenance to an identity-convention issue. No witness was deleted, renamed or overwritten.
+
+## 10.15 Consolidated M1–M9 Final Re-Witness — 2026-10-05
+
+**Document:** `docs/research/gate-1-consolidated-m1-m9-final-rewitness-2026-10-05.md`  
+**Commit:** `4f53d444563185e5d47b71b1b9e8f433e490b738`
+
+All M1–M9 candidates survive the consolidated final re-witness.
+
+Constitution contradiction: NONE FOUND. Domain Model contradiction: NONE FOUND. No universal Guardian precedence, AI authority, automatic safeguarding guilt, blanket republication permission, fixed freshness/retention period, schema/RLS requirement, or compliance certification was created.
+
+### Current decision
+```
+M1–M9 candidate set: SURVIVES FINAL RE-WITNESS
+Ratified amendments: 0
+Constitution: UNCHANGED
+Domain Model: UNCHANGED
+ERD/schema: DEFERRED
+RLS: DEFERRED
+Implementation: DEFERRED
+Compliance claim: NONE
+Investor-ready claim: NONE
+Gate 1: OPEN
+```
+
+The evidence now supports a future M1–M9 semantic amendment package, but M8/M9 legal/product wording and the final witness identity convention remain review boundaries. Next step is ratification review, not coding.
