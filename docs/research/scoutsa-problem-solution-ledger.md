@@ -1084,3 +1084,31 @@ Required next decision: **explicit ratification or rejection of the candidate As
 **ERD:** HOLD  
 **Schema:** HOLD  
 **Implementation:** DEFERRED
+## 10.25 Gate 2 Assertion Concept — Ratification Review — 2026-10-05
+
+**Review:** `docs/research/gate-2-assertion-ratification-review-2026-10-05.md`  
+**Commit:** 081b9cec764fb9941719dcde653f851d1e481aab
+
+The G2-SEAM-04 candidate was tested against semantic consistency, authority boundaries, truth boundaries, contradiction preservation, verification separation, temporal applicability, and implementation deferral.
+
+### Result
+
+**ELIGIBLE FOR RATIFICATION.**
+
+The candidate first-class Assertion concept closes the witnessed representation gap without contradicting M1–M9 or inventing legal/operational authority.
+
+Proposed definition:
+
+> Assertion is an attributable domain statement or claim about a defined subject, made or submitted by an actor within an applicable authority/scope where relevant, preserved with sufficient provenance and temporal context to distinguish the historical assertion from later applicability, and capable of being supported or evaluated by Evidence and Verification without itself constituting truth.
+
+The review explicitly rejects truth-by-record, universal authority, automatic conflict resolution, verification-as-truth, automatic current applicability, AI adjudication, and implementation semantics.
+
+**Current ratification state: PENDING EXPLICIT ACCEPTANCE.**
+
+No Constitution or Domain Model change has been made.
+
+**Gate 2:** OPEN  
+**G2-SEAM-04:** ELIGIBLE FOR RATIFICATION  
+**ERD:** HOLD  
+**Schema:** HOLD  
+**Implementation:** DEFERRED
