@@ -444,14 +444,15 @@ Gate 1 decision
 **Commit:** `60936b97f8166888a9f7075155b642f2b037a7ef`  
 **Status:** Candidate research text — NOT RATIFIED.
 
-The draft reduces the seven synthesis gaps to six candidate amendment themes:
+The draft preserves the seven orthogonal synthesis gaps as seven candidate amendment themes:
 
 1. Epistemic Object Separation;
 2. Scoped Authority and Conflict Preservation;
 3. Purpose-Bound Authorization;
 4. Temporal Applicability and Freshness;
 5. Derived-State Dependency and Invalidation;
-6. Safeguarding / Disclosure boundaries.
+6. Safeguarding Is Distinct From Verification;
+7. Disclosure / Republication Boundary.
 
 Each clause is explicitly classified as externally supported, product policy, legal-review required, or not yet earned.
 
@@ -502,3 +503,63 @@ Gate 1: OPEN
 ```
 
 Next step: formal minimal amendment proposal → final Constitution/Domain Model contradiction audit → affected-case re-witness → Gate 1 decision.
+
+
+## 10.10 Formal Minimal Semantic Amendment Proposal — 2026-10-05
+
+**Document:** `docs/research/gate-1-formal-minimal-amendment-proposal-2026-10-05.md`  
+**Commit:** `a08fabfc40754997cd7dd57fb1315f1cad500cb9`  
+**Status:** Formal proposal — NOT RATIFIED.
+
+The seven surviving candidate themes were converted into a minimal formal semantic amendment proposal:
+
+1. Epistemic Object Separation;
+2. Scoped Authority and Conflict Preservation;
+3. Purpose-Bound Authorization;
+4. Temporal Applicability and Freshness;
+5. Derived-State Dependency and Reassessment;
+6. Safeguarding Is Distinct From Verification;
+7. Disclosure and Republication Boundary.
+
+The proposal explicitly excludes universal Guardian precedence, automatic invalidation mechanics, fixed freshness/retention periods, AI authority, compliance certification, and premature ERD/schema/RLS decisions.
+
+**Gate 1 remains OPEN.**
+
+## 10.11 Constitution / Domain Model Contradiction Audit — 2026-10-05
+
+**Document:** `docs/research/gate-1-constitution-domain-contradiction-audit-2026-10-05.md`  
+**Commit:** `13cf78f4a932479066a27ba41321a282b9f36aeb`  
+**Status:** Preliminary final contradiction audit — NOT RATIFICATION.
+
+The formal proposal was re-fetched from `main` and audited against:
+
+- `docs/00-constitution.md`;
+- `docs/01-domain-model.md`.
+
+Result:
+
+- Constitutional contradiction: NONE FOUND.
+- Domain-model contradiction: NONE FOUND.
+- Unsupported legal expansion: NONE FOUND in the proposed wording, subject to explicit legal-review boundaries.
+- Implementation leakage: NONE FOUND.
+- New domain concepts accidentally frozen: NONE FOUND.
+
+The audit also preserved one unresolved repository-provenance issue: duplicate numbered witness filenames for Cases 07, 08, and 09. The canonical 01–14 sequence remains the ledger/synthesis sequence; duplicate files remain preserved evidence pending explicit provenance reconciliation.
+
+### Current decision
+
+```
+Formal proposal: SURVIVES CONTRADICTION AUDIT
+Constitution: UNCHANGED
+Domain Model: UNCHANGED
+Ratified amendments: 0
+Affected-case re-witness: NEXT
+ERD/schema: DEFERRED
+RLS: DEFERRED
+Implementation: DEFERRED
+Gate 1: OPEN
+```
+
+Next evidence transition:
+
+**Formal proposal → affected-case re-witness → contradiction check → Gate 1 decision.**
