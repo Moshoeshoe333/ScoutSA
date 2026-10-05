@@ -385,3 +385,54 @@ Gate 1 decision
 
 The synthesis confirms that further witnesses should not be added merely to repeat already-witnessed seams unless the external research or reconciliation reveals a genuinely orthogonal adversarial class.
 
+
+
+## 10.7 External / Legal Anchor Research — 2026-10-05
+
+**Research document:** `docs/research/external-anchors-2026-10-05.md`  
+**Commit:** `ba3b293ad23dc9bb48eaf7071882e4978cef7ea8`  
+**Status:** External evidence reconciliation — NOT legal advice and NOT constitutional ratification.
+
+The research strengthens seven Gate 1 candidate boundaries:
+
+- scoped parental/guardian authority;
+- child best-interests and safeguarding treatment;
+- purpose and further-processing limitations;
+- information quality/currentness;
+- special treatment of children's personal information;
+- separation of safeguarding from ordinary role/identity verification;
+- controlled disclosure/republication.
+
+### Important evidence boundary
+
+The research does **not** establish ScoutSA compliance, a universal Guardian precedence rule, a universal consent taxonomy, a universal freshness period, a particular schema/RLS design, current SAFA policy beyond the retrieved source, institutional integration, or investor readiness.
+
+The strongest external anchors retrieved are:
+
+- Constitution of South Africa, section 28;
+- Children's Act 38 of 2005, especially section 18 and section 28;
+- POPIA, especially sections 4, 15, 16, 32, 34 and 35;
+- Information Regulator official guidance/eServices;
+- FIFA's 2026 Safeguarding Policy and safeguarding guidance;
+- SAFA Football Academies Regulations, treated as historical/institutional evidence rather than current universal policy.
+
+### Research verdict
+
+External evidence supports the **direction** of the candidate semantic amendments but does not automatically ratify them.
+
+Next action:
+
+```
+Candidate semantic amendment draft
+        ↓
+Classify each clause:
+  EXTERNALLY SUPPORTED
+  PRODUCT POLICY
+  LEGAL REVIEW REQUIRED
+  NOT YET EARNED
+        ↓
+Re-witness affected cases
+        ↓
+Gate 1 decision
+```
+
