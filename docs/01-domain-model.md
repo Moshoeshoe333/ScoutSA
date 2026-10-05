@@ -159,6 +159,44 @@ Evidence does **not** automatically establish truth. Its provenance, type, sourc
 
 ---
 
+
+## 4.3 Ratified Assertion
+
+**Assertion** is a first-class semantic domain concept.
+
+An Assertion is an attributable domain statement or claim about a defined subject, made or submitted by an actor within an applicable authority/scope where relevant, preserved with sufficient provenance and temporal context to distinguish the historical assertion from later applicability, and capable of being supported or evaluated by Evidence and Verification without itself constituting truth.
+
+Conceptual aspects, where applicable:
+
+- subject;
+- author/submitter;
+- authority/scope context;
+- asserted proposition or claim scope;
+- creation/submission time;
+- effective period;
+- lifecycle/status;
+- provenance;
+- supporting Evidence;
+- correction/dispute reference;
+- visibility/disclosure classification.
+
+### Assertion invariants
+
+1. ASSERTION ≠ EVIDENCE.
+2. ASSERTION ≠ VERIFICATION.
+3. ASSERTION ≠ TRUTH.
+4. AUTHOR ≠ AUTHORITY.
+5. Evidence supports an Assertion; Evidence does not thereby establish truth.
+6. Contradictory Assertions remain distinguishable until an authorized resolution process applies.
+7. Historical Assertion does not by itself establish current applicability.
+8. Assertion visibility does not imply Evidence visibility or republication permission.
+9. An Assertion does not create consent, safeguarding clearance, legal validity, or universal authority.
+10. Assertion existence does not create a verification result.
+11. Derived readiness may consume Assertions and supporting Evidence but never replaces them as source records.
+12. Correction or dispute must preserve provenance rather than silently rewriting historical assertions.
+
+These are semantic requirements, not database columns or implementation mechanics.
+
 ## 5. Core Entities
 
 ### 5.1 User
