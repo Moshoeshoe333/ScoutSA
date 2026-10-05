@@ -563,3 +563,57 @@ Gate 1: OPEN
 Next evidence transition:
 
 **Formal proposal → affected-case re-witness → contradiction check → Gate 1 decision.**
+
+
+## 10.12 Formal Amendment Affected-Case Re-Witness — 2026-10-05
+
+**Document:** `docs/research/gate-1-formal-amendment-affected-case-rewitness-2026-10-05.md`  
+**Commit:** `01a59b14cbf69d2d128546abd73dd56830a18b68`  
+**Status:** Adversarial re-witness — NOT RATIFICATION.
+
+All 14 canonical Gate 1 cases were re-tested against the seven-theme formal amendment proposal.
+
+### Result
+
+All seven amendment themes survive as semantic candidates.
+
+No Constitution contradiction was found.
+
+No Domain Model contradiction was found.
+
+No amendment creates:
+- universal Guardian precedence;
+- automatic winner selection;
+- universal consent;
+- absolute retention;
+- derived-state authority;
+- AI authority;
+- compliance certification;
+- premature schema/RLS/implementation requirements.
+
+### Residual gaps discovered
+
+**R-01 — Child Voice / Guardian Authorization:** Case 08 shows that scoped authority and purpose-bound consent do not by themselves define the product/legal treatment of a child's objection, assent, participation preference, or applicable age/capacity rules.
+
+**R-02 — Safeguarding Protective Action:** Case 09 shows that verification must remain separate from safeguarding, but temporary protective action, investigation, escalation, dismissal, substantiation, and resolution semantics remain unresolved.
+
+**R-03 — Witness Provenance:** Duplicate numbered witness filenames remain for Cases 07, 08 and 09. They are preserved; no deletion or silent renaming occurred.
+
+### Current decision
+
+```
+Formal proposal: SURVIVES AFFECTED-CASE RE-WITNESS
+Ratification: NOT YET
+Residual gaps: 3
+Constitution: UNCHANGED
+Domain Model: UNCHANGED
+ERD/schema: DEFERRED
+RLS: DEFERRED
+Implementation: DEFERRED
+Gate 1: OPEN
+```
+
+### Next evidence transition
+
+Targeted evidence/legal/safeguarding research for R-01 and R-02, plus explicit provenance reconciliation for R-03, followed by a final Gate 1 re-witness.
+
