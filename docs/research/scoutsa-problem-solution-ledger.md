@@ -808,3 +808,53 @@ Gate 1 closure does not establish POPIA/Children's Act/FIFA/SAFA compliance, saf
 
 > Deferred ≠ ignored. Deferred ≠ approved. Deferred ≠ implemented.
 
+
+
+## 10.19 Gate 2 Relationship Model Initiated — 2026-10-05
+
+**Document:** `docs/02-relationship-model.md`  
+**Commit:** `e21404b754b7bc007dfd01cf4762569d8b62b849`
+
+Gate 2 has formally begun. The first conceptual relationship model was derived from the closed Gate 1 Domain Model.
+
+### Verified starting position
+
+- Core Player / Guardian / Organization / Opportunity relationships are derivable.
+- Membership remains first-class.
+- GuardianLink remains first-class.
+- Consent remains purpose-bound.
+- Verification remains scoped.
+- Evidence remains provenance-bearing.
+- OpportunityApplication remains first-class.
+- OpportunityReadiness remains contextual/derived.
+- FootballReadiness remains separate.
+- AuditEvent remains historical/accountability-oriented.
+- No new semantic concept was silently introduced.
+
+### Gate 2 remains OPEN
+
+Schema work is **HOLD**.
+
+The following seams must be interrogated before an ERD can be frozen:
+
+1. User / Player / Guardian / Coach / Scout cardinalities and affiliations.
+2. GuardianLink authority-scope representation.
+3. Assertion/Claim ↔ Evidence representation.
+4. Safeguarding response relationship/state structure.
+5. Child participation / objection / assent / decision relationship.
+6. OpportunityApplication participant/state structure.
+7. Outcome multiplicity and correction/dispute structure.
+
+### Control
+
+If any seam requires a new semantic concept or changes a ratified boundary:
+
+`STOP → GOVERNANCE REVIEW → RE-WITNESS → RATIFY IF REQUIRED`
+
+No schema, RLS, API, UI, or implementation work is authorized from an unresolved Gate 2 assumption.
+
+**Gate 1:** CLOSED  
+**Gate 2:** OPEN  
+**Schema:** HOLD  
+**Implementation:** DEFERRED
+
