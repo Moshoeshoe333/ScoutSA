@@ -322,3 +322,66 @@ ERD/schema expansion: DEFERRED
 **Monday starting point:** Gate 1 synthesis, not new feature construction.
 
 > Do not build around a semantic gap merely because the gap is inconvenient. Witness it, synthesize it, research it, amend minimally, and re-witness it first.
+
+
+## 10.6 Gate 1 Synthesis — Cases 01–14
+
+**Synthesis document:** `docs/research/gate-1-synthesis-cases-01-14.md`  
+**Commit:** `b848dafaa37f601fc0f6e0d14f163b5e46ea1ae3`  
+**Status:** Synthesis only — NOT constitutional ratification.
+
+The fourteen witnesses have been consolidated into seven orthogonal semantic gap classes:
+
+1. Assertion Boundary
+2. Scoped Authority and Conflict
+3. Purpose-Bound Authorization
+4. Temporal Freshness and Applicability
+5. Derived-State Dependency and Invalidation
+6. Safeguarding vs Verification
+7. Disclosure / Republication Boundary
+
+Repeated failure modes are:
+
+- silent promotion of a narrow fact into broader authority;
+- silent invalidation or rewriting of historical state;
+- silent conflict resolution;
+- provenance loss.
+
+### Repository provenance issue identified
+
+The witness directory contains duplicate numbered scenarios for Cases 7, 8 and 9. The committed session ledger remains the current canonical sequence, but the duplicate files are preserved as evidence until provenance is explicitly reconciled.
+
+**No witness was deleted, renamed, overwritten, or silently reclassified by the synthesis.**
+
+### Gate decision
+
+**Gate 1 remains OPEN.**
+
+The synthesis does not authorize:
+
+- Constitution amendment;
+- Domain Model amendment;
+- ERD/schema design;
+- RLS/API design;
+- implementation;
+- compliance claims;
+- investor-readiness claims.
+
+### Next action
+
+The repository's planned next phase is now active:
+
+```
+External / legal anchor research
+        ↓
+Evidence-source reconciliation
+        ↓
+Minimal semantic amendment draft
+        ↓
+Re-witness affected cases
+        ↓
+Gate 1 decision
+```
+
+The synthesis confirms that further witnesses should not be added merely to repeat already-witnessed seams unless the external research or reconciliation reveals a genuinely orthogonal adversarial class.
+
