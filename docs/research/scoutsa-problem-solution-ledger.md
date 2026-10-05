@@ -752,3 +752,59 @@ Gate 1: OPEN — CLOSURE REVIEW REMAINS
 ```
 
 The next work is not feature construction. It is a final Gate 1 closure review focused on the remaining explicit boundaries: jurisdiction-specific child participation/capacity effects, safeguarding response authority/procedure, disclosure/republication context, exact authority-resolution process, and whether the remaining unresolved domain decisions can be closed without inventing unsupported rules.
+
+
+## 10.18 Gate 1 Closure Review — 2026-10-05
+
+**Document:** `docs/research/gate-1-closure-review-2026-10-05.md`  
+**Commit:** `3ba1d74c6a73cfc56a1ef2440023aa282b4e415e`  
+**Decision:** **GATE 1 READY TO CLOSE**
+
+The final closure review re-fetched the governing Constitution and Domain Model and tested the remaining explicit boundaries.
+
+### Closure disposition
+
+- Entity boundaries: CLOSED FOR GATE 1.
+- Ownership / authority semantics: CLOSED; operational/legal detail deferred.
+- Evidence model: CLOSED; storage/integrity mechanics deferred.
+- Temporal model: CLOSED; freshness/retention thresholds deferred.
+- Visibility / disclosure semantics: CLOSED; contextual legal/product rules deferred.
+- Child participation / voice: CLOSED AS SEMANTIC BOUNDARY; contextual effects deferred.
+- Safeguarding: CLOSED AS SEMANTIC BOUNDARY; operational response authority/procedure deferred.
+- Authority conflict: CLOSED AS SEMANTIC BOUNDARY; resolution process deferred.
+- Remaining domain decisions: DEFERRED, NOT BLOCKING.
+
+### 33×3 closure judgment
+
+```
+Existence:         PASS
+Coherence:         PASS
+Failure containment: PASS
+```
+
+No remaining issue requires invention of a legal conclusion, authority hierarchy, child-capacity rule, safeguarding adjudication, disclosure permission, new core entity, or change to a ratified semantic boundary.
+
+### Gate decision
+
+```
+M1–M9: RATIFIED AS SEMANTIC PRINCIPLES
+Constitution: RECONCILED
+Domain Model: RECONCILED + GATE 1 CLOSED
+Gate 1: CLOSED — DOMAIN INTEGRITY
+ERD / Schema: NOW AUTHORIZED AS GATE 2 WORK
+RLS / API / UI: DEFERRED
+Implementation: DEFERRED
+Compliance claim: NONE
+Investor-ready claim: NONE
+```
+
+Gate 2 is now authorized to derive the Relationship Model / ERD from the ratified Domain Model.
+
+**Critical control:** If Gate 2 exposes a genuinely missing semantic concept, work must stop at that seam and return to governance. Gate 2 must not silently invent domain truth.
+
+### Explicit non-claims
+
+Gate 1 closure does not establish POPIA/Children's Act/FIFA/SAFA compliance, safeguarding clearance, legal sufficiency of consent, production readiness, security assurance, investor readiness, or implemented RLS/API/UI behavior.
+
+> Deferred ≠ ignored. Deferred ≠ approved. Deferred ≠ implemented.
+
