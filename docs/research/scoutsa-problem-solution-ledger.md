@@ -974,3 +974,71 @@ No latest-wins, first-wins, majority-wins, universal Guardian precedence, role-i
 **Implementation:** DEFERRED
 
 Next seam: **Assertion / Claim ↔ Evidence representation.**
+
+## 10.23 Gate 2 Adversarial Seam G2-SEAM-04 — Assertion / Claim ↔ Evidence — 2026-10-05
+
+**Relationship Model commit:** b3c03c623b14405fab555f7169cc8c053361cde0
+
+Fourth Gate 2 seam was interrogated against the ratified Domain Model and M1–M9 boundaries.
+
+### Finding
+
+The repository clearly establishes:
+- ASSERTION ≠ EVIDENCE.
+- EVIDENCE ≠ VERIFICATION.
+- VERIFICATION ≠ TRUTH.
+- Authority is the actor permitted to make a particular assertion.
+- Evidence supports claims and remains provenance-bearing.
+- Verification is scoped to a defined subject/claim/scope with authority, evidence basis, timestamp and status.
+
+However, the current domain does not clearly define a first-class object carrying the attributable assertion/claim itself.
+
+### Disposition
+
+- Evidence supporting a claim: **DERIVABLE / SAFE**.
+- Assertion distinct from Evidence: **RATIFIED / SAFE**.
+- Verification distinct from underlying assertion: **RATIFIED / SAFE**.
+- Player ↔ Evidence alone as the complete claim model: **INSUFFICIENT / NOT SAFE TO FREEZE**.
+- Reusing Verification as the universal Claim object: **REJECTED**.
+- Inventing a technical claim ID/entity directly in the ERD: **REJECTED**.
+- Whether Assertion/Claim requires first-class domain representation: **GOVERNANCE REVIEW REQUIRED**.
+
+### Why we stopped
+
+This is materially different from the previous seams. The existing concepts may be semantically sufficient, but the current relationship model does not yet tell us what domain object carries the full chain: subject → author → authority → assertion/claim → supporting evidence → time/status.
+
+Adding an ERD entity now would risk creating domain truth through schema design.
+
+Therefore the Gate 2 control was correctly triggered:
+
+STOP → GOVERNANCE REVIEW → RE-WITNESS → RATIFY IF REQUIRED
+
+### Required governance questions
+
+The next re-witness must determine:
+1. assertion subject;
+2. author;
+3. authority to assert;
+4. asserted content/scope;
+5. one-to-many assertion/evidence support;
+6. contradictory assertions;
+7. temporal change/history;
+8. Verification's relationship to the assertion;
+9. derived-state consumption;
+10. correction/dispute lifecycle;
+11. assertion vs Evidence visibility/disclosure.
+
+### Gate consequence
+
+**G2-SEAM-04 = GOVERNANCE STOP.**
+
+No Assertion entity, schema object, foreign key, API, RLS, UI, or implementation rule is being invented.
+
+**Gate 2:** OPEN  
+**G2-SEAM-01/02/03:** unresolved blockers  
+**G2-SEAM-04:** governance stop  
+**ERD:** HOLD  
+**Schema:** HOLD  
+**Implementation:** DEFERRED
+
+**Next action:** Governance/re-witness package for Assertion / Claim semantics before continuing ERD work.
