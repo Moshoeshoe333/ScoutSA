@@ -367,6 +367,109 @@ However, **G2-SEAM-03 remains an ERD blocker** because the exact authoriser iden
 
 No schema, RLS, API, or UI rule may be derived from an assumed Guardian precedence rule.
 
+## 6.4 Adversarial Seam D — Assertion / Claim ↔ Evidence
+
+**Seam ID:** G2-SEAM-04  
+**Status:** **GOVERNANCE STOP — POTENTIAL MISSING SEMANTIC CONCEPT / ERD BLOCKER**
+
+### Question
+
+Can the current domain represent an attributable **assertion/claim** and its relationship to supporting Evidence without collapsing assertion into evidence, evidence into truth, verification into assertion, or verification into truth?
+
+### Adversarial test
+
+The ratified Domain Model establishes:
+- Authority is the actor permitted to make a particular assertion.
+- Evidence is an artifact, observation, assertion, or system event supporting a claim.
+- Evidence is first-class and provenance-bearing.
+- ASSERTION ≠ EVIDENCE.
+- EVIDENCE ≠ VERIFICATION.
+- VERIFICATION ≠ TRUTH.
+- Verification must have a defined subject, claim/scope, authority, evidence basis, timestamp, and status.
+- Evidence may include a coach assertion, organization assertion, guardian consent action, or system event.
+
+The current Domain Model does not, however, define a first-class Assertion or Claim entity with its own lifecycle, subject, author/authority, content/scope, timestamp, status, or relationship to one or more Evidence records.
+
+### Representation tests
+
+| Proposition | Disposition | Reason |
+|---|---|---|
+| Evidence can support a claim | **DERIVABLE / SAFE** | Explicit Domain Model rule. |
+| Evidence can itself be an assertion submitted by an actor | **DERIVABLE / SAFE** | Explicit Evidence examples. |
+| An assertion is semantically distinct from Evidence | **RATIFIED / SAFE** | Explicit M1 boundary. |
+| Verification can be treated as the assertion itself | **REJECTED** | Would conflate verification with the underlying assertion. |
+| Evidence alone can represent who asserted a fact, what exactly they asserted, and when | **INSUFFICIENT / NOT SAFE TO FREEZE** | Current evidence fields do not clearly define the substantive assertion object. |
+| Player ↔ Evidence alone can represent all claims supported by that evidence | **INSUFFICIENT / NOT SAFE TO FREEZE** | One evidence artifact may support multiple claims, and a claim may require multiple evidence items. |
+| A technical claim_id may be invented now | **REJECTED** | A technical key cannot create an unratified domain concept. |
+| A generic Evidence record may silently become the Assertion object | **REJECTED** | Would collapse a ratified semantic distinction. |
+| Verification may be reused as the universal Claim object | **REJECTED** | Would conflate verification with underlying assertion and truth. |
+
+### Why this seam is different from G2-SEAM-03
+
+G2-SEAM-03 exposed unresolved operational/legal relationship rules while the existing semantic objects were sufficient.
+
+G2-SEAM-04 exposes a more fundamental question:
+
+> **What is the domain object that carries the attributable assertion/claim which Evidence supports?**
+
+The current documents define the distinction but do not clearly define the object required to represent it.
+
+A relationship-only solution would therefore risk inventing semantics through the ERD.
+
+### Governance trigger
+
+Under the Gate 2 control:
+
+> STOP → GOVERNANCE REVIEW → RE-WITNESS → RATIFY IF REQUIRED
+
+This seam therefore must not be resolved by adding an Assertion entity, renaming Evidence, or reusing Verification by implication.
+
+The appropriate next step is a governance/re-witness package to determine whether:
+1. Assertion is an existing implicit domain concept that can be formally clarified without semantic amendment; or
+2. a new ratifiable domain concept is genuinely required; and, if so,
+3. its minimum semantics and boundaries can be established without creating truth-by-record, automatic verification, or unsupported authority.
+
+### Required re-witness questions
+
+1. What is the subject of an assertion?
+2. Who is its author?
+3. What authority, if any, permits the author to make that assertion?
+4. What exactly is being asserted?
+5. Can one assertion have multiple supporting Evidence records?
+6. Can one Evidence record support multiple assertions?
+7. How are contradictory assertions preserved?
+8. How do assertions change over time without erasing historical provenance?
+9. How does Verification relate to an assertion without replacing it?
+10. How does a derived readiness state consume assertions/evidence without becoming a source of truth?
+11. What correction/dispute lifecycle is required?
+12. What visibility/disclosure rules apply to the assertion versus its supporting Evidence?
+
+### Disposition
+
+**G2-04A — Evidence as a supporting domain concept: DERIVABLE / SAFE.**
+
+**G2-04B — Assertion ≠ Evidence: RATIFIED / SAFE.**
+
+**G2-04C — Verification ≠ underlying assertion: RATIFIED / SAFE.**
+
+**G2-04D — Current relationship model is sufficient to freeze an Assertion↔Evidence ERD: NO.**
+
+**G2-04E — Whether Assertion/Claim requires first-class domain representation: GOVERNANCE REVIEW REQUIRED.**
+
+### Gate consequence
+
+**STOP.**
+
+No ERD relationship, schema object, foreign key, API contract, RLS rule, or UI behavior is authorized for this seam until governance determines whether the domain requires a first-class Assertion/Claim concept.
+
+This is **not** a claim that ScoutSA definitely needs a new entity. It is a witnessed insufficiency in the current relationship model that must be resolved before ERD freeze.
+
+**Gate 2:** OPEN  
+**G2-SEAM-04:** GOVERNANCE STOP  
+**ERD:** HOLD  
+**Schema:** HOLD  
+**RLS/API/UI:** DEFERRED  
+**Implementation:** DEFERRED
 ## 7. Gate 2 Findings
 
 **G2-01 — Relationship derivability: PASS.** Core Gate 1 entities can be related without changing the ratified semantic baseline.
