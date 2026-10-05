@@ -1,7 +1,7 @@
 # ScoutSA Domain Model
 
 **Document:** `docs/01-domain-model.md`  
-**Status:** Draft — Gate 1 (Domain Integrity)  
+**Status:** Draft — Gate 1 (Domain Integrity); M1–M9 semantic baseline ratified 2026-10-05  
 **Governing Principle:** Strength of claim must never exceed strength of evidence.
 
 ---
@@ -83,8 +83,31 @@ ScoutSA uses the following distinctions:
 - **Evidence:** an artifact, observation, assertion, or system event supporting a claim.
 - **Consent:** permission for a defined purpose; it is not equivalent to verification.
 - **Derived state:** a system calculation based on underlying records; it is not an independent source of truth.
+- **Decision:** a resulting determination or action taken within an authorized process; it is not itself proof of the underlying facts.
 
 A verification does not make every attribute of an entity verified. Verification must always have a **defined subject, claim/scope, authority, evidence basis, timestamp, and status**.
+
+### 3.1 Ratified semantic distinctions
+
+- ASSERTION ≠ EVIDENCE
+- EVIDENCE ≠ VERIFICATION
+- VERIFICATION ≠ TRUTH
+- ROLE ≠ UNIVERSAL AUTHORITY
+- AUTHORITY ≠ CONSENT
+- PURPOSE A AUTHORIZATION ≠ PURPOSE B AUTHORIZATION
+- HISTORICAL VALIDITY ≠ CURRENT APPLICABILITY
+- AUTHENTIC ≠ CURRENT ≠ APPLICABLE ≠ SUFFICIENT
+- CONFLICT ≠ RESOLUTION
+- DERIVED STATE ≠ SOURCE OF TRUTH
+- VERIFICATION ≠ SAFEGUARDING CLEARANCE
+- DISCOVERABLE ≠ REPUBLISHABLE
+- CHILD VOICE ≠ GUARDIAN AUTHORITY
+- CHILD VOICE ≠ FINAL DECISION
+- CONCERN / REPORT ≠ FINDING / SUBSTANTIATION
+- PROTECTIVE ACTION ≠ INVESTIGATION OUTCOME
+- INVESTIGATION OUTCOME ≠ FINAL RESOLUTION
+
+These are semantic boundaries. They do not create a fixed authority hierarchy, legal conclusion, implementation mechanism, or automatic outcome.
 
 ---
 
@@ -315,6 +338,7 @@ Conceptual verification levels:
 - Verification must identify verifier, scope, timestamp, and status.
 - Higher level does not automatically verify unrelated facts.
 - Expired/revoked verification cannot silently continue to support a current claim.
+- Verification is not safeguarding clearance.
 
 ---
 
@@ -502,6 +526,7 @@ Preferred actionable states:
 3. Every state must be explainable by underlying inputs.
 4. Missing evidence must not be silently interpreted as a positive state.
 5. A readiness state becomes stale when material inputs or opportunity requirements change.
+6. Material input withdrawal, revocation, expiry, or dispute requires current-state reassessment; historical evaluations are not silently rewritten.
 
 ---
 
@@ -648,6 +673,8 @@ A public verification badge does not make its supporting evidence public.
 
 A public Player Passport does not make guardian, transport, academic, medical, or consent records public.
 
+Discoverability or public availability does not by itself establish permission to reproduce, aggregate, transform, disclose, or reuse information for another purpose.
+
 ---
 
 ## 9. Safeguarding and Contact Boundary
@@ -660,6 +687,9 @@ For minors:
 4. Verification does not equal suitability.
 5. An opportunity invitation does not equal acceptance.
 6. Acceptance does not equal placement.
+7. A safeguarding concern/report does not equal a finding/substantiation.
+8. A finding/substantiation does not automatically determine protective action, investigation outcome, or final resolution.
+9. Child participation/voice is distinct from Guardian authority and from the resulting decision where applicable law or policy requires the child's participation or consideration of views.
 
 The system must enforce the applicable guardian/safeguarding gate before protected contact details or attendance commitments are exposed.
 
@@ -689,6 +719,13 @@ The following are Gate 1 candidate invariants:
 16. **No implementation theater.** Documentation status must never be reported as implementation status.
 17. **No compliance theater.** Documentation alone does not establish legal compliance.
 18. **No ranking by logistics.** Transport, guardian status, academic context, or medical status must not become unexplained public talent rankings.
+19. **Purpose does not silently expand.** Authorization for one purpose does not silently authorize another.
+20. **Historical validity is not current applicability.** Authentic or valid historical material is not automatically current, applicable, or sufficient.
+21. **Conflict is not resolution.** Incompatible legitimate assertions remain distinguishable until an authorized resolution process applies.
+22. **Verification is not safeguarding clearance.**
+23. **Discoverable is not republishable.**
+24. **Child voice is distinct.** A child's expressed view is preserved separately from Guardian authority and from the resulting decision where applicable.
+25. **Safeguarding response states are distinct.** Concern/report, finding/substantiation, protective action, investigation outcome, and final resolution are not silently collapsed.
 
 ---
 
@@ -771,6 +808,9 @@ The following remain deliberately unresolved until later gates:
 - dispute/correction workflow;
 - moderation authority and escalation;
 - organization verification process.
+- exact operational safeguarding response procedure and competent authority;
+- exact product/legal effect of child participation, objection, assent, or capacity in different contexts;
+- legal basis and operational rules for disclosure/republication in context.
 
 Unresolved does not mean forgotten. Each item must be resolved with an explicit decision and evidence before implementation depends on it.
 
@@ -787,19 +827,21 @@ Candidate exit criteria:
 - [ ] Evidence model accepted.
 - [ ] Temporal behavior accepted.
 - [ ] Visibility classes accepted.
-- [ ] Minor/guardian boundary accepted.
-- [ ] Readiness semantics accepted.
-- [ ] Global invariants accepted.
-- [ ] Unresolved decisions assigned to later gates.
+- [x] Minor/guardian semantic boundary accepted.
+- [x] Readiness semantics accepted.
+- [x] Global semantic invariants accepted.
+- [x] Unresolved decisions assigned to later gates.
 - [ ] ERD can be derived without inventing missing domain concepts.
 
-**Current status: DRAFT / NOT YET VERIFIED AS AN IMPLEMENTATION.**
+**Current status: RATIFIED SEMANTIC BASELINE / GATE 1 CLOSURE STILL PENDING.**
 
 ---
 
 ## 15. Next Gate
 
-After Gate 1 review:
+Gate 1 closure requires the remaining legal/product/operational boundaries to be explicitly dispositioned. Once Gate 1 is closed:
+
+
 
 **Gate 2 — Relationship Model / ERD**
 
