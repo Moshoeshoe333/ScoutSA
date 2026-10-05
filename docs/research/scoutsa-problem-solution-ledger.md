@@ -907,3 +907,36 @@ No new semantic amendment is currently required. The issue is an explicit domain
 **Implementation:** DEFERRED
 
 Next seam: **User ↔ Guardian / Coach / Scout affiliation and identity relationship.**
+
+
+## 10.21 Gate 2 Adversarial Seam G2-SEAM-02 — User ↔ Guardian / Coach / Scout / Organization — 2026-10-05
+
+**Relationship Model commit:** `dcf3741bb8fa7e48bba4177c61d4df4203a8af1e`
+
+Second Gate 2 seam: roles and organizational affiliations were tested without converting them into implicit authority.
+
+### Finding
+
+- User identity remains distinct from Guardian, Coach, and Scout role semantics.
+- Role assignment does not equal external verification.
+- Organization affiliation is distinct from User identity.
+- Guardian relationship remains Player-specific through GuardianLink.
+- Affiliation requires temporal/history semantics where it affects authority-bearing assertions.
+- Exact actor multiplicities remain **NEEDS DOMAIN DECISION**.
+- Exact organization affiliation/authorization behavior remains **NEEDS DOMAIN + OPERATIONAL DECISION**.
+
+### Rejected assumptions
+
+No single permanent `user.organization_id`, role-implied authority, immutable Coach/Scout affiliation, or Guardian authority derived solely from a User role was promoted into the relationship model.
+
+### Gate consequence
+
+**G2-SEAM-02 remains an ERD blocker.** No new semantic amendment is required at this stage.
+
+**Gate 2:** OPEN  
+**ERD:** HOLD  
+**Schema:** HOLD  
+**RLS/API/UI:** DEFERRED  
+**Implementation:** DEFERRED
+
+Next seam: **GuardianLink authority scope and its relationship to ConsentRecord.**
