@@ -1042,3 +1042,45 @@ No Assertion entity, schema object, foreign key, API, RLS, UI, or implementation
 **Implementation:** DEFERRED
 
 **Next action:** Governance/re-witness package for Assertion / Claim semantics before continuing ERD work.
+
+## 10.24 Gate 2 Governance Re-Witness — Assertion / Claim ↔ Evidence — 2026-10-05
+
+**Governance document:** `docs/research/gate-2-assertion-evidence-governance-rewitness-2026-10-05.md`  
+**Commit:** 06d498ff76f07ad8e07d2d255a31cf6fea12c610
+
+The G2-SEAM-04 governance interrogation was completed.
+
+### Result
+
+The existing domain successfully preserves the distinctions ASSERTION ≠ EVIDENCE, EVIDENCE ≠ VERIFICATION, and VERIFICATION ≠ TRUTH. Evidence remains first-class and provenance-bearing.
+
+However, Player ↔ Evidence alone cannot represent the attributable proposition itself with sufficient precision. The re-witness therefore finds that a **first-class Assertion concept is warranted as a domain-level candidate**.
+
+This is a governance finding, **not yet a ratified amendment**.
+
+### Candidate minimum semantics
+
+Subject; author/submitter; applicable authority/scope where relevant; asserted proposition/content or claim scope; time/effective period; lifecycle/status; provenance; supporting Evidence relationship; correction/dispute reference where applicable; visibility/disclosure classification where applicable.
+
+### Candidate boundaries
+
+- ASSERTION ≠ EVIDENCE
+- ASSERTION ≠ VERIFICATION
+- ASSERTION ≠ TRUTH
+- AUTHOR ≠ AUTHORITY
+- EVIDENCE SUPPORTS ASSERTION ≠ EVIDENCE ESTABLISHES TRUTH
+- CONTRADICTORY ASSERTIONS ≠ SILENT RESOLUTION
+- HISTORICAL ASSERTION ≠ CURRENT APPLICABILITY
+- ASSERTION VISIBILITY ≠ EVIDENCE VISIBILITY
+
+### Control
+
+No Assertion entity, schema, RLS, API, UI, or implementation behavior has been introduced.
+
+Required next decision: **explicit ratification or rejection of the candidate Assertion concept**, followed by Domain Model reconciliation if accepted.
+
+**Gate 2:** OPEN  
+**G2-SEAM-04:** RATIFICATION PENDING  
+**ERD:** HOLD  
+**Schema:** HOLD  
+**Implementation:** DEFERRED
