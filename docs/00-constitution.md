@@ -64,6 +64,27 @@ ScoutSA handles sensitive contexts, including minors. Privacy, safeguarding, con
 Legal compliance claims must be demonstrated against the implemented system and applicable law; documentation alone does not establish compliance.
 
 
+
+## Ratified Semantic Boundary — Gate 2 Assertion
+
+Following the G2-SEAM-04 governance re-witness and explicit ratification on 2026-10-05, **Assertion** is a first-class semantic domain concept.
+
+> **Assertion:** An attributable domain statement or claim about a defined subject, made or submitted by an actor within an applicable authority/scope where relevant, preserved with sufficient provenance and temporal context to distinguish the historical assertion from later applicability, and capable of being supported or evaluated by Evidence and Verification without itself constituting truth.
+
+The following are ratified boundaries:
+
+- ASSERTION ≠ EVIDENCE
+- ASSERTION ≠ VERIFICATION
+- ASSERTION ≠ TRUTH
+- AUTHOR ≠ AUTHORITY
+- EVIDENCE SUPPORTS ASSERTION ≠ EVIDENCE ESTABLISHES TRUTH
+- CONTRADICTORY ASSERTIONS ≠ SILENT RESOLUTION
+- HISTORICAL ASSERTION ≠ CURRENT APPLICABILITY
+- ASSERTION VISIBILITY ≠ EVIDENCE VISIBILITY
+
+This ratification does not establish universal authority, Guardian precedence, legal validity, truth-by-record, automatic verification, automatic conflict resolution, safeguarding clearance, public disclosure permission, AI adjudication, or implementation mechanics.
+
+
 ## Ratified Semantic Boundaries — Gate 1
 
 The following semantic principles are ratified as governing constraints for the ScoutSA domain. They do not, by themselves, prescribe schema, RLS, API, UI, retention periods, freshness durations, or implementation mechanics.
