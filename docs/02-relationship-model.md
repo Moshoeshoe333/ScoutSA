@@ -470,6 +470,58 @@ This is **not** a claim that ScoutSA definitely needs a new entity. It is a witn
 **Schema:** HOLD  
 **RLS/API/UI:** DEFERRED  
 **Implementation:** DEFERRED
+
+## 6.5 Adversarial Seam E — Assertion ↔ Evidence Reconciliation
+
+**Seam ID:** G2-SEAM-04  
+**Status:** **CLOSED — SEMANTIC CONCEPT RATIFIED**
+
+The explicit Gate 2 ratification record establishes **Assertion** as a first-class semantic domain concept.
+
+Conceptual relationship:
+
+```
+Subject
+  ↑
+Assertion
+  ├── author / authority context
+  ├── temporal context / lifecycle
+  ├── provenance
+  └── supporting Evidence
+
+Assertion → Verification (where a defined verification evaluates the assertion/scope)
+Assertion → Derived State (as an input, never as replacement)
+```
+
+The relationship model may therefore distinguish:
+
+- the proposition being asserted;
+- the actor who authored/submitted it;
+- applicable authority/scope;
+- supporting Evidence;
+- any scoped Verification evaluating it;
+- historical/current temporal context.
+
+### Ratified relationship invariants
+
+1. ASSERTION ≠ EVIDENCE.
+2. ASSERTION ≠ VERIFICATION.
+3. ASSERTION ≠ TRUTH.
+4. AUTHOR ≠ AUTHORITY.
+5. One Assertion may require multiple Evidence records.
+6. One Evidence record may support multiple Assertions.
+7. Contradictory Assertions remain separately attributable until an authorized resolution process applies.
+8. Historical Assertions remain distinguishable from current applicability.
+9. Assertion visibility does not automatically equal Evidence visibility or republication permission.
+10. Derived readiness may consume Assertions and Evidence but does not replace them.
+
+### Scope boundary
+
+This reconciliation does **not** freeze database multiplicity, keys, storage, RLS, API, UI, or implementation mechanics. Those remain later-gate decisions.
+
+**Disposition:** G2-SEAM-04 semantic blocker CLOSED. Remaining Gate 2 seams continue.
+
+
 ## 7. Gate 2 Findings
 
 **G2-01 — Relationship derivability: PASS.** Core Gate 1 entities can be related without changing the ratified semantic baseline.
