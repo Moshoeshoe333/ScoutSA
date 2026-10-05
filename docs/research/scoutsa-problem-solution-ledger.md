@@ -474,3 +474,31 @@ Retain, revise, reject or escalate
 ```
 
 **Gate 1 remains OPEN.**
+
+
+## 10.9 Candidate Amendment Re-Witness — 2026-10-05
+
+**Document:** `docs/research/gate-1-candidate-rewitness-2026-10-05.md`  
+**Commit:** `d21cc506f198687d00ff79fdb97e6104ac5116fa`  
+**Status:** Preliminary adversarial re-witness — NOT RATIFIED.
+
+The candidate amendment themes survived the preliminary contradiction test.
+
+Three qualifications were made explicit:
+
+1. Historical preservation is subject to applicable retention/deletion law and policy.
+2. Authority conflict must defer to applicable law/policy rather than inventing precedence.
+3. Public-information/republication behavior remains purpose- and context-dependent.
+
+Result:
+
+```
+Candidate amendments: RETAIN FOR FORMAL DRAFTING
+Constitution amendment: NOT YET
+Domain Model amendment: NOT YET
+ERD/schema: DEFERRED
+Implementation: DEFERRED
+Gate 1: OPEN
+```
+
+Next step: formal minimal amendment proposal → final Constitution/Domain Model contradiction audit → affected-case re-witness → Gate 1 decision.
