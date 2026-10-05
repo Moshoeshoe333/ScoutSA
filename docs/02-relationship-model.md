@@ -191,6 +191,81 @@ This seam does not require a new semantic amendment at present. It requires an e
 
 **No schema implementation is authorized from this seam.**
 
+
+
+## 6.2 Adversarial Seam B — User ↔ Guardian / Coach / Scout / Organization Affiliation
+
+**Seam ID:** G2-SEAM-02  
+**Status:** NEEDS DOMAIN / OPERATIONAL DECISION — ERD BLOCKER
+
+### Question
+
+Are Guardian, Coach, and Scout permanent identities, roles held by a User, organization affiliations, or some combination?
+
+### Adversarial test
+
+The Domain Model defines:
+
+- User as authentication identity for a human actor.
+- Guardian, Coach, and Scout as conceptual roles.
+- Organization as a separate domain entity.
+- A role assignment does not itself verify external professional status.
+
+Therefore the following shortcuts are not authorized:
+
+- User role = verified Guardian/Coach/Scout status;
+- User has one permanent Organization;
+- Coach or Scout affiliation is immutable;
+- Guardian authority is created merely by a GUARDIAN role;
+- Organization membership automatically grants every organizational permission;
+- changing a User's role rewrites historical actions or assertions.
+
+### Safe derivations
+
+| Proposition | Disposition | Reason |
+|---|---|---|
+| A User may hold a Guardian role | SAFE | Explicitly supported by conceptual roles. |
+| A User may hold Coach/Scout roles | SAFE | Explicitly supported by conceptual roles. |
+| Role ≠ external verification | SAFE | Explicit Domain invariant. |
+| Organization affiliation is separate from User identity | SAFE | Organization and User are distinct concepts. |
+| Affiliation needs temporal/history semantics | SAFE | Historical provenance is required for authority-bearing assertions. |
+| One permanent Organization per User | NOT SUPPORTED | No such domain rule exists. |
+| Role alone grants organization authority | REJECTED | Conflicts with scoped authority. |
+| Exact multiplicity/cardinality | NEEDS DOMAIN DECISION | Not yet ratified. |
+| Exact verification/authorization process | NEEDS OPERATIONAL / LEGAL DECISION | Deliberately deferred by Gate 1. |
+
+### Important distinction
+
+A relationship such as User → Organization cannot by itself answer:
+
+- whether the person is currently authorized to act for that organization;
+- which claims they may make;
+- whether they are a Guardian for a particular Player;
+- whether they are a verified Coach or Scout;
+- whether they may access restricted information.
+
+Those require separate scope/status/verification/authorization concepts where applicable.
+
+### Disposition
+
+**G2-02A — Role assignment is distinct from verification: DERIVABLE / SAFE.**
+
+**G2-02B — Organization affiliation is distinct from User identity: DERIVABLE / SAFE.**
+
+**G2-02C — Guardian relationship must remain Player-specific through GuardianLink: DERIVABLE / SAFE.**
+
+**G2-02D — Exact User ↔ Guardian/Coach/Scout multiplicities: NEEDS DOMAIN DECISION.**
+
+**G2-02E — Organization affiliation/authorization semantics: NEEDS DOMAIN + OPERATIONAL DECISION.**
+
+### Gate consequence
+
+Do not freeze a single user.organization_id, permanent role, or role-implied authority into the ERD.
+
+No new semantic amendment is presently required. The unresolved issue is the exact relationship and authorization model.
+
+**No schema implementation is authorized from this seam.**
+
 ## 7. Gate 2 Findings
 
 **G2-01 — Relationship derivability: PASS.** Core Gate 1 entities can be related without changing the ratified semantic baseline.
