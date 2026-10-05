@@ -436,3 +436,41 @@ Re-witness affected cases
 Gate 1 decision
 ```
 
+
+
+## 10.8 Candidate Semantic Amendment Draft — 2026-10-05
+
+**Document:** `docs/research/gate-1-candidate-semantic-amendments.md`  
+**Commit:** `60936b97f8166888a9f7075155b642f2b037a7ef`  
+**Status:** Candidate research text — NOT RATIFIED.
+
+The draft reduces the seven synthesis gaps to six candidate amendment themes:
+
+1. Epistemic Object Separation;
+2. Scoped Authority and Conflict Preservation;
+3. Purpose-Bound Authorization;
+4. Temporal Applicability and Freshness;
+5. Derived-State Dependency and Invalidation;
+6. Safeguarding / Disclosure boundaries.
+
+Each clause is explicitly classified as externally supported, product policy, legal-review required, or not yet earned.
+
+**No Constitution or Domain Model text was changed.**
+
+### Next evidence step
+
+Affected witnesses must now be re-witnessed against the candidate clauses before any ratification decision:
+
+```
+Candidate clause
+    ↓
+Affected witness
+    ↓
+33×3 re-test
+    ↓
+New contradiction / unsupported assumption?
+    ↓
+Retain, revise, reject or escalate
+```
+
+**Gate 1 remains OPEN.**
