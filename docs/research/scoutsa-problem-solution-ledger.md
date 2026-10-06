@@ -1563,3 +1563,52 @@ RLS/API/UI: **DEFERRED**
 IMPLEMENTATION: **DEFERRED**
 
 Next authorized seam: **G2-SEAM-03 — GuardianLink ↔ ConsentRecord operational authority.**
+
+
+## 10.36 Gate 2 G2-SEAM-07 — OpportunityApplication Participant / State Re-Witness — 2026-10-06
+
+**Re-witness:** `docs/research/gate-2-opportunity-application-participant-state-rewitness-2026-10-06.md`  
+**Commit:** `4704ae229ad56bce18bdbade54b15ed022632239`
+
+### Finding
+
+OpportunityApplication remains semantically sufficient as a first-class concept. Its subject is the Player in relation to an Opportunity. No additional semantic entity was exposed.
+
+The re-witness preserves the distinction between Player, initiating/submitting actor, Opportunity-side actor, Guardian participation where applicable, Child Participation / Voice, and later Outcome.
+
+Application state describes the application interaction only. It does not establish truth, football ability, safeguarding clearance, legal authority, suitability, placement, or future success. `APPROVED ≠ PLACEMENT` remains mandatory.
+
+### Remaining decisions
+
+- exact participant cardinality;
+- exact actors permitted to initiate/submit/respond/transition;
+- Player/Guardian behavior for minors;
+- complete lifecycle vocabulary, including withdrawal/cancellation/invitation where required;
+- correction/dispute behavior;
+- access/notification semantics.
+
+No technical ApplicationParticipant or StateTransition concept is invented merely for implementation convenience.
+
+### Disposition
+
+G2-07A Application first-class: **CONFIRMED**.  
+G2-07B Player + Opportunity subject: **SAFE / DERIVABLE**.  
+G2-07C Initiating actor may vary by context: **SAFE PRINCIPLE; exact authorization OPEN**.  
+G2-07D Guardian participation does not replace GuardianLink/ConsentRecord: **RATIFIED / SAFE**.  
+G2-07E Child Voice remains separate: **RATIFIED / SAFE**.  
+G2-07F Application state ≠ truth/placement/success: **RATIFIED / SAFE**.  
+G2-07G Participant cardinality: **OPEN — DOMAIN/OPERATIONAL DECISION**.  
+G2-07H State taxonomy/transition authority: **OPEN — OPERATIONAL DECISION**.  
+G2-07I Withdrawal/cancellation/invitation: **OPEN**.  
+G2-07J New semantic concept: **NOT WARRANTED**.
+
+### Gate consequence
+
+G2-SEAM-07: **SEMANTICALLY SUFFICIENT / DOMAIN-OPERATIONAL HOLD**  
+GATE 2: **OPEN**  
+ERD: **HOLD**  
+SCHEMA: **HOLD**  
+RLS/API/UI: **DEFERRED**  
+IMPLEMENTATION: **DEFERRED**
+
+Next authorized seam: **G2-SEAM-08 — Outcome multiplicity / correction / dispute structure.**
