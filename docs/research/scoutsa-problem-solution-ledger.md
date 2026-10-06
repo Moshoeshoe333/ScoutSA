@@ -1929,3 +1929,56 @@ Current decision:
 **Migration-safety design: DEFINED / EXECUTION HOLD.**
 
 This does not convert the SQL draft into an executable or validated migration. The PostgreSQL runtime witness remains the gating evidence event.
+
+
+## 10.45 — SQL ↔ Field/Constraint Reconciliation — 2026-10-06
+
+**Artifact:** `docs/research/sql-field-constraint-reconciliation-2026-10-06.md`  
+**Commit:** `b7c64fdf4357f4115be51f3280c2bbdf0b65029c`
+
+The current non-executed SQL draft was reconciled against the frozen Field / Constraint Decision Matrix.
+
+### Result
+
+- Candidate SQL tables remain inside the frozen physical table boundary: **PASS**.
+- User, Player, Guardian, Organization, Coach and Scout remain distinct concepts: **PASS**.
+- GuardianLink remains distinct from ConsentRecord: **PASS**.
+- Assertion, Evidence and Verification remain distinct: **PASS**.
+- Child Participation/Voice remains distinct from authority, consent and final decision: **PASS**.
+- Safeguarding Case/Response remains distinct from verification, finding, guilt and clearance: **PASS**.
+- OpportunityApplication remains distinct from Outcome: **PASS**.
+- FootballReadiness and OpportunityReadiness remain derived: **PASS**.
+- Conditional academic/medical concepts remain bounded: **PASS**.
+- Temporal/provenance requirements are represented without claiming truth: **PASS**.
+- Pending legal/operational questions remain unencoded: **PASS**.
+- No hidden semantic concept was introduced by the SQL table set: **PASS**.
+
+### Important boundary
+
+The reconciliation is a semantic/traceability witness only. It does **not** establish PostgreSQL parser acceptance, runtime validity, migration safety, RLS correctness, legal compliance, or production readiness.
+
+Remaining holds:
+- PostgreSQL runtime/parser witness;
+- final nullability/default review;
+- indexes/uniqueness review;
+- RLS/access design;
+- retention/deletion;
+- transaction/reversibility;
+- authorized non-production dry run;
+- post-migration runtime witness.
+
+### 33×3
+
+Existence: **PASS**  
+Coherence: **PASS**  
+Failure containment: **PASS**
+
+### Decision
+
+**SQL ↔ FIELD/CONSTRAINT RECONCILIATION: PASS**
+
+The SQL draft remains **DRAFT / NOT EXECUTED**.
+
+**Migration: HOLD. Database write: HOLD. RLS: HOLD. API: HOLD. UI: HOLD. Production implementation: HOLD.**
+
+The next required evidence remains an **actual PostgreSQL runtime/parser witness**.
