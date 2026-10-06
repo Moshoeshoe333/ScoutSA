@@ -1,0 +1,105 @@
+name: PostgreSQL Runtime Witness
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  postgres-runtime-witness:
+    name: PostgreSQL runtime witness (non-production)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: witness_only
+          POSTGRES_USER: scoutsa_witness
+          POSTGRES_DB: scoutsa_witness
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U scoutsa_witness -d scoutsa_witness"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+
+    steps:
+      - name: Checkout exact witness commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Verify SQL blob identity
+        env:
+          EXPECTED_BLOB_SHA: 127d93f100e3fedafcc6a45b6ab6c3ad9ef6478e
+        run: |
+          set -euo pipefail
+          actual="$(git hash-object docs/research/scoutsa-schema-draft.sql)"
+          printf 'expected_blob_sha=%s\nactual_blob_sha=%s\n' "$EXPECTED_BLOB_SHA" "$actual"
+          test "$actual" = "$EXPECTED_BLOB_SHA"
+
+      - name: Capture PostgreSQL runtime identity
+        env:
+          PGPASSWORD: witness_only
+        run: |
+          set -euo pipefail
+          psql --version
+          psql -h 127.0.0.1 -U scoutsa_witness -d scoutsa_witness -v ON_ERROR_STOP=1 -c 'select version();'
+
+      - name: Execute schema draft in isolated database
+        env:
+          PGPASSWORD: witness_only
+        run: |
+          set -euo pipefail
+          psql -h 127.0.0.1 -U scoutsa_witness -d scoutsa_witness -v ON_ERROR_STOP=1 -f docs/research/scoutsa-schema-draft.sql
+
+      - name: Verify tables and foreign keys
+        env:
+          PGPASSWORD: witness_only
+        run: |
+          set -euo pipefail
+
+          table_count="$(psql -h 127.0.0.1 -U scoutsa_witness -d scoutsa_witness -Atqc "
+            select count(*)
+            from information_schema.tables
+            where table_schema = 'public'
+              and table_type = 'BASE TABLE'
+          ")"
+
+          expected_tables=26
+          printf 'expected_tables=%s\nactual_tables=%s\n' "$expected_tables" "$table_count"
+          test "$table_count" -eq "$expected_tables"
+
+          fk_count="$(psql -h 127.0.0.1 -U scoutsa_witness -d scoutsa_witness -Atqc "
+            select count(*)
+            from information_schema.table_constraints
+            where table_schema = 'public'
+              and constraint_type = 'FOREIGN KEY'
+          ")"
+
+          expected_fks=17
+          printf 'expected_foreign_keys=%s\nactual_foreign_keys=%s\n' "$expected_fks" "$fk_count"
+          test "$fk_count" -eq "$expected_fks"
+
+          psql -h 127.0.0.1 -U scoutsa_witness -d scoutsa_witness -v ON_ERROR_STOP=1 -c "
+            select table_name
+            from information_schema.tables
+            where table_schema = 'public'
+              and table_type = 'BASE TABLE'
+            order by table_name;
+          "
+
+      - name: Record witness boundary
+        run: |
+          cat <<'EOF'
+          PostgreSQL runtime witness boundary:
+          - isolated GitHub Actions PostgreSQL service only
+          - no production database
+          - no application data
+          - no migration deployment
+          - no RLS/access-policy validation
+          - no legal/compliance conclusion
+          - execution proves only parser/DDL acceptance and declared structural checks for the exact SQL blob
+          EOF
