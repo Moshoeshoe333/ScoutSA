@@ -2062,3 +2062,54 @@ The PostgreSQL runtime gap remains an **evidence limitation**, not a PASS or FAI
 
 **Decision:** STATUS RECONCILIATION — **PASS**.  
 **AuthorityLevel:** NONE beyond the evidence recorded.
+
+
+## 10.48 — PostgreSQL Runtime Witness — 2026-10-06
+
+**Artifact:** `docs/research/postgresql-runtime-witness-2026-10-06.md`  
+**Record commit:** `a214be879d23c8a25b76896d8803027ff25f1935`  
+**Workflow:** PostgreSQL Runtime Witness  
+**Workflow run:** `37468048851`  
+**Job:** `112283944840`  
+**Witness commit:** `47210a0500b583cc9ef9b1557df5577edcf5d6e9`  
+**SQL blob:** `127d93f100e3fedafcc6a45b6ab6c3ad9ef6478e`
+
+### Runtime result
+
+The previously missing PostgreSQL runtime witness has now been independently observed through GitHub Actions.
+
+- Isolated PostgreSQL service: **PostgreSQL 17.11**.
+- Exact SQL blob identity: **MATCH / PASS**.
+- Exact SQL draft execution with `ON_ERROR_STOP=1`: **PASS**.
+- Tables created: **26**.
+- Tables observed: **26 / 26 — PASS**.
+- Foreign keys observed: **17 / 17 — PASS**.
+- Workflow run: **SUCCESS**.
+- Job: **SUCCESS**.
+
+### What this establishes
+
+The exact SQL draft is syntactically/runtime executable against PostgreSQL 17.11 in the isolated witness environment, and its declared 26-table / 17-FK structural checks pass.
+
+### What this does NOT establish
+
+This witness does not establish migration safety, reversibility, RLS correctness, authorization correctness, legal compliance, production readiness, investor readiness, or production database deployment.
+
+No production database was touched.
+
+### Gate consequence
+
+The PostgreSQL runtime evidence gate is now **PASS**.
+
+The migration gate remains **HOLD** pending:
+
+1. migration transaction/reversibility review;
+2. final nullability/default review;
+3. indexes/uniqueness review;
+4. RLS/access review;
+5. authorized non-production migration dry run;
+6. explicit migration authorization;
+7. post-migration runtime witness.
+
+**Decision:** PostgreSQL Runtime Witness — **PASS**.  
+**AuthorityLevel:** NONE beyond the evidence recorded.
