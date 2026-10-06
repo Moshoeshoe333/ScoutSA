@@ -40,8 +40,8 @@ ScoutSA begins in the **Vaal Triangle**, with expansion intended through Sediben
 ## Current Gate Status — 6 October 2026
 
 **Gate 1: CLOSED**  
-**Gate 2: OPEN — Relationship Model / ERD**  
-**ERD: HOLD** · **Schema: HOLD** · **Implementation: DEFERRED**
+**Gate 2: CLOSED AT CONCEPTUAL LEVEL**  
+**Conceptual ERD: FROZEN** · **Schema: HOLD** · **Implementation: DEFERRED**
 
 Three additional semantic concepts have been explicitly ratified through Gate 2 adversarial work:
 
@@ -49,19 +49,19 @@ Three additional semantic concepts have been explicitly ratified through Gate 2 
 - **Safeguarding Case / Response**
 - **Child Participation / Voice Record**
 
-The remaining Gate 2 work is primarily about **relationship/cardinality, authorization process, lifecycle, correction/dispute, and access-policy decisions**. No additional semantic entity is currently warranted.
+The remaining relationship/cardinality, authorization-process, lifecycle, correction/dispute, access, retention, and legal questions are explicitly carried forward rather than hidden in the ERD. No additional semantic entity is currently warranted.
 
 See the canonical current status: **[Gate Status](docs/00-gate-status.md)**.
 
-### Gate 2 remaining seams
+### Gate 2 carry-forward decisions
 
 | Seam | Status |
 |---|---|
-| G2-01 User ↔ Player | Hold — cardinality/delegation |
-| G2-02 User ↔ actors / Organization | Hold — affiliation/authorization |
-| G2-03 GuardianLink ↔ ConsentRecord | Hold — conflict/authoriser/applicability |
-| G2-07 OpportunityApplication | Hold — participants/lifecycle |
-| G2-08 Outcome | Hold — multiplicity/correction/dispute |
+| G2-01 User ↔ Player | Operational policy — cardinality/delegation |
+| G2-02 User ↔ actors / Organization | Operational/legal — affiliation/authorization |
+| G2-03 GuardianLink ↔ ConsentRecord | Legal/operational — conflict/authoriser/applicability |
+| G2-07 OpportunityApplication | Operational policy — participants/lifecycle |
+| G2-08 Outcome | Operational/legal — multiplicity/correction/dispute/access |
 
 ### Repository Principle
 
@@ -102,4 +102,4 @@ The `docs/research/` directory contains Gate witnesses, re-witnesses, ratificati
 
 The objective is not documentation for its own sake. The objective is to make the eventual MVP **smaller, safer, and derivable** from ratified domain and relationship decisions.
 
-Before implementation, ScoutSA will explicitly freeze the MVP boundary and verify that the implementation can proceed without hidden semantic assumptions.
+**Next phase: MVP Boundary Freeze.** The frozen conceptual relationship model will be reduced to the smallest MVP scope and explicit non-scope before schema or implementation work begins.
