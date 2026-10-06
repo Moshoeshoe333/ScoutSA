@@ -150,3 +150,59 @@ Once Gate 2 relationship integrity is sufficiently stable, the next authorized a
 ## 11. Evidence rule
 
 > **Strength of claim must never exceed strength of evidence.**
+
+
+## 12. Current controlled state — reconciled 2026-10-06
+
+The earlier Gate 2 → MVP wording above is historical and must not be read as the current next step. Subsequent ratified/frozen work has advanced the repository to the SQL schema draft boundary.
+
+### Current state
+
+| Control | State |
+|---|---|
+| Gate 1 | **CLOSED** |
+| Gate 2 | **CLOSED — CONCEPTUAL LEVEL** |
+| Conceptual ERD | **FROZEN** |
+| MVP Boundary | **RATIFIED** |
+| MVP Relationship Subset | **FROZEN** |
+| Implementation Prerequisites | **RATIFIED** |
+| Schema Boundary | **FROZEN** |
+| Physical Table Boundary | **FROZEN** |
+| SQL Schema | **DRAFT / REVIEWED** |
+| SQL Static Witness | **PASS WITH RUNTIME HOLD** |
+| SQL ↔ Field/Constraint Reconciliation | **PASS** |
+| PostgreSQL Runtime Witness | **UNAVAILABLE / NOT TESTED** |
+| Migration-Safety Design | **DEFINED / EXECUTION HOLD** |
+| Migration-Safety Review | **HOLD** |
+| Migration / Database | **HOLD** |
+| RLS | **HOLD** |
+| API | **HOLD** |
+| UI | **HOLD** |
+| Production Implementation | **HOLD** |
+| Future Collaborator Lead | **RECORDED / NOT VERIFIED** |
+
+### Authoritative next sequence
+
+```
+SQL draft
+   ↓
+Static witness                         PASS
+   ↓
+SQL ↔ Field/Constraint reconciliation PASS
+   ↓
+PostgreSQL syntax/runtime witness     REQUIRED
+   ↓
+Migration-safety review               HOLD until runtime evidence
+   ↓
+Explicit migration authorization      REQUIRED
+   ↓
+Authorized non-production migration   ONLY AFTER AUTHORIZATION
+   ↓
+Post-migration runtime witness        REQUIRED
+```
+
+The repository must not manufacture PostgreSQL evidence. The missing runtime witness is an environmental limitation, not a passing or failing SQL execution result.
+
+Until actual PostgreSQL-capable execution evidence exists, work may continue only on non-execution controls such as provenance, traceability, acceptance criteria, collaborator planning, or other artifacts that do not imply runtime validation.
+
+**Authority boundary:** NONE beyond the evidence actually recorded above.
