@@ -95,7 +95,7 @@ OpportunityApplication is semantically sufficient; operational lifecycle remains
 | Correction/version/supersession semantics? | **DEFER AS OPERATIONAL POLICY** |
 | Dispute lifecycle/participants? | **DEFER AS OPERATIONAL POLICY** |
 | Placement/registration treatment? | **DEFER AS OPERATIONAL POLICY** |
-| Access/retention? | **DEFER AS LEGAL/JURISDICTIONAL + OPERATIONAL POLICY** |
+| Access/retention? | **DEFER AS LEGAL/JURISDICTIONAL** |
 | Technical history structures? | **IMPLEMENTATION DETAIL — AFTER ERD** |
 
 Outcome is semantically sufficient; remaining questions concern exact relationship and lifecycle semantics and are explicitly carried forward under the classifications above.
