@@ -1138,3 +1138,48 @@ The ratified concept closes the witnessed semantic gap without creating truth-by
 **Implementation:** DEFERRED.
 
 Next authorized work: continue adversarial interrogation of the next Gate 2 seam. Do not freeze the ERD until all required seams are resolved.
+
+## 10.27 Gate 2 G2-SEAM-05 — Safeguarding Response Governance Stop — 2026-10-06
+
+**Governance re-witness:** `docs/research/gate-2-safeguarding-response-governance-rewitness-2026-10-06.md`  
+**Commit:** 3e5146a180a5c0be91a47795da5b4a4b5d390058
+
+G2-SEAM-05 was adversarially interrogated after G2-SEAM-04 Assertion ratification.
+
+### Finding
+
+Gate 1 already ratified the distinctions between:
+
+- Concern / Report
+- Finding / Substantiation
+- Protective Action
+- Investigation Outcome
+- Final Resolution
+
+The current domain also contains AuditEvent, Evidence, Verification, and the relevant actor/organization relationships.
+
+However, **AuditEvent is not sufficient to represent the substantive safeguarding response lifecycle**. It records system accountability, not the domain process itself.
+
+A first-class **Safeguarding Case/Response** concept is therefore warranted as a **candidate**, but it is NOT RATIFIED.
+
+### Required boundaries
+
+The candidate must not collapse:
+
+- allegation into guilt;
+- report into finding;
+- protective action into guilt;
+- verification into safeguarding clearance;
+- one report into permanent exclusion;
+- AI into safeguarding adjudication;
+- disclosure into public permission.
+
+### Gate consequence
+
+**G2-SEAM-05:** GOVERNANCE STOP  
+**Gate 2:** OPEN  
+**ERD:** HOLD  
+**Schema:** HOLD  
+**Implementation:** DEFERRED
+
+Next authorized action: governance review / explicit ratification decision for the candidate Safeguarding Case/Response concept.
