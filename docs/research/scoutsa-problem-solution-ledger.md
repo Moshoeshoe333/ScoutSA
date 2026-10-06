@@ -1302,3 +1302,48 @@ IMPLEMENTATION: DEFERRED
 ```
 
 Next authorized seam: **G2-SEAM-07 — OpportunityApplication participant/state structure.**
+
+
+## 10.31 Gate 2 G2-SEAM-07 — OpportunityApplication Semantic Sufficiency — 2026-10-06
+
+**Re-witness:** `docs/research/gate-2-opportunity-application-governance-rewitness-2026-10-06.md`  
+**Commit:** `76b62c36d1ba8011a307d8e5bd7a067da9a570c1`
+
+G2-SEAM-07 was adversarially interrogated.
+
+### Finding
+
+The existing OpportunityApplication concept is semantically sufficient. No missing first-class domain entity was exposed.
+
+Confirmed boundaries:
+
+- application subject = Player + Opportunity;
+- initiating actor does not gain universal Player authority;
+- responding actor does not gain unrelated data authority;
+- Guardian participation does not replace GuardianLink/ConsentRecord semantics;
+- child voice remains separate;
+- application state does not establish truth, football ability, safeguarding clearance, placement, or success;
+- APPROVED ≠ PLACEMENT;
+- DECLINED/EXPIRED ≠ generalized player rejection;
+- ConsentRecord remains purpose-bound;
+- OpportunityReadiness remains derived;
+- Outcome remains distinct;
+- AuditEvent does not replace Application.
+
+### Remaining hold
+
+Exact participant cardinality, actor authorization, state taxonomy, withdrawal/cancellation, invitation semantics, correction/dispute, notification/access, and contextual child-participation effects remain unresolved before ERD/schema freeze.
+
+**No new semantic ratification required.**
+
+### Gate consequence
+
+```
+G2-SEAM-07: SEMANTICALLY SUFFICIENT / DOMAIN-OPERATIONAL HOLD
+GATE 2: OPEN
+ERD: HOLD
+SCHEMA: HOLD
+IMPLEMENTATION: DEFERRED
+```
+
+Next authorized seam: **G2-SEAM-08 — Outcome multiplicity and correction/dispute structure.**
