@@ -40,7 +40,7 @@ Player
  ├── MedicalClearance
  ├── TransportProfile
  ├── Child Participation / Voice Record
- ├── Safeguarding Case / Response
+ ├── Safeguarding Case / Response                              [defined subject]
  ├── FootballReadiness              [derived]
  ├── OpportunityReadiness           [derived]
  ├── OpportunityApplication ───────→ Opportunity
@@ -70,7 +70,7 @@ Assertion
  └── evaluated by ─────────────────→ Verification                         [scoped]
 
 Safeguarding Case / Response
- ├── concerns ─────────────────────→ defined safeguarding matter
+ ├── concerns ─────────────────────→ defined safeguarding matter/subject
  ├── preserves ────────────────────→ concern/report, response states,
  │                                    findings where applicable,
  │                                    investigation outcome,
@@ -79,7 +79,7 @@ Safeguarding Case / Response
 
 Child Participation / Voice Record
  ├── concerns ─────────────────────→ defined matter/context
- ├── expressed by ─────────────────→ Child/Player
+ ├── expressed by ─────────────────→ Child/Player where applicable
  └── remains distinct from ────────→ Guardian authority / Consent / Decision
 
 AuditEvent
@@ -320,3 +320,42 @@ This draft does not establish:
 - investor readiness.
 
 **No implementation is authorized by this document.**
+
+
+## 12. Adversarial ERD review — 2026-10-06
+
+### Review result
+
+**CONDITIONAL PASS — one scope correction applied before review closure.**
+
+The first draft risked reading Safeguarding Case/Response as inherently Player-owned because the relationship map placed it beneath Player. That would overconstrain the domain: the ratified concept concerns a defined safeguarding matter/subject and must not assume the subject is always a Player.
+
+The draft has therefore been corrected to preserve a **defined subject/actor relationship** rather than a Player-only ownership assumption.
+
+### Review checks
+
+| Check | Result | Finding |
+|---|---|---|
+| First-class domain concepts | PASS | All currently established concepts are represented. |
+| Ratified semantic boundaries | PASS | M1–M9 plus Assertion, Safeguarding Case/Response, and Child Voice boundaries are preserved. |
+| User ↔ Player | PASS | Cardinality/delegation remain OPEN; no invented access entity. |
+| User ↔ roles/Organization | PASS | No role-implied universal authority or permanent organization shortcut. |
+| GuardianLink ↔ ConsentRecord | PASS WITH EVIDENCE NOTE | Relationship remains OPEN; no precedence invented. G2-03 repository witness remains an evidence gap. |
+| Assertion ↔ Evidence/Verification | PASS | Relationships remain scoped and non-equivalent to truth. |
+| OpportunityApplication | PASS | Player + Opportunity subject retained; participants/lifecycle remain OPEN. |
+| Outcome | PASS | Application relationship and multiplicity remain OPEN; no placement/ranking inference. |
+| Safeguarding | PASS AFTER CORRECTION | Case/Response is not forced to be Player-owned; operational authority/lifecycle/visibility remain OPEN. |
+| Child Voice | PASS | Voice remains separate from Guardian authority, Consent, and final decision. |
+| Derived readiness | PASS | FootballReadiness and OpportunityReadiness remain derived, not source-of-truth. |
+| Historical/provenance | PASS | Correction/dispute/history boundaries are preserved. |
+| Disclosure | PASS | Discoverability is not treated as republication permission. |
+| Technical leakage | PASS | No schema, key, RLS, API, UI, storage, or implementation rule is introduced. |
+| Missing semantic concept test | PASS | No new first-class semantic concept exposed by this ERD review. |
+
+### Review disposition
+
+**Conceptual ERD draft: ADMISSIBLE FOR CONSOLIDATED RELATIONSHIP REVIEW / NOT FROZEN.**
+
+The review does not close Gate 2. The remaining OPEN decisions remain exactly the relationship/operational/legal-policy seams already identified.
+
+**No implementation authorization is created.**
