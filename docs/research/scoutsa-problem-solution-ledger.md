@@ -2207,3 +2207,43 @@ Required before implementation:
 8. explicit implementation authorization.
 
 No production database or application data is authorized.
+
+
+## 10.52 — MVP Access-Policy Decision Matrix — 2026-10-06
+
+Artifact: docs/research/mvp-access-policy-decision-matrix-2026-10-06.md
+Commit: be583b62479c9292b6d11d45565dcb2752388291
+
+Decision: SEMANTICALLY COMPLETE / POLICY-LEGAL RATIFICATION REQUIRED.
+
+The matrix introduces four controlled classifications: ALLOW, DENY, CONDITIONAL, HOLD. Unresolved policy/legal questions are not converted into permissions.
+
+Covered resources: Player identity, Assertion, Evidence, Verification, ConsentRecord, Media, AcademicProfile, MedicalClearance, TransportProfile, Opportunity, OpportunityApplication, Outcome, Child Participation/Voice, Safeguarding Case/Response and AuditEvent.
+
+Protected/accountability access was deliberately tightened to CONDITIONAL rather than treated as universal authorization.
+
+No legal Guardian precedence, child-capacity rule, safeguarding finding, consent-validity rule, republication permission, or universal role authority was invented.
+
+RLS implementation remains NOT AUTHORIZED.
+
+
+## 10.53 — MVP Access-Policy Matrix Adversarial Review — 2026-10-06
+
+Artifact: docs/research/mvp-access-policy-decision-matrix-adversarial-review-2026-10-06.md
+Commit: b7189aedc2660e3d364fdb05d28b40a1332c1605
+
+Adversarial review: PASS WITH POLICY-LEGAL HOLDS.
+
+Existence: PASS.
+Coherence: PASS.
+Failure containment: PASS.
+
+The review confirmed preservation of USER ≠ PLAYER, ROLE ≠ UNIVERSAL AUTHORITY, MEMBERSHIP ≠ OWNERSHIP, ASSERTION ≠ EVIDENCE, VERIFICATION ≠ SAFEGUARDING CLEARANCE, CHILD VOICE ≠ FINAL DECISION, DISCOVERABLE ≠ REPUBLISHABLE, and HISTORICAL AUTHORIZATION ≠ CURRENT ACCESS.
+
+The review also recorded and corrected the initial over-broad Protected/Accountability ALLOW classification to CONDITIONAL.
+
+Remaining holds include identity/delegation, organization authority, Guardian conflict, application transitions, outcome correction/dispute, child-voice effects, safeguarding procedure, public-field disclosure, protected/minor-data access, retention/deletion and republication.
+
+RLS implementation: NOT AUTHORIZED.
+Migration: HOLD.
+Production database: HOLD.
