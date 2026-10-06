@@ -1517,3 +1517,49 @@ IMPLEMENTATION: DEFERRED
 ```
 
 Next authorized seam: **G2-SEAM-02 — User ↔ Guardian / Coach / Scout / Organization affiliation and authorization.**
+
+
+## 10.35 Gate 2 G2-SEAM-02 — User ↔ Guardian / Coach / Scout / Organization Re-Witness — 2026-10-06
+
+**Re-witness:** `docs/research/gate-2-user-actor-organization-affiliation-rewitness-2026-10-06.md`  
+**Commit:** `a6d0ec29b970af790ebc24a223e72d6c7eb18fe9`
+
+### Finding
+
+G2-SEAM-02 was adversarially re-witnessed. The semantic boundary is stable: User identity remains distinct from Guardian/Coach/Scout role semantics and from Organization affiliation. Role or affiliation does not create universal authority or verification.
+
+Guardian authority remains Player-specific through GuardianLink. Organization affiliation may require temporal/history semantics when it affects authority-bearing assertions or actions.
+
+No additional first-class semantic concept is currently warranted.
+
+### Unresolved domain / operational decisions
+
+- exact actor-role multiplicity;
+- exact User ↔ Organization affiliation/cardinality;
+- exact organization authorization and verification process.
+
+Common technical structures such as OrganizationMembership, RoleAssignment, OrganizationAffiliation, or ActorAuthorization must not be invented in the conceptual ERD merely because they are familiar implementation patterns.
+
+### Disposition
+
+- G2-02A User identity distinct from actor-role semantics: **RATIFIED / EXISTING BOUNDARY**.
+- G2-02B Role assignment ≠ verification: **RATIFIED / EXISTING BOUNDARY**.
+- G2-02C Organization affiliation distinct from User identity: **DERIVABLE / SAFE**.
+- G2-02D Guardian relationship remains Player-specific through GuardianLink: **DERIVABLE / SAFE**.
+- G2-02E Exact actor-role multiplicity: **OPEN — DOMAIN DECISION REQUIRED**.
+- G2-02F Exact User ↔ Organization affiliation/cardinality: **OPEN — DOMAIN / OPERATIONAL DECISION REQUIRED**.
+- G2-02G Exact organization authorization/verification process: **OPEN — OPERATIONAL / LEGAL DECISION REQUIRED**.
+- G2-02H Role or affiliation creates universal authority: **REJECTED**.
+
+### Gate consequence
+
+No new semantic amendment is warranted. No permanent user.organization_id, role-implied authority, or universal organization access rule is frozen. No new conceptual authorization entity is invented.
+
+G2-SEAM-02: **SEMANTICALLY STABLE / AFFILIATION-AUTHORIZATION HOLD**  
+GATE 2: **OPEN**  
+ERD: **HOLD**  
+SCHEMA: **HOLD**  
+RLS/API/UI: **DEFERRED**  
+IMPLEMENTATION: **DEFERRED**
+
+Next authorized seam: **G2-SEAM-03 — GuardianLink ↔ ConsentRecord operational authority.**
