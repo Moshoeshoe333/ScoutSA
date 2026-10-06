@@ -107,23 +107,40 @@ Historical relationships must preserve provenance.
 11. Derived states never replace their underlying records.
 12. Technical relationship keys, if later implemented, do not themselves establish legal authority or truth.
 
-## 6. Gate 2 Seams — Not Yet Frozen
+## 6. Gate 2 Seams — Current Status
 
-The following require explicit resolution before schema work:
+Gate 2 seam interrogation has now completed across G2-SEAM-01 through G2-SEAM-08. The current state is:
 
-- exact User ↔ Player cardinality;
-- User ↔ Guardian relationship;
-- User ↔ Coach / Organization affiliation;
-- User ↔ Scout / Organization affiliation;
-- whether GuardianLink authority scopes require a separate authorization concept;
-- exact Claim/Assertion representation relative to Evidence;
-- safeguarding response relationship/state structure;
-- child participation / objection / assent / decision relationship;
-- OpportunityApplication participant and state structure;
-- Outcome multiplicity and correction/dispute structure.
+| Seam | State | Remaining work |
+|---|---|---|
+| G2-SEAM-01 User ↔ Player | **SEMANTICALLY STABLE / HOLD** | cardinality; delegated/shared access |
+| G2-SEAM-02 User ↔ actors / Organization | **SEMANTICALLY STABLE / HOLD** | actor multiplicity; affiliation; authorization |
+| G2-SEAM-03 GuardianLink ↔ ConsentRecord | **SEMANTICALLY STABLE / HOLD** | authoriser identity; conflict effect; applicability |
+| G2-SEAM-04 Assertion ↔ Evidence | **CLOSED** | technical relationship detail only |
+| G2-SEAM-05 Safeguarding Case / Response | **CLOSED** | operational representation only |
+| G2-SEAM-06 Child Participation / Voice | **CLOSED** | contextual effects only |
+| G2-SEAM-07 OpportunityApplication | **SUFFICIENT / HOLD** | participants; lifecycle; transition authority |
+| G2-SEAM-08 Outcome | **SUFFICIENT / HOLD** | multiplicity; correction; dispute; supersession; access |
+
+### Gate 2 control
+
+The remaining items are relationship/cardinality, authorization-process, lifecycle, correction/dispute, and access-policy decisions. No additional first-class semantic concept is currently warranted.
+
+The following remain deliberately unresolved:
+
+- exact User ↔ Player cardinality and delegated/shared access;
+- actor multiplicity and User ↔ Organization affiliation/authorization;
+- GuardianLink ↔ ConsentRecord conflict and authoriser applicability;
+- OpportunityApplication participants and lifecycle/transition authority;
+- Outcome multiplicity, correction/supersession, dispute, placement treatment, and access/retention.
 
 These are **deferred decisions, not hidden assumptions**.
 
+If a remaining relationship seam exposes a genuinely missing semantic concept:
+
+> STOP → GOVERNANCE REVIEW → RE-WITNESS → RATIFY IF REQUIRED → DOMAIN RECONCILIATION → RELATIONSHIP MODEL UPDATE
+
+No schema, RLS, API, UI, or implementation behavior may be derived from an unresolved assumption.
 
 
 ## 6.1 Adversarial Seam A — User ↔ Player / Actor Identity
