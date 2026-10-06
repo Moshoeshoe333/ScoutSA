@@ -1769,3 +1769,77 @@ G2-SEAM-03 (GuardianLink ↔ ConsentRecord) remains an explicit repository evide
 
 Before relationship freeze, resolve or explicitly carry forward the remaining OPEN Gate 2 decisions. Do not allow the ERD to become a backdoor for technical implementation or invented authority.
 
+
+
+## 10.40 Gate 2 — Final Conceptual Relationship Freeze — 2026-10-06
+
+**Review:** `docs/research/gate-2-final-conceptual-relationship-freeze-review-2026-10-06.md`  
+**Commit:** `2561afcd9b7cfd1ad60e88f98272d4fabedbe0d7`
+
+### Final test
+
+The five remaining Gate 2 seam families were tested against one question:
+
+> Does any remaining relationship decision force a hidden semantic assumption into the conceptual ERD?
+
+**Answer: NO.**
+
+The remaining items can remain explicit OPEN/DEFERRED boundaries without changing the ratified semantic ontology.
+
+### Five-way classification control
+
+Every remaining question is now assigned exactly one of:
+
+- RATIFY;
+- DEFER AS OPERATIONAL POLICY;
+- DEFER AS LEGAL/JURISDICTIONAL;
+- REJECT;
+- IMPLEMENTATION DETAIL — AFTER ERD.
+
+The Outcome access/retention item was corrected to a single classification: **DEFER AS LEGAL/JURISDICTIONAL**.
+
+### 33×3
+
+```
+Existence:           PASS
+Coherence:           PASS
+Failure containment: PASS
+```
+
+### Gate decision
+
+```
+Gate 2 — Semantic Relationship Integrity: CLOSED AT CONCEPTUAL LEVEL
+Conceptual ERD: FROZEN
+Schema: HOLD
+RLS/API/UI: DEFERRED
+Implementation: DEFERRED
+Compliance claim: NONE
+Investor-ready claim: NONE
+```
+
+This is a narrow conceptual closure. It does not resolve deferred cardinality, authority-process, lifecycle, correction/dispute, access, retention, or legal questions.
+
+### Evidence boundary
+
+G2-SEAM-03 retains an explicit repository evidence-completeness note: the dedicated re-witness artifact was previously blocked from commit. The semantic conclusion is not promoted into a claim of complete repository evidence for that seam.
+
+### Authorized next phase
+
+**MVP BOUNDARY FREEZE**
+
+```
+Frozen Conceptual ERD
+        ↓
+MVP scope + explicit non-scope
+        ↓
+Operational / legal carry-forward
+        ↓
+MVP relationship subset
+        ↓
+Schema
+        ↓
+Implementation
+```
+
+No implementation is authorized merely because Gate 2 is conceptually closed.
