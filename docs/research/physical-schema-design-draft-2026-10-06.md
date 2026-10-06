@@ -125,3 +125,74 @@ Before physical schema freeze, create a **Field/Constraint Decision Matrix** map
 9. acceptance test/evidence.
 
 **No SQL or migration is authorized by this review.**
+
+
+# Physical Schema Freeze Review — 2026-10-06
+
+**Decision:** PASS — PHYSICAL SCHEMA CONCEPTUAL STRUCTURE FROZEN; SQL IMPLEMENTATION STILL CONTROLLED
+
+## Traceability
+
+Every candidate table in this draft is traceable to the frozen conceptual ERD and the Field/Constraint Decision Matrix.
+
+### Frozen table boundary
+
+```text
+users
+players
+guardians
+guardian_links
+coaches
+scouts
+organizations
+memberships
+assertions
+evidence
+verifications
+consent_records
+media
+season_performances
+academic_profiles
+medical_clearances
+transport_profiles
+opportunities
+opportunity_applications
+outcomes
+child_participation_voice_records
+safeguarding_cases
+safeguarding_responses
+football_readiness
+opportunity_readiness
+audit_events
+```
+
+## Freeze tests
+
+- Concept-to-table traceability: PASS
+- MVP relationship traceability: PASS
+- Field/constraint matrix traceability: PASS
+- M1–M9 preservation: PASS
+- No hidden authority: PASS
+- No hidden legal conclusion: PASS
+- No forbidden scope expansion: PASS
+- Derived-state isolation: PASS
+- Provenance preservation: PASS
+- Conditional-data containment: PASS
+- 33×3: PASS / PASS / PASS
+
+## Important boundary
+
+This freezes the **conceptual physical table boundary**, not the final SQL.
+
+Still unresolved and therefore not frozen:
+- exact foreign keys/cardinalities where policy-dependent;
+- RLS/access policies;
+- authorization mechanics;
+- retention/deletion jobs;
+- exact physical types and indexes where they encode policy;
+- migration sequencing;
+- authentication/storage provider;
+- API contracts;
+- UI behavior.
+
+**Next authorized artifact:** SQL/schema implementation draft, with every constraint explicitly traced to an already-frozen decision.
