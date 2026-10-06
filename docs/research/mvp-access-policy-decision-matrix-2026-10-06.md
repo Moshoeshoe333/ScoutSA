@@ -52,21 +52,21 @@ These are contexts, not universal roles.
 
 | Resource | Self / Player | Scoped Guardian | Organization / Opportunity | Public Discovery | Protected / Accountability |
 |---|---|---|---|---|---|
-| Player identity | CONDITIONAL | CONDITIONAL | CONDITIONAL | CONDITIONAL | ALLOW |
-| Assertions | CONDITIONAL | CONDITIONAL | CONDITIONAL | DENY | ALLOW |
-| Evidence | CONDITIONAL | CONDITIONAL | CONDITIONAL | DENY | ALLOW |
-| Verification | CONDITIONAL | CONDITIONAL | CONDITIONAL | CONDITIONAL | ALLOW |
-| ConsentRecord | DENY by default | CONDITIONAL | CONDITIONAL | DENY | ALLOW |
-| Media | CONDITIONAL | CONDITIONAL | CONDITIONAL | CONDITIONAL | ALLOW |
-| AcademicProfile | DENY by default | CONDITIONAL | CONDITIONAL | DENY | ALLOW |
-| MedicalClearance | DENY by default | CONDITIONAL | CONDITIONAL | DENY | ALLOW |
-| TransportProfile | CONDITIONAL | CONDITIONAL | CONDITIONAL | DENY | ALLOW |
-| Opportunity | ALLOW where published | CONDITIONAL | CONDITIONAL | CONDITIONAL | ALLOW |
-| OpportunityApplication | CONDITIONAL | CONDITIONAL | CONDITIONAL | DENY | ALLOW |
-| Outcome | CONDITIONAL | CONDITIONAL | CONDITIONAL | DENY | ALLOW |
-| Child Participation / Voice | CONDITIONAL | CONDITIONAL | HOLD | DENY | ALLOW |
-| Safeguarding Case / Response | DENY by default | HOLD | HOLD | DENY | ALLOW |
-| AuditEvent | DENY | DENY | DENY | DENY | ALLOW |
+| Player identity | CONDITIONAL | CONDITIONAL | CONDITIONAL | CONDITIONAL | CONDITIONAL |
+| Assertions | CONDITIONAL | CONDITIONAL | CONDITIONAL | DENY | CONDITIONAL |
+| Evidence | CONDITIONAL | CONDITIONAL | CONDITIONAL | DENY | CONDITIONAL |
+| Verification | CONDITIONAL | CONDITIONAL | CONDITIONAL | CONDITIONAL | CONDITIONAL |
+| ConsentRecord | DENY by default | CONDITIONAL | CONDITIONAL | DENY | CONDITIONAL |
+| Media | CONDITIONAL | CONDITIONAL | CONDITIONAL | CONDITIONAL | CONDITIONAL |
+| AcademicProfile | DENY by default | CONDITIONAL | CONDITIONAL | DENY | CONDITIONAL |
+| MedicalClearance | DENY by default | CONDITIONAL | CONDITIONAL | DENY | CONDITIONAL |
+| TransportProfile | CONDITIONAL | CONDITIONAL | CONDITIONAL | DENY | CONDITIONAL |
+| Opportunity | ALLOW where published | CONDITIONAL | CONDITIONAL | CONDITIONAL | CONDITIONAL |
+| OpportunityApplication | CONDITIONAL | CONDITIONAL | CONDITIONAL | DENY | CONDITIONAL |
+| Outcome | CONDITIONAL | CONDITIONAL | CONDITIONAL | DENY | CONDITIONAL |
+| Child Participation / Voice | CONDITIONAL | CONDITIONAL | HOLD | DENY | CONDITIONAL |
+| Safeguarding Case / Response | DENY by default | HOLD | HOLD | DENY | CONDITIONAL |
+| AuditEvent | DENY | DENY | DENY | DENY | CONDITIONAL |
 
 The terms applicable, approved, authorized, and purpose-limited remain unresolved policy/legal inputs where indicated. They are not permissions created by this table.
 
@@ -154,7 +154,7 @@ The record preserves a child's expressed view without making it automatically co
 ### Safeguarding Case / Response
 Baseline: highly restricted.
 
-Public discovery: DENY. Guardian and Organization access remains HOLD unless an applicable safeguarding procedure, responsible authority and disclosure rule have been explicitly established. Protected/accountability access is ALLOW only for an appropriately authorized safeguarding/accountability process.
+Public discovery: DENY. Guardian and Organization access remains HOLD unless an applicable safeguarding procedure, responsible authority and disclosure rule have been explicitly established. Protected/accountability access is CONDITIONAL and only for an appropriately authorized safeguarding/accountability process.
 
 The record must not be treated as proof of guilt, safeguarding clearance, legal finding, or automatic exclusion.
 
