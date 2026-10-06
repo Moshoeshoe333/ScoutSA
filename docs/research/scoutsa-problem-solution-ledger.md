@@ -2149,3 +2149,23 @@ No production migration, hosted database, production credentials, RLS policy, or
 
 **Decision:** Migration-safety review — **CONDITIONAL PASS / EXECUTION HOLD**.  
 **AuthorityLevel:** NONE beyond the evidence recorded.
+
+
+## 10.50 — Nullability / Defaults / Index / Uniqueness Review — 2026-10-06
+
+**Artifact:** `docs/research/nullability-default-index-uniqueness-review-2026-10-06.md`  
+**Commit:** `d614d971e7537b73aa0d3137089cb2f354b030f8`
+
+**Decision:** **PASS WITH POLICY HOLDS**
+
+- Structural primary keys and required relationship keys remain safe.
+- No semantic defaults are authorized.
+- Existing 17 foreign keys are structurally valid and runtime-witnessed.
+- Business uniqueness constraints remain HOLD because multiplicity/lifecycle decisions remain open.
+- Additional indexes remain HOLD pending approved access/workflow patterns.
+- Lifecycle CHECK constraints remain HOLD while status vocabularies remain operationally open.
+- Policy-sensitive nullability must not be tightened merely for technical convenience.
+
+**Next controlled gate:** RLS / access / disclosure review.
+
+No production database or application data is authorized.
