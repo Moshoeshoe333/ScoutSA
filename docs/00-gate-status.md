@@ -1,6 +1,6 @@
 # ScoutSA Gate Status — 2026-10-06
 
-**Current phase:** MVP Boundary Freeze  
+**Current phase:** MVP Relationship Subset Freeze  
 **Gate 1:** CLOSED  
 **Gate 2:** CLOSED AT CONCEPTUAL LEVEL  
 **Conceptual ERD:** FROZEN  
@@ -109,17 +109,16 @@ This closure does not resolve deferred cardinality, authority-process, lifecycle
 
 G2-SEAM-03 retains an evidence-completeness note: its dedicated re-witness artifact was previously blocked from commit. No claim of complete repository evidence for that seam is made.
 
-## 8. Next gate — MVP Boundary Freeze
+## 8. Next gate — MVP Relationship Subset Freeze
 
-The next authorized work is to define the smallest evidence-backed product surface that can be implemented without reopening the ratified semantic baseline.
+The MVP boundary has been explicitly ratified. The next authorized work is to derive the smallest MVP relationship subset strictly from the frozen conceptual ERD, without reopening the ratified semantic baseline.
 
 Required sequence:
 
-1. MVP scope and explicit non-scope.
-2. MVP relationship subset from the frozen conceptual model.
+1. MVP relationship subset from the frozen conceptual model.
 3. Operational/legal carry-forward decisions required for that MVP.
 4. Implementation prerequisites and evidence requirements.
-5. Only after MVP boundary freeze: schema and implementation.
+5. Only after MVP relationship subset and implementation prerequisites are frozen: schema and implementation.
 
 
 
