@@ -1467,3 +1467,53 @@ IMPLEMENTATION: DEFERRED
 Only after these are explicitly resolved should the conceptual ERD be drafted and adversarially reviewed.
 
 **No implementation is authorized by this consolidation.**
+
+
+## 10.34 Gate 2 G2-SEAM-01 — User ↔ Player Identity / Cardinality Re-Witness — 2026-10-06
+
+**Re-witness:** `docs/research/gate-2-user-player-cardinality-rewitness-2026-10-06.md`  
+**Commit:** `4136594a16e7724fe66cc1e8deeb8cfbae6365af`
+
+### Finding
+
+G2-SEAM-01 was adversarially re-witnessed against the ratified Constitution, Domain Model, Player Passport semantics, and existing Gate 2 relationship boundaries.
+
+The semantic boundary is stable:
+
+- USER ≠ PLAYER;
+- Player may exist without a User account;
+- User may exist without being a Player;
+- User role does not prove football identity;
+- account lifecycle does not automatically control Player lifecycle.
+
+No additional first-class semantic concept is currently warranted.
+
+### Unresolved domain decision
+
+The exact User ↔ Player cardinality remains **OPEN**. Strict one-to-one, optional one-to-one, one-to-many, and many-to-one each introduce assumptions that are not currently ratified.
+
+Delegated/shared Player access is likewise **OPEN**. If such access is required, its authority, lifecycle, provenance, and scope must be explicitly defined before an access/delegation concept is introduced into the ERD.
+
+### Disposition
+
+- G2-01A USER ≠ PLAYER: **RATIFIED / EXISTING BOUNDARY**.
+- G2-01B Player may exist without User: **DERIVABLE / SAFE**.
+- G2-01C User may exist without Player: **DERIVABLE / SAFE**.
+- G2-01D Exact cardinality: **OPEN — DOMAIN DECISION REQUIRED**.
+- G2-01E Delegated/shared access: **OPEN — DOMAIN + AUTHORIZATION DECISION REQUIRED**.
+- G2-01F Account lifecycle automatically controls Player lifecycle: **REJECTED / NOT ESTABLISHED**.
+
+### Gate consequence
+
+No ERD cardinality is frozen and no delegation/access entity is invented.
+
+```
+G2-SEAM-01: SEMANTICALLY STABLE / CARDINALITY HOLD
+GATE 2: OPEN
+ERD: HOLD
+SCHEMA: HOLD
+RLS/API/UI: DEFERRED
+IMPLEMENTATION: DEFERRED
+```
+
+Next authorized seam: **G2-SEAM-02 — User ↔ Guardian / Coach / Scout / Organization affiliation and authorization.**
