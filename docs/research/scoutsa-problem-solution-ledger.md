@@ -1843,3 +1843,15 @@ Implementation
 ```
 
 No implementation is authorized merely because Gate 2 is conceptually closed.
+
+
+## 10.42 — MVP Boundary → Physical Schema Draft — 2026-10-06
+
+- MVP implementation prerequisites explicitly ratified: commit `bd70952e54671bde7970d138a4691f1285d30458`.
+- Schema Boundary adversarial review passed and boundary frozen: commit `8846d7901919f56acd0d4a25ed20e1f2a107add2`.
+- Field/Constraint Decision Matrix adversarial review passed: commit `2dcbbf2b945ba53b330a3d041eceb749a6b809be`.
+- Physical table boundary frozen after traceability review: commit `692d01f102949602dbb0714e3e79e7b3410712dd`.
+- Traceable SQL schema draft created at `docs/research/scoutsa-schema-draft.sql`: commit `8f5dd03436122975747ab324c429cd0db0260a58`.
+- SQL is **DRAFT ONLY**; no migration has been run and no production implementation is claimed.
+- Unresolved legal/operational questions remain comments/holds rather than technical assumptions.
+- Next required witness: SQL draft syntax/traceability/adversarial review before any migration authorization.
