@@ -2169,3 +2169,41 @@ No production migration, hosted database, production credentials, RLS policy, or
 **Next controlled gate:** RLS / access / disclosure review.
 
 No production database or application data is authorized.
+
+
+## 10.51 — RLS / Access / Disclosure Boundary Review — 2026-10-06
+
+**Artifact:** `docs/research/rls-access-disclosure-boundary-review-2026-10-06.md`  
+**Commit:** `b4824159e1ece056c0d132f7038c7bcf5864fdd3`
+
+**Decision:** **CONDITIONAL PASS — POLICY / LEGAL INPUT REQUIRED BEFORE RLS IMPLEMENTATION**
+
+The semantic access boundary is sufficiently defined to prevent unsafe technical assumptions.
+
+Ratified technical principles:
+
+- default deny for protected data;
+- User ≠ automatic Player authority;
+- role ≠ universal authority;
+- membership ≠ ownership;
+- consent ≠ blanket database permission;
+- Assertion visibility ≠ Evidence visibility;
+- protected domains require narrower access;
+- current applicability matters;
+- audit records are not public surfaces;
+- RLS cannot decide legal guardian precedence, capacity, best interests, safeguarding guilt, lawful basis, or final dispute resolution.
+
+Production RLS remains **NOT AUTHORIZED**.
+
+Required before implementation:
+
+1. approved MVP access purposes and actors;
+2. legal/jurisdictional review for protected/minor data;
+3. predicate-to-authority mapping;
+4. correction/dispute effects;
+5. retention/deletion interaction;
+6. deny-by-default and cross-purpose leakage tests;
+7. non-production RLS tests;
+8. explicit implementation authorization.
+
+No production database or application data is authorized.
