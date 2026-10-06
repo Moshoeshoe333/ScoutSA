@@ -1612,3 +1612,66 @@ RLS/API/UI: **DEFERRED**
 IMPLEMENTATION: **DEFERRED**
 
 Next authorized seam: **G2-SEAM-08 — Outcome multiplicity / correction / dispute structure.**
+
+
+## 10.37 Gate 2 G2-SEAM-08 — Outcome Multiplicity / Correction / Dispute Re-Witness — 2026-10-06
+
+**Re-witness:** `docs/research/gate-2-outcome-correction-dispute-rewitness-2026-10-06.md`  
+**Commit:** `eef1dccc2ee2af4ed0d4384722370ff723d4acd2`
+
+### Finding
+
+Outcome remains semantically sufficient as a first-class domain concept. No additional semantic entity was exposed.
+
+The re-witness preserves these boundaries:
+
+- Outcome ≠ OpportunityApplication state;
+- Outcome ≠ truth;
+- Placement ≠ proof ScoutSA caused placement;
+- Outcome ≠ ranking/reputation;
+- correction does not silently erase history;
+- dispute ≠ proof of falsity;
+- contradictory outcome assertions remain attributable until applicable resolution;
+- Evidence supports an Outcome-related Assertion without automatically establishing truth;
+- Outcome visibility does not become public merely because a Player or Organization is discoverable;
+- historical Outcome ≠ current applicability.
+
+### Remaining relationship / operational decisions
+
+1. Exact Outcome multiplicity/cardinality relative to OpportunityApplication.
+2. Event-like versus composite-result representation.
+3. Precise Assertion ↔ Outcome relationship.
+4. Correction/version/supersession representation.
+5. Dispute lifecycle and authorized participants.
+6. Placement/registration treatment.
+7. Visibility/access policy.
+8. Retention/deletion policy.
+
+No technical OutcomeVersion, OutcomeDispute, OutcomeEvent, or StatusHistory concept is promoted into the domain merely for implementation convenience.
+
+### Disposition
+
+G2-08A Outcome first-class: **CONFIRMED**.  
+G2-08B Multiple Outcomes conceptually possible: **SAFE / DERIVABLE**.  
+G2-08C Outcome ≠ Application state: **RATIFIED / SAFE**.  
+G2-08D Correction preserves provenance: **RATIFIED / SAFE**.  
+G2-08E Dispute ≠ proof of falsity: **SAFE PRINCIPLE**.  
+G2-08F Contradictory outcome assertions remain attributable: **SAFE PRINCIPLE**.  
+G2-08G Outcome ≠ ranking/reputation: **RATIFIED / SAFE**.  
+G2-08H Exact multiplicity/cardinality: **OPEN — DOMAIN DECISION**.  
+G2-08I Correction/version/supersession: **OPEN — DOMAIN/OPERATIONAL DECISION**.  
+G2-08J Dispute lifecycle: **OPEN — OPERATIONAL DECISION**.  
+G2-08K Placement/registration treatment: **OPEN**.  
+G2-08L Access/retention: **OPEN — POLICY/LEGAL DECISION**.  
+G2-08M New semantic entity: **NOT WARRANTED**.
+
+### Gate consequence
+
+G2-SEAM-08: **SEMANTICALLY SUFFICIENT / RELATIONSHIP-OPERATIONAL HOLD**  
+GATE 2: **OPEN**  
+ERD: **HOLD**  
+SCHEMA: **HOLD**  
+RLS/API/UI: **DEFERRED**  
+IMPLEMENTATION: **DEFERRED**
+
+Next authorized action: **consolidated Gate 2 blocker review and decision package** for G2-01, G2-02, G2-03, G2-07, and G2-08.
