@@ -2315,3 +2315,21 @@ External feedback is evidence input, not automatic ratification. Material contra
 **Strategic decision:** freeze governance ritual at its current sufficient level and prioritize external validation before further internal expansion.
 
 **Implementation remains HOLD.**
+
+
+## 10.57 — F1–F3 SQL Amendment Runtime Witness — 2026-10-06
+
+Artifact: docs/research/postgresql-runtime-witness-f1-f3-amended-2026-10-06.md
+Commit: 323749142bf6033b3a4a80073fe00b9627652594
+
+The amended SQL blob `00f0dd0542f7f9a92447799f1452b26c513b06a5` was independently re-witnessed after F1–F3 changes.
+
+GitHub Actions run `37479429284`, job `112323365262`: SUCCESS.
+
+- exact amended SQL blob verification: PASS
+- PostgreSQL 17 runtime: PASS
+- exact SQL execution with ON_ERROR_STOP=1: PASS
+- 26 tables: PASS
+- 17 foreign keys: PASS
+
+This witness supersedes the previous runtime evidence for the amended SQL only. It remains non-production evidence and does not authorize migration, RLS or production use.
