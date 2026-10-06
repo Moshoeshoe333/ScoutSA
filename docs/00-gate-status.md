@@ -1,6 +1,6 @@
 # ScoutSA Gate Status — 2026-10-06
 
-**Current phase:** Schema Boundary Freeze  
+**Current phase:** SQL Schema Implementation Draft  
 **Gate 1:** CLOSED  
 **Gate 2:** CLOSED AT CONCEPTUAL LEVEL  
 **Conceptual ERD:** FROZEN  
@@ -120,7 +120,8 @@ Required sequence:
 4. Implementation prerequisites and evidence requirements.
 5. Schema Boundary Freeze.
 6. Only after schema boundary review/freeze: schema design.
-7. Implementation remains HOLD until schema and implementation evidence are ratified.
+7. SQL/schema implementation draft is permitted only as a traceable draft.
+8. Implementation remains HOLD until SQL/schema review and implementation evidence are ratified.
 
 
 
