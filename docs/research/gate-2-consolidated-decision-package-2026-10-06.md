@@ -4,7 +4,15 @@
 
 ## Decision rule
 
-Each open item is classified as RATIFY, DEFER AS OPERATIONAL POLICY, DEFER AS LEGAL/JURISDICTIONAL QUESTION, REJECT, or IMPLEMENTATION DETAIL — AFTER ERD.
+Every remaining question is assigned exactly one of the five convergence classifications:
+
+1. **RATIFY** — semantic decision is closed and enters the Relationship Model.
+2. **DEFER AS OPERATIONAL POLICY** — not required to freeze the conceptual ERD; resolved later as product/operational policy.
+3. **DEFER AS LEGAL/JURISDICTIONAL** — requires external legal/institutional input; ScoutSA does not invent the answer.
+4. **REJECT** — explicitly not part of the model.
+5. **IMPLEMENTATION DETAIL — AFTER ERD** — technical structure only; prohibited from driving domain semantics.
+
+Where an item previously carried a mixed label such as “domain + operational,” this package resolves it to the single classification that best preserves the current evidence boundary.
 
 > **Strength of claim must never exceed strength of evidence.**
 
@@ -13,10 +21,10 @@ Each open item is classified as RATIFY, DEFER AS OPERATIONAL POLICY, DEFER AS LE
 | Question | Decision |
 |---|---|
 | User = Player? | **REJECT** |
-| Player may exist without User? | **RATIFY / EXISTING SAFE PRINCIPLE** |
-| User may exist without Player? | **RATIFY / EXISTING SAFE PRINCIPLE** |
-| Exact cardinality? | **DEFER AS DOMAIN DECISION** |
-| Delegated/shared Player access? | **DEFER AS DOMAIN + AUTHORIZATION POLICY** |
+| Player may exist without User? | **RATIFY** |
+| User may exist without Player? | **RATIFY** |
+| Exact cardinality? | **DEFER AS OPERATIONAL POLICY** |
+| Delegated/shared Player access? | **DEFER AS OPERATIONAL POLICY** |
 | User lifecycle controls Player lifecycle? | **REJECT** |
 
 No single FK/cardinality is justified by current evidence. Delegation mechanisms remain downstream of an explicit domain decision.
@@ -28,10 +36,10 @@ No single FK/cardinality is justified by current evidence. Delegation mechanisms
 | Role = verified external status? | **REJECT** |
 | User = Guardian/Coach/Scout identity? | **REJECT** |
 | Organization affiliation = universal authority? | **REJECT** |
-| Guardian relationship remains Player-specific? | **RATIFY / EXISTING SAFE PRINCIPLE** |
-| Exact role multiplicity? | **DEFER AS DOMAIN DECISION** |
-| Exact Organization affiliation/cardinality? | **DEFER AS DOMAIN + OPERATIONAL POLICY** |
-| External verification/authorization process? | **DEFER AS OPERATIONAL / LEGAL QUESTION** |
+| Guardian relationship remains Player-specific? | **RATIFY** |
+| Exact role multiplicity? | **DEFER AS OPERATIONAL POLICY** |
+| Exact Organization affiliation/cardinality? | **DEFER AS OPERATIONAL POLICY** |
+| External verification/authorization process? | **DEFER AS LEGAL/JURISDICTIONAL** |
 
 Do not create a permanent user.organization_id, role-implied authority, or universal organization access rule.
 
@@ -42,40 +50,40 @@ Do not create a permanent user.organization_id, role-implied authority, or unive
 | GuardianLink = ConsentRecord? | **REJECT** |
 | Consent expands legitimate authority? | **REJECT** |
 | Authorising-person reference proves authority by itself? | **REJECT** |
-| Consent is purpose-bound and temporal? | **RATIFY / EXISTING SAFE PRINCIPLE** |
+| Consent is purpose-bound and temporal? | **RATIFY** |
 | Historical consent erased on revocation? | **REJECT** |
-| Authority/consent/context changes can affect current applicability? | **RATIFY / EXISTING SAFE PRINCIPLE** |
-| Multiple-Guardian conflict precedence? | **DEFER AS LEGAL/JURISDICTIONAL + OPERATIONAL QUESTION** |
-| Authoriser ↔ User/Guardian/Player exact cardinality? | **DEFER AS DOMAIN DECISION** |
+| Authority/consent/context changes can affect current applicability? | **RATIFY** |
+| Multiple-Guardian conflict precedence? | **DEFER AS LEGAL/JURISDICTIONAL** |
+| Authoriser ↔ User/Guardian/Player exact cardinality? | **DEFER AS OPERATIONAL POLICY** |
 | Latest/first/majority wins? | **REJECT** |
 
-The domain is coherent without inventing a universal Guardian hierarchy.
+The domain is coherent without inventing a universal Guardian hierarchy. The conflict-resolution mechanism is therefore deferred rather than encoded into the ERD.
 
 ## G2-SEAM-07 — OpportunityApplication
 
 | Question | Decision |
 |---|---|
-| Application first-class? | **RATIFY / CONFIRMED** |
-| Application subject = Player + Opportunity? | **RATIFY / CONFIRMED** |
+| Application first-class? | **RATIFY** |
+| Application subject = Player + Opportunity? | **RATIFY** |
 | Initiating actor always Player? | **REJECT** |
 | Guardian participation replaces GuardianLink/Consent? | **REJECT** |
 | Child Voice = consent/veto? | **REJECT** |
 | Application state = truth/suitability? | **REJECT** |
 | APPROVED = PLACEMENT? | **REJECT** |
-| Exact participant cardinality? | **DEFER AS DOMAIN + OPERATIONAL POLICY** |
+| Exact participant cardinality? | **DEFER AS OPERATIONAL POLICY** |
 | Exact transition authority? | **DEFER AS OPERATIONAL POLICY** |
-| Complete lifecycle vocabulary? | **DEFER AS DOMAIN/OPERATIONAL POLICY** |
-| Withdrawal/cancellation/invitation semantics? | **DEFER AS DOMAIN/OPERATIONAL POLICY** |
+| Complete lifecycle vocabulary? | **DEFER AS OPERATIONAL POLICY** |
+| Withdrawal/cancellation/invitation semantics? | **DEFER AS OPERATIONAL POLICY** |
 | Technical participant/state-history structures? | **IMPLEMENTATION DETAIL — AFTER ERD** |
 
-OpportunityApplication is semantically sufficient; operational lifecycle remains to be made precise.
+OpportunityApplication is semantically sufficient; operational lifecycle remains to be made precise after the conceptual ERD.
 
 ## G2-SEAM-08 — Outcome
 
 | Question | Decision |
 |---|---|
-| Outcome first-class? | **RATIFY / CONFIRMED** |
-| Multiple outcomes conceptually possible? | **RATIFY / SAFE PRINCIPLE** |
+| Outcome first-class? | **RATIFY** |
+| Multiple outcomes conceptually possible? | **RATIFY** |
 | Outcome = Application state? | **REJECT** |
 | Outcome = truth? | **REJECT** |
 | Outcome = ranking/reputation? | **REJECT** |
@@ -83,14 +91,14 @@ OpportunityApplication is semantically sufficient; operational lifecycle remains
 | Correction silently rewrites history? | **REJECT** |
 | Dispute proves falsity? | **REJECT** |
 | Contradictory outcomes silently collapsed? | **REJECT** |
-| Exact multiplicity/cardinality? | **DEFER AS DOMAIN DECISION** |
-| Correction/version/supersession semantics? | **DEFER AS DOMAIN/OPERATIONAL POLICY** |
+| Exact multiplicity/cardinality? | **DEFER AS OPERATIONAL POLICY** |
+| Correction/version/supersession semantics? | **DEFER AS OPERATIONAL POLICY** |
 | Dispute lifecycle/participants? | **DEFER AS OPERATIONAL POLICY** |
-| Placement/registration treatment? | **DEFER AS DOMAIN/OPERATIONAL POLICY** |
+| Placement/registration treatment? | **DEFER AS OPERATIONAL POLICY** |
 | Access/retention? | **DEFER AS LEGAL/JURISDICTIONAL + OPERATIONAL POLICY** |
 | Technical history structures? | **IMPLEMENTATION DETAIL — AFTER ERD** |
 
-Outcome is semantically sufficient; remaining questions concern exact relationship and lifecycle semantics.
+Outcome is semantically sufficient; remaining questions concern exact relationship and lifecycle semantics and are explicitly carried forward under the classifications above.
 
 # Cross-seam conclusion
 
@@ -135,9 +143,9 @@ Remaining questions concern exact cardinalities, authority processes, lifecycle 
 
 ## Gate 2 disposition
 
-**GATE 2 — SEMANTIC RELATIONSHIP INTEGRITY: READY FOR CONCEPTUAL ERD DRAFT**
+**GATE 2 — SEMANTIC RELATIONSHIP INTEGRITY: CONCEPTUAL ERD-READY**
 
-This is **not full Gate 2 closure**.
+This is **not full Gate 2 closure**. It establishes the decision-package classification discipline and authorizes the conceptual ERD stage; it does not silently resolve deferred policy/legal questions.
 
 ### Authorized next step
 
