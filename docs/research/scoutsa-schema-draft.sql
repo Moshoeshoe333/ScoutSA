@@ -215,3 +215,14 @@ create table audit_events (
 -- access/disclosure/RLS
 -- retention/deletion
 -- provider/authentication/storage choices
+
+
+-- SQL Draft Review Note — 2026-10-06
+-- Status: REVIEWED DRAFT; NOT EXECUTED.
+-- Structural review: candidate tables and declared FK references are internally traceable
+-- to the frozen physical table boundary.
+-- Semantic review: no ratified M1-M9 distinction is intentionally collapsed.
+-- Safety review: no RLS, authorization hierarchy, retention schedule, or legal precedence
+-- is encoded.
+-- Important: this is PostgreSQL-oriented draft syntax and has not been claimed as an
+-- executed migration or runtime-tested database artifact.
