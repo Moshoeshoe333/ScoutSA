@@ -901,3 +901,45 @@ Only after the relationship model is stable should ScoutSA freeze:
 ---
 
 **End of Domain Model Draft**
+
+
+## 9.1 Ratified Safeguarding Case/Response
+
+**Safeguarding Case/Response** is a first-class semantic domain concept representing the substantive safeguarding response context around a concern/report and, where applicable, subsequent finding/substantiation, protective action, investigation outcome, and final resolution.
+
+Not every case must pass through every state.
+
+### Conceptual aspects, where applicable
+
+- case/response identity;
+- safeguarding subject;
+- concern/report provenance;
+- submitting/receiving actor;
+- relevant organization/opportunity context;
+- temporal history;
+- response state(s);
+- responsible authority/process reference where applicable;
+- supporting Evidence;
+- protective action records where applicable;
+- investigation outcome where applicable;
+- final resolution where applicable;
+- disclosure/access classification;
+- correction/dispute provenance.
+
+### Safeguarding Case/Response invariants
+
+1. CONCERN / REPORT ≠ FINDING / SUBSTANTIATION.
+2. FINDING / SUBSTANTIATION ≠ PROTECTIVE ACTION.
+3. PROTECTIVE ACTION ≠ INVESTIGATION OUTCOME.
+4. INVESTIGATION OUTCOME ≠ FINAL RESOLUTION.
+5. VERIFICATION ≠ SAFEGUARDING CLEARANCE.
+6. PROTECTIVE ACTION ≠ GUILT.
+7. CASE EXISTENCE ≠ TRUTH.
+8. CASE EXISTENCE ≠ LEGAL VALIDITY.
+9. Historical response records remain distinguishable from current applicability.
+10. Safeguarding record visibility does not imply public disclosure.
+11. Multiple or contradictory reports remain attributable and are not silently merged or automatically assigned greater evidentiary weight.
+12. AI does not acquire authority to determine guilt, safeguarding findings, investigation outcomes, or final resolution.
+13. Exact safeguarding authority and operating procedure remain context-dependent and deferred to applicable law, policy, and competent process.
+
+These are semantic requirements, not database columns or implementation mechanics.
