@@ -1266,3 +1266,39 @@ EXPOSURE ≠ OUTCOME
 The opportunity-surface concept is therefore a **product/methodology hypothesis**, not a ratified domain entity or success guarantee.
 
 **No implementation change authorized from this observation.**
+
+
+## 10.30 Gate 2 G2-SEAM-06 — Child Participation / Voice RATIFIED — 2026-10-06
+
+**Re-witness:** `docs/research/gate-2-child-participation-voice-governance-rewitness-2026-10-06.md`  
+**Ratification review:** `docs/research/gate-2-child-participation-voice-ratification-review-2026-10-06.md`  
+**Ratification record:** `docs/research/gate-2-child-participation-voice-ratification-record-2026-10-06.md`  
+**Ratification record commit:** `501d901e7a294f458ffbe9ae6875df05db0ff361`
+
+Explicit acceptance has ratified **Child Participation / Voice Record** as a first-class semantic domain concept.
+
+### Reconciliation
+
+The candidate was tested against M8, ConsentRecord, GuardianLink, Assertion, Safeguarding Case/Response, provenance, temporal behavior, disclosure, authority boundaries, and AI non-authority.
+
+All tests passed.
+
+Reconciliation authorized and completed:
+
+- Constitution: child participation/voice semantic boundary added.
+- Domain Model: first-class Child Participation / Voice Record and invariants added.
+- Relationship Model: conceptual relationship added.
+- No fixed age/capacity rule, universal assent/consent rule, child veto, Guardian precedence, schema, RLS, API, UI, or implementation behavior was introduced.
+
+### Gate consequence
+
+```
+G2-SEAM-06: CLOSED — SEMANTIC CONCEPT RATIFIED
+GATE 2: OPEN
+ERD: HOLD pending remaining seam interrogation
+SCHEMA: HOLD
+RLS/API/UI: DEFERRED
+IMPLEMENTATION: DEFERRED
+```
+
+Next authorized seam: **G2-SEAM-07 — OpportunityApplication participant/state structure.**
