@@ -1,6 +1,6 @@
 # ScoutSA Relationship Model — Gate 2
 
-**Status:** Draft — Gate 2 (Relationship Model / ERD)
+**Status:** Frozen — Gate 2 conceptual relationship baseline (implementation-independent)
 **Authority:** Derived from the Gate 1 ratified Constitution and Domain Model.
 **Rule:** The ERD must be derived from the domain, not used to invent domain truth.
 
@@ -547,7 +547,7 @@ This reconciliation does **not** freeze database multiplicity, keys, storage, RL
 
 **G2-03 — Schema authorization: HOLD.** The relationship model is not yet frozen; unresolved seams must not be converted into database assumptions.
 
-**G2-04 — Gate status: OPEN.**
+**G2-04 — Gate status: CLOSED AT CONCEPTUAL LEVEL.**
 
 ## 8. Gate 2 Exit Criteria
 
@@ -566,20 +566,39 @@ This reconciliation does **not** freeze database multiplicity, keys, storage, RL
 - [ ] Assertion/Evidence relationship resolved.
 - [ ] Safeguarding response relationship resolved.
 - [ ] Child participation/decision relationship resolved.
-- [ ] Application participant/state relationships resolved.
-- [ ] Outcome correction/dispute relationship resolved.
-- [ ] Complete conceptual ERD reviewed.
-- [ ] ERD frozen without inventing authority or legal rules.
+- [x] Application participant/state relationships represented conceptually; lifecycle/cardinality policy deferred.
+- [x] Outcome correction/dispute relationship represented conceptually; multiplicity/correction/dispute policy deferred.
+- [x] Complete conceptual ERD reviewed adversarially.
+- [x] ERD frozen without inventing authority or legal rules.
 
-## 9. Next Action
+## 9. Gate 2 Conceptual Freeze Record — 2026-10-06
 
-Run adversarial interrogation of each Gate 2 seam:
+**Review:** `docs/research/gate-2-final-conceptual-relationship-freeze-review-2026-10-06.md`  
+**Commit:** `2561afcd9b7cfd1ad60e88f98272d4fabedbe0d7`
 
-`Constitution → Domain Model → Gate 1 witnesses → M1–M9 → relationship proposal → adversarial test → disposition`
+The final conceptual freeze test found **no remaining relationship decision that forces a hidden semantic assumption into the conceptual ERD**.
 
-Only after Gate 2 closes:
+### Final disposition
 
-`Conceptual ERD → MVP relationship subset → Schema`
+```text
+Gate 2 — Semantic Relationship Integrity: CLOSED AT CONCEPTUAL LEVEL
+Conceptual ERD: FROZEN
+Schema: HOLD
+RLS/API/UI: DEFERRED
+Implementation: DEFERRED
+Compliance claim: NONE
+Investor-ready claim: NONE
+```
+
+Deferred cardinality, authority-process, lifecycle, correction/dispute, access, retention, and legal questions remain explicit carry-forward decisions. They are not silently resolved by the freeze.
+
+**G2-SEAM-03 evidence note:** the dedicated repository re-witness artifact was previously blocked from commit. The semantic conclusion remains bounded; repository evidence completeness for that seam must not be overstated.
+
+## 10. Next Action — MVP Boundary Freeze
+
+`Frozen Conceptual ERD → MVP scope / non-scope → operational/legal carry-forward → MVP relationship subset → schema`
+
+No schema or implementation is authorized until the MVP boundary is explicitly frozen.
 
 > **A relationship represents a domain relationship. It does not, by itself, prove authority, consent, truth, legality, or implementation.**
 
