@@ -88,3 +88,40 @@ Before any migration:
 8. explicitly freeze the physical schema.
 
 **Decision:** Physical schema draft created for review. Implementation remains HOLD.
+
+
+# Physical Schema Adversarial Review — 2026-10-06
+
+**Decision:** CONDITIONAL PASS — FIELD/CONSTRAINT MAPPING REQUIRED BEFORE FREEZE
+
+## Review findings
+
+| Test | Result | Finding |
+|---|---|---|
+| Conceptual ERD coverage | PASS | Candidate tables map to established concepts. |
+| MVP subset coverage | PASS | Approved MVP relationships are represented. |
+| Semantic separation | PASS | No table definition collapses ratified concepts. |
+| Provenance | PASS | Provenance is represented as a requirement, not invented as authority. |
+| Derived-state containment | PASS | Readiness remains derived. |
+| Conditional-data containment | PASS | Sensitive/contextual data remains conditional. |
+| Technical leakage | PASS | Draft does not claim unresolved policy through technical structure. |
+| Cardinality/constraints | HOLD | Exact physical cardinalities and constraints still require field-level decision mapping. |
+| Access/RLS | HOLD | Disclosure and authorization policies are not yet frozen. |
+| Retention/deletion | HOLD | Legal/operational basis remains open. |
+| Acceptance evidence | HOLD | Field-level acceptance evidence has not yet been recorded. |
+| 33×3 | PASS | Existence, coherence and failure containment all pass for the draft stage. |
+
+## Required next artifact
+
+Before physical schema freeze, create a **Field/Constraint Decision Matrix** mapping every proposed table/field/constraint to:
+1. source concept;
+2. MVP requirement;
+3. semantic necessity;
+4. operational/legal dependency;
+5. nullability/optionality rationale;
+6. cardinality rationale;
+7. access sensitivity;
+8. retention dependency;
+9. acceptance test/evidence.
+
+**No SQL or migration is authorized by this review.**
