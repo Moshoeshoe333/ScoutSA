@@ -1713,3 +1713,59 @@ The ERD must mark unresolved cardinalities and operational/legal dependencies ex
 - Failure containment: **PASS**
 
 **Next authorized action: conceptual ERD drafting.**
+
+
+## 10.39 Gate 2 — Conceptual ERD Draft + Adversarial Review — 2026-10-06
+
+**Conceptual ERD:** `docs/research/gate-2-conceptual-erd-draft-2026-10-06.md`  
+**Draft commit:** `ed237ae6fa268a91cedd661669a15cec81ee97b3`  
+**Adversarial-review/correction commit:** `1164e994a88ff4bdf98844ba52564763e5baf365`  
+**Current ERD blob:** `1373ede1eceeb5e8f3d550dd5abbca42597067da`
+
+### Authorized action completed
+
+The first implementation-independent conceptual ERD draft was created from the ratified Constitution, Domain Model, Relationship Model, Gate 2 seam witnesses, and consolidated decision package.
+
+The draft explicitly represents established relationships while marking unresolved cardinality, delegation, affiliation, authority, lifecycle, correction/dispute, visibility, retention, and legal/operational dependencies as **OPEN**.
+
+No schema, foreign-key design, RLS, API, UI, authentication, storage, or implementation behavior was introduced.
+
+### Adversarial review
+
+A consolidated adversarial review was performed against:
+
+- first-class domain concepts;
+- Gate 1 M1–M9 semantic boundaries;
+- Assertion;
+- Safeguarding Case/Response;
+- Child Participation/Voice;
+- User/Player identity;
+- GuardianLink/ConsentRecord;
+- OpportunityApplication;
+- Outcome;
+- provenance/history;
+- derived readiness;
+- disclosure/republication.
+
+One scope defect was found and corrected: Safeguarding Case/Response must not be read as inherently Player-owned. Its conceptual subject remains a defined safeguarding matter/subject. No new semantic concept was required.
+
+### Result
+
+- Conceptual ERD: **ADMISSIBLE / NOT FROZEN**
+- Missing semantic concept test: **PASS**
+- Semantic coherence: **PASS**
+- Failure containment: **PASS**
+- Gate 2: **OPEN**
+- Relationship freeze: **NOT YET RATIFIED**
+- Schema: **HOLD**
+- RLS/API/UI: **DEFERRED**
+- Implementation: **DEFERRED**
+
+### Evidence boundary
+
+G2-SEAM-03 (GuardianLink ↔ ConsentRecord) remains an explicit repository evidence gap because its dedicated re-witness artifact was previously blocked from commit. The ERD therefore does not claim a complete G2-03 repository evidence trail; the underlying relationship decision remains OPEN.
+
+### Next control
+
+Before relationship freeze, resolve or explicitly carry forward the remaining OPEN Gate 2 decisions. Do not allow the ERD to become a backdoor for technical implementation or invented authority.
+
