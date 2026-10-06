@@ -2002,3 +2002,63 @@ No claim is made here that the address has been independently verified, that Sob
 - Any future collaboration must be separately evidenced and recorded before being treated as an established relationship.
 
 **Next action:** retain as a future-collaborator lead for later outreach/verification.
+
+
+## 10.47 — Current Gate / Implementation Status Reconciliation — 2026-10-06
+
+**Status artifact:** `docs/00-gate-status.md`  
+**Commit:** `eb4a8aea209f3891c5dd830d55e0b3d2b0d366f1`  
+**Content SHA:** `e67567a193fbbc2875b4d559758df1bfda6a3541`
+
+### Purpose
+
+A status-drift check found that the older Gate 2 section in `docs/00-gate-status.md` still described **MVP Boundary Freeze** as the next phase, even though subsequent ratified/frozen work had already advanced the repository through the schema boundary and SQL draft stages.
+
+The status document has therefore been reconciled with the latest evidence.
+
+### Current controlled state
+
+- Gate 1: **CLOSED**.
+- Gate 2: **CLOSED AT CONCEPTUAL LEVEL**.
+- Conceptual ERD: **FROZEN**.
+- MVP Boundary: **RATIFIED**.
+- MVP Relationship Subset: **FROZEN**.
+- Implementation Prerequisites: **RATIFIED**.
+- Schema Boundary: **FROZEN**.
+- Physical Table Boundary: **FROZEN**.
+- SQL Schema: **DRAFT / REVIEWED**.
+- SQL Static Witness: **PASS WITH RUNTIME HOLD**.
+- SQL ↔ Field/Constraint Reconciliation: **PASS**.
+- PostgreSQL Runtime Witness: **UNAVAILABLE / NOT TESTED**.
+- Migration-Safety Design: **DEFINED / EXECUTION HOLD**.
+- Migration, Database, RLS, API, UI and Production Implementation: **HOLD**.
+- Future Collaborator Lead: **RECORDED / NOT VERIFIED**.
+
+### Controlled next evidence
+
+```
+SQL draft
+   ↓
+Static witness                         PASS
+   ↓
+SQL ↔ Field/Constraint reconciliation PASS
+   ↓
+PostgreSQL syntax/runtime witness     REQUIRED
+   ↓
+Migration-safety review               HOLD until runtime evidence
+   ↓
+Explicit migration authorization      REQUIRED
+   ↓
+Authorized non-production migration   ONLY AFTER AUTHORIZATION
+   ↓
+Post-migration runtime witness        REQUIRED
+```
+
+### Integrity decision
+
+This reconciliation changes **status documentation only**. It does not create PostgreSQL execution evidence, authorize a migration, establish legal compliance, establish production readiness, or alter the frozen semantic/domain/relationship baseline.
+
+The PostgreSQL runtime gap remains an **evidence limitation**, not a PASS or FAIL execution result.
+
+**Decision:** STATUS RECONCILIATION — **PASS**.  
+**AuthorityLevel:** NONE beyond the evidence recorded.
