@@ -175,6 +175,8 @@ The earlier Gate 2 → MVP wording above is historical and must not be read as t
 | RLS | **HOLD** |
 | API | **HOLD** |
 | UI | **HOLD** |
+| Nullability/Defaults/Index/Uniqueness | **PASS WITH POLICY HOLDS** |
+| RLS / Access / Disclosure Review | **NEXT CONTROLLED GATE** |
 | Production Implementation | **HOLD** |
 | Future Collaborator Lead | **RECORDED / NOT VERIFIED** |
 
@@ -211,6 +213,10 @@ SQL ↔ Field/Constraint reconciliation PASS
 PostgreSQL syntax/runtime witness     PASS
    ↓
 Migration-safety review               CONDITIONAL PASS / EXECUTION HOLD
+   ↓
+Nullability/default/index/uniqueness   PASS WITH POLICY HOLDS
+   ↓
+RLS/access/disclosure review           NEXT CONTROLLED GATE
    ↓
 Explicit migration authorization      REQUIRED
    ↓
