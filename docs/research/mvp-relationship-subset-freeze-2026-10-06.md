@@ -99,3 +99,71 @@ No schema, RLS, API, UI, authentication implementation, or production behavior i
 Next controlled action:
 
 **MVP Relationship Subset Review → implementation-prerequisite freeze → schema design.**
+
+
+# MVP Relationship Subset — Adversarial Freeze Review — 2026-10-06
+
+**Authority:** Review only. Derived from the ratified MVP Boundary and frozen conceptual ERD.  
+**Decision:** PASS — READY FOR FREEZE.
+
+## 1. Review test
+
+The subset was tested against four failure modes:
+
+- hidden semantic invention;
+- accidental legal/authority assumption;
+- technical leakage into conceptual design;
+- omission of a relationship required by the approved MVP loop.
+
+## 2. Results
+
+| Test | Result | Finding |
+|---|---|---|
+| Frozen ERD coverage | PASS | Every required MVP relationship maps to an established concept. |
+| MVP loop coverage | PASS | Passport → verification/evidence → opportunity → discovery → application/contact → protected gates → outcome is representable. |
+| Semantic integrity | PASS | No M1–M9 boundary is collapsed. |
+| Authority containment | PASS | No role, membership, GuardianLink, verification or application state is promoted to universal authority. |
+| Child boundary | PASS | Child Voice remains separate from Guardian authority, ConsentRecord and final Decision. |
+| Safeguarding boundary | PASS | Case/Response remains separate from guilt, clearance, investigation outcome and final resolution. |
+| Provenance | PASS | Assertion, Evidence, Verification, Outcome and AuditEvent remain distinguishable. |
+| Disclosure | PASS | Discoverability does not imply republication or unrestricted contact-data disclosure. |
+| Derived state | PASS | FootballReadiness and OpportunityReadiness remain derived. |
+| Technical leakage | PASS | No foreign keys, RLS rules, API contracts, UI behavior, storage technology or schema cardinality has been invented. |
+| Scope containment | PASS | Transfer marketplace, payments, unrestricted messaging, ranking/reputation, prediction and AI authority remain excluded. |
+| 33×3 Existence | PASS | Selected relationships exist in the frozen conceptual model. |
+| 33×3 Coherence | PASS | The subset is internally and constitutionally coherent. |
+| 33×3 Failure containment | PASS | Deferred questions remain explicit and cannot silently become implementation assumptions. |
+
+## 3. Required correction
+
+No substantive correction is required.
+
+The wording **“REQUIRED”** means required for the approved MVP relationship subset, not legally mandatory and not proof that every record must exist for every player.
+
+“CONDITIONAL” and “MVP-LIMITED” relationships must remain conditional in implementation; they must not become universal data-collection requirements.
+
+## 4. Freeze decision
+
+**MVP RELATIONSHIP SUBSET: FROZEN — 2026-10-06**
+
+This freeze authorizes the next controlled artifact only:
+
+**Implementation-Prerequisite Freeze Review.**
+
+It does NOT authorize schema, RLS, API, UI, authentication implementation, production deployment, or compliance claims.
+
+## 5. Carry-forward
+
+Before schema design, the implementation-prerequisite review must resolve or explicitly classify:
+
+- exact MVP fields and data minimization;
+- workflow states and transition ownership;
+- access/disclosure purposes;
+- Guardian/Consent behavior;
+- safeguarding escalation ownership;
+- child participation effects;
+- correction/dispute behavior;
+- retention/deletion basis;
+- acceptance/evidence requirements.
+
+No unresolved item may be silently encoded as a technical assumption.
