@@ -161,3 +161,23 @@ The following boundaries are ratified:
 - AI ≠ SAFEGUARDING ADJUDICATOR
 
 This ratification does not establish universal safeguarding authority, legal investigative/adjudicative authority, automatic exclusion, fixed investigation procedure, fixed retention duration, automatic public disclosure, compliance certification, or implementation mechanics.
+
+
+## Ratified Semantic Boundary — Gate 2 Child Participation / Voice
+
+Following the G2-SEAM-06 governance re-witness, ratification review, and explicit acceptance on 2026-10-06, **Child Participation / Voice Record** is a first-class semantic domain concept.
+
+> **Child Participation / Voice Record:** An attributable record of a child's expressed view or participation in a defined matter/context, preserved with provenance and temporal context and kept distinct from Guardian authority, ConsentRecord, and any resulting Decision.
+
+The following boundaries are ratified:
+
+- CHILD VOICE ≠ GUARDIAN AUTHORITY
+- CHILD VOICE ≠ CONSENT
+- CHILD VOICE ≠ FINAL DECISION
+- CHILD OBJECTION ≠ AUTOMATIC VETO
+- GUARDIAN AUTHORITY ≠ AUTOMATIC SUPPRESSION OF CHILD VOICE
+- HISTORICAL CHILD EXPRESSION ≠ LATER DECISION
+- AI ≠ CAPACITY ASSESSOR
+- AI ≠ BEST-INTERESTS ADJUDICATOR
+
+This ratification does not establish fixed age thresholds, legal capacity, universal assent/consent rules, universal child veto, universal Guardian precedence, automatic conflict resolution, AI capacity/best-interests determination, compliance certification, or implementation mechanics.
