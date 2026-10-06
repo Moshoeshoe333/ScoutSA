@@ -1904,3 +1904,28 @@ Post-migration runtime witness         REQUIRED
 ```
 
 **No database implementation is authorized by the environment witness.**
+
+
+## 10.44 — Migration-Safety Design While PostgreSQL Runtime Is Unavailable — 2026-10-06
+
+**Artifact:** `docs/research/migration-safety-design-hold-2026-10-06.md`  
+**Commit:** `ebad53fc9a6b99ab548b11ad97ac82c37dcf8e6b`
+
+With PostgreSQL execution unavailable, the next control was advanced without crossing the runtime boundary: the migration-safety evidence requirements were explicitly defined.
+
+The controlled prerequisites are now:
+
+1. exact SQL input/blob verification;
+2. actual PostgreSQL parser/runtime witness;
+3. transaction and reversibility review;
+4. field/constraint reconciliation;
+5. separate RLS/access review;
+6. authorized non-production dry run;
+7. post-migration runtime witness;
+8. explicit production boundary authorization if production is ever considered.
+
+Current decision:
+
+**Migration-safety design: DEFINED / EXECUTION HOLD.**
+
+This does not convert the SQL draft into an executable or validated migration. The PostgreSQL runtime witness remains the gating evidence event.
