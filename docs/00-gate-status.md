@@ -176,7 +176,7 @@ The earlier Gate 2 → MVP wording above is historical and must not be read as t
 | API | **HOLD** |
 | UI | **HOLD** |
 | Nullability/Defaults/Index/Uniqueness | **PASS WITH POLICY HOLDS** |
-| RLS / Access / Disclosure Review | **NEXT CONTROLLED GATE** |
+| RLS / Access / Disclosure Review | **CONDITIONAL PASS / POLICY-LEGAL HOLD** |
 | Production Implementation | **HOLD** |
 | Future Collaborator Lead | **RECORDED / NOT VERIFIED** |
 
@@ -216,7 +216,9 @@ Migration-safety review               CONDITIONAL PASS / EXECUTION HOLD
    ↓
 Nullability/default/index/uniqueness   PASS WITH POLICY HOLDS
    ↓
-RLS/access/disclosure review           NEXT CONTROLLED GATE
+RLS/access/disclosure review           CONDITIONAL PASS / POLICY-LEGAL HOLD
+   ↓
+Explicit MVP access-policy authorization  REQUIRED
    ↓
 Explicit migration authorization      REQUIRED
    ↓
