@@ -138,3 +138,26 @@ M1–M9 are semantic constraints, not legal advice or compliance certification. 
 No M1–M9 principle grants AI independent authority to determine truth, legal precedence, capacity, best interests, safeguarding guilt, or final resolution.
 
 **Ratification record:** Gate 1 M1–M9 package accepted 2026-10-05 following the final re-witness and explicit ratification review.
+
+
+## Ratified Semantic Boundary — Gate 2 Safeguarding Case/Response
+
+Following the G2-SEAM-05 governance re-witness, ratification review, and explicit acceptance on 2026-10-06, **Safeguarding Case/Response** is a first-class semantic domain concept.
+
+It represents the substantive safeguarding response context around a concern/report and, where applicable, subsequent finding/substantiation, protective action, investigation outcome, and final resolution. Not every case must pass through every state.
+
+The following boundaries are ratified:
+
+- CONCERN / REPORT ≠ FINDING / SUBSTANTIATION
+- FINDING / SUBSTANTIATION ≠ PROTECTIVE ACTION
+- PROTECTIVE ACTION ≠ INVESTIGATION OUTCOME
+- INVESTIGATION OUTCOME ≠ FINAL RESOLUTION
+- VERIFICATION ≠ SAFEGUARDING CLEARANCE
+- PROTECTIVE ACTION ≠ GUILT
+- CASE EXISTENCE ≠ TRUTH
+- CASE EXISTENCE ≠ LEGAL VALIDITY
+- HISTORICAL RESPONSE RECORD ≠ CURRENT APPLICABILITY
+- SAFEGUARDING RECORD VISIBILITY ≠ PUBLIC DISCLOSURE
+- AI ≠ SAFEGUARDING ADJUDICATOR
+
+This ratification does not establish universal safeguarding authority, legal investigative/adjudicative authority, automatic exclusion, fixed investigation procedure, fixed retention duration, automatic public disclosure, compliance certification, or implementation mechanics.
