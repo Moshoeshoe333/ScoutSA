@@ -71,3 +71,52 @@ After explicit ratification, the next controlled artifact is:
 **MVP Implementation-Prerequisite Ratification → Schema Boundary Freeze.**
 
 Schema remains HOLD until that step.
+
+
+# Implementation-Prerequisite Ratification Record — 2026-10-06
+
+**Decision:** RATIFIED  
+**Scope:** MVP implementation prerequisites only  
+**Authority boundary:** This ratification does not create legal compliance, production readiness, or schema authority by itself.
+
+## Ratified prerequisite boundaries
+
+IP-01 through IP-13 are accepted as the controlled prerequisite set for schema preparation.
+
+The ratification means:
+- each prerequisite must be explicitly resolved, bounded, or recorded as an implementation hold before its affected schema behavior is introduced;
+- legal/jurisdictional matters remain subject to applicable law and qualified review;
+- operational policies must not be disguised as domain truths;
+- unresolved questions cannot be silently encoded into schema, RLS, API, UI, authentication, or storage behavior.
+
+## Ratification exclusions
+
+This record does not ratify:
+- exact database cardinalities;
+- foreign-key structure;
+- RLS policies;
+- API contracts;
+- authentication provider;
+- storage architecture;
+- retention durations;
+- legal conclusions;
+- compliance certification;
+- production readiness.
+
+## 33×3
+
+**Existence — PASS**  
+**Coherence — PASS**  
+**Failure containment — PASS**
+
+## Next authorized phase
+
+**SCHEMA BOUNDARY FREEZE**
+
+The next artifact must define only the schema boundary derivable from the frozen conceptual model and ratified MVP prerequisites. It must explicitly separate:
+1. semantically required data;
+2. operationally required data;
+3. legally conditional data;
+4. implementation detail.
+
+No production implementation is authorized merely by entering the schema phase.
