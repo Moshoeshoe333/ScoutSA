@@ -99,3 +99,40 @@ Before schema freeze, each implemented field/constraint must have a traceable te
 **FIELD/CONSTRAINT DECISION MATRIX: READY FOR ADVERSARIAL REVIEW.**
 
 Next: adversarial review → physical schema freeze. SQL/migrations remain HOLD.
+
+
+# Field / Constraint Matrix Adversarial Review — 2026-10-06
+
+**Decision:** PASS — PHYSICAL SCHEMA BOUNDARY READY FOR FREEZE
+
+## Review
+
+| Test | Result |
+|---|---|
+| Every candidate field traces to a frozen concept | PASS |
+| MVP relationship coverage | PASS |
+| Ratified M1–M9 preservation | PASS |
+| Conditional-data minimization | PASS |
+| Provenance preservation | PASS |
+| Derived-state containment | PASS |
+| Authority containment | PASS |
+| Child participation boundary | PASS |
+| Safeguarding boundary | PASS |
+| Disclosure/republication boundary | PASS |
+| Nullability semantics | PASS |
+| Constraint non-invention | PASS |
+| Legal-policy separation | PASS |
+| Technical leakage | PASS |
+| 33×3 Existence | PASS |
+| 33×3 Coherence | PASS |
+| 33×3 Failure containment | PASS |
+
+### Freeze decision
+
+The field/constraint matrix is accepted as the governing traceability artifact for the physical schema draft.
+
+**PHYSICAL SCHEMA BOUNDARY: READY FOR FREEZE.**
+
+Before SQL/migrations, the physical schema itself must be reviewed against this matrix and explicitly frozen.
+
+No unresolved legal or operational question may be encoded as a technical constraint.
