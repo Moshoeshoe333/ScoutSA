@@ -169,8 +169,8 @@ The earlier Gate 2 → MVP wording above is historical and must not be read as t
 | SQL Static Witness | **PASS WITH RUNTIME HOLD** |
 | SQL ↔ Field/Constraint Reconciliation | **PASS** |
 | PostgreSQL Runtime Witness | **PASS — PostgreSQL 17.11 / isolated non-production execution** |
-| Migration-Safety Design | **DEFINED / EXECUTION HOLD** |
-| Migration-Safety Review | **HOLD** |
+| Migration-Safety Design | **DEFINED / REVIEWED** |
+| Migration-Safety Review | **CONDITIONAL PASS / EXECUTION HOLD** |
 | Migration / Database | **HOLD** |
 | RLS | **HOLD** |
 | API | **HOLD** |
@@ -210,7 +210,7 @@ SQL ↔ Field/Constraint reconciliation PASS
    ↓
 PostgreSQL syntax/runtime witness     PASS
    ↓
-Migration-safety review               REQUIRED / HOLD
+Migration-safety review               CONDITIONAL PASS / EXECUTION HOLD
    ↓
 Explicit migration authorization      REQUIRED
    ↓
