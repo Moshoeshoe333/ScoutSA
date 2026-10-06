@@ -1982,3 +1982,23 @@ The SQL draft remains **DRAFT / NOT EXECUTED**.
 **Migration: HOLD. Database write: HOLD. RLS: HOLD. API: HOLD. UI: HOLD. Production implementation: HOLD.**
 
 The next required evidence remains an **actual PostgreSQL runtime/parser witness**.
+
+
+## 10.46 — Future Collaborator Contact — Sobayeni Sports — 2026-10-06
+
+**Contact:** info@sobayenisports.com  
+**Status:** FUTURE COLLABORATOR / CONTACT LEAD — NOT YET VERIFIED  
+**AuthorityLevel:** NONE
+
+The contact address was supplied for future collaborator tracking.
+
+No claim is made here that the address has been independently verified, that Sobayeni Sports has agreed to collaborate, or that any person/entity represented by the address has been authenticated.
+
+### Boundary
+
+- No outreach has been sent by this ledger entry.
+- No affiliation, endorsement, partnership, sponsorship, verification, or authorization is inferred.
+- No ScoutSA access or domain authority is granted.
+- Any future collaboration must be separately evidenced and recorded before being treated as an established relationship.
+
+**Next action:** retain as a future-collaborator lead for later outreach/verification.
