@@ -230,3 +230,15 @@ Post-migration runtime witness        REQUIRED
 The PostgreSQL runtime evidence must not be broadened into claims about migration safety, RLS, authorization, legal compliance, production readiness, or investor readiness.
 
 **Authority boundary:** NONE beyond the evidence actually recorded above.
+
+
+## Access-Policy Control — 2026-10-06
+
+MVP Access-Policy Decision Matrix: **SEMANTICALLY COMPLETE / POLICY-LEGAL RATIFICATION REQUIRED**.
+Adversarial review: **PASS WITH POLICY-LEGAL HOLDS**.
+
+RLS / Access / Disclosure remains **CONDITIONAL PASS / POLICY-LEGAL HOLD**.
+
+RLS implementation: **NOT AUTHORIZED**.
+Migration: **HOLD**.
+Database implementation: **HOLD**.
