@@ -1408,3 +1408,62 @@ If consolidation exposes a missing semantic concept rather than a relationship/o
 `STOP → GOVERNANCE REVIEW → RE-WITNESS → RATIFY IF REQUIRED → DOMAIN RECONCILIATION`
 
 No conceptual ERD freeze is authorized until the remaining relationship decisions are explicitly resolved.
+
+
+## 10.33 Gate 2 — Consolidated Relationship Blocker Review — 2026-10-06
+
+**Review:** `docs/research/gate-2-consolidated-relationship-blocker-review-2026-10-06.md`  
+**Commit:** `52a17438eb0e063f87e33d6df2b442d7845d4d76`
+
+### Consolidated result
+
+G2-SEAM-01 through G2-SEAM-08 have now been consolidated.
+
+The major result is that **no additional first-class semantic concept is currently warranted** beyond the three concepts already introduced through governance:
+
+1. Assertion;
+2. Safeguarding Case/Response;
+3. Child Participation / Voice Record.
+
+The remaining blockers are relationship, cardinality, authorization-process, lifecycle, correction/dispute, and access-policy decisions.
+
+### Remaining Gate 2 blockers
+
+| Seam | Status | Remaining decision class |
+|---|---|---|
+| G2-SEAM-01 User ↔ Player | OPEN | Cardinality / delegation |
+| G2-SEAM-02 User ↔ Guardian/Coach/Scout/Organization | OPEN | Actor multiplicity / affiliation / authorization |
+| G2-SEAM-03 GuardianLink ↔ ConsentRecord | OPEN | Conflict handling / authorizing-person relationship / applicability |
+| G2-SEAM-04 Assertion ↔ Evidence | CLOSED | Technical relationship detail only |
+| G2-SEAM-05 Safeguarding Case/Response | CLOSED | Representation / operational detail |
+| G2-SEAM-06 Child Participation/Voice | CLOSED | Representation / contextual effects |
+| G2-SEAM-07 OpportunityApplication | SUFFICIENT / HOLD | Participants / state lifecycle / authorization |
+| G2-SEAM-08 Outcome | SUFFICIENT / HOLD | Multiplicity / correction / dispute / supersession |
+
+### Gate 2 control
+
+```
+GATE 2: OPEN
+ERD: HOLD
+SCHEMA: HOLD
+RLS/API/UI: DEFERRED
+IMPLEMENTATION: DEFERRED
+```
+
+### 33×3 control
+
+- **Existence: PASS** — required semantic concepts are represented or explicitly deferred through governance.
+- **Coherence: PASS** — no unresolved relationship decision currently requires contradiction of the ratified semantic baseline.
+- **Failure containment: PASS** — unresolved cardinality, authority, lifecycle, correction/dispute, and disclosure questions remain visible rather than being silently encoded.
+
+### Next authorized order
+
+1. G2-SEAM-01 — User ↔ Player cardinality.
+2. G2-SEAM-02 — actor / organization affiliation.
+3. G2-SEAM-03 — GuardianLink / Consent operational authority.
+4. G2-SEAM-07 — OpportunityApplication participant/state model.
+5. G2-SEAM-08 — Outcome multiplicity/correction/dispute.
+
+Only after these are explicitly resolved should the conceptual ERD be drafted and adversarially reviewed.
+
+**No implementation is authorized by this consolidation.**
