@@ -1675,3 +1675,41 @@ RLS/API/UI: **DEFERRED**
 IMPLEMENTATION: **DEFERRED**
 
 Next authorized action: **consolidated Gate 2 blocker review and decision package** for G2-01, G2-02, G2-03, G2-07, and G2-08.
+
+
+## 10.38 Gate 2 — Consolidated Decision Package / Conceptual ERD Draft Authorization — 2026-10-06
+
+**Decision package:** `docs/research/gate-2-consolidated-decision-package-2026-10-06.md`  
+**Commit:** `e237b85eb43c251e76f6a0bf4e5d2493e2e302db`
+
+### Consolidated result
+
+The remaining Gate 2 seams were classified without inventing new semantics:
+
+- G2-01 User ↔ Player: cardinality/delegation remain domain/authorization decisions.
+- G2-02 User ↔ actors/Organization: multiplicity, affiliation and authorization remain domain/operational decisions.
+- G2-03 GuardianLink ↔ ConsentRecord: conflict effect and authoriser relationship remain legal/operational/domain decisions.
+- G2-07 OpportunityApplication: participant cardinality, lifecycle and transition authority remain domain/operational decisions.
+- G2-08 Outcome: multiplicity, correction/dispute/supersession and access remain domain/operational/legal-policy decisions.
+
+### Key conclusion
+
+**Missing-semantic-concept test: PASS.** No additional first-class semantic concept is currently warranted beyond Assertion, Safeguarding Case/Response, and Child Participation/Voice Record.
+
+**ERD readiness test: PASS at the semantic-ontology level.** The remaining uncertainty can be represented explicitly as unresolved relationship/policy decisions rather than silently guessed.
+
+### Authorized transition
+
+**GATE 2 — SEMANTIC RELATIONSHIP INTEGRITY: READY FOR CONCEPTUAL ERD DRAFT.**
+
+This is not full Gate 2 closure. The next authorized activity is one implementation-independent conceptual ERD draft followed by one consolidated adversarial ERD review.
+
+The ERD must mark unresolved cardinalities and operational/legal dependencies explicitly. No schema, RLS, API, UI, authentication, storage, or implementation behavior is authorized by this transition.
+
+### 33×3
+
+- Existence: **PASS**
+- Coherence: **PASS**
+- Failure containment: **PASS**
+
+**Next authorized action: conceptual ERD drafting.**
