@@ -1,16 +1,17 @@
 # ScoutSA Gate Status — 2026-10-06
 
-**Current phase:** Gate 2 — Relationship Model / ERD  
+**Current phase:** MVP Boundary Freeze  
 **Gate 1:** CLOSED  
-**Gate 2:** OPEN  
-**ERD:** HOLD  
+**Gate 2:** CLOSED AT CONCEPTUAL LEVEL  
+**Conceptual ERD:** FROZEN  
+**ERD implementation detail:** DEFERRED  
 **Schema:** HOLD  
 **RLS / API / UI:** DEFERRED  
 **Implementation:** DEFERRED
 
 ## 1. Executive status
 
-ScoutSA has completed the Gate 1 semantic foundation and is actively resolving the remaining Gate 2 relationship decisions.
+ScoutSA has completed Gate 1 and has now closed Gate 2 at the conceptual relationship level. The conceptual ERD is frozen without inventing unresolved operational or legal policy.
 
 The governing sequence remains:
 
@@ -48,7 +49,7 @@ Three additional first-class concepts were exposed by adversarial seam work and 
 
 No additional semantic concept is currently warranted.
 
-## 4. Gate 2 seam status
+## 4. Gate 2 seam status — conceptual freeze
 
 | Seam | Current state | What remains |
 |---|---|---|
@@ -89,19 +90,40 @@ If a relationship decision exposes a missing semantic concept:
 
 > **STOP → GOVERNANCE REVIEW → RE-WITNESS → RATIFY IF REQUIRED → DOMAIN RECONCILIATION → RELATIONSHIP MODEL UPDATE**
 
-## 7. Exit criteria for Gate 2
+## 7. Gate 2 closure record
 
-Gate 2 may move toward conceptual ERD freeze only when:
+**Final review:** `docs/research/gate-2-final-conceptual-relationship-freeze-review-2026-10-06.md`  
+**Review commit:** `2561afcd9b7cfd1ad60e88f98272d4fabedbe0d7`  
+**Relationship Model freeze commit:** `558515b228ef217c50d232ec598efeff58f5b42b`
 
-1. remaining relationship/cardinality decisions are explicitly resolved;
-2. authorization boundaries are defined without inventing legal authority;
-3. application and outcome lifecycles are sufficiently precise;
-4. correction/dispute/provenance behavior is represented;
-5. access/disclosure boundaries are sufficiently defined for the conceptual model;
-6. the complete relationship model passes adversarial review;
-7. the conceptual ERD can be derived without introducing hidden semantic assumptions.
+Final conceptual test:
 
-## 8. Anti-drift rule
+- Existence: **PASS**
+- Coherence: **PASS**
+- Failure containment: **PASS**
+- Hidden-semantic-assumption test: **PASS**
+
+**Decision: Gate 2 — Semantic Relationship Integrity CLOSED AT CONCEPTUAL LEVEL.**
+
+This closure does not resolve deferred cardinality, authority-process, lifecycle, correction/dispute, access, retention, or legal questions. Those remain explicit carry-forward decisions.
+
+G2-SEAM-03 retains an evidence-completeness note: its dedicated re-witness artifact was previously blocked from commit. No claim of complete repository evidence for that seam is made.
+
+## 8. Next gate — MVP Boundary Freeze
+
+The next authorized work is to define the smallest evidence-backed product surface that can be implemented without reopening the ratified semantic baseline.
+
+Required sequence:
+
+1. MVP scope and explicit non-scope.
+2. MVP relationship subset from the frozen conceptual model.
+3. Operational/legal carry-forward decisions required for that MVP.
+4. Implementation prerequisites and evidence requirements.
+5. Only after MVP boundary freeze: schema and implementation.
+
+
+
+## 9. Anti-drift rule
 
 Documentation growth is not itself progress.
 
@@ -115,7 +137,7 @@ A new research artifact must either:
 
 Otherwise it should not expand the repository.
 
-## 9. Implementation boundary
+## 10. Implementation boundary
 
 **No implementation is currently authorized.**
 
@@ -123,6 +145,6 @@ The purpose of Gate 2 is to make the eventual implementation **smaller, safer, a
 
 Once Gate 2 relationship integrity is sufficiently stable, the next authorized activity is an explicit **MVP Boundary Freeze** before code.
 
-## 10. Evidence rule
+## 11. Evidence rule
 
 > **Strength of claim must never exceed strength of evidence.**
