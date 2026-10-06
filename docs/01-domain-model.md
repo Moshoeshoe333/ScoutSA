@@ -943,3 +943,37 @@ Not every case must pass through every state.
 13. Exact safeguarding authority and operating procedure remain context-dependent and deferred to applicable law, policy, and competent process.
 
 These are semantic requirements, not database columns or implementation mechanics.
+
+
+## 9.2 Ratified Child Participation / Voice Record
+
+**Child Participation / Voice Record** is a first-class semantic domain concept representing an attributable record of a child's expressed view or participation in a defined matter/context, preserved with provenance and temporal context and kept distinct from Guardian authority, ConsentRecord, and any resulting Decision.
+
+### Conceptual aspects, where applicable
+
+- child/player subject;
+- expressed view or participation event;
+- matter/purpose/context;
+- expressing actor;
+- time/effective context;
+- provenance;
+- relationship to Guardian authority/ConsentRecord;
+- resulting Decision reference where applicable;
+- correction/dispute history;
+- visibility/access classification.
+
+### Child Participation / Voice invariants
+
+1. CHILD VOICE ≠ GUARDIAN AUTHORITY.
+2. CHILD VOICE ≠ CONSENT.
+3. CHILD VOICE ≠ FINAL DECISION.
+4. Child objection does not create an automatic veto.
+5. Guardian authority does not automatically suppress the child's expressed view where participation/consideration is applicable.
+6. Historical child expression remains distinct from later decisions.
+7. A child's expressed view may change over time without rewriting prior views.
+8. Conflicting child and Guardian views remain attributable until an applicable authority/process determines their effect.
+9. Exact age, capacity, assent, consent, and participation effects are context-dependent and must not be invented by the domain model.
+10. AI does not acquire authority to determine capacity, best interests, consent validity, or final decision.
+11. Recording a child's view does not create public disclosure or republication permission.
+
+These are semantic requirements, not database columns or implementation mechanics.
