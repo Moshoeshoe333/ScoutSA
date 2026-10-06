@@ -1183,3 +1183,86 @@ The candidate must not collapse:
 **Implementation:** DEFERRED
 
 Next authorized action: governance review / explicit ratification decision for the candidate Safeguarding Case/Response concept.
+
+## 10.28 Gate 2 G2-SEAM-05 — Safeguarding Case/Response RATIFIED — 2026-10-06
+
+**Ratification review:** `docs/research/gate-2-safeguarding-response-ratification-review-2026-10-06.md`  
+**Ratification record:** `docs/research/gate-2-safeguarding-response-ratification-record-2026-10-06.md`  
+**Ratification record commit:** `7b8c01742d70a4e0f4dc31bca07faee6d242a1ef`
+
+Explicit acceptance has ratified **Safeguarding Case/Response** as a first-class semantic domain concept.
+
+### Reconciliation
+
+The candidate was tested against M1–M9, Assertion semantics, provenance, temporal applicability, authority boundaries, disclosure boundaries, and implementation deferral.
+
+All tests passed.
+
+Reconciliation authorized and completed:
+
+- Constitution: ratified Safeguarding Case/Response semantic boundary added.
+- Domain Model: first-class Safeguarding Case/Response concept and invariants added.
+- Relationship Model: conceptual lifecycle relationship added.
+- No database schema, RLS, API, UI, retention duration, fixed investigation procedure, universal safeguarding authority, compliance certification, or implementation behavior was introduced.
+
+### Gate consequence
+
+```
+G2-SEAM-05: CLOSED — SEMANTIC CONCEPT RATIFIED
+GATE 2: OPEN
+ERD: HOLD pending remaining seam interrogation
+SCHEMA: HOLD
+RLS/API/UI: DEFERRED
+IMPLEMENTATION: DEFERRED
+```
+
+The next authorized seam remains **G2-SEAM-06 — child participation / objection / assent / decision relationship**.
+
+---
+
+## 10.29 Methodology Observation — Opportunity Exposure / Surface Area — 2026-10-06
+
+**Source status:** External observation supplied for methodological consideration; the referenced X post could not be independently fetched from the available web surface. The text supplied in the working conversation is therefore treated as **NON-AUTHORITATIVE INPUT**, not evidence.
+
+### Observation
+
+The supplied post frames opportunity as something that can be systematically increased through greater exposure/surface area, positioning, reduced friction, and deliberate access to bottlenecks.
+
+This resonates with ScoutSA's product thesis, but only after applying the project's evidence discipline.
+
+### ScoutSA interpretation
+
+ScoutSA should not promise to manufacture opportunity. It can instead aim to increase **qualified exposure to genuine opportunity** by:
+
+1. making real grassroots player signals more discoverable;
+2. improving verification and provenance so visibility carries more trust;
+3. reducing legitimate access friction without bypassing consent, safeguarding, or authority boundaries;
+4. connecting verified players to relevant opportunities;
+5. measuring downstream outcomes rather than vanity exposure.
+
+### Critical correction to the earlier framing
+
+The supplied text contains implementation/compliance claims that are **not currently ratified or established**, including references to hardcoding POPIA, Children's Act consent models, MySAFA identity verification, and SASCOC safeguarding.
+
+ScoutSA must not convert those statements into repository facts.
+
+The stronger formulation is:
+
+> **ScoutSA systematically increases qualified exposure to opportunity while preserving evidence, consent, authority, safeguarding, and feasibility boundaries.**
+
+This aligns the opportunity thesis with the existing North Star without weakening the Constitution.
+
+### Methodological invariant
+
+```
+EXPOSURE ≠ OPPORTUNITY
+VISIBILITY ≠ ACCESS
+DISCOVERABILITY ≠ TRUST
+VERIFICATION ≠ GUARANTEE
+CONTACT ≠ PLACEMENT
+EXPOSURE ≠ OUTCOME
+```
+
+The opportunity-surface concept is therefore a **product/methodology hypothesis**, not a ratified domain entity or success guarantee.
+
+**No implementation change authorized from this observation.**
