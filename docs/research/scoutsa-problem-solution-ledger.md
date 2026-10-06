@@ -2113,3 +2113,39 @@ The migration gate remains **HOLD** pending:
 
 **Decision:** PostgreSQL Runtime Witness — **PASS**.  
 **AuthorityLevel:** NONE beyond the evidence recorded.
+
+
+## 10.49 — Migration-Safety Review — 2026-10-06
+
+**Artifact:** `docs/research/migration-safety-review-2026-10-06.md`  
+**Commit:** `bc66741057e0e9b667c51c4d2c904fbda894a55f`
+
+### Result
+
+**MIGRATION-SAFETY REVIEW: CONDITIONAL PASS — MIGRATION AUTHORIZATION HOLD**
+
+The PostgreSQL runtime barrier is cleared for the exact current SQL draft.
+
+Evidence confirms:
+
+- exact SQL blob integrity: PASS;
+- PostgreSQL 17.11 runtime execution: PASS;
+- 26/26 tables: PASS;
+- 17/17 foreign keys: PASS.
+
+The current SQL contains create-table DDL only and no destructive data operations, roles, grants, RLS, triggers, functions, or production-side effects. This supports a controlled transaction design assessment, but rollback/reversibility has **not yet been runtime-witnessed**.
+
+### Remaining controlled holds
+
+1. final nullability/default decision mapping;
+2. index/uniqueness decision mapping;
+3. RLS/access review;
+4. explicit authorization for a non-production migration dry run;
+5. transaction/reversibility witness;
+6. post-dry-run schema inspection;
+7. post-migration runtime witness.
+
+No production migration, hosted database, production credentials, RLS policy, or application data has been introduced.
+
+**Decision:** Migration-safety review — **CONDITIONAL PASS / EXECUTION HOLD**.  
+**AuthorityLevel:** NONE beyond the evidence recorded.
