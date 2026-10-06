@@ -116,14 +116,12 @@ The MVP boundary has been explicitly ratified. The next authorized work is to de
 Required sequence:
 
 1. MVP relationship subset from the frozen conceptual model.
-3. Operational/legal carry-forward decisions required for that MVP.
-4. Implementation prerequisites and evidence requirements.
-5. Schema Boundary Freeze.
-6. Only after schema boundary review/freeze: schema design.
-7. SQL/schema implementation draft is permitted only as a traceable draft.
-8. Implementation remains HOLD until SQL/schema review and implementation evidence are ratified.
-
-
+2. Operational/legal carry-forward decisions required for that MVP.
+3. Implementation prerequisites and evidence requirements.
+4. Schema Boundary Freeze.
+5. Only after schema boundary review/freeze: schema design.
+6. SQL/schema implementation draft is permitted only as a traceable draft.
+7. Implementation remains HOLD until SQL/schema review and implementation evidence are ratified.
 
 ## 9. Anti-drift rule
 
@@ -151,10 +149,9 @@ Once Gate 2 relationship integrity is sufficiently stable, the next authorized a
 
 > **Strength of claim must never exceed strength of evidence.**
 
-
 ## 12. Current controlled state — reconciled 2026-10-06
 
-The earlier Gate 2 → MVP wording above is historical and must not be read as the current next step. Subsequent ratified/frozen work has advanced the repository to the SQL schema draft boundary.
+The earlier Gate 2 → MVP wording above is historical and must not be read as the current next step. Subsequent ratified/frozen work has advanced the repository through the schema boundary and SQL draft stages.
 
 ### Current state
 
@@ -171,7 +168,7 @@ The earlier Gate 2 → MVP wording above is historical and must not be read as t
 | SQL Schema | **DRAFT / REVIEWED** |
 | SQL Static Witness | **PASS WITH RUNTIME HOLD** |
 | SQL ↔ Field/Constraint Reconciliation | **PASS** |
-| PostgreSQL Runtime Witness | **UNAVAILABLE / NOT TESTED** |
+| PostgreSQL Runtime Witness | **PASS — PostgreSQL 17.11 / isolated non-production execution** |
 | Migration-Safety Design | **DEFINED / EXECUTION HOLD** |
 | Migration-Safety Review | **HOLD** |
 | Migration / Database | **HOLD** |
@@ -180,6 +177,27 @@ The earlier Gate 2 → MVP wording above is historical and must not be read as t
 | UI | **HOLD** |
 | Production Implementation | **HOLD** |
 | Future Collaborator Lead | **RECORDED / NOT VERIFIED** |
+
+### Runtime witness record
+
+**Artifact:** `docs/research/postgresql-runtime-witness-2026-10-06.md`  
+**Record commit:** `a214be879d23c8a25b76896d8803027ff25f1935`  
+**Workflow run:** `37468048851`  
+**Job:** `112283944840`  
+**Witness commit:** `47210a0500b583cc9ef9b1557df5577edcf5d6e9`  
+**SQL blob:** `127d93f100e3fedafcc6a45b6ab6c3ad9ef6478e`
+
+Observed evidence:
+
+- PostgreSQL 17.11 server started and became healthy.
+- Exact SQL blob identity matched.
+- Exact SQL draft executed with `ON_ERROR_STOP=1`.
+- 26 tables created.
+- 26 tables observed.
+- 17 foreign keys observed.
+- Workflow/job conclusion: **SUCCESS**.
+
+This is a runtime witness for the exact SQL draft in an isolated non-production environment. It is not a production migration.
 
 ### Authoritative next sequence
 
@@ -190,9 +208,9 @@ Static witness                         PASS
    ↓
 SQL ↔ Field/Constraint reconciliation PASS
    ↓
-PostgreSQL syntax/runtime witness     REQUIRED
+PostgreSQL syntax/runtime witness     PASS
    ↓
-Migration-safety review               HOLD until runtime evidence
+Migration-safety review               REQUIRED / HOLD
    ↓
 Explicit migration authorization      REQUIRED
    ↓
@@ -201,8 +219,6 @@ Authorized non-production migration   ONLY AFTER AUTHORIZATION
 Post-migration runtime witness        REQUIRED
 ```
 
-The repository must not manufacture PostgreSQL evidence. The missing runtime witness is an environmental limitation, not a passing or failing SQL execution result.
-
-Until actual PostgreSQL-capable execution evidence exists, work may continue only on non-execution controls such as provenance, traceability, acceptance criteria, collaborator planning, or other artifacts that do not imply runtime validation.
+The PostgreSQL runtime evidence must not be broadened into claims about migration safety, RLS, authorization, legal compliance, production readiness, or investor readiness.
 
 **Authority boundary:** NONE beyond the evidence actually recorded above.
