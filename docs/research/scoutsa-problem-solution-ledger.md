@@ -1855,3 +1855,52 @@ No implementation is authorized merely because Gate 2 is conceptually closed.
 - SQL is **DRAFT ONLY**; no migration has been run and no production implementation is claimed.
 - Unresolved legal/operational questions remain comments/holds rather than technical assumptions.
 - Next required witness: SQL draft syntax/traceability/adversarial review before any migration authorization.
+
+
+## 10.43 — PostgreSQL Runtime Witness / Migration Hold — 2026-10-06
+
+**Environment witness:** `docs/research/postgresql-runtime-witness-environment-limitation-2026-10-06.md`  
+**Commit:** `52ec22a279d14dc75e15aa6ed968771fffaa242e`
+
+The SQL draft static witness was completed, but the available execution environment does not contain a PostgreSQL server or PostgreSQL-compatible parser/runtime. `pg_config` is present, but is insufficient by itself to establish parser or runtime execution evidence.
+
+Therefore the repository records the following conservatively:
+
+- SQL draft static witness: **PASS WITH RUNTIME HOLD**.
+- PostgreSQL syntax/parser witness: **UNAVAILABLE / NOT TESTED**.
+- Migration-safety review: **HOLD**.
+- Migration: **HOLD**.
+- Production database write: **NOT AUTHORIZED**.
+
+The environment limitation is now preserved as a dedicated evidence artifact rather than being treated as a failed SQL result or silently omitted.
+
+### Required next evidence
+
+1. Actual PostgreSQL syntax/parser/runtime witness.
+2. Exact PostgreSQL version and execution result.
+3. Migration transaction/reversibility review.
+4. Field/nullability/default reconciliation against the frozen decision matrix.
+5. RLS/access review.
+6. Non-production migration dry run.
+7. Explicit migration authorization.
+8. Post-migration runtime witness.
+
+### Current controlled sequence
+
+```
+SQL draft
+   ↓
+Static witness                         PASS
+   ↓
+PostgreSQL runtime witness             UNAVAILABLE
+   ↓
+Migration-safety review                HOLD
+   ↓
+Explicit migration authorization       REQUIRED
+   ↓
+Non-production migration               ONLY AFTER AUTHORIZATION
+   ↓
+Post-migration runtime witness         REQUIRED
+```
+
+**No database implementation is authorized by the environment witness.**
