@@ -614,3 +614,48 @@ The relationship is conceptual only. Not every case follows every branch.
 **Schema:** HOLD.  
 **RLS/API/UI:** DEFERRED.  
 **Implementation:** DEFERRED.
+
+
+## 6.7 Adversarial Seam G — Child Participation / Voice
+
+**Seam ID:** G2-SEAM-06  
+**Status:** CLOSED — SEMANTIC CONCEPT RATIFIED
+
+The G2-SEAM-06 governance re-witness established that ConsentRecord and AuditEvent are insufficient to represent substantive child participation/voice without collapsing voice into consent or a system event.
+
+### Ratified conceptual relationship
+
+```
+Player / Child
+      │
+      ▼
+Child Participation / Voice Record
+      │
+      ├── view / preference / objection / participation context
+      ├── purpose / matter
+      ├── provenance + time
+      └── resulting Decision (where applicable)
+```
+
+The relationship is conceptual only.
+
+### Relationship invariants
+
+1. Child voice remains distinct from Guardian authority.
+2. Child voice remains distinct from ConsentRecord.
+3. Child voice remains distinct from any resulting Decision.
+4. Child objection does not create an automatic veto.
+5. Guardian authority does not automatically erase or overwrite the historical child expression.
+6. Conflicting views remain separately attributable until an applicable authority/process determines their effect.
+7. Exact legal age/capacity/assent/consent effects remain deferred.
+8. Child voice visibility does not imply public disclosure.
+9. Technical keys, cardinalities, RLS, API behavior, UI behavior, and storage mechanics remain deferred.
+
+### Gate consequence
+
+**G2-SEAM-06:** CLOSED — semantic concept ratified.  
+**Gate 2:** OPEN.  
+**ERD:** HOLD pending remaining seam interrogation.  
+**Schema:** HOLD.  
+**RLS/API/UI:** DEFERRED.  
+**Implementation:** DEFERRED.
