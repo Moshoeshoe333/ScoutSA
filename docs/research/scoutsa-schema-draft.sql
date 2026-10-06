@@ -44,6 +44,8 @@ create table memberships (
   id uuid primary key,
   player_id uuid not null references players(id),
   organization_id uuid not null references organizations(id),
+  valid_from timestamptz not null,
+  valid_to timestamptz,
   created_at timestamptz not null
 );
 
@@ -98,7 +100,7 @@ create table media (
   player_id uuid not null references players(id),
   media_ref text not null,
   purpose_ref text,
-  provenance_ref text,
+  provenance_ref text not null,
   created_at timestamptz not null
 );
 
@@ -106,7 +108,7 @@ create table season_performances (
   id uuid primary key,
   player_id uuid not null references players(id),
   season_ref text not null,
-  provenance_ref text,
+  provenance_ref text not null,
   created_at timestamptz not null
 );
 
@@ -114,6 +116,7 @@ create table academic_profiles (
   id uuid primary key,
   player_id uuid not null references players(id),
   purpose_ref text,
+  provenance_ref text not null,
   created_at timestamptz not null
 );
 
@@ -122,6 +125,7 @@ create table medical_clearances (
   player_id uuid not null references players(id),
   purpose_ref text,
   status text not null,
+  provenance_ref text not null,
   created_at timestamptz not null,
   expires_at timestamptz
 );
@@ -129,6 +133,7 @@ create table medical_clearances (
 create table transport_profiles (
   id uuid primary key,
   player_id uuid not null references players(id),
+  provenance_ref text not null,
   created_at timestamptz not null
 );
 
@@ -176,6 +181,7 @@ create table safeguarding_responses (
   id uuid primary key,
   case_id uuid not null references safeguarding_cases(id),
   response_type text not null,
+  responsible_authority_ref text not null,
   created_at timestamptz not null,
   provenance_ref text
 );
