@@ -1,13 +1,13 @@
 # ScoutSA Gate Status — 2026-10-06
 
-**Current phase:** SQL Schema Implementation Draft  
+**Current phase:** MVP Authorization / External Validation Hold  
 **Gate 1:** CLOSED  
 **Gate 2:** CLOSED AT CONCEPTUAL LEVEL  
 **Conceptual ERD:** FROZEN  
 **ERD implementation detail:** DEFERRED  
-**Schema:** HOLD  
-**RLS / API / UI:** DEFERRED  
-**Implementation:** DEFERRED
+**Schema:** DRAFT / REVIEWED — IMPLEMENTATION HOLD  
+**RLS / API / UI:** HOLD — POLICY / LEGAL AUTHORIZATION REQUIRED  
+**Implementation:** HOLD
 
 ## 1. Executive status
 
@@ -231,6 +231,50 @@ The PostgreSQL runtime evidence must not be broadened into claims about migratio
 
 **Authority boundary:** NONE beyond the evidence actually recorded above.
 
+
+
+## 13. Current executive position — reconciled after access-policy work
+
+The historical sections above preserve the chronology of the project. They are not the current executive state.
+
+**Current controlled position:**
+
+| Control | Current state |
+|---|---|
+| Gate 1 | **CLOSED** |
+| Gate 2 | **CLOSED — CONCEPTUAL LEVEL** |
+| Conceptual ERD | **FROZEN** |
+| MVP Boundary | **RATIFIED** |
+| MVP Relationship Subset | **FROZEN** |
+| Implementation Prerequisites | **RATIFIED** |
+| Schema Boundary | **FROZEN** |
+| Physical Table Boundary | **FROZEN** |
+| SQL Schema | **DRAFT / REVIEWED** |
+| PostgreSQL Runtime Witness | **PASS — isolated non-production** |
+| Migration-Safety Review | **CONDITIONAL PASS / HOLD** |
+| RLS / Access / Disclosure | **CONDITIONAL PASS / POLICY-LEGAL HOLD** |
+| MVP Access-Policy Matrix | **COMPLETE / RATIFICATION REQUIRED** |
+| Actor × Purpose × Resource Map | **COMPLETE / RATIFICATION REQUIRED** |
+| RLS | **NOT AUTHORIZED** |
+| Migration / Database | **HOLD** |
+| Production Implementation | **HOLD** |
+
+### Controlled next move
+
+The repository has reached the point where additional internal governance artifacts should be minimized unless they resolve a concrete decision or contradiction.
+
+The next product-validating activity is therefore **external validation**, focused on the smallest set of questions that can materially change the MVP:
+
+1. Can Vaal Triangle football organizations understand and use the proposed Player Passport / Opportunity model?
+2. Which information do they actually need before making a contact or trial decision?
+3. Which information would they refuse to receive or store?
+4. What safeguarding and Guardian workflow do they consider workable in practice?
+5. Which parts of the current MVP are unnecessary, confusing or operationally burdensome?
+6. Does the proposed opportunity-readiness model solve a real access problem rather than merely describe one?
+
+External feedback is evidence input, not automatic ratification. Material contradictions return through the existing governance path; non-material feedback should not generate ceremony.
+
+**Anti-drift boundary:** no new governance artifact should be created merely to demonstrate activity. The next artifact should exist only if external validation produces a decision that must be preserved.
 
 ## Access-Policy Control — 2026-10-06
 
