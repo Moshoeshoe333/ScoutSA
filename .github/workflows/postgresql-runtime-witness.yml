@@ -1,0 +1,51 @@
+name: PostgreSQL Runtime Witness
+
+on:
+  push:
+    branches:
+      - "evidence/postgresql-runtime-witness-f1-f3-2026-10-06"
+
+permissions:
+  contents: read
+
+jobs:
+  postgres-runtime-witness:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: witness_only
+          POSTGRES_USER: scoutsa_witness
+          POSTGRES_DB: scoutsa_witness
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U scoutsa_witness -d scoutsa_witness"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify amended SQL blob
+        run: |
+          set -euo pipefail
+          actual="$(git hash-object docs/research/scoutsa-schema-draft.sql)"
+          test "$actual" = "00f0dd0542f7f9a92447799f1452b26c513b06a5"
+      - name: Execute amended schema
+        env:
+          PGPASSWORD: witness_only
+        run: |
+          set -euo pipefail
+          psql --version
+          psql -h 127.0.0.1 -U scoutsa_witness -d scoutsa_witness -v ON_ERROR_STOP=1 -f docs/research/scoutsa-schema-draft.sql
+      - name: Verify structure
+        env:
+          PGPASSWORD: witness_only
+        run: |
+          set -euo pipefail
+          tables="$(psql -h 127.0.0.1 -U scoutsa_witness -d scoutsa_witness -Atqc "select count(*) from information_schema.tables where table_schema='public' and table_type='BASE TABLE'")"
+          fks="$(psql -h 127.0.0.1 -U scoutsa_witness -d scoutsa_witness -Atqc "select count(*) from information_schema.table_constraints where table_schema='public' and constraint_type='FOREIGN KEY'")"
+          test "$tables" -eq 26
+          test "$fks" -eq 17
+          printf 'tables=%s foreign_keys=%s\n' "$tables" "$fks"
