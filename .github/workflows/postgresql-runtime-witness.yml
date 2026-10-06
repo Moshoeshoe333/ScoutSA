@@ -2,6 +2,10 @@ name: PostgreSQL Runtime Witness
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - "docs/research/scoutsa-schema-draft.sql"
+      - ".github/workflows/postgresql-runtime-witness.yml"
 
 permissions:
   contents: read
@@ -60,14 +64,12 @@ jobs:
           PGPASSWORD: witness_only
         run: |
           set -euo pipefail
-
           table_count="$(psql -h 127.0.0.1 -U scoutsa_witness -d scoutsa_witness -Atqc "
             select count(*)
             from information_schema.tables
             where table_schema = 'public'
               and table_type = 'BASE TABLE'
           ")"
-
           expected_tables=26
           printf 'expected_tables=%s\nactual_tables=%s\n' "$expected_tables" "$table_count"
           test "$table_count" -eq "$expected_tables"
@@ -78,7 +80,6 @@ jobs:
             where table_schema = 'public'
               and constraint_type = 'FOREIGN KEY'
           ")"
-
           expected_fks=17
           printf 'expected_foreign_keys=%s\nactual_foreign_keys=%s\n' "$expected_fks" "$fk_count"
           test "$fk_count" -eq "$expected_fks"
