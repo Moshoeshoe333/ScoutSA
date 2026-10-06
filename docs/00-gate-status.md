@@ -1,6 +1,6 @@
 # ScoutSA Gate Status — 2026-10-06
 
-**Current phase:** MVP Relationship Subset Freeze  
+**Current phase:** Schema Boundary Freeze  
 **Gate 1:** CLOSED  
 **Gate 2:** CLOSED AT CONCEPTUAL LEVEL  
 **Conceptual ERD:** FROZEN  
@@ -118,7 +118,9 @@ Required sequence:
 1. MVP relationship subset from the frozen conceptual model.
 3. Operational/legal carry-forward decisions required for that MVP.
 4. Implementation prerequisites and evidence requirements.
-5. Only after MVP relationship subset and implementation prerequisites are frozen: schema and implementation.
+5. Schema Boundary Freeze.
+6. Only after schema boundary review/freeze: schema design.
+7. Implementation remains HOLD until schema and implementation evidence are ratified.
 
 
 
