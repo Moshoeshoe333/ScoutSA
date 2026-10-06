@@ -567,3 +567,50 @@ Only after Gate 2 closes:
 > **A relationship represents a domain relationship. It does not, by itself, prove authority, consent, truth, legality, or implementation.**
 
 **End of Gate 2 Relationship Model**
+
+
+## 6.6 Adversarial Seam F — Safeguarding Case/Response
+
+**Seam ID:** G2-SEAM-05  
+**Status:** CLOSED — SEMANTIC CONCEPT RATIFIED
+
+The G2-SEAM-05 governance re-witness established that AuditEvent is not sufficient to represent the substantive safeguarding response lifecycle. The ratification review then tested the candidate against M1–M9, the ratified Assertion concept, provenance, authority, truth, temporal, disclosure, and implementation boundaries.
+
+### Ratified conceptual relationship
+
+```
+Safeguarding Subject
+        │
+        ▼
+Concern / Report
+        │
+        ▼
+Safeguarding Case / Response
+   ├── Finding / Substantiation (where applicable)
+   ├── Protective Action (where applicable)
+   ├── Investigation Outcome (where applicable)
+   └── Final Resolution (where applicable)
+```
+
+The relationship is conceptual only. Not every case follows every branch.
+
+### Relationship invariants
+
+1. A concern/report remains distinct from any later finding/substantiation.
+2. Protective action does not establish guilt or final resolution.
+3. Investigation outcome remains distinct from interim protective action and the original report.
+4. Final resolution remains distinct from earlier response states.
+5. Case/response records retain provenance and temporal context.
+6. Safeguarding records are not public merely because the Player or Organization is discoverable.
+7. AuditEvent remains an accountability/history mechanism and does not replace the substantive case/response concept.
+8. Responsible authority/process may be referenced where applicable, but the relationship model does not invent a universal safeguarding authority hierarchy.
+9. Technical keys, cardinalities, RLS, API behavior, UI behavior, and storage mechanics remain deferred.
+
+### Gate consequence
+
+**G2-SEAM-05:** CLOSED — semantic concept ratified.  
+**Gate 2:** OPEN.  
+**ERD:** HOLD pending remaining seam interrogation.  
+**Schema:** HOLD.  
+**RLS/API/UI:** DEFERRED.  
+**Implementation:** DEFERRED.
