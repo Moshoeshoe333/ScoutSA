@@ -2333,3 +2333,51 @@ GitHub Actions run `37479429284`, job `112323365262`: SUCCESS.
 - 17 foreign keys: PASS
 
 This witness supersedes the previous runtime evidence for the amended SQL only. It remains non-production evidence and does not authorize migration, RLS or production use.
+
+
+## 10.58 — End-of-Day Progress & Next Action Plan — 2026-10-06
+
+### Today's progress
+
+ScoutSA completed a significant transition from internal domain/schema preparation toward controlled external validation.
+
+1. **Canonical status reconciled** — `docs/00-gate-status.md` was corrected so the executive state matches the later ledger/research evidence. Gate 1 is CLOSED; Gate 2 is CLOSED at conceptual level; conceptual ERD is FROZEN; MVP Boundary is RATIFIED; MVP Relationship Subset is FROZEN; Schema/Physical Table boundaries are FROZEN; SQL remains DRAFT/REVIEWED; runtime evidence is PASS; migration and RLS remain held.
+2. **Governance expansion deliberately frozen** — the repository now records that another internal gate/artifact should not be created unless a concrete uncertainty or new evidence requires it.
+3. **External validation plan established** — five initial stakeholder conversations are targeted: 2 grassroots coaches, 1 school sports coordinator, 1 youth-player guardian, and 1 scout/academy recruiter. The core test is deliberately non-leading: what actually prevents talented young players from reaching trials/opportunities?
+4. **Scoped legal review identified** — a 1–2 hour South African legal review is proposed for the Consent Model, access-policy matrix, POPIA/Children's Act assumptions. It is an external input, not a compliance certification.
+5. **SQL adversarial review produced three required amendments** — F1 responsible authority on safeguarding responses; F2 membership validity bounds; F3 required provenance anchors for conditional/contextual records.
+6. **F1–F3 amendments applied to SQL** — amended SQL blob: `00f0dd0542f7f9a92447799f1452b26c513b06a5`.
+7. **Fresh PostgreSQL runtime witness completed** — GitHub Actions run `37479429284`, job `112323365262`: exact amended blob verified; PostgreSQL 17 execution PASS; 26 tables PASS; 17 foreign keys PASS. This fresh witness supersedes the earlier runtime evidence for the amended SQL.
+8. **Methodology correction identified** — future schema reviews must test both directions: (a) schema feature → approved source, and (b) every ratified matrix requirement → represented physical field/constraint. The second direction is now an explicit control because F1 exposed its absence.
+
+### Today's achieved state
+
+**ScoutSA is no longer authorized to grow governance merely for its own sake.** The internal foundation is sufficiently mature for external reality-testing. The product remains non-production and no RLS/migration authorization has been granted.
+
+### Next action plan — next working session
+
+**Priority 1 — External validation preparation**
+- Prepare a one-page plain-language ScoutSA explanation for people unfamiliar with gates/seams/witnesses.
+- Prepare the five-conversation interview sheet using neutral, non-leading questions.
+- Identify the first Vaal Triangle stakeholder contacts.
+
+**Priority 2 — Legal review preparation**
+- Package only the Consent Model + MVP access-policy matrix + relevant legal assumptions for a narrowly scoped reviewer.
+- Do not ask for broad “compliance certification.”
+
+**Priority 3 — One final technical reconciliation**
+- Perform the bidirectional Field/Constraint Matrix ↔ SQL column/constraint trace on the amended SQL.
+- Record only concrete defects or unresolved implementation dependencies.
+- Do not reopen settled semantic decisions.
+
+**Priority 4 — Hold implementation**
+- No RLS SQL.
+- No migration.
+- No production database.
+- No production readiness claim.
+
+### Exit condition for this phase
+
+The next phase should be considered complete only when external stakeholder evidence and scoped legal input have been gathered and reconciled with the existing MVP boundary/access model, or when documented evidence shows that the proposed validation cannot yet be obtained.
+
+**Operating principle:** The methodology has done enough work to earn contact with reality. From here, evidence from real stakeholders should drive the next material change.
