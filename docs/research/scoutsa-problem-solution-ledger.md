@@ -2247,3 +2247,47 @@ Remaining holds include identity/delegation, organization authority, Guardian co
 RLS implementation: NOT AUTHORIZED.
 Migration: HOLD.
 Production database: HOLD.
+
+
+## 10.54 — MVP Actor × Purpose × Resource Authorization Map — 2026-10-06
+
+Artifact: docs/research/mvp-actor-purpose-resource-authorization-map-2026-10-06.md
+Commit: 1b60a47396f5c128786de2bfd1738609ca15b19b
+
+The MVP access boundary was decomposed into explicit actor contexts, purposes and resources using ALLOW, DENY, CONDITIONAL and HOLD.
+
+Actor contexts remain separate from role titles:
+- Player / subject;
+- Scoped Guardian;
+- Opportunity-side organization actor;
+- Public / discovery viewer;
+- Accountability actor;
+- System / service.
+
+Purpose classes include Passport management, Discovery, Verification, Contact request, Trial request, Opportunity administration, Consent administration, Safeguarding response, Accountability/audit, Public display and Derived readiness.
+
+Decision: COMPLETE AS A POLICY-DESIGN ARTIFACT / READY FOR EXPLICIT POLICY-LEGAL RATIFICATION.
+
+RLS remains NOT AUTHORIZED.
+
+
+## 10.55 — MVP Actor × Purpose × Resource Authorization Map — Adversarial Review — 2026-10-06
+
+Artifact: docs/research/mvp-actor-purpose-resource-authorization-map-adversarial-review-2026-10-06.md
+Commit: c76aad64543e8f4e2fa4ab11eb5d2280392d6692
+
+Review result: PASS WITH POLICY / LEGAL HOLDS.
+
+Existence: PASS.
+Coherence: PASS.
+Failure containment: PASS.
+
+The review confirmed that the map does not invent Guardian precedence, child capacity, safeguarding adjudication, consent validity, universal role authority, republication permission or RLS logic.
+
+Public access remains narrow. Organization access remains opportunity-scoped. Guardian access remains Player-specific and purpose-bound. Sensitive domains remain separated. System execution remains subordinate to approved policy.
+
+Remaining holds include User↔Player delegation, organization actor affiliation, Guardian conflict/authorizer validity, application transition authority, public Passport fields, public Verification display state, outcome correction/dispute, child participation effects, safeguarding authority, medical/academic disclosure, retention/deletion and lawful basis/republication.
+
+RLS: NOT AUTHORIZED.
+Migration: HOLD.
+Production: HOLD.
