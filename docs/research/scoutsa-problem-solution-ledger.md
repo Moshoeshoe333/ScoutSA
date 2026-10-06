@@ -1347,3 +1347,64 @@ IMPLEMENTATION: DEFERRED
 ```
 
 Next authorized seam: **G2-SEAM-08 — Outcome multiplicity and correction/dispute structure.**
+
+
+## 10.32 Gate 2 G2-SEAM-08 — Outcome Multiplicity / Correction / Dispute — 2026-10-06
+
+**Re-witness:** `docs/research/gate-2-outcome-correction-dispute-governance-rewitness-2026-10-06.md`  
+**Commit:** `a2e67e3cb9570e37d12f5ef1f4673cbdd578ed70`
+
+G2-SEAM-08 was adversarially interrogated against the existing Outcome, OpportunityApplication, Assertion, Evidence, Verification, AuditEvent, temporal, disclosure, and provenance semantics.
+
+### Finding
+
+The existing **Outcome** concept is semantically sufficient. No additional first-class semantic entity was exposed.
+
+Confirmed boundaries:
+
+- Outcome ≠ OpportunityApplication state.
+- Outcome ≠ truth.
+- Outcome ≠ player ranking/reputation.
+- Placement ≠ proof of player quality.
+- Placement ≠ proof ScoutSA caused the outcome.
+- Multiple outcomes are conceptually possible where the opportunity interaction warrants them.
+- Correction must preserve historical provenance rather than silently rewrite history.
+- Dispute ≠ proof of falsity.
+- Contradictory outcome assertions remain attributable until an applicable authority/process resolves them.
+- Evidence may support an outcome assertion without establishing truth by record existence.
+- AuditEvent supports accountability but does not replace the substantive Outcome.
+- Outcome visibility does not become public merely because a Player or Organization is discoverable.
+- Historical Outcome ≠ current applicability.
+- Fixed retention/deletion semantics remain deferred.
+
+### Remaining relationship / operational decisions
+
+1. Exact Outcome multiplicity/cardinality relative to OpportunityApplication.
+2. Event-like versus composite-result representation.
+3. Precise Assertion ↔ Outcome relationship.
+4. Correction/version/supersession representation.
+5. Dispute lifecycle and authorized participants.
+6. Placement/registration treatment.
+7. Visibility/access policy.
+8. Retention/deletion policy.
+
+**No new semantic ratification is required.**
+
+### Gate consequence
+
+```
+G2-SEAM-08: SEMANTICALLY SUFFICIENT / RELATIONSHIP-OPERATIONAL HOLD
+GATE 2: OPEN
+ERD: HOLD
+SCHEMA: HOLD
+RLS/API/UI: DEFERRED
+IMPLEMENTATION: DEFERRED
+```
+
+The next authorized action is a **consolidated Gate 2 relationship blocker review** covering G2-SEAM-01, G2-SEAM-02, G2-SEAM-03, G2-SEAM-07, and G2-SEAM-08.
+
+If consolidation exposes a missing semantic concept rather than a relationship/operational decision:
+
+`STOP → GOVERNANCE REVIEW → RE-WITNESS → RATIFY IF REQUIRED → DOMAIN RECONCILIATION`
+
+No conceptual ERD freeze is authorized until the remaining relationship decisions are explicitly resolved.
