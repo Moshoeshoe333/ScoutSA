@@ -2462,3 +2462,35 @@ Current field state:
 **Decision:** proceed to actual stakeholder outreach/interview. Do not create additional internal governance artifacts unless a concrete uncertainty, contradiction, or external evidence requires one.
 
 **Evidence boundary:** A candidate contact is not a witness. A public source is not stakeholder validation. No external validation claim is made by this entry.
+
+
+## 10.62 — ScoutSA Opportunity Pathway Model — 2026-10-07
+
+**Artifact:** docs/research/opportunity-pathway-model-2026-10-07.md
+
+A conceptual pathway was defined from the existing frozen product model:
+
+**Player → Football Readiness → Opportunity → Opportunity Readiness → Authorized Connection → Trial/Opportunity Event → Real-World Outcome**
+
+The model reinforces the existing distinctions:
+
+- Player Passport ≠ truth;
+- Football Readiness ≠ talent ranking;
+- Opportunity Readiness ≠ selection guarantee;
+- Discovery ≠ contact authorization;
+- Contact request ≠ approval;
+- Approval ≠ safeguarding clearance;
+- Opportunity ≠ outcome;
+- trial invitation ≠ trial attendance;
+- trial attendance ≠ placement;
+- historical authorization ≠ current authorization.
+
+The pathway makes the North Star operationally visible: **verified players receiving genuine opportunities**, rather than profile views or platform engagement.
+
+Stakeholder-dependent questions remain deliberately open, including which readiness inputs matter in practice, what information is needed at each stage, what constitutes sufficient verification, how guardians want contact/trial authorization handled, which outcomes can be evidenced, and which existing informal networks already solve parts of the pathway.
+
+**Decision:** RESEARCH / DESIGN INPUT — NOT RATIFIED.
+
+No Constitution, MVP boundary, schema, access-policy boundary, RLS authorization, migration authorization, or production status was changed.
+
+**External validation remains the next authority-bearing evidence source.**
