@@ -2511,3 +2511,58 @@ Potential diagnostic funnel ratios are research candidates only; no targets, pro
 **Decision:** RESEARCH / DESIGN INPUT — NOT RATIFIED.
 
 External stakeholder evidence must test the model before any metric becomes a ratified product requirement. RLS remains NOT AUTHORIZED; migration remains HOLD; production remains HOLD.
+
+
+## 10.64 — Genuine Opportunity Definition & Evidence Boundary — 2026-10-07
+
+**Artifact:** `docs/research/genuine-opportunity-definition-evidence-boundary-2026-10-07.md`  
+**Commit:** c16495cadc603688b853145b3dc682eeef79b375
+
+A working evidence boundary was defined for the North Star concept **genuine football opportunity**.
+
+The proposed definition requires an opportunity to be real, relevant and sufficiently evidenced, with an identifiable responsible party and enough context to distinguish a credible opportunity from mere visibility, communication, or an unsupported claim.
+
+Seven proposed evidence dimensions were recorded:
+1. existence;
+2. legitimacy / responsible party;
+3. relevance;
+4. practical accessibility;
+5. authorization / safeguarding boundary;
+6. temporal validity;
+7. evidence / provenance.
+
+The artifact explicitly distinguishes:
+
+- profile view ≠ opportunity;
+- message ≠ necessarily opportunity;
+- contact request ≠ approval;
+- approval ≠ safeguarding clearance;
+- trial invitation ≠ trial attendance;
+- trial attendance ≠ placement;
+- opportunity ≠ outcome.
+
+It also establishes a proposed minimum threshold for any future “genuine opportunity” claim and a conceptual evidence-tier model, while preserving unresolved states such as unresolved, contradicted, expired, withdrawn, or not established where evidence is insufficient.
+
+This work does **not** ratify a production definition, metric, schema, readiness state, verification badge, legal/safeguarding standard, or implementation rule.
+
+**Decision:** RESEARCH / DESIGN INPUT — NOT RATIFIED.
+
+### Current external-validation state
+
+VOB FC outreach: **SENT**.  
+NWU Vaal outreach: **SENT**.  
+First stakeholder interview: **NOT YET CONDUCTED**.  
+Stakeholder evidence: **NONE YET**.
+
+The proposed definition is now ready to be tested against actual stakeholder practice rather than expanded internally.
+
+### State unchanged
+
+- Product assumptions: unchanged.
+- MVP boundary: unchanged.
+- RLS: NOT AUTHORIZED.
+- Migration: HOLD.
+- Production: HOLD.
+- Legal compliance: NOT CLAIMED.
+
+**Next authority-bearing evidence:** stakeholder responses/interviews and scoped legal/safeguarding input.
