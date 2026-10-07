@@ -2420,3 +2420,45 @@ A field-ready external validation pack was created containing:
 The pack deliberately avoids leading stakeholders toward transport, guardianship, cost, academics or other proposed Opportunity Readiness barriers. It also avoids presenting ScoutSA as legally compliant, approved, or guaranteed to create opportunities.
 
 Decision: FIELD VALIDATION MATERIAL READY. No new governance gate opened.
+
+
+## 10.61 — External Validation Stakeholder Sampling Frame — 2026-10-07
+
+Artifact: `docs/research/external-validation-stakeholder-sampling-frame-2026-10-07.md`
+Commit: `c199e8541f212d5b419a5f984e689a9fdf861919`
+
+A purposive first-contact sampling frame was established for the external-validation phase.
+
+The frame covers five perspectives:
+1. grassroots club/coach;
+2. academy/development coach;
+3. school sports;
+4. guardian;
+5. scout/academy recruitment.
+
+Public-source research was used only to justify **contact relevance**. It does not establish stakeholder agreement, product demand, adoption, safeguarding quality, legal compliance, commercial viability, or representativeness.
+
+Initial candidate routes:
+- VOB FC — grassroots/youth-development perspective;
+- NWU Vaal Football — institutional/development pathway;
+- Vaal Elite Soccer Academy — youth-development perspective;
+- Vaal Triangle school sports channel — school perspective;
+- guardian recruited through an authorized club/academy/school relationship — family perspective.
+
+Current field state:
+
+| Control | State |
+|---|---|
+| Sampling frame | READY |
+| First stakeholder contacted | NO |
+| First stakeholder interview completed | NO |
+| External validation evidence | NONE YET |
+| Product assumptions changed | NO |
+| MVP boundary changed | NO |
+| RLS | NOT AUTHORIZED |
+| Migration | HOLD |
+| Production | HOLD |
+
+**Decision:** proceed to actual stakeholder outreach/interview. Do not create additional internal governance artifacts unless a concrete uncertainty, contradiction, or external evidence requires one.
+
+**Evidence boundary:** A candidate contact is not a witness. A public source is not stakeholder validation. No external validation claim is made by this entry.
