@@ -213,6 +213,38 @@ This matrix is an evidence-control instrument. It does not authorize Constitutio
 
 ---
 
+## Living Primary-Evidence Capture Board
+
+Use this board as the landing point for every substantive stakeholder response. Keep evidence cells empty until real primary witnesses exist.
+
+| Assumption | Primary evidence required | Status | Interview date | Evidence / quote | Contradiction | Decision |
+|---|---|---|---|---|---|---|
+| A2 — Visibility vs trusted reachability | How did the last promising player come to attention, who recommended them, and what caused action? | CHALLENGED | | | | |
+| A3 — Trustworthy evidence before progression | What is checked first/second/third before progressing a player? | OPEN | | | | |
+| A4 — MySAFA / registration anchor | Is registration actually checked, by whom, when, and what happens when records conflict? | OPEN | | | | |
+| A5 — Trusted human standing | Who can vouch for a player, and why is that person trusted? | OPEN | | | | |
+| A6 — Invitation vs open trial | How did the last recruited/referred player receive an assessment or invitation, and how common are open trials? | CHALLENGED | | | | |
+| A7 — Existing ecosystem already solves parts | Which existing structures solve discovery, verification, exposure, referral and access, and where do they stop? | CHALLENGED | | | | |
+| A8 — Interoperate vs replace | What systems are already used, what works, and what duplication would be harmful? | OPEN | | | | |
+| A9 — Guardian role | How do guardians approve, reject, monitor or verify opportunities in practice? | OPEN | | | | |
+| A10 — Fraud/scam risk | What scams have actually been encountered and how are legitimate counterparties distinguished? | OPEN | | | | |
+| A11 — Practical access constraints | Which barriers actually caused recent players to miss opportunities, and which were decisive? | OPEN | | | | |
+| A12 — Education as opportunity | Give a concrete example of a football-to-education opportunity and how it was accessed. | CHALLENGED | | | | |
+| A13 — Unique unresolved junction | What remains unsolved after a promising player is noticed, after existing solutions are named? | OPEN — DECISIVE | | | | |
+| A14 — Stakeholder adoption | What would make them use ScoutSA, and what would stop them? | OPEN | | | | |
+| A15 — Opportunity economics | What costs or incentives affect discovery, access, movement or disclosure? | OPEN | | | | |
+| A16 — Informal digital visibility | Do informal digital alerts lead to action, and what additional evidence is required? | OPEN | | | | |
+| A17 — Recommender/network trust | Would structured profile evidence change a decision if the recommender is already trusted? | OPEN | | | | |
+| A18 — Unique junction beyond visibility/network | What does the existing ecosystem fail to solve after notice, and what would make ScoutSA unnecessary? | OPEN — DECISIVE | | | | |
+
+### Daily evidence rule
+
+When a response arrives: preserve the raw witness first; record date and stakeholder role; add only attributable evidence; record contradictions; interpret afterward; update status only when the evidence rule is met; record the decision and required corroboration.
+
+**A positive reply, introduction, referral, or willingness to talk does not populate this board as validation.**
+
+---
+
 ## Universal interview questions
 
 Use these across stakeholder roles. Prefer concrete cases over abstract opinions.
