@@ -2639,3 +2639,26 @@ The draft also separates activity metrics from evidence-of-value metrics and del
 **Authority:** NONE beyond the documented draft and existing ratified/frozen boundaries.  
 **Implementation:** NOT AUTHORIZED.  
 **Next evidence:** first external stakeholder conversations, beginning with the coach / academy / guardian-relevant sample already prepared.
+
+
+## 10.67 — Desk Phase B Closed / Informal Discovery & Trust Evidence Seeded — 2026-10-07
+
+Desk Phase B is now recorded as **SUBSTANTIALLY COMPLETE / CLOSED FOR EXPANSION**. Secondary evidence remains permitted to inform the assumption matrix and outreach map, but it is not treated as stakeholder validation.
+
+The Assumption Validation Matrix was updated in commit **61366f71dbe57088548ec1a2a7c02b7c679e0451** (blob **ac7db9b9a38fa9363adcd0513d66e3fb7bd073ee**) with three explicit research controls:
+
+- **A16 — Informal digital visibility channels already perform part of discovery:** local public reporting on Vino Snap provides a concrete example of grassroots visibility through photography/content and tournament exposure. This supports the existence of an informal visibility mechanism, not proof that it solves verification, feasibility or safe opportunity access.
+- **A17 — Trust may attach more strongly to the recommender/network than to structured profile data:** public Vaal football history documents network-mediated discovery through coaches, journalists and development actors. This remains an OPEN hypothesis requiring primary evidence.
+- **A18 — ScoutSA must identify a unique unresolved junction beyond existing visibility and network pathways:** existing clubs, academies, tournaments, development leagues and local football media make a generic visibility-gap thesis insufficient. This is OPEN / DECISIVE and requires primary stakeholder convergence.
+
+A2 and A6 were also refined using secondary evidence: A2 remains **CHALLENGED**, while A6 is treated as a pathway-specific hypothesis rather than a universal claim because local open trials and invitation/scouting pathways both exist.
+
+### Methodological boundary
+
+Public sources establish context, contact relevance and hypotheses only. They do not establish that coaches, guardians or scouts will use ScoutSA, nor do they ratify product requirements.
+
+### Current bottleneck
+
+**Primary validation remains the next authority-bearing evidence source.** The first stakeholder interview has not yet occurred. No product assumption, MVP boundary, Constitution, schema, RLS, migration or production decision was changed by this desk update.
+
+**Next action:** conduct the first real stakeholder conversation and preserve the raw witness, concrete case, contradiction and interpretation separately.
