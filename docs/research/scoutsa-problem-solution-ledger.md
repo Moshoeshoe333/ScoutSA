@@ -2662,3 +2662,28 @@ Public sources establish context, contact relevance and hypotheses only. They do
 **Primary validation remains the next authority-bearing evidence source.** The first stakeholder interview has not yet occurred. No product assumption, MVP boundary, Constitution, schema, RLS, migration or production decision was changed by this desk update.
 
 **Next action:** conduct the first real stakeholder conversation and preserve the raw witness, concrete case, contradiction and interpretation separately.
+
+## 10.68 — Primary Validation Witness Record — 2026-10-07
+
+Artifact: `docs/research/primary-validation-witness-record.md`  
+Commit: 486f529ca267552ccea47c31673f5238750e46ea
+
+A standardized field-ready witness record was created for the external-validation phase. It separates raw stakeholder testimony, concrete lived cases, general experience, interpretation, contradiction, assumption impact, and decision disposition.
+
+The record includes the existing neutral five-question interview core, required non-leading probes, a dedicated falsifier question, evidence classification, contradiction capture, privacy/minimization controls, and an explicit authority boundary preventing interview evidence from silently authorizing Constitution, MVP, schema, RLS, migration, production, legal, safeguarding, institutional, or investor claims.
+
+The artifact also preserves the distinction between discovery, relevant opportunity exposure, authorized connection, genuine opportunity event, and real-world outcome. Activity such as profile views, messages, contact requests, introductions, or positive opinions is not treated as product success by itself.
+
+**Decision:** FIELD VALIDATION CONTROL READY. No new governance gate opened. No product or schema boundary changed.
+
+**Current field state:**
+- Primary Validation: OPEN
+- First stakeholder interview: NOT YET CONDUCTED at artifact creation
+- External validation evidence: NONE YET
+- MVP boundary: UNCHANGED
+- RLS: NOT AUTHORIZED
+- Migration: HOLD
+- Production: HOLD
+
+**Next action:** use this record for the first actual stakeholder conversation and preserve the raw witness before interpretation.
+
