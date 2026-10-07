@@ -2381,3 +2381,25 @@ ScoutSA completed a significant transition from internal domain/schema preparati
 The next phase should be considered complete only when external stakeholder evidence and scoped legal input have been gathered and reconciled with the existing MVP boundary/access model, or when documented evidence shows that the proposed validation cannot yet be obtained.
 
 **Operating principle:** The methodology has done enough work to earn contact with reality. From here, evidence from real stakeholders should drive the next material change.
+
+
+## 10.59 — Bidirectional SQL Traceability Review — 2026-10-07
+
+Artifact: docs/research/bidirectional-field-constraint-sql-traceability-review-2026-10-07.md
+Commit: 7076bae4b187999caa76bf5d9832dfe8c6ace40e
+
+The amended SQL was reviewed in both directions against the Field/Constraint Decision Matrix.
+
+**Source → SQL:** PASS, with two explicitly bounded implementation/lifecycle holds:
+- derived-state version/context representation (D1);
+- consent withdrawal/supersession representation (F5).
+
+**SQL → Source:** PASS. No orphan physical field or constraint was identified.
+
+The review found no hidden authority, legal precedence, verification-as-truth, verification-as-safeguarding-clearance, republication permission, readiness-as-ranking, or other ratified semantic collapse.
+
+33×3: Existence PASS / Coherence PASS / Failure containment PASS.
+
+Decision: BIDIRECTIONAL TRACEABILITY PASS WITH IMPLEMENTATION-DETAIL / LIFECYCLE HOLDS.
+
+No new governance gate opened. Migration remains HOLD; RLS remains NOT AUTHORIZED; production remains HOLD.
