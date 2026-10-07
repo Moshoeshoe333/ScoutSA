@@ -2494,3 +2494,20 @@ Stakeholder-dependent questions remain deliberately open, including which readin
 No Constitution, MVP boundary, schema, access-policy boundary, RLS authorization, migration authorization, or production status was changed.
 
 **External validation remains the next authority-bearing evidence source.**
+
+
+## 10.63 — North-Star Impact Evidence Model — 2026-10-07
+
+**Artifact:** docs/research/north-star-impact-evidence-model-2026-10-07.md
+
+A conceptual evidence ladder was defined for the ScoutSA North Star: **verified players receiving genuine football opportunities**.
+
+The proposed progression is: **Player existence → Evidence-supported information → Relevant opportunity exposure → Authorized connection → Genuine opportunity event → Real-world outcome**.
+
+The model explicitly prevents activity metrics from being treated as impact and preserves attribution uncertainty. It distinguishes platform events from real-world events and records failure/constraint evidence as useful information rather than automatically treating it as product failure.
+
+Potential diagnostic funnel ratios are research candidates only; no targets, production analytics requirements, schema changes, or causal claims were authorized.
+
+**Decision:** RESEARCH / DESIGN INPUT — NOT RATIFIED.
+
+External stakeholder evidence must test the model before any metric becomes a ratified product requirement. RLS remains NOT AUTHORIZED; migration remains HOLD; production remains HOLD.
