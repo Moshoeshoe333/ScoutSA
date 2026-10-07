@@ -2614,3 +2614,28 @@ The outreach remains research-only: no endorsement, partnership, adoption, sale,
 | Production | HOLD |
 
 **Decision:** treat the bounce as a contact-provenance/delivery issue, not stakeholder evidence. Re-route through the current official NWU sports-management contact rather than inventing or guessing an alternative address.
+
+
+## 10.66 — MVP Definition Draft — 2026-10-07
+
+A one-page MVP definition was drafted and committed as `docs/01-mvp-definition.md` for review and later ratification.
+
+**Commit:** f5104fe55664ce509c9df827d27496b7e5136f73  
+**Blob:** 62c3812b7114469729440980a4bf8ab3b262b32c
+
+The draft was inspected against the live Constitution, Gate Status, Domain Model, Relationship Model, frozen MVP Boundary, frozen MVP Relationship Subset, and MVP Access-Policy Matrix before commit.
+
+The draft defines one bounded user loop:
+
+**Player Passport → minimum evidence / verification → consent-controlled discoverability → legitimate opportunity/contact request → applicable guardian gate → opportunity/trial outcome.**
+
+The review preserved existing holds rather than inventing them. In particular, exact User↔Player cardinality/delegation, receiving-side authorization, Guardian conflict handling, and field-level disclosure remain governed by existing operational/legal holds.
+
+The draft explicitly excludes rankings, transfer marketplace, payments, national scope, unrestricted messaging, AI authority, and production RLS/migration implementation.
+
+The draft also separates activity metrics from evidence-of-value metrics and deliberately sets no adoption target before primary external conversations.
+
+**Status:** DRAFT / NOT RATIFIED.  
+**Authority:** NONE beyond the documented draft and existing ratified/frozen boundaries.  
+**Implementation:** NOT AUTHORIZED.  
+**Next evidence:** first external stakeholder conversations, beginning with the coach / academy / guardian-relevant sample already prepared.
