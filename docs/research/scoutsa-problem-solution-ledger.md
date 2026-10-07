@@ -2403,3 +2403,20 @@ The review found no hidden authority, legal precedence, verification-as-truth, v
 Decision: BIDIRECTIONAL TRACEABILITY PASS WITH IMPLEMENTATION-DETAIL / LIFECYCLE HOLDS.
 
 No new governance gate opened. Migration remains HOLD; RLS remains NOT AUTHORIZED; production remains HOLD.
+
+
+## 10.60 — External Validation Interview Pack — 2026-10-07
+
+Artifact: docs/research/external-validation-interview-pack-2026-10-07.md
+Commit: 750c812a62a3a8e5f7b9a336b1a87b7dcbe8926a
+
+A field-ready external validation pack was created containing:
+- a one-page plain-language explanation of ScoutSA;
+- neutral discovery questions for five initial stakeholder categories;
+- separate treatment of direct observation, interpretation, contradiction, confidence and action;
+- explicit anti-bias rules;
+- a five-outcome validation decision rule: Confirmed / Revised / Reduced / New constraint / Contradicted / Unresolved.
+
+The pack deliberately avoids leading stakeholders toward transport, guardianship, cost, academics or other proposed Opportunity Readiness barriers. It also avoids presenting ScoutSA as legally compliant, approved, or guaranteed to create opportunities.
+
+Decision: FIELD VALIDATION MATERIAL READY. No new governance gate opened.
