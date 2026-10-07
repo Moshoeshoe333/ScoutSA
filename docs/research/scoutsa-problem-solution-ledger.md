@@ -2687,3 +2687,27 @@ The artifact also preserves the distinction between discovery, relevant opportun
 
 **Next action:** use this record for the first actual stakeholder conversation and preserve the raw witness before interpretation.
 
+## 10.69 — Living Assumption Board + Primary Interview Run-Sheet — 2026-10-07
+
+Two field-validation controls were added without changing the product or governance boundaries.
+
+### Living Assumption Board
+Artifact: `docs/research/assumption-validation-matrix-2026-10-07.md`  
+Commit: 2ead6ca4e3606abd274f0890a44278396d60d1b6
+
+The Assumption Validation Matrix now contains a dedicated **Living Primary-Evidence Capture Board** covering A2–A18. Each tracked assumption has a primary-evidence question plus empty fields for interview date, attributable evidence/quote, contradiction and decision. A daily evidence rule requires raw witness preservation before interpretation and prevents positive replies, introductions or referrals from being recorded as validation.
+
+### Interview Run-Sheet
+Artifact: `docs/research/primary-validation-interview-run-sheet-2026-10-07.md`  
+Commit: 07d7e4bb5cac8a40756a7cc9cec62e7db5e8a7b0
+
+A concise 25–30 minute operating sheet was added with the neutral opening, five universal questions, non-leading probes, falsifier question, optional concept reaction only after discovery, same-day five-bullet capture, and explicit evidence/authority boundaries.
+
+### Decision
+
+**PRIMARY VALIDATION OPERATING CONTROLS READY.**
+
+No assumption was changed by these artifacts. No product requirement was ratified. No Constitution, MVP boundary, schema, RLS, migration, production, legal-compliance or safeguarding claim was authorized.
+
+**Next authority-bearing event:** the first actual stakeholder witness.
+
