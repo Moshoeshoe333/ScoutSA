@@ -2711,3 +2711,55 @@ No assumption was changed by these artifacts. No product requirement was ratifie
 
 **Next authority-bearing event:** the first actual stakeholder witness.
 
+## 10.70 — Actor × Purpose × Resource Authorization Reconciliation — 2026-10-07
+
+The MVP Actor × Purpose × Resource Authorization Framework was reconciled against the live ScoutSA MVP Access-Policy Decision Matrix.
+
+### Artifact
+
+`docs/research/mvp-actor-purpose-resource-map-2026-10-07.md`
+
+Commit: `1619511e60fed91af5163f9893120cc7298487bc`
+
+The framework establishes the traceability chain:
+
+**ACTOR → PURPOSE → RESOURCE → ACCESS CLASSIFICATION → ACTIVE PRECONDITIONS / PROVENANCE**
+
+It explicitly preserves the matrix's distinction between contextual access and universal role authority.
+
+### Reconciliation result
+
+The framework is **architecturally coherent**, but it does not close the underlying policy/legal holds.
+
+The following remain unresolved and therefore cannot become RLS predicates:
+
+- exact User↔Player relationship and delegated/shared access;
+- Guardian/authorizer cardinality and conflicting authority;
+- actor↔Organization affiliation and jurisdiction;
+- OpportunityApplication lifecycle and transition authority;
+- field-level discovery/application disclosure;
+- child voice effects in specific workflows;
+- safeguarding assignment, escalation and disclosure;
+- correction/version/supersession and dispute handling;
+- retention/deletion;
+- lawful republication/further processing;
+- external verification of actor/organization authority.
+
+The framework adds an active-state requirement: authorization must be evaluated against current identity, relationship, purpose, resource, scope, applicability, consent/authorization, eligibility/safeguarding state where relevant, provenance, minimum disclosure and auditability.
+
+### Authority decision
+
+**Actor × Purpose × Resource Framework: PROPOSED / ARCHITECTURALLY COHERENT**
+
+**Policy/legal holds: REMAIN OPEN**
+
+**RLS: NOT AUTHORIZED**
+
+**Migration: HOLD**
+
+**Production: HOLD**
+
+No product requirement, Constitution boundary, physical schema, RLS rule or migration was authorized by this reconciliation.
+
+**Next authority-bearing evidence:** actual stakeholder evidence for the external-validation workstream, alongside appropriately scoped legal/safeguarding review for the remaining protected-data questions.
+
