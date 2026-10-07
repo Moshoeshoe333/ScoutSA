@@ -2566,3 +2566,51 @@ The proposed definition is now ready to be tested against actual stakeholder pra
 - Legal compliance: NOT CLAIMED.
 
 **Next authority-bearing evidence:** stakeholder responses/interviews and scoped legal/safeguarding input.
+
+
+## 10.65 — NWU Outreach Delivery Failure / Contact Reconciliation — 2026-10-07
+
+The initial NWU Vaal football outreach email to **Thomas.thema@nwu.ac.za** was returned by Proton Mail with SMTP response **550 5.0.0 — User unknown** at the recipient server.
+
+This is evidence that the outreach message was **not delivered**. It is not evidence that NWU declined participation, nor evidence that the stakeholder/contact itself is invalid in every source.
+
+A fresh check of official NWU sources found an important provenance conflict:
+
+- NWU's current official Soccer page still lists **Thomas Thema**, **Thomas.thema@nwu.ac.za**, and **016-910-3228** as Vanderbijlpark Campus soccer contact.
+- NWU's current official Sport contact page also lists Thomas Thema under Soccer / Vanderbijlpark Campus.
+- An older official NWU Vanderbijlpark Campus Sport document (17 March 2021) also identifies Thomas Thema as Sport Manager (Football & Bodybuilding), but its age makes it weaker current-contact evidence.
+- NWU's current Corporate Relations page identifies **Karabo Mokoka** as the Vanderbijlpark Senior Sports Manager and gives **Karabo.Mokoka@nwu.ac.za**.
+- NWU's current Vanderbijlpark Campus sports information continues to identify football as a high-performance sport.
+
+### Evidence interpretation
+
+The correct conclusion is:
+
+**Contact route conflicted / delivery unresolved — DO NOT treat as stakeholder rejection.**
+
+The official web directory currently presents Thomas's address as valid, while the recipient mail server returned User unknown. Therefore the address should not be blindly retried as though delivery succeeded.
+
+### Controlled next step
+
+Use the current official NWU sports-management route to request either:
+1. confirmation of the correct current football contact; or
+2. referral to the appropriate person for a 20–30 minute research conversation.
+
+The outreach remains research-only: no endorsement, partnership, adoption, sale, legal-compliance claim, or guaranteed-opportunity claim is being requested.
+
+### External-validation state
+
+| Control | State |
+|---|---|
+| VOB FC outreach | SENT / delivery pending response |
+| NWU Thomas Thema email | **BOUNCED — NOT DELIVERED** |
+| NWU stakeholder validation | NONE YET |
+| NWU contact route | **RECONCILIATION REQUIRED** |
+| First stakeholder interview | NOT YET CONDUCTED |
+| Product assumptions | UNCHANGED |
+| MVP boundary | UNCHANGED |
+| RLS | NOT AUTHORIZED |
+| Migration | HOLD |
+| Production | HOLD |
+
+**Decision:** treat the bounce as a contact-provenance/delivery issue, not stakeholder evidence. Re-route through the current official NWU sports-management contact rather than inventing or guessing an alternative address.
