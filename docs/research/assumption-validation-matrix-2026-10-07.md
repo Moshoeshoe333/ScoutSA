@@ -59,7 +59,7 @@ This matrix is an evidence-control instrument. It does not authorize Constitutio
 ### A2 — Visibility alone is not the core problem; trusted reachability may matter more
 
 **Current state:** CHALLENGED  
-**Desk evidence:** Research indicates relational trust, safety, access and invitations may matter more than simply making a profile visible.  
+**Desk evidence:** Local secondary evidence now gives concrete examples of visibility already occurring through photography, social distribution, tournaments, journalists and existing football networks. Vino Snap is publicly documented as a Vaal-raised sports photographer whose grassroots football work surfaces players and connects local football stories to wider attention; separate reporting describes a Vino Snap tournament as the setting where a youth coach first saw Relebohile Mofokeng. This supports the narrower claim that visibility already exists in fragmented informal channels. It does not establish that those channels reliably produce trusted, feasible opportunities. citeturn0search1turn0search13  
 **Primary evidence required:** How did the last promising player come to attention? Who recommended them? What caused the receiving stakeholder to act?  
 **Disconfirming evidence:** Stakeholders consistently say discoverability through an open digital system is sufficient and human trust adds little.  
 **Interpretation if falsified:** Preserve/reconsider a visibility-led discovery model.  
@@ -95,7 +95,7 @@ This matrix is an evidence-control instrument. It does not authorize Constitutio
 ### A6 — Major-club opportunity pathways are often invitation/scouting-led rather than open-trial-led
 
 **Current state:** CHALLENGED  
-**Desk evidence:** Secondary research indicates invitation and showcase pathways may dominate for major clubs, while smaller academies may use open trials.  
+**Desk evidence:** Secondary research remains mixed rather than universal: invitation/scouting pathways are visible in major-club contexts, while open trials clearly exist in local Vaal/Sedibeng football. Recent local reporting documents Ben 10 FC holding trials for fresh talent, while a separate account describes a youth coach encountering Mofokeng at a Vino Snap tournament. The correct hypothesis is therefore pathway-specific, not “open trials are obsolete.” citeturn0search13turn0search14  
 **Primary evidence required:** How did the last recruited/referred player receive an assessment or invitation? How common are open trials?  
 **Disconfirming evidence:** Vaal stakeholders report open trials as the dominant pathway even for major recruitment.  
 **Interpretation if falsified:** Reconsider opportunity aggregation as a central product function.  
@@ -172,6 +172,35 @@ This matrix is an evidence-control instrument. It does not authorize Constitutio
 **Disconfirming evidence:** Stakeholders consistently say they would not use a new platform and existing workflows are sufficient.  
 **Interpretation:** Product may need to become an interoperability/service layer rather than a standalone destination, or be retired.  
 **Implementation:** HOLD.
+
+### A16 — Informal digital visibility channels already perform part of the discovery function
+
+**Current state:** OPEN  
+**Desk evidence:** Vino Snap is a documented local visibility node: reporting describes Pitsi Vincent Matlou as a Vaal-raised sports photographer with deep grassroots football presence, while public commentary and football reporting describe his photography/content as surfacing township players to wider football attention. This demonstrates an existing informal discovery/visibility mechanism, not a structured verification or feasibility system. citeturn0search1turn0search4turn0search30  
+**Primary evidence required:** Do receiving coaches/clubs actually act on these public alerts? What additional evidence do they require before contact, assessment or invitation?  
+**Disconfirming evidence:** Relevant receiving stakeholders report that informal digital alerts already provide all information needed for safe, trusted opportunity decisions.  
+**Interpretation:** If informal channels close the relevant junction sufficiently, ScoutSA should narrow or retire the corresponding product claim. If they stop at visibility, the unresolved junction must be stated more precisely.  
+**Implementation:** HOLD.
+
+### A17 — Trust may attach more strongly to the recommender/network than to structured profile data
+
+**Current state:** OPEN  
+**Desk evidence:** Vaal football history contains repeated examples of coaches, journalists, tournaments and development structures acting as discovery intermediaries. Zacharia Nale is publicly documented as both a football development actor and journalist, and historical Vaal football coverage describes his role in profiling young players. This is secondary evidence of network-mediated discovery, not proof of a general trust hierarchy. citeturn0search0turn0search5  
+**Primary evidence required:** “Would a structured profile with coach verification change anything if you already trust the person who sent the name?”  
+**Disconfirming evidence:** Stakeholders consistently treat structured evidence as independently sufficient regardless of who introduces the player.  
+**Interpretation:** Do not build recommender authority into ScoutSA unless primary evidence shows it is necessary and can be safely scoped.  
+**Implementation:** HOLD.
+
+### A18 — ScoutSA must identify a unique unresolved junction beyond existing visibility and network pathways
+
+**Current state:** OPEN — DECISIVE  
+**Desk evidence:** Existing local mechanisms already include clubs, academies, tournaments, journalists, photographers/content creators and development leagues. Recent reporting also documents local grassroots tournaments and development structures. This strengthens the need to identify a specific unresolved junction rather than assuming a generic “visibility gap.” citeturn0search2turn0search8turn0search10  
+**Primary evidence required:** Ask each stakeholder: “What does the existing ecosystem fail to solve after a promising player has been noticed?” and “What would make ScoutSA unnecessary?”  
+**Disconfirming evidence:** Stakeholders consistently identify existing structures as sufficient, or no common unresolved junction emerges across materially different roles.  
+**Interpretation:** If falsified, narrow, redesign or retire the current thesis. If supported, define the narrowest evidence-backed product boundary.  
+**Implementation:** HOLD.
+
+---
 
 ### A15 — Opportunity economics and development/compensation incentives can affect pathway behaviour
 
@@ -274,12 +303,12 @@ A candidate product change becomes eligible for governance consideration only af
 
 | Control | State |
 |---|---|
-| Desk Research Phase B | SUBSTANTIALLY COMPLETE |
+| Desk Research Phase B | SUBSTANTIALLY COMPLETE / CLOSED FOR EXPANSION |
 | Primary Validation Phase | OPEN |
 | VOB FC outreach | SENT / awaiting response |
 | NWU Karabo Mokoka outreach | SENT / awaiting response |
 | Thomas Thema outreach | BOUNCED / NOT DELIVERED |
-| First stakeholder interview | NOT YET CONDUCTED |
+| First stakeholder interview | NOT YET CONDUCTED — PRIMARY BOTTLENECK |
 | Primary stakeholder evidence | NONE YET |
 | Product assumptions changed | NO |
 | MVP boundary | UNCHANGED |
