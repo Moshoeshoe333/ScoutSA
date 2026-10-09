@@ -3072,3 +3072,13 @@ Cross-checked 15 candidate invariants against the written claim-scoped verificat
 This was a document traceability exercise only. It did not execute any scenario, reopen STS-001, evaluate STS-002–STS-010, change frozen fixtures, prove implementation/security enforcement, or authorize a new harness. STS-001 v1.1 remains **BLOCKED — NOT A PASS**; STS-006 remains blocked from evaluation under the current procedure.
 
 Next analytical step: propose a separately versioned, unfrozen set of adversarial specification examples for the remaining gaps, with expected outcomes declared before evaluation. Separate approval is required before any execution; existing implementation and live-use holds remain.
+
+
+## 10.87 — Unfrozen Specification-Gap Vectors Proposed — 2026-10-09
+
+**Artifact:** `docs/research/trust-core-unfrozen-specification-gap-vectors-proposal-2026-10-09.md`  
+**Status:** PROPOSED TEST DESIGN ONLY — NOT RATIFIED, NOT EXECUTED; AuthorityLevel NONE.
+
+Prepared five new, unfrozen synthetic examples for unresolved specification questions: freshness field mapping, unknown versus explicit no-fee state, conflicting authorization evidence, correction history versus retention/deletion, and access denial versus audit completeness. Each has a predeclared expected blocked/hold outcome and review conditions. They are separate from STS-FIXTURES-1.0/v1.1 and do not reopen or replace any frozen case.
+
+No execution or implementation is authorized. STS-001 v1.1 remains **BLOCKED — NOT A PASS**; STS-006 remains blocked from evaluation. Policy/legal holds, main-branch isolation, and implementation/live-use holds remain unchanged.
