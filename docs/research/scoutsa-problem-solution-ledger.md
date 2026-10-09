@@ -2966,3 +2966,13 @@ Decision B approves a new versioned fixture set. STS-001 has clearly labelled, n
 The recorded handling limits Tier 1 to two explicitly enumerated authenticity claims with synthetic packet/source references, timestamp, verifier ID and limitations. Eligibility, capacity and transport/access/cost remain unresolved, so Tier 2 stays PAUSED/BLOCKED and Tier 3 is NOT ESTABLISHED. No public/actionable use or participant-specific contact is allowed. The result indicates consistency with the frozen v1.1 expected outcome only; the evaluator had prior oracle exposure and helped author the fixture. It is not independent assurance, software enforcement, legal compliance, production readiness, or live-pilot evidence.
 
 **Stop rule applied:** Formal tabletop expansion stops here. STS-002–STS-010 remain unevaluated. The original v1.0 STS-001 BLOCKED record and STS-006 v1.0 blocker remain historical and unchanged. Next step is a distinct Trust Core implementation-readiness/design gate. The README's schema hold and implementation-deferred status are not overridden; no implementation, migration/RLS, merge, real data, minor contact, public listing, pilot, or gate transition is authorized by these records.
+
+
+## 10.78 — Minimal Trust Core MVP Boundary Proposal — 2026-10-09
+
+**Artifact:** `docs/research/trust-core-minimal-mvp-boundary-proposal-2026-10-09.md`  
+**Status:** PROPOSAL INPUT TO MVP BOUNDARY FREEZE — NOT RATIFIED, NOT IMPLEMENTED
+
+The proposal converts the implementation recommendation into a bounded candidate target: opportunity state/conditions; claim-scoped verification records with provenance and explicit `valid_until`/`reconfirm_by`; scoped consent and withdrawal; append-only evidence and decision audit; paused/blocked states; and negative tests for freshness, consent, access control, unauthorized tier escalation, history mutation, and audit completeness. It also states a strict non-scope (no real data, public profiles/listings, contact, pilot, or compliance/readiness claims).
+
+This does not authorize code, schema, migration, RLS, API, UI, or deployment. The governing `README.md` on `main` states Gate 2 is closed at conceptual level, ERD frozen, schema on hold, implementation deferred, and MVP Boundary Freeze is the next phase. The Trust Core proposal is therefore input to that next phase; the MVP boundary and implementation gate must be reconciled and explicitly authorized before code begins. Existing holds remain.
