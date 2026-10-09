@@ -2935,3 +2935,13 @@ A versioned delta is proposed rather than editing frozen `STS-FIXTURES-1.0`. For
 For STS-006, the proposed v1.1 variant removes the unsupported 12-month rule from the test input and instead tests whether the evaluator identifies the missing governing freshness threshold and blocks actionable use without inventing policy. V1.0 and its oracle remain unchanged.
 
 Before use, the complete v1.1 fixture set must be assembled with unchanged cases carried forward, every delta itemized, explicitly reviewed/approved, and separately frozen. A separate retest must record evaluator identity/date, procedure version, observation, evidence references and outcome. Until then STS-001 remains BLOCKED under v1.0 and STS-006 remains BLOCKED FROM EVALUATION under v1.0. No scenario result, gate transition, merge, implementation, or live-use authorization is created.
+
+
+## 10.75 — Complete STS-FIXTURES-1.1 Review Copy Drafted — 2026-10-09
+
+**Artifact:** `docs/research/proposed-synthetic-trust-fixtures-v1.1-review-copy-2026-10-09.md`  
+**Status:** PROPOSAL FOR REVIEW — NOT RATIFIED, NOT FROZEN, NOT EXECUTED
+
+A complete v1.1 review copy has been drafted to make the proposed changes reviewable in context. It carries forward STS-002–STS-005 and STS-007–STS-010 in substance, proposes an STS-001 provenance supplement using explicitly fictional source IDs/timestamp/reviewer ID while retaining unresolved material conditions, and proposes an STS-006 missing-policy-dependency case without assuming the unsupported 12-month threshold. This is a review copy, not the frozen v1.1 release.
+
+The frozen v1.0 fixture and oracle remain unchanged. The new synthetic provenance is authored fixture content, not evidence recovered from v1.0 and not a real verification. No PASS/FAIL is awarded. STS-001 remains BLOCKED under v1.0; STS-006 remains BLOCKED FROM EVALUATION under v1.0. Before any v1.1 evaluation, the candidate requires explicit review/approval, an exact change list, and a separate immutable freeze record. All prior holds remain; no merge, implementation, live use, or gate transition is authorized.
