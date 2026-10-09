@@ -2867,3 +2867,17 @@ This is a documentation-consistency correction only. It does not alter fixture i
 **Current state after reconciliation:** Protocol ratification recorded; fixtures v1.0 frozen; readiness review recorded; formal tabletop NOT RUN; all ten scenario outcomes remain unrecorded/NOT TESTED; independent evaluator not recorded; no gate transition or implementation/live-use authorization.
 
 **Next controlled action:** Resolve or explicitly carry forward the operating-procedure gaps and the STS-006 freshness-rule dependency; prepare a blind evaluation packet for a separate evaluator; then execute and record the ten cases under the ratified protocol.
+
+
+## 10.68 — STS-001 Initial Observation Captured — 2026-10-09
+
+**Artifact:** `docs/research/sts-001-initial-observation-2026-10-09.md`  
+**Commit:** `c9b8baa8093941f808628bb9a2f32109a666c915`
+
+The user's initial decision was recorded as **PAUSE PENDING CLARIFICATION**. The evaluator identified corroboration of the submitted invitation through a separate predesignated official channel, while keeping eligibility, capacity, and transport/cost conditions unresolved. The proposed next action is targeted clarification while the opportunity remains non-public and non-actionable.
+
+**Comparison to frozen oracle:** BLOCKED — not a PASS. The observation is consistent with the no-action/no-overclaim boundary, but the required source-packet version, explicit claim-by-claim checked scope, and verification timestamp were not recorded. No critical failure is declared on this incomplete observation; complete the evidence fields and retest under the unchanged oracle.
+
+**Procedure gaps proposed (not ratified amendments):** distinguish authenticity corroboration from full opportunity verification; define blocking conditions; assign an escalation/closure route; and codify transport/cost disclosure fields.
+
+**Authority boundary:** No fixture or oracle changed. No policy amendment ratified. Formal ten-case tabletop remains incomplete; no gate transition or implementation/live-use authorization.
