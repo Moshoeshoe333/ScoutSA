@@ -1,7 +1,7 @@
 # ScoutSA Part 12 — Synthetic Trust Evaluation Set
 
 **As of:** 2026-10-09  
-**Status:** DRAFT FOR REVIEW — proposed evaluation protocol; not yet ratified  
+**Status:** RATIFIED FOR SYNTHETIC MANUAL TABLETOP EVALUATION ONLY — ratification record dated 2026-10-09  
 **Target first evaluation:** Manual tabletop review using synthetic records  
 **Test execution status:** NOT RUN  
 **Authority effect:** None. This document does not authorize implementation, live data processing, recruitment, public listings, migrations, RLS changes, or production use.
@@ -24,9 +24,9 @@ This is a test-design artifact. Writing scenarios or expected outcomes is not ev
 - **Stop condition:** All ten scenarios have documented final outcomes; every critical scenario passes; no critical defect remains unresolved; and all evidence needed for the recommendation is linked. If any critical case fails or is not tested, progression is blocked.
 - **Evidence rule:** Claim strength must not exceed evidence strength. Missing observation is NOT TESTED, never PASS.
 
-## 3. Proposed decision rules — review required
+## 3. Ratified evaluation rules
 
-These are proposed decisions for review and must not be represented as ratified governance until explicitly ratified.
+The rules below were ratified for this bounded synthetic manual tabletop on 2026-10-09. See `docs/research/part-12-protocol-ratification-record-2026-10-09.md`. This does not authorize implementation, live data, or any gate transition.
 
 1. **Critical failures: zero tolerated.** Any critical failure blocks progression. A pass on another scenario cannot offset it.
 2. **Non-critical failures: all ten scenarios must ultimately pass after correction and retest.** Preserve the original failure; a code, policy, or wording change is not a pass until the relevant scenario is rerun and passes.
@@ -49,7 +49,7 @@ These are proposed decisions for review and must not be represented as ratified 
 - **Critical:** A failure could enable unauthorized disclosure/contact, false verification of a material claim, unsafe action on unresolved evidence, or another high-impact breach of a core trust boundary. Any critical failure blocks progression.
 - **High / non-critical for this protocol:** A material quality or workflow failure that does not meet the critical definition. It still requires correction and retest; all ten scenarios must ultimately pass before a progression recommendation.
 
-Severity classifications below are proposed for review. Reclassify only through a documented rationale before evaluation results are inspected; never downgrade severity to excuse a failure.
+Severity classifications are frozen for this evaluation version in `STS-FIXTURES-1.0`. Any correction to a fixture or oracle requires a documented new version; never downgrade severity to excuse a failure.
 
 ## 4. Synthetic scenarios and expected outcomes
 
@@ -131,13 +131,13 @@ Use synthetic records only. If a scenario cannot be evaluated without real perso
 ## 9. Current evidence ledger for this artifact
 
 - **Protocol drafted:** Yes — this document, on a review branch.
-- **Decisions ratified as repository governance:** No — proposed for review.
-- **Fixtures frozen:** No.
+- **Protocol decisions ratified:** Yes — bounded to synthetic manual tabletop; see ratification record.
+- **Fixtures frozen:** Yes — `STS-FIXTURES-1.0`; see frozen fixture manifest.
 - **Tabletop evaluation run:** No — NOT RUN.
-- **Scenario outcomes:** None recorded.
+- **Scenario outcomes:** None recorded; all remain NOT TESTED until observed.
 - **Corrections/retests:** None recorded.
+- **Master research ledger:** Entries 10.65 and 10.66 record the protocol/fixture state and readiness review.
 - **Gate transition:** None.
-- **Master research ledger append:** Not located or updated as part of this change; do not infer that it was updated.
 - **Implementation/live-use holds:** Preserved.
 
 ## 10. Relationship to Part 11
