@@ -2853,3 +2853,17 @@ Limits: no direct Vaal Triangle coach validation; no proof of exact PSL/NFD/ABC 
 **Execution state:** Formal tabletop NOT RUN. No scenario has a PASS/FAIL outcome; all ten remain NOT TESTED. No independent evaluator is recorded. No software enforcement was tested. No gate transition or implementation/live-use authorization occurred.
 
 **Next controlled actions:** Reconcile Part 12 status text; define or explicitly defer the operational gaps; separately govern the freshness rule; prepare blind evaluator packets with expected outcomes withheld until observations are recorded; then run and preserve all ten scenario records. Existing holds remain unchanged.
+
+
+## 10.67 — Part 12 Status Reconciliation — 2026-10-09
+
+**Artifact:** `docs/research/synthetic-trust-evaluation-set-2026-10-09.md`  
+**Commit:** `72f6e9d413cc8c9bc52cc906be06ee95b0482d05`
+
+The parent Part 12 protocol status was corrected on the proposal branch to align with the separate ratification record and frozen fixture manifest. It now records the protocol as ratified for synthetic manual tabletop evaluation only, references the ratification record, treats the scenario severities as frozen for fixture version `STS-FIXTURES-1.0`, and records that the fixtures are frozen while execution remains NOT RUN.
+
+This is a documentation-consistency correction only. It does not alter fixture inputs or expected outcomes, create scenario results, authorize implementation, or lift any hold.
+
+**Current state after reconciliation:** Protocol ratification recorded; fixtures v1.0 frozen; readiness review recorded; formal tabletop NOT RUN; all ten scenario outcomes remain unrecorded/NOT TESTED; independent evaluator not recorded; no gate transition or implementation/live-use authorization.
+
+**Next controlled action:** Resolve or explicitly carry forward the operating-procedure gaps and the STS-006 freshness-rule dependency; prepare a blind evaluation packet for a separate evaluator; then execute and record the ten cases under the ratified protocol.
