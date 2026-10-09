@@ -3097,3 +3097,24 @@ No tests were executed. No stakeholder validation, implementation, legal clearan
 
 
 **Addendum to 10.88 — ratification-boundary classification:** The semantic proposal now classifies each section as restatement, proposed semantic/design rule, bounded tabletop rule, illustrative-only example, or policy/legal/field-mapping hold. This is a review aid only. No silence, commit, or PR update is treated as ratification. The proposal's current file tree is on the proposal branch; after a brief accidental main-branch creation, the file was deleted from main and verified absent there. The main branch history contains the create/delete commits; this was a process error and is not described as “main history untouched.”
+
+
+## 10.89 — Formal Logic Review of Trust Core Semantic Contract — 2026-10-09
+
+**Artifact updated:** `docs/research/trust-core-semantic-contract-proposal-2026-10-09.md`  
+**Status:** DESK-LEVEL CONSISTENCY REVIEW — NOT RATIFIED, NOT EXECUTED; AuthorityLevel NONE.
+
+Reviewed the candidate contract against the Constitution's epistemic separation and scoped-authority rules, the current Gate Status, and the ratified-for-synthetic-tabletop-only Opportunity Verification Procedure v1.0. Four concrete review findings were recorded in §14 of the proposal:
+
+- **FL-01:** Semantic labels such as EXPIRED and DISPUTED describe different dimensions and can coexist; they must not become mutually exclusive states by accident.
+- **FL-02:** `valid_until` and `reconfirm_by` may encode different deadline meanings. The existing bounded tabletop block remains in force, but no general equivalence or universal consequence is inferred.
+- **FL-03:** “Weakest required predicate” is not a complete evaluator. Claim-specific dependencies, approved alternatives, materiality, and blocked outcomes must be explicit.
+- **FL-04:** Audit completeness does not justify indiscriminate logging; event-specific minimisation, access, retention, correction and deletion remain policy/threat-model decisions.
+
+**Review outcome:** No contradiction was found with the core ratified epistemic boundaries or frozen conceptual model. The proposal requires semantic refinement before it could be considered a general contract. This was desk reasoning only: no tests, fixture evaluations, stakeholder interviews, or live records were used.
+
+No new standalone artifact was created, in accordance with the anti-drift rule. External validation with adult football stakeholders remains the highest-value empirical next step when access is practical. No schema/code/RLS/API/UI/implementation, merge, real-data, outreach, minor-contact, or pilot authority is granted.
+
+**Evaluation state unchanged:** STS-001 v1.1 remains **BLOCKED — NOT A PASS**; STS-006 remains **BLOCKED FROM EVALUATION**; STS-002–010 remain unopened under the stop rule.
+
+**Branch-provenance clarification:** A repository comparison at this review reported the proposal branch as 58 commits ahead and 2 behind `main` (snapshot only; counts can change). The semantic proposal is absent from the current `main` tree, but the main history includes the earlier temporary create/delete commits. Therefore “main history untouched” is not an accurate claim. No merge was performed.
