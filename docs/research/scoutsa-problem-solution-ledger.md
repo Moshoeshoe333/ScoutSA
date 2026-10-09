@@ -2787,3 +2787,15 @@ Desk research reviewed South African practitioner interviews (TimesLIVE 2022; EW
 Decision: carry forward only bounded design implications — contextual evidence, role/source provenance, no universal talent score, separate football readiness from opportunity access, and complement existing coach/competition pathways. No claim of measured Vaal Triangle demand or current national-system status is made.
 
 Next research lane: individual players' first-person accounts, with attention to access barriers, trial logistics, scams, costs, and evidence that could contradict ScoutSA's assumptions.
+
+
+## 10.63 — Individual Player Experience Research Dossier — 2026-10-09
+
+Artifact: docs/research/individual-player-experience-research-dossier-2026-10-09.md
+Commit: eac3f970d7a38c1a8ff3fa29b25d59ecd1d23a2f
+
+Desk research reviewed a 2026 South African township-player vox pop (source surfaced in search but page could not be independently opened in this pass), FIFPRO Africa's 2023 survey summary of 263 professional players across seven African countries, and individual FIFPRO case reports involving players stranded after false club/trial promises. Limitations are explicit: professional-player survey findings are not representative of South African grassroots players; individual cases are not prevalence estimates; Tsakani is not the Vaal Triangle.
+
+Research-derived design implications: independently confirm the receiving organization and opportunity; make cost/logistics/contingency explicit; avoid charging players for discoverability; minimize youth disclosure; separate concerns from findings; track request, response and outcome distinctly; never treat access constraints as a talent judgment. No claim is made that the Vaal Triangle's principal barrier has been measured or that ScoutSA can guarantee selection.
+
+Current research sequence completed for first pass: (1) agents/agencies, (2) coaches/scouts/pathways, (3) individual player experiences. Next step is cross-dossier synthesis: identify convergences, contradictions, evidence strength, what ScoutSA can responsibly design for, and which questions remain local/unresolved. Avoid further internal governance expansion unless the synthesis identifies a material issue.
