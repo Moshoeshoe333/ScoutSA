@@ -1,3 +1,5 @@
+> **Reconciliation notice (2026-10-09):** The “MVP Boundary Freeze is next” premise below is superseded by `docs/research/trust-core-mvp-boundary-reconciliation-2026-10-09.md`. The later controlled-state chronology in `docs/00-gate-status.md` records the MVP boundary as ratified and schema/table boundaries as frozen. Treat this proposal only as a candidate mapping/test target against existing frozen artifacts. It does not authorize new schema fields, entities, migrations, RLS, API, UI, or implementation. Existing policy/legal and implementation holds remain. Current STS-001 v1.1 result is **BLOCKED — NOT A PASS**.
+
 # Trust Core — Minimal MVP Boundary Proposal
 
 **Date:** 2026-10-09  
