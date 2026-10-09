@@ -2805,7 +2805,8 @@ Current research sequence completed for first pass: (1) agents/agencies, (2) coa
 
 Artifact: docs/research/player-profile-video-and-metrics-research-dossier-2026-10-09.md  
 Initial artifact commit: 24dc13c72587a56648705f37f591fac0888a3456  
-Source-excerpt register commit: d57661ccc30f94e185df41577c57dfed7a13189d
+Source-excerpt register commit: d57661ccc30f94e185df41577c57dfed7a13189d  
+Positional indicator matrix commit: a3560941038db8ab14e9f1e8e2a785d0581cd85b
 
 Desk research reviewed FIFA's 2026 Talent Identification Guide and football-data materials, Wyscout's official metric glossary, a 2024 peer-reviewed study comparing in-person and video scouting by 30 English Category One academy scouts, a peer-reviewed study of coach interpretation agreement on tactical video, South African TIDQ-OP research, a Kaizer Chiefs official bogus-trial warning, and Information Regulator POPIA guidance.
 
