@@ -2897,3 +2897,16 @@ Following the STS-001 initial observation, a draft manual-procedure clarificatio
 **STS-001 state:** Initial decision PAUSE PENDING CLARIFICATION; scenario record BLOCKED pending completion of required evidence fields and controlled comparison/retest. Formal tabletop remains incomplete.
 
 **Next action:** Obtain explicit review/ratification or revision of the proposed procedure clarification before treating it as governing policy; then complete STS-001's claim-by-claim evidence scope and timestamp and retest against the unchanged oracle. Do not proceed to the next scenario until the current case's blocked state is addressed, consistent with the evaluator's stated stop condition.
+
+
+## 10.70 — STS-006 Freshness Threshold Blocked — 2026-10-09
+
+Artifact: `docs/research/sts-006-freshness-threshold-blocker-2026-10-09.md`. STS-006 is BLOCKED FROM EVALUATION, not PASS or FAIL. The fixture's 12-month threshold is not established in inspected governing documents. Fixture v1.0 remains unchanged pending separate governance.
+
+## 10.71 — Opportunity Verification Procedure Ratified — 2026-10-09
+
+Artifacts: `docs/research/opportunity-verification-rule-ratification-2026-10-09.md`; `docs/research/opportunity-verification-procedure-v1-2026-10-09.md`. The user ratified three tiers: AUTHENTICITY CORROBORATED — LIMITED SCOPE; OPPORTUNITY CONDITIONS CHECKED — SCOPE LIMITED; ACTIONABLE FOR A PARTICULAR PARTICIPANT. Transitions are deliberate, not automatic. For physical attendance, transport/access responsibility and known costs are required fields. Each tier requires source reference, verification timestamp, verifier identity, scope and limitations as applicable; missing evidence blocks the tier. Unresolved material conditions escalate after 72 hours to the designated authority and remain BLOCKED if unresolved. This is for synthetic manual tabletop only; no constitutional amendment or live-use authority.
+
+## 10.72 — Tabletop Status After STS-001 Retest / STS-006 Block — 2026-10-09
+
+STS-001 retest: `docs/research/sts-001-procedure-retest-2026-10-09.md`; result BLOCKED, not PASS. The fixture reference is identified, but verification-action timestamp and sufficiently explicit verifier identity/claim scope are absent; eligibility, capacity and transport/access/cost remain unresolved. No evidence was invented and the oracle is unchanged. STS-006 is BLOCKED FROM EVALUATION pending a governed freshness rule. STS-002–STS-005 and STS-007–STS-010 are NOT STARTED. Formal tabletop remains incomplete; no PASS/FAIL is awarded. Independent/blind evaluation is not recorded. No gate transition, implementation, migration, real data, minor contact, public listing, or live-pilot authorization is granted.
