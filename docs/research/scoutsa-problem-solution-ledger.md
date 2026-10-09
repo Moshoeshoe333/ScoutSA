@@ -2998,3 +2998,19 @@ The earlier Trust Core proposal incorrectly treated MVP Boundary Freeze as the n
 The Trust Core candidate mostly maps to existing Opportunity, Verification, ConsentRecord, Evidence and AuditEvent concepts; it must not be treated as five new domain entities. The current SQL draft does not yet represent every proposed opportunity condition, and generic verification `expires_at` does not prove enforcement of the tabletop's explicit `valid_until` / `reconfirm_by` requirement. EvidenceEvent and DecisionAuditEvent require reconciliation against existing Evidence/AuditEvent semantics before any separate entity is proposed.
 
 The README/Gate Status wording conflict is recorded for separate documentation maintenance; neither governing file was silently changed. Current STS-001 v1.1 remains **BLOCKED — NOT A PASS** due to missing freshness metadata. No schema, RLS, migration, API, UI, production, live-use or merge authority is created.
+
+
+## 10.81 — Trust Core Field-Boundary Reconciliation and README Gate Correction — 2026-10-09
+
+**Artifacts:**
+- `docs/research/trust-core-field-boundary-reconciliation-2026-10-09.md`
+- `README.md` (proposal-branch documentation correction)
+**Status:** Reconciliation witness / documentation correction on proposal branch only; no implementation authority.
+
+A field-level comparison was made between the Trust Core candidate, frozen Field/Constraint Decision Matrix, frozen physical table boundary, and SQL draft. Findings include: opportunity lifecycle, date/time/venue, eligibility, capacity, fee policy/recipient and opportunity-specific transport/access/cost are not represented in the current `opportunities` SQL definition; `verifications.expires_at` is not assumed equivalent to the tabletop's explicit `valid_until` / `reconfirm_by` plus rationale; verifier identity, limitations/conflicts, decision-rule version, prior/new state, and some audit-completeness semantics are not explicitly represented. Existing `evidence` and `audit_events` may overlap the proposed EvidenceEvent and DecisionAuditEvent; no duplicate entities are authorized. Existing `transport_profiles` do not by themselves represent opportunity-specific attendance feasibility.
+
+These are traceability findings, not permission to add fields. Each gap requires a decision whether it is essential to the ratified MVP, already represented elsewhere, deferred, or requires a separately authorized boundary amendment. Policy/legal matters remain holds. Table presence does not prove append-only behavior, access enforcement, consent enforcement or tier-transition enforcement.
+
+The README on this proposal branch was corrected to reflect the later controlled chronology in `docs/00-gate-status.md`: MVP boundary and relationship subset ratified/frozen; schema and physical table boundary frozen; SQL draft reviewed; isolated PostgreSQL runtime evidence recorded; migration, RLS, API, UI and production implementation remain on hold. This does not change `main`, silently amend the frozen schema, or authorize implementation.
+
+Current STS-001 v1.1 remains **BLOCKED — NOT A PASS**. No schema, migration, RLS, API, UI, live-use or merge authority is created.
