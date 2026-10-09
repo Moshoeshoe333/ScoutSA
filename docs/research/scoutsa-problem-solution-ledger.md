@@ -2881,3 +2881,19 @@ The user's initial decision was recorded as **PAUSE PENDING CLARIFICATION**. The
 **Procedure gaps proposed (not ratified amendments):** distinguish authenticity corroboration from full opportunity verification; define blocking conditions; assign an escalation/closure route; and codify transport/cost disclosure fields.
 
 **Authority boundary:** No fixture or oracle changed. No policy amendment ratified. Formal ten-case tabletop remains incomplete; no gate transition or implementation/live-use authorization.
+
+
+## 10.69 — Proposed Claim-Scoped Opportunity Verification States — 2026-10-09
+
+**Artifact:** `docs/research/proposal-opportunity-verification-states-2026-10-09.md`  
+**Commit:** `2a6598151be84a24eb3a90bd0aa997001569e9f5`
+
+**Status:** PROPOSAL ONLY — NOT RATIFIED.
+
+Following the STS-001 initial observation, a draft manual-procedure clarification was added to distinguish limited authenticity corroboration from full opportunity conditions and actionable status. It proposes claim-scoped verification labels and a blocking rule for unresolved material conditions including eligibility, capacity, transport/access and cost. It also proposes evidence fields for source scope, provenance, timestamp, reviewer and limitations.
+
+**No policy change occurred.** The proposal does not amend governing documents or the frozen STS-001 oracle. No implementation or live-use authority was granted.
+
+**STS-001 state:** Initial decision PAUSE PENDING CLARIFICATION; scenario record BLOCKED pending completion of required evidence fields and controlled comparison/retest. Formal tabletop remains incomplete.
+
+**Next action:** Obtain explicit review/ratification or revision of the proposed procedure clarification before treating it as governing policy; then complete STS-001's claim-by-claim evidence scope and timestamp and retest against the unchanged oracle. Do not proceed to the next scenario until the current case's blocked state is addressed, consistent with the evaluator's stated stop condition.
