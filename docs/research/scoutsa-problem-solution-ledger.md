@@ -3082,3 +3082,15 @@ Next analytical step: propose a separately versioned, unfrozen set of adversaria
 Prepared five new, unfrozen synthetic examples for unresolved specification questions: freshness field mapping, unknown versus explicit no-fee state, conflicting authorization evidence, correction history versus retention/deletion, and access denial versus audit completeness. Each has a predeclared expected blocked/hold outcome and review conditions. They are separate from STS-FIXTURES-1.0/v1.1 and do not reopen or replace any frozen case.
 
 No execution or implementation is authorized. STS-001 v1.1 remains **BLOCKED — NOT A PASS**; STS-006 remains blocked from evaluation. Policy/legal holds, main-branch isolation, and implementation/live-use holds remain unchanged.
+
+
+## 10.88 — Trust Core Semantic Contract Proposal — 2026-10-09
+
+**Artifact:** `docs/research/trust-core-semantic-contract-proposal-2026-10-09.md`  
+**Status:** PROPOSAL — NOT RATIFIED; NOT AN IMPLEMENTATION SPECIFICATION; AuthorityLevel NONE.
+
+Defined candidate semantics for UNKNOWN, CONFIRMED, CONFLICTING, EXPIRED, NOT_APPLICABLE, NOT_PROVIDED, REVOKED/WITHDRAWN and DISPUTED; a bounded dependency rule; freshness semantics without a universal duration; distinctions between organization authenticity, checked opportunity conditions and participant-specific actionability; and a candidate minimum decision/audit trace. Added hypothetical consistency examples and an unresolved decision register.
+
+The proposal is constrained by the ratified Constitution M1–M9 and Assertion boundary. It introduces no new first-class domain concept, does not amend the frozen conceptual or physical schema, and does not map `expires_at` to `valid_until` / `reconfirm_by`. Conflict resolution, guardian/authorizer authority, materiality by opportunity type, audit/retention rules and field mapping remain explicit review or policy/legal holds.
+
+No tests were executed. No stakeholder validation, implementation, legal clearance, compliance, security enforcement, or production readiness is claimed. STS-001 v1.1 remains **BLOCKED — NOT A PASS**; STS-006 remains blocked from evaluation.
