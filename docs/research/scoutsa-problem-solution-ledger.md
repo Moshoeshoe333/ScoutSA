@@ -2945,3 +2945,24 @@ Before use, the complete v1.1 fixture set must be assembled with unchanged cases
 A complete v1.1 review copy has been drafted to make the proposed changes reviewable in context. It carries forward STS-002–STS-005 and STS-007–STS-010 in substance, proposes an STS-001 provenance supplement using explicitly fictional source IDs/timestamp/reviewer ID while retaining unresolved material conditions, and proposes an STS-006 missing-policy-dependency case without assuming the unsupported 12-month threshold. This is a review copy, not the frozen v1.1 release.
 
 The frozen v1.0 fixture and oracle remain unchanged. The new synthetic provenance is authored fixture content, not evidence recovered from v1.0 and not a real verification. No PASS/FAIL is awarded. STS-001 remains BLOCKED under v1.0; STS-006 remains BLOCKED FROM EVALUATION under v1.0. Before any v1.1 evaluation, the candidate requires explicit review/approval, an exact change list, and a separate immutable freeze record. All prior holds remain; no merge, implementation, live use, or gate transition is authorized.
+
+
+## 10.76 — Freshness Governance Decision and STS-FIXTURES-1.1 Freeze — 2026-10-09
+
+**Decision:** `docs/research/part-12-freshness-and-fixture-v1.1-decision-2026-10-09.md`  
+**Frozen fixture:** `docs/research/synthetic-trust-fixtures-v1.1-2026-10-09.md`  
+**Status:** ADOPTED/FROZEN FOR BOUNDED SYNTHETIC MANUAL TABLETOP ONLY
+
+Decision A selects no universal freshness duration at this stage. For the bounded tabletop, each verification used for a current claim must include an explicit `valid_until` or `reconfirm_by`, with accountable verifier, claim scope and rationale. If both are absent, record `FRESHNESS METADATA MISSING — BLOCKED`; if a deadline has passed, preserve historical evidence and require re-confirmation before current/actionable use. This is not Constitution-level or live operational policy; implementation/live adoption needs separate governance.
+
+Decision B approves a new versioned fixture set. STS-001 has clearly labelled, newly authored fictional provenance and exact claim scope, while eligibility, capacity and transport/access/cost remain blocking. STS-006 tests missing freshness metadata without assuming the unsupported 12-month threshold. STS-FIXTURES-1.0 remains unchanged. STS-002–STS-010 are not opened for evaluation now.
+
+## 10.77 — STS-001 v1.1 Controlled Retest — 2026-10-09
+
+**Record:** `docs/research/sts-001-v1.1-controlled-retest-2026-10-09.md`  
+**Result:** **PASS — BOUNDED SYNTHETIC MANUAL TABLETOP ONLY**  
+**Independence:** NOT INDEPENDENT / NOT BLIND
+
+The recorded handling limits Tier 1 to two explicitly enumerated authenticity claims with synthetic packet/source references, timestamp, verifier ID and limitations. Eligibility, capacity and transport/access/cost remain unresolved, so Tier 2 stays PAUSED/BLOCKED and Tier 3 is NOT ESTABLISHED. No public/actionable use or participant-specific contact is allowed. The result indicates consistency with the frozen v1.1 expected outcome only; the evaluator had prior oracle exposure and helped author the fixture. It is not independent assurance, software enforcement, legal compliance, production readiness, or live-pilot evidence.
+
+**Stop rule applied:** Formal tabletop expansion stops here. STS-002–STS-010 remain unevaluated. The original v1.0 STS-001 BLOCKED record and STS-006 v1.0 blocker remain historical and unchanged. Next step is a distinct Trust Core implementation-readiness/design gate. The README's schema hold and implementation-deferred status are not overridden; no implementation, migration/RLS, merge, real data, minor contact, public listing, pilot, or gate transition is authorized by these records.
