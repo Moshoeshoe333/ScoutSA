@@ -226,3 +226,20 @@ These excerpts preserve the wording that materially supports the findings. They 
 | E-10 | Information Regulator South Africa, POPIA guidance page, accessed 9 October 2026 | “Application to Process Personal Information of Children (PIC)” | Confirms a dedicated regulatory process exists; the page alone does not settle every legal basis or safeguard for ScoutSA. |
 
 **Source-fetch note:** The FIFA guide, Wyscout glossary, FIFA broadcast-tracking article, academy-scouting study, coach-interpretation study, PubMed abstract and Kaizer Chiefs statement were opened or retrieved in this research pass. The POPIA page was reviewed at the Information Regulator site; a separate legal review is still required. The exact minimum camera height, reel lengths, and proposed scanning interval were not found in these sources.
+
+
+## 11. Optional positional indicator matrix (not a scoring rubric)
+
+This is a practical menu of possible indicators, not a claim that all clubs use these measures or that they should be weighted universally. Use only metrics that can be observed or calculated reliably; otherwise use attributed qualitative notes and mark the metric unavailable.
+
+| Role group | Possible observable / countable indicators | Context and caution |
+|---|---|---|
+| Goalkeeper | Saves and shots faced (if reliably logged); distribution completion by pass type; crosses claimed / exits where observable; starting position and decision notes | Save percentage needs a reliable denominator and shot-quality context. Do not infer elite tracking measures from ordinary footage. |
+| Centre-back | Defensive duels and success; aerial duels and success; interceptions; clearances; progressive passes or line-breaking distribution when consistently tagged | Defensive actions depend on team style, possession and opponent. Raw totals alone can punish players whose team defends less. |
+| Fullback / wingback | Defensive 1v1 outcomes; progressive carries; crosses attempted/completed; recoveries; support/overlap timing and transition response notes | Role depends heavily on formation and coach instructions. Crossing percentages need attempts and a consistent definition. |
+| Defensive / central midfielder | Passing completion by type; progressive passes; recoveries/interceptions; turnovers/losses; receiving under pressure and scanning observations when viewable | “Under pressure” and “scan” require explicit definitions and reliable footage; do not present observer estimates as sensor-derived facts. |
+| Wide attacker / winger | Dribble attempts and success; progressive carries; crosses; shots and shots on target; chance-creating actions when reliably recorded; off-ball run notes | Successful outcomes alone miss decision quality and team role. xA/xG should appear only if a documented data source calculates them. |
+| Centre-forward / striker | Shots, goals and minutes; shot-on-target rate if consistently recorded; aerial duels; link-up actions; pressing actions where the definition and event log are available | Goal conversion from a small sample is unstable. Do not compare players without minutes, competition and role context. |
+| Any position | Minutes, appearances, starts, match context, role, source and last-updated date | These are context fields, not talent scores. Missing evidence should be marked incomplete, not interpreted as poor performance. |
+
+**Minimum reporting rule:** every numeric metric must show (1) definition/source, (2) sample size or minutes, (3) collection method, (4) context and date, and (5) verification state. Where any of these are missing, either omit the metric or label the limitation prominently.
