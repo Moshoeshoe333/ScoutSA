@@ -2976,3 +2976,13 @@ The recorded handling limits Tier 1 to two explicitly enumerated authenticity cl
 The proposal converts the implementation recommendation into a bounded candidate target: opportunity state/conditions; claim-scoped verification records with provenance and explicit `valid_until`/`reconfirm_by`; scoped consent and withdrawal; append-only evidence and decision audit; paused/blocked states; and negative tests for freshness, consent, access control, unauthorized tier escalation, history mutation, and audit completeness. It also states a strict non-scope (no real data, public profiles/listings, contact, pilot, or compliance/readiness claims).
 
 This does not authorize code, schema, migration, RLS, API, UI, or deployment. The governing `README.md` on `main` states Gate 2 is closed at conceptual level, ERD frozen, schema on hold, implementation deferred, and MVP Boundary Freeze is the next phase. The Trust Core proposal is therefore input to that next phase; the MVP boundary and implementation gate must be reconciled and explicitly authorized before code begins. Existing holds remain.
+
+
+## 10.79 — STS-001 v1.1 Retest Result Corrected — 2026-10-09
+
+**Correction record:** `docs/research/sts-001-v1.1-retest-correction-2026-10-09.md`  
+**Current result:** **BLOCKED — NOT A PASS**
+
+The PASS conclusion recorded in entry 10.77 and the initial retest file overlooked the freshness requirement adopted in entry 10.76. The frozen STS-001 v1.1 packet includes a verification-action timestamp and synthetic verifier ID but omits both `valid_until` and `reconfirm_by` and provides no rationale for a validity deadline. A verification timestamp is not a validity deadline; the missing value cannot be inferred or fabricated. The PASS conclusion is superseded by the correction record; the original record remains preserved as an audit trail.
+
+Current status: Tier 1 current-verification claim is not established due to missing freshness metadata; Tier 2 remains PAUSED/BLOCKED because eligibility, capacity, and transport/access/cost are unresolved; Tier 3 remains NOT ESTABLISHED. The fixture remains frozen and unchanged. Do not create a new fixture merely to force a pass. The formal tabletop stops here; STS-002–STS-010 remain unopened. No implementation, merge, live use, or gate transition is authorized.
