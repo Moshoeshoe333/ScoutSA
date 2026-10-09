@@ -185,3 +185,42 @@ This classification is a review aid, not a ratification decision.
 | §12 self-review clarification | **PROPOSED CLARIFICATION** | Prevents accidental conflation; not independently ratified. |
 
 **Review rule:** Only an explicit governance decision can move a row from proposed to ratified. File creation, ledger entry, PR update, internal consistency, or absence of objection does not ratify any new semantic rule. If a row depends on policy/legal authority, that hold cannot be cleared by a product-design decision alone.
+
+
+## 14. Formal logic review — counterexamples and required refinement (2026-10-09)
+
+**Review type:** Desk-level consistency review against the Constitution, current Gate Status, and ratified-for-tabletop-only Opportunity Verification Procedure v1.0. **No tests executed; no scenario opened; no new rule ratified.**
+
+### FL-01 — Cross-cutting states are not mutually exclusive
+
+Section 12 correctly says the labels are not one shared enum, but the proposal still needs an explicit compositional rule before implementation or formal ratification. For example, the same evidence item could be **EXPIRED** for current use and **DISPUTED** while its historical provenance remains **CONFIRMED**. These labels answer different questions; treating them as alternatives would erase information or force an arbitrary precedence.
+
+**Disposition:** Keep labels as cross-cutting descriptions. Before any future machine representation, define separate semantic dimensions and permitted combinations per object type. This is a specification question, not permission to add columns, enums, or domain concepts.
+
+### FL-02 — `valid_until` and `reconfirm_by` have not been shown to be semantically interchangeable
+
+The proposal currently blocks current use after either applicable deadline and blocks when both deadlines imply inconsistent outcomes. That conservative tabletop treatment may be appropriate as a temporary fail-closed rule, but the names can encode different meanings: a validity end may mean the claim is no longer valid after a point; a reconfirmation date may mean a review is due. Counterexample: a venue was confirmed for a particular event, and a reconfirmation check is overdue, but no governing rule yet says the event fact itself becomes false at that instant. The system must not silently convert “review overdue” into “historically false”; it may still block action pending review.
+
+**Disposition:** Preserve the existing tabletop block where that bounded rule applies. For any broader semantic contract, explicitly distinguish deadline type, what event triggers it, and its consequence for current-use. Do not map either field to `expires_at`, and do not choose a universal consequence or duration without governance. This refinement is required before the freshness section can be presented as a general semantic rule.
+
+### FL-03 — “Weaker predicate” is explanatory, not yet a complete logic
+
+The phrase “the outcome cannot be stronger than its weakest required predicate” expresses the evidence rule, but predicates do not always form a single ordered scale. Some claims require conjunctions; some may permit approved alternative evidence routes; some conditions are not applicable only after scoped assessment. Counterexample: two independent authorized evidence routes may each be sufficient for the same bounded claim, while an unrelated unknown field is not a dependency. A simple “weakest input wins” implementation could either over-block unrelated claims or permit an unsupported one.
+
+**Disposition:** For each claim/action, define required predicates, approved alternatives, materiality, and the precise blocked/hold outcomes. Keep this as a candidate reasoning principle until claim-specific dependencies are approved; do not infer a universal evaluator or numeric score.
+
+### FL-04 — Audit completeness must not override data minimisation
+
+The §7 list is expressly a candidate checklist, not a schema mandate. Still, recording actor identity, target, purpose, evidence references, and prior state for every event could itself create unnecessary sensitive records if applied indiscriminately. A timestamp-only record may be insufficient for some audited decisions, but that does not prove every listed field is necessary for every event.
+
+**Disposition:** Retain the checklist as review input. Require event-class-specific necessity, access, minimisation, retention, correction, and deletion decisions before any logging contract. No “log everything” or “retain forever” rule is implied.
+
+### Formal review outcome
+
+- **No contradiction found** with the Constitution's core epistemic separation, scoped authority, historical/current distinction, or frozen conceptual boundary.
+- **Three material specification refinements remain**: orthogonal state composition (FL-01), distinct deadline semantics (FL-02), and claim-specific dependency logic (FL-03).
+- **One policy/threat-model hold remains explicit**: event-specific audit minimisation and lifecycle (FL-04).
+- These findings do **not** authorize more domain concepts, schema changes, code, RLS, API/UI, implementation, merge, live outreach, or pilot.
+- Given the repository's anti-drift rule and thin external validation, do not create another standalone artifact for these findings. Keep them in this proposal and ledger; prioritize adult stakeholder validation when access becomes practical.
+
+**Current evaluation boundary unchanged:** STS-001 v1.1 remains **BLOCKED — NOT A PASS**; STS-006 remains **BLOCKED FROM EVALUATION**; STS-002–010 remain unopened under the stop rule.
