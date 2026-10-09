@@ -3014,3 +3014,15 @@ These are traceability findings, not permission to add fields. Each gap requires
 The README on this proposal branch was corrected to reflect the later controlled chronology in `docs/00-gate-status.md`: MVP boundary and relationship subset ratified/frozen; schema and physical table boundary frozen; SQL draft reviewed; isolated PostgreSQL runtime evidence recorded; migration, RLS, API, UI and production implementation remain on hold. This does not change `main`, silently amend the frozen schema, or authorize implementation.
 
 Current STS-001 v1.1 remains **BLOCKED — NOT A PASS**. No schema, migration, RLS, API, UI, live-use or merge authority is created.
+
+
+## 10.82 — Trust Core Gap Disposition Proposal — 2026-10-09
+
+**Artifact:** `docs/research/trust-core-gap-disposition-proposal-2026-10-09.md`  
+**Status:** PROPOSAL FOR EXPLICIT REVIEW — NOT RATIFIED; no implementation authority.
+
+The candidate gaps have been classified with proposed dispositions. The proposal treats lifecycle state, date/time/venue, eligibility, capacity, material costs/fees, opportunity-specific transport/access, freshness, verifier provenance/limitations, applicable consent, non-destructive history and audit completeness as requirements that must be resolved before the corresponding current/actionable or protected workflow can be claimed. It does not assume each item requires a new table or field. Existing Evidence/AuditEvent concepts must be mapped before any duplicate event entity is considered.
+
+It proposes a “enough” threshold for a future synthetic-only harness: exact boundary reconciliation, explicitly bounded environment, faithful frozen fixtures, negative tests for freshness/consent/access/tier escalation/history/audit, no conversion of policy HOLD into ALLOW, traceable execution evidence, and zero critical failures. This threshold is a proposal only; no harness or implementation is authorized.
+
+Next decision: review the proposed dispositions and determine which questions need adult football-stakeholder validation, which can be explicitly deferred, and which require policy/legal ratification. Current STS-001 v1.1 remains **BLOCKED — NOT A PASS**. Existing migration/database, RLS, API, UI, production and live-use holds remain.
