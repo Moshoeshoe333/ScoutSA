@@ -206,3 +206,23 @@ Permitted next design direction: a low-bandwidth, progressive Player Passport wi
 9. Kaizer Chiefs. “Beware of Bogus Trials.” 18 May 2018. https://www.kaizerchiefs.com/club-news/beware-bogus-trials
 10. Information Regulator South Africa. POPIA guidance. https://inforegulator.org.za/popia/
 11. Protection of Personal Information Act, section 35 (secondary hosted text). https://popia.co.za/section-35-general-authorisation-concerning-personal-information-of-children/
+
+
+## 10. Evidence excerpt register (exact short passages)
+
+These excerpts preserve the wording that materially supports the findings. They are deliberately short; interpretation and limits remain in the claim ledger above.
+
+| Evidence ID | Publisher / date | Exact passage | Claim supported / limit |
+|---|---|---|---|
+| E-01 | FIFA Training Centre, “Talent Identification Guide,” 2 April 2026 | “Profiles are the characteristics and attributes defining the type of players needed to execute a playing style.” | Supports role- and philosophy-specific profiles; does not prescribe ScoutSA’s video durations. |
+| E-02 | FIFA Training Centre, “Talent Identification Guide,” 2 April 2026 | “regardless of size, budget or geography.” | The guide presents its system framework as adaptable across resource contexts; supports avoiding a high-cost entry barrier. |
+| E-03 | Wyscout, Player Metrics Glossary, accessed 9 October 2026 | “Progressive passes / 90 — Number of progressive passes normalized per 90 minutes.” | Supports the existence of defined per-90 metrics; does not prove local coaches require them. |
+| E-04 | FIFA Innovation, broadcast tracking article, 24 January 2021 | “The influence of video quality parametres, stadium environment or missing players in zoomed shots has, however, not been quantified until now making statement on data validity speculative.” | Supports caution about deriving tracking metrics from arbitrary footage. |
+| E-05 | Owen et al., Journal of Expertise, 2024 | “no significant difference in player performance ratings when comparing in-person and video-recorded observation modalities (p > .05)” | Supports video as a potentially useful input in the studied setting; sample was 30 scouts at one English Category One academy. |
+| E-06 | Owen et al., Journal of Expertise, 2024 | “scouts subjectively rating in-person as being the more accurate modality (p < .001).” | Preserves the counterpoint that perceived accuracy favored in-person observation. |
+| E-07 | Furley et al., International Journal of Sports Science & Coaching, first published online 5 September 2024 | “there was a high degree of diversity in coach responses and little consensus on basic questions” | Supports that video interpretation is not uniform; the study was tactical video interpretation, not a direct test of ScoutSA profiles. |
+| E-08 | PubMed record for TIDQ-OP study, 2024 | “The final questionnaire consisted of 58 items.” | Supports the existence of a South African coach-informed structured instrument; it is not a universal metric standard or automated talent predictor. |
+| E-09 | Kaizer Chiefs official club statement, 18 May 2018 | “The club has not issued any official communiqué or advertisement for trials or academies.” | Supports checking a specific trial through the receiving club’s official channel; historical statement, not evidence about every club’s current process. |
+| E-10 | Information Regulator South Africa, POPIA guidance page, accessed 9 October 2026 | “Application to Process Personal Information of Children (PIC)” | Confirms a dedicated regulatory process exists; the page alone does not settle every legal basis or safeguard for ScoutSA. |
+
+**Source-fetch note:** The FIFA guide, Wyscout glossary, FIFA broadcast-tracking article, academy-scouting study, coach-interpretation study, PubMed abstract and Kaizer Chiefs statement were opened or retrieved in this research pass. The POPIA page was reviewed at the Information Regulator site; a separate legal review is still required. The exact minimum camera height, reel lengths, and proposed scanning interval were not found in these sources.
