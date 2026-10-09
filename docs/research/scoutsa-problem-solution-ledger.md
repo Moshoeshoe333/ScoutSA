@@ -3060,3 +3060,15 @@ Authored 15 candidate invariants, 12 synthetic adversarial vectors, a bounded de
 This is a desk-reasoning artifact, not an execution result. It does not change the frozen STS fixtures or procedure, does not mark any invariant empirically verified, and does not authorize schema/code/harness implementation. The next permitted analytical step is a traceability cross-check against the ratified claim-scoped procedure and frozen fixture definitions, recording aligned/conflict/missing/not-applicable without opening STS-002–STS-010 for evaluation or editing fixtures.
 
 Current STS-001 v1.1 remains **BLOCKED — NOT A PASS**. No stakeholder validation, legal clearance, production readiness or live-use readiness is claimed.
+
+
+## 10.86 — Trust Core Invariant Traceability Crosswalk — 2026-10-09
+
+**Artifact:** `docs/research/trust-core-invariant-traceability-crosswalk-2026-10-09.md`  
+**Status:** DESK CROSSWALK ONLY — NOT EXECUTED; NO FIXTURE EVALUATION; AuthorityLevel NONE.
+
+Cross-checked 15 candidate invariants against the written claim-scoped verification procedure and frozen fixture definitions. Document-level alignment is strong for claim scope, authenticity/actionability separation, consent scope, blocking unresolved material conditions, tier separation, preservation of holds, and the distinction between synthetic tabletop and real-world validation. Partial specification gaps remain around exact freshness field mapping/transition behavior, typed unknown/conflict semantics, guardian/authorizer conflicts, retention/deletion boundaries, and denied-action audit detail.
+
+This was a document traceability exercise only. It did not execute any scenario, reopen STS-001, evaluate STS-002–STS-010, change frozen fixtures, prove implementation/security enforcement, or authorize a new harness. STS-001 v1.1 remains **BLOCKED — NOT A PASS**; STS-006 remains blocked from evaluation under the current procedure.
+
+Next analytical step: propose a separately versioned, unfrozen set of adversarial specification examples for the remaining gaps, with expected outcomes declared before evaluation. Separate approval is required before any execution; existing implementation and live-use holds remain.
