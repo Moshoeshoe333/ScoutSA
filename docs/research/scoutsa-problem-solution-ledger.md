@@ -2763,3 +2763,15 @@ No product requirement, Constitution boundary, physical schema, RLS rule or migr
 
 **Next authority-bearing evidence:** actual stakeholder evidence for the external-validation workstream, alongside appropriately scoped legal/safeguarding review for the remaining protected-data questions.
 
+
+
+## 10.61 — Football Agent and Agency Research Dossier — 2026-10-09
+
+Artifact: docs/research/agent-agency-research-dossier-2026-10-09.md
+Commit: 764a86c3756099495814fb5d9fbfc804bf80d23e
+
+Desk-research dossier created with a source register and primary/independent evidence lanes. It distinguishes agents, agencies, scouts, academies and clubs; summarizes FIFA's published agent framework and parent education materials; reviews the SAFA Football Agent Regulations approved 2023-12-09 with an explicit current-status caveat; and examines player-protection reporting from FIFPRO, the PFA and South African media.
+
+Research-derived direction: ScoutSA should not assume the role of an agent marketplace or guarantee placement. Its bounded value may be to distinguish roles and claims, support source-level verification of real opportunities, make responsibilities/costs explicit, scope youth safeguards, and avoid implying that agent identity verification proves a specific trial is genuine.
+
+Limits preserved: this is desk research, not direct Vaal Triangle validation, legal advice, a current licence check, or proof of local demand. Reports of allegations are not treated as adjudicated facts. Next research lanes remain coaches/scouts, then individual players.
