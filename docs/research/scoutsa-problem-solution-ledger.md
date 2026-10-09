@@ -3026,3 +3026,15 @@ The candidate gaps have been classified with proposed dispositions. The proposal
 It proposes a “enough” threshold for a future synthetic-only harness: exact boundary reconciliation, explicitly bounded environment, faithful frozen fixtures, negative tests for freshness/consent/access/tier escalation/history/audit, no conversion of policy HOLD into ALLOW, traceable execution evidence, and zero critical failures. This threshold is a proposal only; no harness or implementation is authorized.
 
 Next decision: review the proposed dispositions and determine which questions need adult football-stakeholder validation, which can be explicitly deferred, and which require policy/legal ratification. Current STS-001 v1.1 remains **BLOCKED — NOT A PASS**. Existing migration/database, RLS, API, UI, production and live-use holds remain.
+
+
+## 10.83 — Adult Stakeholder Validation Protocol Prepared — 2026-10-09
+
+**Artifact:** `docs/research/adult-stakeholder-validation-protocol-2026-10-09.md`  
+**Status:** RESEARCH PLAN ONLY — NOT EXECUTED; no stakeholder responses or endorsements recorded.
+
+A bounded qualitative research contract and interview guide were prepared for 5–8 adults across at least three role categories and two organizations in the Vaal Triangle/Sedibeng area. Focus: real-world opportunity verification, current capacity/eligibility, freshness/reconfirmation, material costs and access, correction/history, and purpose-bound consent. The protocol includes counterevidence questions, provenance and interview-note requirements, data-minimization guardrails, a stop condition, and a synthesis taxonomy.
+
+Public-source leads include VOB FC and Sharpeville Rhinos as current official-site leads, plus The Nale Academy and FC Mmabatho as stale leads requiring current verification. These are leads only—not endorsements, confirmed participants, or evidence that outreach occurred. No outreach was sent and no stakeholder interview is claimed.
+
+The protocol prohibits contacting/recruiting minors or collecting player/guardian records. Stakeholder input cannot itself settle legal questions or authorize schema changes, RLS, migrations, API/UI, live listings, or a pilot. Current STS-001 v1.1 remains **BLOCKED — NOT A PASS**. The next evidence-producing step is a real, voluntary conversation with an adult stakeholder, documented only after it occurs.
