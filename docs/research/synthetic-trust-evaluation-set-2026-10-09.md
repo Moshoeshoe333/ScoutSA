@@ -136,7 +136,7 @@ Use synthetic records only. If a scenario cannot be evaluated without real perso
 - **Tabletop evaluation run:** No — NOT RUN.
 - **Scenario outcomes:** None recorded; all remain NOT TESTED until observed.
 - **Corrections/retests:** None recorded.
-- **Master research ledger:** Entries 10.65 and 10.66 record the protocol/fixture state and readiness review.
+- **Master research ledger:** Entries 10.65–10.67 record the protocol/fixture state, readiness review, and status reconciliation.
 - **Gate transition:** None.
 - **Implementation/live-use holds:** Preserved.
 
