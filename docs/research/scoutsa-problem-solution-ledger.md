@@ -2815,3 +2815,21 @@ Findings: contextual, role-specific and provenance-labelled evidence is justifie
 Research-derived direction only: build a progressive, low-bandwidth Player Passport; make contextual video and match evidence useful without making expensive footage mandatory; show source, sample size and measurement method for statistics; keep physical data and coach observations qualified; do not expose youth identity documents or full DOB publicly; independently confirm any claimed trial through the receiving organisation's official channel.
 
 Limits: no direct Vaal Triangle coach validation; no proof of exact PSL/NFD/ABC Motsepe submission thresholds; no quantified local bandwidth study; no legal opinion or POPIA compliance claim. No schema, gate, RLS, migration, or production authority changed. Existing freezes and holds remain unchanged.
+
+
+## 10.65 — Part 12 Protocol Ratification and Synthetic Fixture Freeze — 2026-10-09
+
+**Artifacts**
+- `docs/research/part-12-protocol-ratification-record-2026-10-09.md`
+- `docs/research/synthetic-trust-fixtures-v1-2026-10-09.md`
+- Parent protocol: `docs/research/synthetic-trust-evaluation-set-2026-10-09.md`
+
+**Protocol decision:** Ratified for synthetic manual tabletop evaluation only, following explicit user confirmation in the project conversation. The ratification sets zero tolerance for critical failures; any critical failure blocks progression; all ten scenarios must ultimately pass after correction and retest; manual tabletop is the first evaluation; missing observations are NOT TESTED rather than PASS; and aggregate results cannot offset a critical failure.
+
+**Fixture state:** Synthetic fixture set `STS-FIXTURES-1.0` frozen before evaluation. Six Critical scenarios: STS-002, STS-003, STS-004, STS-005, STS-007 and STS-008. Four High scenarios: STS-001, STS-006, STS-009 and STS-010. Inputs and expected outcomes are fictional and contain no copied real-person data.
+
+**Execution state:** NOT RUN. No scenario has a PASS or FAIL result. No independent evaluator review is recorded. No corrective action or retest is recorded.
+
+**Authority boundary:** Protocol ratification and fixture freeze do not authorize implementation, schema/RLS/migration changes, real player/guardian data, recruiting or contacting minors, public profiles/listings, live outreach, closed rehearsal, live pilot, or a gate transition. Existing holds remain unchanged.
+
+**Next controlled step:** Conduct the manual tabletop against frozen version 1.0. Record each observation separately from its expected outcome, preserve failures and limitations, and block progression if any critical scenario fails or remains untested. A tabletop cannot establish software enforcement or live-pilot readiness.
