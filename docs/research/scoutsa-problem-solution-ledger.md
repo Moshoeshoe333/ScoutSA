@@ -2923,3 +2923,15 @@ STS-001 retest: `docs/research/sts-001-procedure-retest-2026-10-09.md`; result B
 - **STS-006:** Remains BLOCKED FROM EVALUATION pending governance resolution of the unsupported 12-month freshness threshold.
 - **Fixture handling:** Frozen `STS-FIXTURES-1.0` remains unchanged. A proposed v1.1 must be separately versioned/reviewed/approved, and any new fictional evidence must be labelled as newly authored synthetic fixture content, not recovered evidence from v1.0.
 - **State:** No scenario result awarded; no oracle change; no merge to main, implementation, migration/RLS work, real data, minor contact, public listing, live outreach, pilot, or gate transition authorized.
+
+
+## 10.74 — Proposed Versioned Fixture Amendments for STS-001 / STS-006 — 2026-10-09
+
+**Artifact:** `docs/research/proposed-sts-fixtures-v1.1-amendments-2026-10-09.md`  
+**Status:** PROPOSAL ONLY — NOT APPROVED, NOT FROZEN, NOT EVALUATED
+
+A versioned delta is proposed rather than editing frozen `STS-FIXTURES-1.0`. For STS-001, the proposal adds explicitly fictional packet/source IDs, a synthetic verification-action timestamp, a synthetic verifier ID, exact claim scope, and explicit exclusions. It deliberately leaves eligibility, capacity, transport/access/cost and other material conditions unresolved; the proposed expected handling permits only limited Tier 1 corroboration and keeps Tier 2/Tier 3 blocked. The invented fields are labelled new synthetic fixture data, not evidence recovered from v1.0 or from a real event.
+
+For STS-006, the proposed v1.1 variant removes the unsupported 12-month rule from the test input and instead tests whether the evaluator identifies the missing governing freshness threshold and blocks actionable use without inventing policy. V1.0 and its oracle remain unchanged.
+
+Before use, the complete v1.1 fixture set must be assembled with unchanged cases carried forward, every delta itemized, explicitly reviewed/approved, and separately frozen. A separate retest must record evaluator identity/date, procedure version, observation, evidence references and outcome. Until then STS-001 remains BLOCKED under v1.0 and STS-006 remains BLOCKED FROM EVALUATION under v1.0. No scenario result, gate transition, merge, implementation, or live-use authorization is created.
