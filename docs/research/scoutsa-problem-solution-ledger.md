@@ -2910,3 +2910,16 @@ Artifacts: `docs/research/opportunity-verification-rule-ratification-2026-10-09.
 ## 10.72 — Tabletop Status After STS-001 Retest / STS-006 Block — 2026-10-09
 
 STS-001 retest: `docs/research/sts-001-procedure-retest-2026-10-09.md`; result BLOCKED, not PASS. The fixture reference is identified, but verification-action timestamp and sufficiently explicit verifier identity/claim scope are absent; eligibility, capacity and transport/access/cost remain unresolved. No evidence was invented and the oracle is unchanged. STS-006 is BLOCKED FROM EVALUATION pending a governed freshness rule. STS-002–STS-005 and STS-007–STS-010 are NOT STARTED. Formal tabletop remains incomplete; no PASS/FAIL is awarded. Independent/blind evaluation is not recorded. No gate transition, implementation, migration, real data, minor contact, public listing, or live-pilot authorization is granted.
+
+
+## 10.73 — GAP-004 / GAP-005: Escalation Authority and Tabletop Policy Boundary — 2026-10-09
+
+**Artifact:** `docs/research/gap-004-gap-005-escalation-governance-boundary-2026-10-09.md`  
+**Status:** OPEN — governance clarification required
+
+- **GAP-004:** The 72-hour tabletop escalation trigger has no designated authority/role, route, backup, or accountable closure owner identified in the reviewed material. In tabletop records, mark destination UNASSIGNED / GOVERNANCE GAP and keep the case BLOCKED; do not invent an authority or perform a real escalation. Any operational role/route requires a separate governance decision.
+- **GAP-005:** The 72-hour trigger was ratified for synthetic manual tabletop only, not as Constitution-level or live operational policy. The gap is the risk of scope confusion, not proof that the bounded tabletop instruction is invalid. Keep it labelled tabletop-only; separately review whether any operational rule should be adopted before a live pilot is ever considered.
+- **STS-001:** Remains BLOCKED pending evidence actually present in an approved synthetic packet or a properly versioned replacement fixture. Do not fabricate timestamp, verifier identity, claim scope, eligibility, capacity, or transport evidence.
+- **STS-006:** Remains BLOCKED FROM EVALUATION pending governance resolution of the unsupported 12-month freshness threshold.
+- **Fixture handling:** Frozen `STS-FIXTURES-1.0` remains unchanged. A proposed v1.1 must be separately versioned/reviewed/approved, and any new fictional evidence must be labelled as newly authored synthetic fixture content, not recovered evidence from v1.0.
+- **State:** No scenario result awarded; no oracle change; no merge to main, implementation, migration/RLS work, real data, minor contact, public listing, live outreach, pilot, or gate transition authorized.
