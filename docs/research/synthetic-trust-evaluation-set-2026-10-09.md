@@ -145,3 +145,14 @@ Use synthetic records only. If a scenario cannot be evaluated without real perso
 Part 11 defines a controlled path from synthetic/tabletop validation to a closed workflow rehearsal and only later, if separately authorized, a limited live pilot. Part 12 specifies a proposed first-stage evaluation method for the trust boundaries. Neither document is a gate transition or implementation authorization.
 
 **Governing rule:** No trust claim without evidence; no critical failure hidden by aggregate results; no progression merely because a protocol has been written.
+
+
+## 11. Controlled observations and policy dependencies — 2026-10-09 update
+
+The claim-scoped opportunity-verification procedure was ratified for synthetic manual tabletop only. See `docs/research/opportunity-verification-rule-ratification-2026-10-09.md` and `docs/research/opportunity-verification-procedure-v1-2026-10-09.md`. This procedural clarification does not change the frozen fixture/oracle or authorize implementation or live use.
+
+- **STS-001:** Initial observation and controlled procedure retest are recorded as BLOCKED, not PASS. The record lacks the underlying verification-action timestamp and sufficiently explicit verifier identifier/claim-by-claim scope; eligibility, capacity and transport/access/cost remain unresolved. No missing evidence was invented.
+- **STS-006:** BLOCKED FROM EVALUATION because the fixture's 12-month freshness threshold is not established by governing documents. The frozen v1.0 fixture remains unchanged pending separate resolution.
+- **Other scenarios:** STS-002–STS-005 and STS-007–STS-010 remain NOT STARTED.
+- **Evaluation state:** The ten-case tabletop is incomplete. No scenario PASS/FAIL is awarded by this status update. Independent/blind evaluation is not recorded.
+- **Authority boundary:** No gate transition, merge to main, implementation, migration/RLS work, real player/guardian data, minor contact, public listing, outreach, closed rehearsal, or live pilot is authorized. Existing holds remain.
