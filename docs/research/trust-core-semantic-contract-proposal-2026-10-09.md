@@ -163,3 +163,25 @@ A consistency review against the Constitution's epistemic-separation and histori
 - The candidate audit trace in §7 is a review checklist, not a requirement to store every listed item for every event. The applicable event class, necessity, access, retention and deletion rules must be determined before a concrete logging contract is authorized.
 
 This clarification narrows the proposal to avoid accidental conflation of domain objects and authority. It does not ratify new semantics or authorize implementation.
+
+
+## 13. Ratification-boundary classification — 2026-10-09
+
+This classification is a review aid, not a ratification decision.
+
+| Proposal area | Candidate classification | Why / required treatment |
+|---|---|---|
+| §2 epistemic and authority constraints | **ACCEPT AS RESTATEMENT** | Restates existing ratified M1–M9 and Assertion boundaries; do not broaden them. |
+| §3 UNKNOWN / NOT_PROVIDED distinction | **PROPOSED SEMANTIC RULE** | Useful distinction, but explicit shared domain meaning requires review; do not add a generic status enum. |
+| §3 CONFIRMED / CONFLICTING / DISPUTED | **MIXED: RESTATEMENT + PROPOSED PRECISION** | Conflict preservation is ratified; exact labels and application per object require review. |
+| §3 EXPIRED / REVOKED / WITHDRAWN | **PROPOSED PRECISION / POLICY DEPENDENCY** | Temporal applicability is ratified; revocation authority and effects depend on object, context and accountable process. |
+| §3 NOT_APPLICABLE | **PROPOSED SEMANTIC RULE** | Requiring a scoped rationale is a candidate contract, not yet a ratified universal representation. |
+| §4 bounded dependency rule | **PROPOSED DESIGN RULE** | Follows evidence-bounded claims but needs review for claim-specific dependencies and allowed historical display. |
+| §5 freshness rules | **PARTLY RATIFIED TABLETOP RULE; REMAINDER REVIEW/HOLD** | Missing/expired deadline blocks current-use within the bounded tabletop procedure; no universal duration, schema mapping or field equivalence is approved. |
+| §6 authenticity / checked conditions / participant actionability | **RESTATEMENT + PROPOSED OPERATIONAL DETAIL** | Assurance tiers and separation are in the tabletop procedure; materiality by opportunity type still needs a decision. |
+| §7 audit trace checklist | **PROPOSED CHECKLIST + POLICY/THREAT-MODEL HOLD** | Not a schema requirement; event coverage, privacy, access, retention and deletion need explicit review. |
+| §8 hypothetical examples | **ILLUSTRATIVE ONLY** | Not executed tests, frozen fixtures, or empirical findings. |
+| §9 unresolved decision register | **CARRY-FORWARD REGISTER** | Explicitly preserves authority, field mapping, retention and access questions as unresolved. |
+| §12 self-review clarification | **PROPOSED CLARIFICATION** | Prevents accidental conflation; not independently ratified. |
+
+**Review rule:** Only an explicit governance decision can move a row from proposed to ratified. File creation, ledger entry, PR update, internal consistency, or absence of objection does not ratify any new semantic rule. If a row depends on policy/legal authority, that hold cannot be cleared by a product-design decision alone.
