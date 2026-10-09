@@ -3048,3 +3048,15 @@ The protocol prohibits contacting/recruiting minors or collecting player/guardia
 Prepared a brief, consent-first invitation for Coach Zacharia Nale to consider a voluntary adult stakeholder conversation. The message explains ScoutSA's research-stage status, limits the ask to professional perspective, offers a text/email-based format, avoids requests for player data or endorsement, and permits refusal without pressure. Instructions explicitly limit the intermediary to relaying the invitation and scheduling preference; the intermediary must not conduct the interview or interpret answers.
 
 Context search found a 2015 article about The Nale Academy and a May 2026 football report authored by Zacharia Nale; these do not prove current academy operations, endorsement, or authority to speak for any organization. No contact was initiated by this repository action. The next evidence state can change only after the invitation is actually relayed and a real response is received, with consent and provenance recorded. STS-001 v1.1 remains **BLOCKED — NOT A PASS**; all implementation and live-use holds remain.
+
+
+## 10.85 — Trust Core Logic-Only Invariant and Test Matrix — 2026-10-09
+
+**Artifact:** `docs/research/trust-core-logic-only-invariant-and-test-matrix-2026-10-09.md`  
+**Status:** DESIGN / REASONING ARTIFACT — NOT EXECUTED, NOT RATIFIED; AuthorityLevel NONE.
+
+Authored 15 candidate invariants, 12 synthetic adversarial vectors, a bounded decision-reasoning order, non-monotonic risk checks, and acceptance criteria for a future separately authorized synthetic harness. The matrix focuses on scope-bounded claims, authenticity versus availability/actionability, explicit freshness, unknown-state preservation, purpose-bound consent, tier escalation, unresolved conditions, correction history, auditability, HOLD preservation, and limits on what synthetic PASS can establish.
+
+This is a desk-reasoning artifact, not an execution result. It does not change the frozen STS fixtures or procedure, does not mark any invariant empirically verified, and does not authorize schema/code/harness implementation. The next permitted analytical step is a traceability cross-check against the ratified claim-scoped procedure and frozen fixture definitions, recording aligned/conflict/missing/not-applicable without opening STS-002–STS-010 for evaluation or editing fixtures.
+
+Current STS-001 v1.1 remains **BLOCKED — NOT A PASS**. No stakeholder validation, legal clearance, production readiness or live-use readiness is claimed.
