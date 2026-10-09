@@ -2986,3 +2986,15 @@ This does not authorize code, schema, migration, RLS, API, UI, or deployment. Th
 The PASS conclusion recorded in entry 10.77 and the initial retest file overlooked the freshness requirement adopted in entry 10.76. The frozen STS-001 v1.1 packet includes a verification-action timestamp and synthetic verifier ID but omits both `valid_until` and `reconfirm_by` and provides no rationale for a validity deadline. A verification timestamp is not a validity deadline; the missing value cannot be inferred or fabricated. The PASS conclusion is superseded by the correction record; the original record remains preserved as an audit trail.
 
 Current status: Tier 1 current-verification claim is not established due to missing freshness metadata; Tier 2 remains PAUSED/BLOCKED because eligibility, capacity, and transport/access/cost are unresolved; Tier 3 remains NOT ESTABLISHED. The fixture remains frozen and unchanged. Do not create a new fixture merely to force a pass. The formal tabletop stops here; STS-002–STS-010 remain unopened. No implementation, merge, live use, or gate transition is authorized.
+
+
+## 10.80 — Trust Core Reconciled Against Existing Frozen MVP Gates — 2026-10-09
+
+**Artifact:** `docs/research/trust-core-mvp-boundary-reconciliation-2026-10-09.md`
+**Status:** Reconciliation witness only; no new ratification or implementation authority.
+
+The earlier Trust Core proposal incorrectly treated MVP Boundary Freeze as the next gate because it relied on the README's “Next phase” wording. The later controlled-state chronology in `docs/00-gate-status.md` records MVP Boundary RATIFIED, MVP Relationship Subset FROZEN, implementation prerequisites RATIFIED, Schema Boundary FROZEN, Physical Table Boundary FROZEN, and SQL/runtime evidence recorded. Migration/database, RLS, API, UI and production implementation remain on hold.
+
+The Trust Core candidate mostly maps to existing Opportunity, Verification, ConsentRecord, Evidence and AuditEvent concepts; it must not be treated as five new domain entities. The current SQL draft does not yet represent every proposed opportunity condition, and generic verification `expires_at` does not prove enforcement of the tabletop's explicit `valid_until` / `reconfirm_by` requirement. EvidenceEvent and DecisionAuditEvent require reconciliation against existing Evidence/AuditEvent semantics before any separate entity is proposed.
+
+The README/Gate Status wording conflict is recorded for separate documentation maintenance; neither governing file was silently changed. Current STS-001 v1.1 remains **BLOCKED — NOT A PASS** due to missing freshness metadata. No schema, RLS, migration, API, UI, production, live-use or merge authority is created.
