@@ -2775,3 +2775,15 @@ Desk-research dossier created with a source register and primary/independent evi
 Research-derived direction: ScoutSA should not assume the role of an agent marketplace or guarantee placement. Its bounded value may be to distinguish roles and claims, support source-level verification of real opportunities, make responsibilities/costs explicit, scope youth safeguards, and avoid implying that agent identity verification proves a specific trial is genuine.
 
 Limits preserved: this is desk research, not direct Vaal Triangle validation, legal advice, a current licence check, or proof of local demand. Reports of allegations are not treated as adjudicated facts. Next research lanes remain coaches/scouts, then individual players.
+
+
+## 10.62 — Coach, Scout and Youth Pathway Research Dossier — 2026-10-09
+
+Artifact: docs/research/coach-scout-pathway-research-dossier-2026-10-09.md
+Commit: a00f0042dfe1971ae5642454098bcd0c8f945265
+
+Desk research reviewed South African practitioner interviews (TimesLIVE 2022; EWN 2025), FIFA Training Centre's Vela Khumalo interview (2023), a FIFA Training Centre brief summarizing a 125-scout Netherlands survey, a University of Johannesburg institutional record for a nine-scout qualitative study, and an older eThekwini coach study (13 coaches/five clubs). Findings emphasize plural discovery routes, context-rich and multidimensional assessment, limits of subjective scouting, and historical practitioner concerns about grassroots resources and pathway coordination.
+
+Decision: carry forward only bounded design implications — contextual evidence, role/source provenance, no universal talent score, separate football readiness from opportunity access, and complement existing coach/competition pathways. No claim of measured Vaal Triangle demand or current national-system status is made.
+
+Next research lane: individual players' first-person accounts, with attention to access barriers, trial logistics, scams, costs, and evidence that could contradict ScoutSA's assumptions.
