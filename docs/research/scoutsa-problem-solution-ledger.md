@@ -2799,3 +2799,18 @@ Desk research reviewed a 2026 South African township-player vox pop (source surf
 Research-derived design implications: independently confirm the receiving organization and opportunity; make cost/logistics/contingency explicit; avoid charging players for discoverability; minimize youth disclosure; separate concerns from findings; track request, response and outcome distinctly; never treat access constraints as a talent judgment. No claim is made that the Vaal Triangle's principal barrier has been measured or that ScoutSA can guarantee selection.
 
 Current research sequence completed for first pass: (1) agents/agencies, (2) coaches/scouts/pathways, (3) individual player experiences. Next step is cross-dossier synthesis: identify convergences, contradictions, evidence strength, what ScoutSA can responsibly design for, and which questions remain local/unresolved. Avoid further internal governance expansion unless the synthesis identifies a material issue.
+
+
+## 10.64 — Player Profile Video, Context and Metrics Research — 2026-10-09
+
+Artifact: docs/research/player-profile-video-and-metrics-research-dossier-2026-10-09.md  
+Initial artifact commit: 24dc13c72587a56648705f37f591fac0888a3456  
+Source-excerpt register commit: d57661ccc30f94e185df41577c57dfed7a13189d
+
+Desk research reviewed FIFA's 2026 Talent Identification Guide and football-data materials, Wyscout's official metric glossary, a 2024 peer-reviewed study comparing in-person and video scouting by 30 English Category One academy scouts, a peer-reviewed study of coach interpretation agreement on tactical video, South African TIDQ-OP research, a Kaizer Chiefs official bogus-trial warning, and Information Regulator POPIA guidance.
+
+Findings: contextual, role-specific and provenance-labelled evidence is justified. Video can be useful, but interpretations differ; advanced tracking metrics require suitable collection methods; metric definitions do not prove universal recruitment use. The proposed exact three-tier video durations, camera-height minimum, 3–5 second scan threshold, universal KPI weights and claims that all professional scouts reject certain formats are not established by the sources reviewed.
+
+Research-derived direction only: build a progressive, low-bandwidth Player Passport; make contextual video and match evidence useful without making expensive footage mandatory; show source, sample size and measurement method for statistics; keep physical data and coach observations qualified; do not expose youth identity documents or full DOB publicly; independently confirm any claimed trial through the receiving organisation's official channel.
+
+Limits: no direct Vaal Triangle coach validation; no proof of exact PSL/NFD/ABC Motsepe submission thresholds; no quantified local bandwidth study; no legal opinion or POPIA compliance claim. No schema, gate, RLS, migration, or production authority changed. Existing freezes and holds remain unchanged.
