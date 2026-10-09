@@ -3038,3 +3038,13 @@ A bounded qualitative research contract and interview guide were prepared for 5�
 Public-source leads include VOB FC and Sharpeville Rhinos as current official-site leads, plus The Nale Academy and FC Mmabatho as stale leads requiring current verification. These are leads only—not endorsements, confirmed participants, or evidence that outreach occurred. No outreach was sent and no stakeholder interview is claimed.
 
 The protocol prohibits contacting/recruiting minors or collecting player/guardian records. Stakeholder input cannot itself settle legal questions or authorize schema changes, RLS, migrations, API/UI, live listings, or a pilot. Current STS-001 v1.1 remains **BLOCKED — NOT A PASS**. The next evidence-producing step is a real, voluntary conversation with an adult stakeholder, documented only after it occurs.
+
+
+## 10.84 — Adult Stakeholder Invitation Script Prepared — 2026-10-09
+
+**Artifact:** `docs/research/adult-stakeholder-invitation-script-nale-2026-10-09.md`  
+**Status:** DRAFT ONLY — NOT SENT; no interview or response claimed.
+
+Prepared a brief, consent-first invitation for Coach Zacharia Nale to consider a voluntary adult stakeholder conversation. The message explains ScoutSA's research-stage status, limits the ask to professional perspective, offers a text/email-based format, avoids requests for player data or endorsement, and permits refusal without pressure. Instructions explicitly limit the intermediary to relaying the invitation and scheduling preference; the intermediary must not conduct the interview or interpret answers.
+
+Context search found a 2015 article about The Nale Academy and a May 2026 football report authored by Zacharia Nale; these do not prove current academy operations, endorsement, or authority to speak for any organization. No contact was initiated by this repository action. The next evidence state can change only after the invitation is actually relayed and a real response is received, with consent and provenance recorded. STS-001 v1.1 remains **BLOCKED — NOT A PASS**; all implementation and live-use holds remain.
