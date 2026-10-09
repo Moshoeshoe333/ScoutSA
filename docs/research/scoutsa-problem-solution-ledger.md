@@ -2815,3 +2815,358 @@ Findings: contextual, role-specific and provenance-labelled evidence is justifie
 Research-derived direction only: build a progressive, low-bandwidth Player Passport; make contextual video and match evidence useful without making expensive footage mandatory; show source, sample size and measurement method for statistics; keep physical data and coach observations qualified; do not expose youth identity documents or full DOB publicly; independently confirm any claimed trial through the receiving organisation's official channel.
 
 Limits: no direct Vaal Triangle coach validation; no proof of exact PSL/NFD/ABC Motsepe submission thresholds; no quantified local bandwidth study; no legal opinion or POPIA compliance claim. No schema, gate, RLS, migration, or production authority changed. Existing freezes and holds remain unchanged.
+
+
+## 10.65 — Part 12 Protocol Ratification and Synthetic Fixture Freeze — 2026-10-09
+
+**Artifacts**
+- `docs/research/part-12-protocol-ratification-record-2026-10-09.md`
+- `docs/research/synthetic-trust-fixtures-v1-2026-10-09.md`
+- Parent protocol: `docs/research/synthetic-trust-evaluation-set-2026-10-09.md`
+
+**Protocol decision:** Ratified for synthetic manual tabletop evaluation only, following explicit user confirmation in the project conversation. The ratification sets zero tolerance for critical failures; any critical failure blocks progression; all ten scenarios must ultimately pass after correction and retest; manual tabletop is the first evaluation; missing observations are NOT TESTED rather than PASS; and aggregate results cannot offset a critical failure.
+
+**Fixture state:** Synthetic fixture set `STS-FIXTURES-1.0` frozen before evaluation. Six Critical scenarios: STS-002, STS-003, STS-004, STS-005, STS-007 and STS-008. Four High scenarios: STS-001, STS-006, STS-009 and STS-010. Inputs and expected outcomes are fictional and contain no copied real-person data.
+
+**Execution state:** NOT RUN. No scenario has a PASS or FAIL result. No independent evaluator review is recorded. No corrective action or retest is recorded.
+
+**Authority boundary:** Protocol ratification and fixture freeze do not authorize implementation, schema/RLS/migration changes, real player/guardian data, recruiting or contacting minors, public profiles/listings, live outreach, closed rehearsal, live pilot, or a gate transition. Existing holds remain unchanged.
+
+**Next controlled step:** Conduct the manual tabletop against frozen version 1.0. Record each observation separately from its expected outcome, preserve failures and limitations, and block progression if any critical scenario fails or remains untested. A tabletop cannot establish software enforcement or live-pilot readiness.
+
+
+## 10.66 — Part 12 Tabletop Readiness Review — 2026-10-09
+
+**Artifact:** `docs/research/part-12-tabletop-readiness-review-2026-10-09.md`  
+**Commit:** `2e2a0eccb3fc411f4b1a8d32e127326a508c474c`
+
+**Review type:** AI-assisted document-readiness review, not an independent scenario evaluation. The reviewer had already inspected the frozen expected outcomes, so this review is not a blind tabletop run.
+
+**Evidence inspected:** Part 12 protocol, frozen synthetic fixtures v1.0, ratification record, Constitution, Player Passport, Consent Model, Core User Flows, and Part 11 pilot design.
+
+**Finding:** The written foundation has clear trust boundaries—role verification is distinct from opportunity verification; consent is purpose-bound and revocable; uncertainty and history must be preserved; and football readiness is distinct from opportunity access. However, the materials do not yet provide a fully operational manual procedure for every high-risk scenario. Noted gaps include escalation ownership/routes, pause/resume/closure criteria, dispute handling, a field-level access decision matrix, and consent-withdrawal operating steps.
+
+**Material consistency defect:** The parent Part 12 protocol still says it is not ratified and fixtures are not frozen, while the separate ratification record and fixture manifest record protocol ratification and fixture freeze. Reconcile the parent protocol status through a controlled, reviewed edit before treating the document set as internally consistent.
+
+**STS-006 dependency:** The fixture references a 12-month freshness threshold, but the inspected governing documents do not independently establish that threshold as an approved general rule. Do not silently use the fixture as its own governing procedure; resolve or explicitly block this dependency.
+
+**Execution state:** Formal tabletop NOT RUN. No scenario has a PASS/FAIL outcome; all ten remain NOT TESTED. No independent evaluator is recorded. No software enforcement was tested. No gate transition or implementation/live-use authorization occurred.
+
+**Next controlled actions:** Reconcile Part 12 status text; define or explicitly defer the operational gaps; separately govern the freshness rule; prepare blind evaluator packets with expected outcomes withheld until observations are recorded; then run and preserve all ten scenario records. Existing holds remain unchanged.
+
+
+## 10.67 — Part 12 Status Reconciliation — 2026-10-09
+
+**Artifact:** `docs/research/synthetic-trust-evaluation-set-2026-10-09.md`  
+**Commit:** `72f6e9d413cc8c9bc52cc906be06ee95b0482d05`
+
+The parent Part 12 protocol status was corrected on the proposal branch to align with the separate ratification record and frozen fixture manifest. It now records the protocol as ratified for synthetic manual tabletop evaluation only, references the ratification record, treats the scenario severities as frozen for fixture version `STS-FIXTURES-1.0`, and records that the fixtures are frozen while execution remains NOT RUN.
+
+This is a documentation-consistency correction only. It does not alter fixture inputs or expected outcomes, create scenario results, authorize implementation, or lift any hold.
+
+**Current state after reconciliation:** Protocol ratification recorded; fixtures v1.0 frozen; readiness review recorded; formal tabletop NOT RUN; all ten scenario outcomes remain unrecorded/NOT TESTED; independent evaluator not recorded; no gate transition or implementation/live-use authorization.
+
+**Next controlled action:** Resolve or explicitly carry forward the operating-procedure gaps and the STS-006 freshness-rule dependency; prepare a blind evaluation packet for a separate evaluator; then execute and record the ten cases under the ratified protocol.
+
+
+## 10.68 — STS-001 Initial Observation Captured — 2026-10-09
+
+**Artifact:** `docs/research/sts-001-initial-observation-2026-10-09.md`  
+**Commit:** `c9b8baa8093941f808628bb9a2f32109a666c915`
+
+The user's initial decision was recorded as **PAUSE PENDING CLARIFICATION**. The evaluator identified corroboration of the submitted invitation through a separate predesignated official channel, while keeping eligibility, capacity, and transport/cost conditions unresolved. The proposed next action is targeted clarification while the opportunity remains non-public and non-actionable.
+
+**Comparison to frozen oracle:** BLOCKED — not a PASS. The observation is consistent with the no-action/no-overclaim boundary, but the required source-packet version, explicit claim-by-claim checked scope, and verification timestamp were not recorded. No critical failure is declared on this incomplete observation; complete the evidence fields and retest under the unchanged oracle.
+
+**Procedure gaps proposed (not ratified amendments):** distinguish authenticity corroboration from full opportunity verification; define blocking conditions; assign an escalation/closure route; and codify transport/cost disclosure fields.
+
+**Authority boundary:** No fixture or oracle changed. No policy amendment ratified. Formal ten-case tabletop remains incomplete; no gate transition or implementation/live-use authorization.
+
+
+## 10.69 — Proposed Claim-Scoped Opportunity Verification States — 2026-10-09
+
+**Artifact:** `docs/research/proposal-opportunity-verification-states-2026-10-09.md`  
+**Commit:** `2a6598151be84a24eb3a90bd0aa997001569e9f5`
+
+**Status:** PROPOSAL ONLY — NOT RATIFIED.
+
+Following the STS-001 initial observation, a draft manual-procedure clarification was added to distinguish limited authenticity corroboration from full opportunity conditions and actionable status. It proposes claim-scoped verification labels and a blocking rule for unresolved material conditions including eligibility, capacity, transport/access and cost. It also proposes evidence fields for source scope, provenance, timestamp, reviewer and limitations.
+
+**No policy change occurred.** The proposal does not amend governing documents or the frozen STS-001 oracle. No implementation or live-use authority was granted.
+
+**STS-001 state:** Initial decision PAUSE PENDING CLARIFICATION; scenario record BLOCKED pending completion of required evidence fields and controlled comparison/retest. Formal tabletop remains incomplete.
+
+**Next action:** Obtain explicit review/ratification or revision of the proposed procedure clarification before treating it as governing policy; then complete STS-001's claim-by-claim evidence scope and timestamp and retest against the unchanged oracle. Do not proceed to the next scenario until the current case's blocked state is addressed, consistent with the evaluator's stated stop condition.
+
+
+## 10.70 — STS-006 Freshness Threshold Blocked — 2026-10-09
+
+Artifact: `docs/research/sts-006-freshness-threshold-blocker-2026-10-09.md`. STS-006 is BLOCKED FROM EVALUATION, not PASS or FAIL. The fixture's 12-month threshold is not established in inspected governing documents. Fixture v1.0 remains unchanged pending separate governance.
+
+## 10.71 — Opportunity Verification Procedure Ratified — 2026-10-09
+
+Artifacts: `docs/research/opportunity-verification-rule-ratification-2026-10-09.md`; `docs/research/opportunity-verification-procedure-v1-2026-10-09.md`. The user ratified three tiers: AUTHENTICITY CORROBORATED — LIMITED SCOPE; OPPORTUNITY CONDITIONS CHECKED — SCOPE LIMITED; ACTIONABLE FOR A PARTICULAR PARTICIPANT. Transitions are deliberate, not automatic. For physical attendance, transport/access responsibility and known costs are required fields. Each tier requires source reference, verification timestamp, verifier identity, scope and limitations as applicable; missing evidence blocks the tier. Unresolved material conditions escalate after 72 hours to the designated authority and remain BLOCKED if unresolved. This is for synthetic manual tabletop only; no constitutional amendment or live-use authority.
+
+## 10.72 — Tabletop Status After STS-001 Retest / STS-006 Block — 2026-10-09
+
+STS-001 retest: `docs/research/sts-001-procedure-retest-2026-10-09.md`; result BLOCKED, not PASS. The fixture reference is identified, but verification-action timestamp and sufficiently explicit verifier identity/claim scope are absent; eligibility, capacity and transport/access/cost remain unresolved. No evidence was invented and the oracle is unchanged. STS-006 is BLOCKED FROM EVALUATION pending a governed freshness rule. STS-002–STS-005 and STS-007–STS-010 are NOT STARTED. Formal tabletop remains incomplete; no PASS/FAIL is awarded. Independent/blind evaluation is not recorded. No gate transition, implementation, migration, real data, minor contact, public listing, or live-pilot authorization is granted.
+
+
+## 10.73 — GAP-004 / GAP-005: Escalation Authority and Tabletop Policy Boundary — 2026-10-09
+
+**Artifact:** `docs/research/gap-004-gap-005-escalation-governance-boundary-2026-10-09.md`  
+**Status:** OPEN — governance clarification required
+
+- **GAP-004:** The 72-hour tabletop escalation trigger has no designated authority/role, route, backup, or accountable closure owner identified in the reviewed material. In tabletop records, mark destination UNASSIGNED / GOVERNANCE GAP and keep the case BLOCKED; do not invent an authority or perform a real escalation. Any operational role/route requires a separate governance decision.
+- **GAP-005:** The 72-hour trigger was ratified for synthetic manual tabletop only, not as Constitution-level or live operational policy. The gap is the risk of scope confusion, not proof that the bounded tabletop instruction is invalid. Keep it labelled tabletop-only; separately review whether any operational rule should be adopted before a live pilot is ever considered.
+- **STS-001:** Remains BLOCKED pending evidence actually present in an approved synthetic packet or a properly versioned replacement fixture. Do not fabricate timestamp, verifier identity, claim scope, eligibility, capacity, or transport evidence.
+- **STS-006:** Remains BLOCKED FROM EVALUATION pending governance resolution of the unsupported 12-month freshness threshold.
+- **Fixture handling:** Frozen `STS-FIXTURES-1.0` remains unchanged. A proposed v1.1 must be separately versioned/reviewed/approved, and any new fictional evidence must be labelled as newly authored synthetic fixture content, not recovered evidence from v1.0.
+- **State:** No scenario result awarded; no oracle change; no merge to main, implementation, migration/RLS work, real data, minor contact, public listing, live outreach, pilot, or gate transition authorized.
+
+
+## 10.74 — Proposed Versioned Fixture Amendments for STS-001 / STS-006 — 2026-10-09
+
+**Artifact:** `docs/research/proposed-sts-fixtures-v1.1-amendments-2026-10-09.md`  
+**Status:** PROPOSAL ONLY — NOT APPROVED, NOT FROZEN, NOT EVALUATED
+
+A versioned delta is proposed rather than editing frozen `STS-FIXTURES-1.0`. For STS-001, the proposal adds explicitly fictional packet/source IDs, a synthetic verification-action timestamp, a synthetic verifier ID, exact claim scope, and explicit exclusions. It deliberately leaves eligibility, capacity, transport/access/cost and other material conditions unresolved; the proposed expected handling permits only limited Tier 1 corroboration and keeps Tier 2/Tier 3 blocked. The invented fields are labelled new synthetic fixture data, not evidence recovered from v1.0 or from a real event.
+
+For STS-006, the proposed v1.1 variant removes the unsupported 12-month rule from the test input and instead tests whether the evaluator identifies the missing governing freshness threshold and blocks actionable use without inventing policy. V1.0 and its oracle remain unchanged.
+
+Before use, the complete v1.1 fixture set must be assembled with unchanged cases carried forward, every delta itemized, explicitly reviewed/approved, and separately frozen. A separate retest must record evaluator identity/date, procedure version, observation, evidence references and outcome. Until then STS-001 remains BLOCKED under v1.0 and STS-006 remains BLOCKED FROM EVALUATION under v1.0. No scenario result, gate transition, merge, implementation, or live-use authorization is created.
+
+
+## 10.75 — Complete STS-FIXTURES-1.1 Review Copy Drafted — 2026-10-09
+
+**Artifact:** `docs/research/proposed-synthetic-trust-fixtures-v1.1-review-copy-2026-10-09.md`  
+**Status:** PROPOSAL FOR REVIEW — NOT RATIFIED, NOT FROZEN, NOT EXECUTED
+
+A complete v1.1 review copy has been drafted to make the proposed changes reviewable in context. It carries forward STS-002–STS-005 and STS-007–STS-010 in substance, proposes an STS-001 provenance supplement using explicitly fictional source IDs/timestamp/reviewer ID while retaining unresolved material conditions, and proposes an STS-006 missing-policy-dependency case without assuming the unsupported 12-month threshold. This is a review copy, not the frozen v1.1 release.
+
+The frozen v1.0 fixture and oracle remain unchanged. The new synthetic provenance is authored fixture content, not evidence recovered from v1.0 and not a real verification. No PASS/FAIL is awarded. STS-001 remains BLOCKED under v1.0; STS-006 remains BLOCKED FROM EVALUATION under v1.0. Before any v1.1 evaluation, the candidate requires explicit review/approval, an exact change list, and a separate immutable freeze record. All prior holds remain; no merge, implementation, live use, or gate transition is authorized.
+
+
+## 10.76 — Freshness Governance Decision and STS-FIXTURES-1.1 Freeze — 2026-10-09
+
+**Decision:** `docs/research/part-12-freshness-and-fixture-v1.1-decision-2026-10-09.md`  
+**Frozen fixture:** `docs/research/synthetic-trust-fixtures-v1.1-2026-10-09.md`  
+**Status:** ADOPTED/FROZEN FOR BOUNDED SYNTHETIC MANUAL TABLETOP ONLY
+
+Decision A selects no universal freshness duration at this stage. For the bounded tabletop, each verification used for a current claim must include an explicit `valid_until` or `reconfirm_by`, with accountable verifier, claim scope and rationale. If both are absent, record `FRESHNESS METADATA MISSING — BLOCKED`; if a deadline has passed, preserve historical evidence and require re-confirmation before current/actionable use. This is not Constitution-level or live operational policy; implementation/live adoption needs separate governance.
+
+Decision B approves a new versioned fixture set. STS-001 has clearly labelled, newly authored fictional provenance and exact claim scope, while eligibility, capacity and transport/access/cost remain blocking. STS-006 tests missing freshness metadata without assuming the unsupported 12-month threshold. STS-FIXTURES-1.0 remains unchanged. STS-002–STS-010 are not opened for evaluation now.
+
+## 10.77 — STS-001 v1.1 Controlled Retest — 2026-10-09
+
+**Record:** `docs/research/sts-001-v1.1-controlled-retest-2026-10-09.md`  
+**Result:** **PASS — BOUNDED SYNTHETIC MANUAL TABLETOP ONLY**  
+**Independence:** NOT INDEPENDENT / NOT BLIND
+
+The recorded handling limits Tier 1 to two explicitly enumerated authenticity claims with synthetic packet/source references, timestamp, verifier ID and limitations. Eligibility, capacity and transport/access/cost remain unresolved, so Tier 2 stays PAUSED/BLOCKED and Tier 3 is NOT ESTABLISHED. No public/actionable use or participant-specific contact is allowed. The result indicates consistency with the frozen v1.1 expected outcome only; the evaluator had prior oracle exposure and helped author the fixture. It is not independent assurance, software enforcement, legal compliance, production readiness, or live-pilot evidence.
+
+**Stop rule applied:** Formal tabletop expansion stops here. STS-002–STS-010 remain unevaluated. The original v1.0 STS-001 BLOCKED record and STS-006 v1.0 blocker remain historical and unchanged. Next step is a distinct Trust Core implementation-readiness/design gate. The README's schema hold and implementation-deferred status are not overridden; no implementation, migration/RLS, merge, real data, minor contact, public listing, pilot, or gate transition is authorized by these records.
+
+
+## 10.78 — Minimal Trust Core MVP Boundary Proposal — 2026-10-09
+
+**Artifact:** `docs/research/trust-core-minimal-mvp-boundary-proposal-2026-10-09.md`  
+**Status:** PROPOSAL INPUT TO MVP BOUNDARY FREEZE — NOT RATIFIED, NOT IMPLEMENTED
+
+The proposal converts the implementation recommendation into a bounded candidate target: opportunity state/conditions; claim-scoped verification records with provenance and explicit `valid_until`/`reconfirm_by`; scoped consent and withdrawal; append-only evidence and decision audit; paused/blocked states; and negative tests for freshness, consent, access control, unauthorized tier escalation, history mutation, and audit completeness. It also states a strict non-scope (no real data, public profiles/listings, contact, pilot, or compliance/readiness claims).
+
+This does not authorize code, schema, migration, RLS, API, UI, or deployment. The governing `README.md` on `main` states Gate 2 is closed at conceptual level, ERD frozen, schema on hold, implementation deferred, and MVP Boundary Freeze is the next phase. The Trust Core proposal is therefore input to that next phase; the MVP boundary and implementation gate must be reconciled and explicitly authorized before code begins. Existing holds remain.
+
+
+## 10.79 — STS-001 v1.1 Retest Result Corrected — 2026-10-09
+
+**Correction record:** `docs/research/sts-001-v1.1-retest-correction-2026-10-09.md`  
+**Current result:** **BLOCKED — NOT A PASS**
+
+The PASS conclusion recorded in entry 10.77 and the initial retest file overlooked the freshness requirement adopted in entry 10.76. The frozen STS-001 v1.1 packet includes a verification-action timestamp and synthetic verifier ID but omits both `valid_until` and `reconfirm_by` and provides no rationale for a validity deadline. A verification timestamp is not a validity deadline; the missing value cannot be inferred or fabricated. The PASS conclusion is superseded by the correction record; the original record remains preserved as an audit trail.
+
+Current status: Tier 1 current-verification claim is not established due to missing freshness metadata; Tier 2 remains PAUSED/BLOCKED because eligibility, capacity, and transport/access/cost are unresolved; Tier 3 remains NOT ESTABLISHED. The fixture remains frozen and unchanged. Do not create a new fixture merely to force a pass. The formal tabletop stops here; STS-002–STS-010 remain unopened. No implementation, merge, live use, or gate transition is authorized.
+
+
+## 10.80 — Trust Core Reconciled Against Existing Frozen MVP Gates — 2026-10-09
+
+**Artifact:** `docs/research/trust-core-mvp-boundary-reconciliation-2026-10-09.md`
+**Status:** Reconciliation witness only; no new ratification or implementation authority.
+
+The earlier Trust Core proposal incorrectly treated MVP Boundary Freeze as the next gate because it relied on the README's “Next phase” wording. The later controlled-state chronology in `docs/00-gate-status.md` records MVP Boundary RATIFIED, MVP Relationship Subset FROZEN, implementation prerequisites RATIFIED, Schema Boundary FROZEN, Physical Table Boundary FROZEN, and SQL/runtime evidence recorded. Migration/database, RLS, API, UI and production implementation remain on hold.
+
+The Trust Core candidate mostly maps to existing Opportunity, Verification, ConsentRecord, Evidence and AuditEvent concepts; it must not be treated as five new domain entities. The current SQL draft does not yet represent every proposed opportunity condition, and generic verification `expires_at` does not prove enforcement of the tabletop's explicit `valid_until` / `reconfirm_by` requirement. EvidenceEvent and DecisionAuditEvent require reconciliation against existing Evidence/AuditEvent semantics before any separate entity is proposed.
+
+The README/Gate Status wording conflict is recorded for separate documentation maintenance; neither governing file was silently changed. Current STS-001 v1.1 remains **BLOCKED — NOT A PASS** due to missing freshness metadata. No schema, RLS, migration, API, UI, production, live-use or merge authority is created.
+
+
+## 10.81 — Trust Core Field-Boundary Reconciliation and README Gate Correction — 2026-10-09
+
+**Artifacts:**
+- `docs/research/trust-core-field-boundary-reconciliation-2026-10-09.md`
+- `README.md` (proposal-branch documentation correction)
+**Status:** Reconciliation witness / documentation correction on proposal branch only; no implementation authority.
+
+A field-level comparison was made between the Trust Core candidate, frozen Field/Constraint Decision Matrix, frozen physical table boundary, and SQL draft. Findings include: opportunity lifecycle, date/time/venue, eligibility, capacity, fee policy/recipient and opportunity-specific transport/access/cost are not represented in the current `opportunities` SQL definition; `verifications.expires_at` is not assumed equivalent to the tabletop's explicit `valid_until` / `reconfirm_by` plus rationale; verifier identity, limitations/conflicts, decision-rule version, prior/new state, and some audit-completeness semantics are not explicitly represented. Existing `evidence` and `audit_events` may overlap the proposed EvidenceEvent and DecisionAuditEvent; no duplicate entities are authorized. Existing `transport_profiles` do not by themselves represent opportunity-specific attendance feasibility.
+
+These are traceability findings, not permission to add fields. Each gap requires a decision whether it is essential to the ratified MVP, already represented elsewhere, deferred, or requires a separately authorized boundary amendment. Policy/legal matters remain holds. Table presence does not prove append-only behavior, access enforcement, consent enforcement or tier-transition enforcement.
+
+The README on this proposal branch was corrected to reflect the later controlled chronology in `docs/00-gate-status.md`: MVP boundary and relationship subset ratified/frozen; schema and physical table boundary frozen; SQL draft reviewed; isolated PostgreSQL runtime evidence recorded; migration, RLS, API, UI and production implementation remain on hold. This does not change `main`, silently amend the frozen schema, or authorize implementation.
+
+Current STS-001 v1.1 remains **BLOCKED — NOT A PASS**. No schema, migration, RLS, API, UI, live-use or merge authority is created.
+
+
+## 10.82 — Trust Core Gap Disposition Proposal — 2026-10-09
+
+**Artifact:** `docs/research/trust-core-gap-disposition-proposal-2026-10-09.md`  
+**Status:** PROPOSAL FOR EXPLICIT REVIEW — NOT RATIFIED; no implementation authority.
+
+The candidate gaps have been classified with proposed dispositions. The proposal treats lifecycle state, date/time/venue, eligibility, capacity, material costs/fees, opportunity-specific transport/access, freshness, verifier provenance/limitations, applicable consent, non-destructive history and audit completeness as requirements that must be resolved before the corresponding current/actionable or protected workflow can be claimed. It does not assume each item requires a new table or field. Existing Evidence/AuditEvent concepts must be mapped before any duplicate event entity is considered.
+
+It proposes a “enough” threshold for a future synthetic-only harness: exact boundary reconciliation, explicitly bounded environment, faithful frozen fixtures, negative tests for freshness/consent/access/tier escalation/history/audit, no conversion of policy HOLD into ALLOW, traceable execution evidence, and zero critical failures. This threshold is a proposal only; no harness or implementation is authorized.
+
+Next decision: review the proposed dispositions and determine which questions need adult football-stakeholder validation, which can be explicitly deferred, and which require policy/legal ratification. Current STS-001 v1.1 remains **BLOCKED — NOT A PASS**. Existing migration/database, RLS, API, UI, production and live-use holds remain.
+
+
+## 10.83 — Adult Stakeholder Validation Protocol Prepared — 2026-10-09
+
+**Artifact:** `docs/research/adult-stakeholder-validation-protocol-2026-10-09.md`  
+**Status:** RESEARCH PLAN ONLY — NOT EXECUTED; no stakeholder responses or endorsements recorded.
+
+A bounded qualitative research contract and interview guide were prepared for 5–8 adults across at least three role categories and two organizations in the Vaal Triangle/Sedibeng area. Focus: real-world opportunity verification, current capacity/eligibility, freshness/reconfirmation, material costs and access, correction/history, and purpose-bound consent. The protocol includes counterevidence questions, provenance and interview-note requirements, data-minimization guardrails, a stop condition, and a synthesis taxonomy.
+
+Public-source leads include VOB FC and Sharpeville Rhinos as current official-site leads, plus The Nale Academy and FC Mmabatho as stale leads requiring current verification. These are leads only—not endorsements, confirmed participants, or evidence that outreach occurred. No outreach was sent and no stakeholder interview is claimed.
+
+The protocol prohibits contacting/recruiting minors or collecting player/guardian records. Stakeholder input cannot itself settle legal questions or authorize schema changes, RLS, migrations, API/UI, live listings, or a pilot. Current STS-001 v1.1 remains **BLOCKED — NOT A PASS**. The next evidence-producing step is a real, voluntary conversation with an adult stakeholder, documented only after it occurs.
+
+
+## 10.84 — Adult Stakeholder Invitation Script Prepared — 2026-10-09
+
+**Artifact:** `docs/research/adult-stakeholder-invitation-script-nale-2026-10-09.md`  
+**Status:** DRAFT ONLY — NOT SENT; no interview or response claimed.
+
+Prepared a brief, consent-first invitation for Coach Zacharia Nale to consider a voluntary adult stakeholder conversation. The message explains ScoutSA's research-stage status, limits the ask to professional perspective, offers a text/email-based format, avoids requests for player data or endorsement, and permits refusal without pressure. Instructions explicitly limit the intermediary to relaying the invitation and scheduling preference; the intermediary must not conduct the interview or interpret answers.
+
+Context search found a 2015 article about The Nale Academy and a May 2026 football report authored by Zacharia Nale; these do not prove current academy operations, endorsement, or authority to speak for any organization. No contact was initiated by this repository action. The next evidence state can change only after the invitation is actually relayed and a real response is received, with consent and provenance recorded. STS-001 v1.1 remains **BLOCKED — NOT A PASS**; all implementation and live-use holds remain.
+
+
+## 10.85 — Trust Core Logic-Only Invariant and Test Matrix — 2026-10-09
+
+**Artifact:** `docs/research/trust-core-logic-only-invariant-and-test-matrix-2026-10-09.md`  
+**Status:** DESIGN / REASONING ARTIFACT — NOT EXECUTED, NOT RATIFIED; AuthorityLevel NONE.
+
+Authored 15 candidate invariants, 12 synthetic adversarial vectors, a bounded decision-reasoning order, non-monotonic risk checks, and acceptance criteria for a future separately authorized synthetic harness. The matrix focuses on scope-bounded claims, authenticity versus availability/actionability, explicit freshness, unknown-state preservation, purpose-bound consent, tier escalation, unresolved conditions, correction history, auditability, HOLD preservation, and limits on what synthetic PASS can establish.
+
+This is a desk-reasoning artifact, not an execution result. It does not change the frozen STS fixtures or procedure, does not mark any invariant empirically verified, and does not authorize schema/code/harness implementation. The next permitted analytical step is a traceability cross-check against the ratified claim-scoped procedure and frozen fixture definitions, recording aligned/conflict/missing/not-applicable without opening STS-002–STS-010 for evaluation or editing fixtures.
+
+Current STS-001 v1.1 remains **BLOCKED — NOT A PASS**. No stakeholder validation, legal clearance, production readiness or live-use readiness is claimed.
+
+
+## 10.86 — Trust Core Invariant Traceability Crosswalk — 2026-10-09
+
+**Artifact:** `docs/research/trust-core-invariant-traceability-crosswalk-2026-10-09.md`  
+**Status:** DESK CROSSWALK ONLY — NOT EXECUTED; NO FIXTURE EVALUATION; AuthorityLevel NONE.
+
+Cross-checked 15 candidate invariants against the written claim-scoped verification procedure and frozen fixture definitions. Document-level alignment is strong for claim scope, authenticity/actionability separation, consent scope, blocking unresolved material conditions, tier separation, preservation of holds, and the distinction between synthetic tabletop and real-world validation. Partial specification gaps remain around exact freshness field mapping/transition behavior, typed unknown/conflict semantics, guardian/authorizer conflicts, retention/deletion boundaries, and denied-action audit detail.
+
+This was a document traceability exercise only. It did not execute any scenario, reopen STS-001, evaluate STS-002–STS-010, change frozen fixtures, prove implementation/security enforcement, or authorize a new harness. STS-001 v1.1 remains **BLOCKED — NOT A PASS**; STS-006 remains blocked from evaluation under the current procedure.
+
+Next analytical step: propose a separately versioned, unfrozen set of adversarial specification examples for the remaining gaps, with expected outcomes declared before evaluation. Separate approval is required before any execution; existing implementation and live-use holds remain.
+
+
+## 10.87 — Unfrozen Specification-Gap Vectors Proposed — 2026-10-09
+
+**Artifact:** `docs/research/trust-core-unfrozen-specification-gap-vectors-proposal-2026-10-09.md`  
+**Status:** PROPOSED TEST DESIGN ONLY — NOT RATIFIED, NOT EXECUTED; AuthorityLevel NONE.
+
+Prepared five new, unfrozen synthetic examples for unresolved specification questions: freshness field mapping, unknown versus explicit no-fee state, conflicting authorization evidence, correction history versus retention/deletion, and access denial versus audit completeness. Each has a predeclared expected blocked/hold outcome and review conditions. They are separate from STS-FIXTURES-1.0/v1.1 and do not reopen or replace any frozen case.
+
+No execution or implementation is authorized. STS-001 v1.1 remains **BLOCKED — NOT A PASS**; STS-006 remains blocked from evaluation. Policy/legal holds, main-branch isolation, and implementation/live-use holds remain unchanged.
+
+
+## 10.88 — Trust Core Semantic Contract Proposal — 2026-10-09
+
+**Artifact:** `docs/research/trust-core-semantic-contract-proposal-2026-10-09.md`  
+**Status:** PROPOSAL — NOT RATIFIED; NOT AN IMPLEMENTATION SPECIFICATION; AuthorityLevel NONE.
+
+Defined candidate semantics for UNKNOWN, CONFIRMED, CONFLICTING, EXPIRED, NOT_APPLICABLE, NOT_PROVIDED, REVOKED/WITHDRAWN and DISPUTED; a bounded dependency rule; freshness semantics without a universal duration; distinctions between organization authenticity, checked opportunity conditions and participant-specific actionability; and a candidate minimum decision/audit trace. Added hypothetical consistency examples and an unresolved decision register.
+
+The proposal is constrained by the ratified Constitution M1–M9 and Assertion boundary. It introduces no new first-class domain concept, does not amend the frozen conceptual or physical schema, and does not map `expires_at` to `valid_until` / `reconfirm_by`. Conflict resolution, guardian/authorizer authority, materiality by opportunity type, audit/retention rules and field mapping remain explicit review or policy/legal holds.
+
+No tests were executed. No stakeholder validation, implementation, legal clearance, compliance, security enforcement, or production readiness is claimed. STS-001 v1.1 remains **BLOCKED — NOT A PASS**; STS-006 remains blocked from evaluation.
+
+
+**Addendum to 10.88 — ratification-boundary classification:** The semantic proposal now classifies each section as restatement, proposed semantic/design rule, bounded tabletop rule, illustrative-only example, or policy/legal/field-mapping hold. This is a review aid only. No silence, commit, or PR update is treated as ratification. The proposal's current file tree is on the proposal branch; after a brief accidental main-branch creation, the file was deleted from main and verified absent there. The main branch history contains the create/delete commits; this was a process error and is not described as “main history untouched.”
+
+
+## 10.89 — Formal Logic Review of Trust Core Semantic Contract — 2026-10-09
+
+**Artifact updated:** `docs/research/trust-core-semantic-contract-proposal-2026-10-09.md`  
+**Status:** DESK-LEVEL CONSISTENCY REVIEW — NOT RATIFIED, NOT EXECUTED; AuthorityLevel NONE.
+
+Reviewed the candidate contract against the Constitution's epistemic separation and scoped-authority rules, the current Gate Status, and the ratified-for-synthetic-tabletop-only Opportunity Verification Procedure v1.0. Four concrete review findings were recorded in §14 of the proposal:
+
+- **FL-01:** Semantic labels such as EXPIRED and DISPUTED describe different dimensions and can coexist; they must not become mutually exclusive states by accident.
+- **FL-02:** `valid_until` and `reconfirm_by` may encode different deadline meanings. The existing bounded tabletop block remains in force, but no general equivalence or universal consequence is inferred.
+- **FL-03:** “Weakest required predicate” is not a complete evaluator. Claim-specific dependencies, approved alternatives, materiality, and blocked outcomes must be explicit.
+- **FL-04:** Audit completeness does not justify indiscriminate logging; event-specific minimisation, access, retention, correction and deletion remain policy/threat-model decisions.
+
+**Review outcome:** No contradiction was found with the core ratified epistemic boundaries or frozen conceptual model. The proposal requires semantic refinement before it could be considered a general contract. This was desk reasoning only: no tests, fixture evaluations, stakeholder interviews, or live records were used.
+
+No new standalone artifact was created, in accordance with the anti-drift rule. External validation with adult football stakeholders remains the highest-value empirical next step when access is practical. No schema/code/RLS/API/UI/implementation, merge, real-data, outreach, minor-contact, or pilot authority is granted.
+
+**Evaluation state unchanged:** STS-001 v1.1 remains **BLOCKED — NOT A PASS**; STS-006 remains **BLOCKED FROM EVALUATION**; STS-002–010 remain unopened under the stop rule.
+
+**Branch-provenance clarification:** A repository comparison at this review reported the proposal branch as 58 commits ahead and 2 behind `main` (snapshot only; counts can change). The semantic proposal is absent from the current `main` tree, but the main history includes the earlier temporary create/delete commits. Therefore “main history untouched” is not an accurate claim. No merge was performed.
+
+
+## 10.90 — End-of-Day Consolidation and Stop Record — 2026-10-09
+
+**Status:** DAY CLOSED — RECORD CONSOLIDATION ONLY  
+**Branch:** `proposal/part-12-synthetic-trust-evaluation`  
+**AuthorityLevel:** NONE for new policy or implementation decisions.  
+**Purpose:** Preserve today's decisions, work completed, verified repository state, limitations, holds, and next permitted action in one ledger entry.
+
+### 1. Work completed today
+
+- Updated `docs/research/trust-core-semantic-contract-proposal-2026-10-09.md` with §14, a desk-level formal logic review and four counterexample-based findings (FL-01 to FL-04).
+- Recorded the review in this ledger as entry 10.89.
+- Updated PR #2's description to reflect the current proposal scope, blocked tabletop status, and accurate branch provenance.
+- Re-fetched the semantic contract and ledger after updates to verify the changes are present on the proposal branch.
+- Confirmed that the semantic contract file is absent from the current `main` tree. The earlier temporary create/delete commits remain in `main` history; do not claim that the history was untouched.
+- Compared branches. At the final comparison available during this work, the proposal branch was 60 commits ahead and 2 behind `main`; this is a time-bound snapshot, not a permanent count.
+- No tests were executed, no tabletop scenarios were evaluated, and no schema, application code, migration, RLS, API or UI implementation was changed.
+
+### 2. Formal logic review findings
+
+- **FL-01 — State composition:** labels such as EXPIRED, DISPUTED and CONFIRMED may describe different dimensions and may coexist. They must not be collapsed into a single mutually exclusive enum without object-specific semantics.
+- **FL-02 — Deadline distinction:** `valid_until` and `reconfirm_by` may have different meanings and consequences. Preserve the current bounded tabletop block, but do not infer a universal equivalence or freshness duration.
+- **FL-03 — Claim dependencies:** “weakest required predicate” is not a complete evaluator. Required predicates, approved alternatives, materiality and blocked outcomes must be defined for the exact claim/action.
+- **FL-04 — Audit minimisation:** a candidate audit checklist is not authority to log every possible datum. Event-specific necessity, access, minimisation, retention, correction and deletion remain policy/threat-model decisions.
+
+**Review conclusion:** No contradiction was identified in this desk review with the Constitution's core epistemic separation, scoped authority, historical/current distinction or frozen conceptual boundary. This is not proof of completeness, an executed test, stakeholder validation, or ratification of the new precision.
+
+### 3. Current tabletop state — preserved
+
+- Part 12 protocol: ratified only for synthetic manual tabletop evaluation, within its recorded scope.
+- STS-001 v1.1: **BLOCKED — NOT A PASS**. The correction record identifies missing freshness deadline metadata; eligibility, final capacity and transport/access/cost also remain unresolved.
+- STS-006: **BLOCKED FROM EVALUATION** because the fixture's 12-month threshold is not established by the inspected governing documents.
+- STS-002–STS-010: remain unopened under the current stop rule; no new scenario result is claimed.
+- No universal freshness duration is approved.
+- No tabletop completion, independent/blind evaluation, software-enforcement evidence, legal clearance or live validation is claimed.
+
+### 4. Governance and safety holds
+
+The following remain unchanged and unauthorized: merge to `main`; schema or domain-boundary changes; migrations; RLS; API/UI or other implementation; real player/guardian data; public/actionable opportunity listings; contact with minors; live outreach or closed rehearsal; live pilot; production use; or gate transition. No legal, safeguarding, privacy, compliance or production-readiness claim is made.
+
+### 5. Research discipline and next action
+
+The next highest-value learning is a voluntary conversation with an adult football stakeholder, when practical access is available. The conversation should test actual opportunity requirements, eligibility, capacity, cost, transport/access and trust expectations, and should invite counterevidence. No interview, response, endorsement or external validation is claimed by this entry. Do not pressure intermediaries or collect player/guardian data; do not contact minors.
+
+Until such evidence or a genuine contradiction creates a reason to reopen the design, avoid generating more standalone documentation. Any stakeholder feedback is evidence to assess, not automatic ratification or legal authority.
+
+### 6. End-of-day stop condition
+
+**DAY CLOSED.** This entry consolidates the work and leaves the repository in its current bounded proposal state. No further changes are authorized or implied by this record. Resume only in a later session, beginning with the repository state and this ledger entry; do not assume that time elapsed, a commit, or silence resolves any blocked item.
+
+**Evidence rule:** Claim strength must never exceed evidence strength.

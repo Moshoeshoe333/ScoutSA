@@ -37,11 +37,16 @@ Every Player Passport should progressively answer:
 
 ScoutSA begins in the **Vaal Triangle**, with expansion intended through Sedibeng, Greater Gauteng, and eventually nationally.
 
-## Current Gate Status — 6 October 2026
+## Current Gate Status — reconciled 9 October 2026
 
 **Gate 1: CLOSED**  
 **Gate 2: CLOSED AT CONCEPTUAL LEVEL**  
-**Conceptual ERD: FROZEN** · **Schema: HOLD** · **Implementation: DEFERRED**
+**Conceptual ERD: FROZEN** · **MVP Boundary: RATIFIED** · **MVP Relationship Subset: FROZEN**  
+**Schema Boundary: FROZEN** · **Physical Table Boundary: FROZEN** · **SQL Draft: REVIEWED**  
+**Migration / Database: HOLD** · **RLS / Access Policy: POLICY-LEGAL RATIFICATION REQUIRED**  
+**API / UI / Production Implementation: HOLD**
+
+The later controlled state in [Gate Status](docs/00-gate-status.md) supersedes the older “Next phase: MVP Boundary Freeze” wording. MVP boundary and schema-boundary work has been recorded as complete at the stated documentary/conceptual level; this does not authorize migrations, RLS, API, UI, or production implementation. A PostgreSQL runtime witness exists for the exact SQL draft in an isolated non-production environment only.
 
 Three additional semantic concepts have been explicitly ratified through Gate 2 adversarial work:
 
@@ -102,4 +107,4 @@ The `docs/research/` directory contains Gate witnesses, re-witnesses, ratificati
 
 The objective is not documentation for its own sake. The objective is to make the eventual MVP **smaller, safer, and derivable** from ratified domain and relationship decisions.
 
-**Next phase: MVP Boundary Freeze.** The frozen conceptual relationship model will be reduced to the smallest MVP scope and explicit non-scope before schema or implementation work begins.
+**Current controlled next move:** resolve explicit access-policy/legal authorization and remaining field-level or operational decisions, and validate the product assumptions with appropriate adult football stakeholders. Do not reopen frozen MVP/schema boundaries without a specific contradiction and an explicit decision record. Migration, database changes, RLS, API, UI, and production implementation remain on hold until the required authorizations are recorded.
