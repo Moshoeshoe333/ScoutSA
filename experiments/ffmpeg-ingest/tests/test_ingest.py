@@ -51,7 +51,7 @@ def test_processes_video_and_preserves_original(tmp_path):
     assert manifest["source_sha256"]
     assert manifest["derivative_sha256"]
     assert manifest["processing_profile"]["audio"] == "removed"
-    assert manifest["processing_profile"]["embedded_metadata"] == "removed"
+    assert manifest["processing_profile"]["source_metadata"] == "stripped"
     assert "source" not in manifest
 
 
