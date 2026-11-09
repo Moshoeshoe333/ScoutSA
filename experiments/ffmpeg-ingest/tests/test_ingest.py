@@ -142,3 +142,17 @@ def test_rejects_ffmpeg_failure_and_cleans_temporary_file(tmp_path):
 
 def test_duration_limit_is_explicit():
     assert MAX_DURATION_SECONDS == 180.0
+
+
+
+def test_rejects_oversized_file_before_probe(tmp_path, monkeypatch):
+    import scoutsa_media.ingest as ingest
+
+    source = tmp_path / "large.mp4"
+    source.write_bytes(b"four")
+    monkeypatch.setattr(ingest, "MAX_INPUT_BYTES", 3)
+
+    with patch("scoutsa_media.ingest.subprocess.run") as mocked:
+        with pytest.raises(IngestError, match="exceeds"):
+            process_video(source, tmp_path / "out")
+    mocked.assert_not_called()
