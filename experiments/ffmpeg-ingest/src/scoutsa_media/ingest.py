@@ -29,6 +29,14 @@ class IngestError(Exception):
     """Expected validation or media-processing failure."""
 
 
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def _run_probe(source: Path, ffprobe_bin: str) -> dict[str, Any]:
     command = [
         ffprobe_bin, "-v", "error",
@@ -223,7 +231,7 @@ def process_video(
         derivative_duration, derivative_width, derivative_height = _validate_derivative(
             derivative_metadata, duration
         )
-        derivative_hash = hashlib.sha256(temp_output.read_bytes()).hexdigest()
+        derivative_hash = _sha256(temp_output)
         manifest = {
             "format_version": 2,
             "processor": "ScoutSA isolated FFmpeg ingestion experiment",
@@ -261,14 +269,17 @@ def process_video(
         manifest_temp = work_dir / "manifest.json"
         manifest_temp.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
         published_output = False
+        published_manifest = False
         try:
             _publish_without_overwrite(temp_output, output_path)
             published_output = True
             _publish_without_overwrite(manifest_temp, manifest_path)
+            published_manifest = True
         except Exception:
+            if published_manifest:
+                manifest_path.unlink(missing_ok=True)
             if published_output:
                 output_path.unlink(missing_ok=True)
-            manifest_path.unlink(missing_ok=True)
             raise
 
         return {"output": str(output_path), "manifest": str(manifest_path), "record": manifest}
