@@ -145,7 +145,7 @@ def process_video(
             "-i", str(source),
             "-map", "0:v:0", "-an", "-sn", "-dn",
             "-map_metadata", "-1",
-            "-vf", f"scale=w='min({MAX_WIDTH},iw)':h='min({MAX_HEIGHT},ih)':force_original_aspect_ratio=decrease",
+            "-vf", f"scale=w='min({MAX_WIDTH},iw)':h='min({MAX_HEIGHT},ih)':force_original_aspect_ratio=decrease:force_divisible_by=2",
             "-t", str(MAX_DURATION_SECONDS),
             "-c:v", "libx264", "-preset", "veryfast", "-crf", "28",
             "-pix_fmt", "yuv420p", "-movflags", "+faststart",
