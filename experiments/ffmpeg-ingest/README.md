@@ -51,7 +51,7 @@ scoutsa-video-ingest input.mov --output-dir processed --ffmpeg /path/to/ffmpeg -
 - Do not use IP-camera discovery, RTSP URLs, camera credentials or remote streams.
 - Do not process real children's footage during this prototype stage.
 - Keep input/output directories private and access-controlled.
-- This prototype does not scan for malware or validate guardian consent.
+- This prototype does not scan for malware or validate guardian consent.\n- FFmpeg/FFprobe parsing is not OS-sandboxed in this experiment. Do not expose it to uploaded or untrusted media, public endpoints or multi-user service workloads. A future service requires a restricted, patched worker with CPU, memory, disk and wall-clock limits, no network access, least privilege and an explicit isolation review.
 - Audio removal reduces voice exposure in the derivative but does not anonymise faces or other identifying visual information.
 - No footage is uploaded or shared by this tool.
 - No retention policy is established; operators must not treat this experiment as approved storage.
@@ -62,4 +62,5 @@ FFmpeg is separately licensed software. The exact FFmpeg build and enabled libra
 
 ## Test limitations
 
-Tests mock FFmpeg/FFprobe process calls and use synthetic bytes. They verify command construction, validation, source preservation, failure cleanup and provenance formatting. They do not prove real codec compatibility, performance, malware resistance, legal compliance or production readiness.
+Unit tests mock FFmpeg/FFprobe process calls. CI additionally generates synthetic media and exercises the real installed FFmpeg/FFprobe binaries. Tests cover source snapshot use, provenance, stream/dimension/duration validation, no-overwrite behavior, source preservation and failure cleanup. They do not prove broad codec compatibility, sandboxing, malware resistance, legal compliance or production readiness.
+\n\n## Security review status\n\nThe prototype remediation adds source snapshotting, post-transcode derivative validation, no-overwrite publication and FFmpeg build-configuration capture. Remaining release blockers include OS-level decoder isolation, dependency/build pinning, review of the actual FFmpeg binary and enabled libraries, and legal review of the selected FFmpeg distribution and codec patent position. This remains a local experiment and must not process real player/minor footage.\n
