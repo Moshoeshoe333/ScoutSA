@@ -1,6 +1,6 @@
 """Safe, local-only FFmpeg ingestion prototype.
 
-This module processes one user-supplied local video at a time. It does not
+This module processes one operator-supplied local video at a time. It does not
 discover cameras, access RTSP endpoints, upload media, or modify source files.
 """
 from __future__ import annotations
@@ -9,6 +9,8 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
+import stat
 import subprocess
 import tempfile
 from datetime import datetime, timezone
@@ -27,18 +29,11 @@ class IngestError(Exception):
     """Expected validation or media-processing failure."""
 
 
-def _sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as stream:
-        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
 def _run_probe(source: Path, ffprobe_bin: str) -> dict[str, Any]:
     command = [
         ffprobe_bin, "-v", "error",
-        "-show_entries", "format=duration:stream=codec_type,width,height",
+        "-show_entries",
+        "format=duration:stream=codec_type,codec_name,width,height",
         "-of", "json", str(source),
     ]
     try:
@@ -51,20 +46,15 @@ def _run_probe(source: Path, ffprobe_bin: str) -> dict[str, Any]:
     if result.returncode != 0:
         raise IngestError("FFprobe rejected the input or could not read it.")
     try:
-        return json.loads(result.stdout)
+        value = json.loads(result.stdout)
     except (TypeError, json.JSONDecodeError) as exc:
         raise IngestError("FFprobe returned invalid metadata.") from exc
+    if not isinstance(value, dict):
+        raise IngestError("FFprobe returned an unexpected metadata structure.")
+    return value
 
 
-def _validate_media(source: Path, metadata: dict[str, Any]) -> tuple[float, int, int]:
-    if source.is_symlink() or not source.is_file():
-        raise IngestError("Input must be a regular, non-symlink file.")
-    size = source.stat().st_size
-    if size <= 0:
-        raise IngestError("Input file is empty.")
-    if size > MAX_INPUT_BYTES:
-        raise IngestError(f"Input exceeds the {MAX_INPUT_BYTES}-byte limit.")
-
+def _duration_and_video(metadata: dict[str, Any]) -> tuple[float, dict[str, Any]]:
     streams = metadata.get("streams")
     if not isinstance(streams, list):
         raise IngestError("No readable media streams were reported.")
@@ -74,19 +64,85 @@ def _validate_media(source: Path, metadata: dict[str, Any]) -> tuple[float, int,
     )
     if video is None:
         raise IngestError("Input does not contain a video stream.")
-
     try:
         duration = float(metadata["format"]["duration"])
         width = int(video["width"])
         height = int(video["height"])
     except (KeyError, TypeError, ValueError) as exc:
         raise IngestError("Duration or video dimensions are missing or invalid.") from exc
-
     if not (0 < duration <= MAX_DURATION_SECONDS):
         raise IngestError(f"Video duration must be between 0 and {MAX_DURATION_SECONDS:g} seconds.")
     if width <= 0 or height <= 0:
         raise IngestError("Video dimensions must be positive.")
+    return duration, video
+
+
+def _snapshot_source(source_path: Path, snapshot_path: Path) -> str:
+    """Copy and hash one opened source inode; downstream tools use only snapshot."""
+    flags = os.O_RDONLY
+    if hasattr(os, "O_NOFOLLOW"):
+        flags |= os.O_NOFOLLOW
+    try:
+        descriptor = os.open(source_path, flags)
+    except OSError as exc:
+        raise IngestError(f"Input could not be opened safely: {exc}") from exc
+    digest = hashlib.sha256()
+    try:
+        info = os.fstat(descriptor)
+        if not stat.S_ISREG(info.st_mode):
+            raise IngestError("Input must be a regular, non-symlink file.")
+        if info.st_size <= 0:
+            raise IngestError("Input file is empty.")
+        if info.st_size > MAX_INPUT_BYTES:
+            raise IngestError(f"Input exceeds the {MAX_INPUT_BYTES}-byte limit.")
+        with os.fdopen(descriptor, "rb", closefd=True) as source:
+            descriptor = -1
+            with snapshot_path.open("xb") as snapshot:
+                for chunk in iter(lambda: source.read(1024 * 1024), b""):
+                    digest.update(chunk)
+                    snapshot.write(chunk)
+                snapshot.flush()
+                os.fsync(snapshot.fileno())
+        return digest.hexdigest()
+    finally:
+        if descriptor >= 0:
+            os.close(descriptor)
+
+
+def _validate_derivative(
+    metadata: dict[str, Any], source_duration: float
+) -> tuple[float, int, int]:
+    streams = metadata.get("streams")
+    if not isinstance(streams, list) or len(streams) != 1:
+        raise IngestError("Derivative must contain exactly one media stream.")
+    video = streams[0]
+    if not isinstance(video, dict) or video.get("codec_type") != "video":
+        raise IngestError("Derivative contains an unexpected non-video stream.")
+    if video.get("codec_name") != "h264":
+        raise IngestError("Derivative video codec is not H.264.")
+    try:
+        duration = float(metadata["format"]["duration"])
+        width = int(video["width"])
+        height = int(video["height"])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise IngestError("Derivative metadata is missing or invalid.") from exc
+    if not (0 < duration <= min(source_duration, MAX_DURATION_SECONDS) + 0.5):
+        raise IngestError("Derivative duration is outside the permitted range.")
+    if not (0 < width <= MAX_WIDTH and 0 < height <= MAX_HEIGHT):
+        raise IngestError("Derivative dimensions exceed the configured limits.")
+    if width % 2 or height % 2:
+        raise IngestError("Derivative dimensions must be even.")
     return duration, width, height
+
+
+def _publish_without_overwrite(temp_path: Path, final_path: Path) -> None:
+    """Atomically create a hard link; fail if another process already owns the name."""
+    try:
+        os.link(temp_path, final_path)
+    except FileExistsError as exc:
+        raise IngestError(f"Refusing to overwrite existing output: {final_path.name}") from exc
+    except OSError as exc:
+        raise IngestError(f"Could not safely publish output {final_path.name}: {exc}") from exc
 
 
 def process_video(
@@ -96,15 +152,10 @@ def process_video(
     ffmpeg_bin: str = "ffmpeg",
     ffprobe_bin: str = "ffprobe",
 ) -> dict[str, Any]:
-    """Create a silent, metadata-stripped MP4 derivative; preserve the original."""
+    """Create a silent, validated, metadata-stripped MP4 derivative; preserve source."""
     source = Path(source_path)
-    if source.is_symlink() or not source.is_file():
+    if source.is_symlink():
         raise IngestError("Input must be a regular, non-symlink file.")
-    if source.stat().st_size <= 0:
-        raise IngestError("Input file is empty.")
-    if source.stat().st_size > MAX_INPUT_BYTES:
-        raise IngestError(f"Input exceeds the {MAX_INPUT_BYTES}-byte limit.")
-    source = source.resolve(strict=True)
 
     destination_dir = Path(output_dir)
     destination_dir.mkdir(parents=True, exist_ok=True)
@@ -112,44 +163,49 @@ def process_video(
     if not destination_dir.is_dir():
         raise IngestError("Output location must be a directory.")
 
-    metadata = _run_probe(source, ffprobe_bin)
-    duration, width, height = _validate_media(source, metadata)
-    source_hash = _sha256(source)
-    output_name = f"video-{source_hash[:16]}.mp4"
-    output_path = destination_dir / output_name
-    manifest_path = destination_dir / f"video-{source_hash[:16]}.manifest.json"
-    if output_path.exists() or manifest_path.exists():
-        raise IngestError("A derivative for this exact source already exists; refusing to overwrite.")
+    with tempfile.TemporaryDirectory(prefix=".scoutsa-work-", dir=destination_dir) as work:
+        work_dir = Path(work)
+        snapshot = work_dir / "source.snapshot"
+        source_hash = _snapshot_source(source, snapshot)
 
-    try:
-        version_result = subprocess.run(
-            [ffmpeg_bin, "-version"], capture_output=True, text=True,
-            check=False, timeout=10,
-        )
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        raise IngestError(f"FFmpeg version check failed: {exc}") from exc
-    if version_result.returncode != 0:
-        raise IngestError("FFmpeg is unavailable or failed its version check.")
-    ffmpeg_version = (version_result.stdout.splitlines() or ["unknown"])[0][:200]
+        source_metadata = _run_probe(snapshot, ffprobe_bin)
+        duration, source_video = _duration_and_video(source_metadata)
+        width = int(source_video["width"])
+        height = int(source_video["height"])
 
-    temp_path: Path | None = None
-    try:
-        with tempfile.NamedTemporaryFile(
-            prefix=".scoutsa-", suffix=".partial.mp4",
-            dir=destination_dir, delete=False,
-        ) as temporary:
-            temp_path = Path(temporary.name)
+        output_name = f"video-{source_hash[:16]}.mp4"
+        output_path = destination_dir / output_name
+        manifest_path = destination_dir / f"video-{source_hash[:16]}.manifest.json"
+        if output_path.exists() or manifest_path.exists():
+            raise IngestError("A derivative for this exact source already exists; refusing to overwrite.")
 
+        try:
+            version_result = subprocess.run(
+                [ffmpeg_bin, "-version"], capture_output=True, text=True,
+                check=False, timeout=10,
+            )
+            build_result = subprocess.run(
+                [ffmpeg_bin, "-buildconf"], capture_output=True, text=True,
+                check=False, timeout=10,
+            )
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            raise IngestError(f"FFmpeg build inspection failed: {exc}") from exc
+        if version_result.returncode != 0 or build_result.returncode != 0:
+            raise IngestError("FFmpeg version/build configuration inspection failed.")
+        ffmpeg_version = (version_result.stdout.splitlines() or ["unknown"])[0][:200]
+        ffmpeg_buildconf = build_result.stdout[:12000]
+
+        temp_output = work_dir / "derivative.mp4"
         command = [
             ffmpeg_bin, "-nostdin", "-hide_banner", "-loglevel", "error", "-y",
-            "-i", str(source),
+            "-i", str(snapshot),
             "-map", "0:v:0", "-an", "-sn", "-dn",
             "-map_metadata", "-1",
             "-vf", f"scale=w='min({MAX_WIDTH},iw)':h='min({MAX_HEIGHT},ih)':force_original_aspect_ratio=decrease:force_divisible_by=2",
             "-t", str(MAX_DURATION_SECONDS),
             "-c:v", "libx264", "-preset", "veryfast", "-crf", "28",
             "-pix_fmt", "yuv420p", "-movflags", "+faststart",
-            str(temp_path),
+            str(temp_output),
         ]
         try:
             result = subprocess.run(
@@ -160,22 +216,30 @@ def process_video(
             raise IngestError(f"FFmpeg processing failed: {exc}") from exc
         if result.returncode != 0:
             raise IngestError("FFmpeg could not produce the derivative.")
-        if not temp_path.is_file() or temp_path.stat().st_size <= 0:
+        if not temp_output.is_file() or temp_output.stat().st_size <= 0:
             raise IngestError("FFmpeg reported success but produced no usable output.")
 
-        derivative_hash = _sha256(temp_path)
+        derivative_metadata = _run_probe(temp_output, ffprobe_bin)
+        derivative_duration, derivative_width, derivative_height = _validate_derivative(
+            derivative_metadata, duration
+        )
+        derivative_hash = hashlib.sha256(temp_output.read_bytes()).hexdigest()
         manifest = {
-            "format_version": 1,
+            "format_version": 2,
             "processor": "ScoutSA isolated FFmpeg ingestion experiment",
-            "processor_version": "0.1.0",
+            "processor_version": "0.2.0",
             "processed_at_utc": datetime.now(timezone.utc).isoformat(),
             "ffmpeg_version": ffmpeg_version,
+            "ffmpeg_build_configuration": ffmpeg_buildconf,
             "source_sha256": source_hash,
             "derivative_sha256": derivative_hash,
             "derivative_file": output_name,
             "source_duration_seconds": duration,
             "source_width": width,
             "source_height": height,
+            "derivative_duration_seconds": derivative_duration,
+            "derivative_width": derivative_width,
+            "derivative_height": derivative_height,
             "processing_profile": {
                 "container": "mp4",
                 "video_codec": "h264",
@@ -190,23 +254,24 @@ def process_video(
                 "Hash and processing provenance only; not proof of authenticity.",
                 "No malware verdict, safeguarding clearance, consent validation, or talent assessment.",
                 "Local prototype only; no upload, sharing, or production storage.",
+                "Media decoding is not OS-sandboxed; process only trusted, authorised test media.",
             ],
         }
 
-        os.replace(temp_path, output_path)
-        temp_path = None
-        manifest_temp = manifest_path.with_suffix(".manifest.json.partial")
+        manifest_temp = work_dir / "manifest.json"
+        manifest_temp.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+        published_output = False
         try:
-            manifest_temp.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
-            os.replace(manifest_temp, manifest_path)
-        except OSError:
-            output_path.unlink(missing_ok=True)
-            manifest_temp.unlink(missing_ok=True)
+            _publish_without_overwrite(temp_output, output_path)
+            published_output = True
+            _publish_without_overwrite(manifest_temp, manifest_path)
+        except Exception:
+            if published_output:
+                output_path.unlink(missing_ok=True)
+            manifest_path.unlink(missing_ok=True)
             raise
+
         return {"output": str(output_path), "manifest": str(manifest_path), "record": manifest}
-    finally:
-        if temp_path is not None:
-            temp_path.unlink(missing_ok=True)
 
 
 def main() -> int:
