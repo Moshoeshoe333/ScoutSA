@@ -100,6 +100,10 @@ def process_video(
     source = Path(source_path)
     if source.is_symlink() or not source.is_file():
         raise IngestError("Input must be a regular, non-symlink file.")
+    if source.stat().st_size <= 0:
+        raise IngestError("Input file is empty.")
+    if source.stat().st_size > MAX_INPUT_BYTES:
+        raise IngestError(f"Input exceeds the {MAX_INPUT_BYTES}-byte limit.")
     source = source.resolve(strict=True)
 
     destination_dir = Path(output_dir)
