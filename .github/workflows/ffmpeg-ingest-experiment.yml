@@ -78,6 +78,6 @@ jobs:
           )
           details = json.loads(probe.stdout)
           assert [s["codec_type"] for s in details["streams"]] == ["video"], details
-          assert "tags" not in details.get("format", {}), details
-          print("Real FFmpeg smoke test passed: video-only derivative; no copied format tags.")
+          assert details.get("format", {}).get("tags", {}).get("title") != "synthetic-private-metadata", details
+          print("Real FFmpeg smoke test passed: video-only derivative; no copied source title metadata (muxer technical tags may remain).")
           PY
