@@ -12,7 +12,7 @@ This experiment accepts a local video file and creates a local MP4 derivative us
 - Maximum source duration: 180 seconds.
 - Requires a readable video stream and positive dimensions.
 - H.264 MP4 derivative, maximum 1280×720, CRF 28, preset veryfast.
-- Audio, subtitles, data streams and embedded metadata are removed.
+- Audio, subtitles and data streams are removed; source metadata is stripped. The MP4 muxer may add its own technical container tags.
 - The original source is never overwritten or deleted.
 - A JSON sidecar records source/derivative SHA-256 hashes, tool version, processing time and profile.
 - Existing derivatives are not overwritten.
