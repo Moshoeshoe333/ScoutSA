@@ -20,6 +20,7 @@ runButton.addEventListener("click",()=>{
  const gateStatus=(name)=>findGate(name)?.querySelector("span")?.textContent||"";
  const clickRequest=(id)=>d.querySelector('button[data-id="'+id+'"]').click();
  const engineContext=()=>({
+   now:new Date().toISOString(),
    players:Object.values(w.SCOUTSA_DEMO_PLAYERS),
    consentCases:w.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases,
    organizations:w.SCOUTSA_DEMO_MEMBERSHIPS.organizations,
