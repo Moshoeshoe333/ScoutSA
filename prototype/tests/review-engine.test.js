@@ -114,6 +114,27 @@ test("evaluation does not mutate request or context inputs", () => {
   evaluate(request, context);
   assert.deepEqual({ request, context }, before);
 });
+test("duplicate Passport references fail closed instead of taking the first record", () => {
+  const context = validContext();
+  context.players.push(structuredClone(context.players[0]));
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "passport_reference").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("DUPLICATE_PASSPORT_REFERENCE"));
+});
+test("duplicate consent references fail closed", () => {
+  const context = validContext();
+  context.consentCases.push(structuredClone(context.consentCases[0]));
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "purpose_consent").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("DUPLICATE_CONSENT_REFERENCE"));
+});
+test("duplicate grants for one purpose code are treated as ambiguous", () => {
+  const context = validContext();
+  context.consentCases[0].purposes.push(structuredClone(context.consentCases[0].purposes[0]));
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "purpose_consent").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("CONSENT_PURPOSE_AMBIGUOUS"));
+});
 test("missing Passport fails closed", () => {
   const result = evaluate(validRequest({ passportRef:null }));
   assert.equal(gate(result, "passport_reference").state, "FAIL");
