@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ScoutSA prototype smoke tests</title>
+<style>
+body{font:15px/1.5 system-ui,sans-serif;margin:0;padding:24px;background:#f4f6f8;color:#172334}
+h1{font-size:24px;margin:0 0 6px}.muted{color:#657386;margin:0 0 18px}
+button{border:0;border-radius:8px;background:#137d5a;color:white;padding:10px 14px;font-weight:700;cursor:pointer}
+#summary{margin:16px 0;padding:12px;border-radius:8px;background:#fff;border:1px solid #dce3ea}
+#results{padding:0;list-style:none;display:grid;gap:8px}
+#results li{padding:10px 12px;border-radius:8px;background:#fff;border:1px solid #dce3ea}
+.pass{border-left:4px solid #16865e!important}.fail{border-left:4px solid #bd3d3d!important}
+iframe{width:100%;height:650px;border:1px solid #dce3ea;border-radius:10px;background:white;margin-top:18px}
+</style>
+</head>
+<body>
+<h1>ScoutSA prototype smoke tests</h1>
+<p class="muted">Local, non-production checks only. These tests use the fictional records bundled in the prototype.</p>
+<button id="run">Run smoke tests</button>
+<div id="summary" role="status">Waiting to run.</div>
+<ul id="results" aria-live="polite"></ul>
+<iframe id="app" title="ScoutSA prototype under test" src="./index.html"></iframe>
+<script>
+const runButton=document.querySelector('#run');
+const frame=document.querySelector('#app');
+const summary=document.querySelector('#summary');
+const results=document.querySelector('#results');
+function assert(name,condition,detail=''){
+ const item=document.createElement('li');
+ item.className=condition?'pass':'fail';
+ item.textContent=(condition?'PASS — ':'FAIL — ')+name+(detail?' · '+detail:'');
+ results.append(item);
+ return Boolean(condition);
+}
+function run(){
+ results.replaceChildren();
+ let passed=0,failed=0;
+ const check=(...args)=>{if(assert(...args))passed++;else failed++};
+ try{
+  const doc=frame.contentDocument;
+  if(!doc)throw new Error('Prototype frame is not accessible. Open both files from the same local folder.');
+  check('Demo environment is clearly labelled',doc.querySelector('.demo-pill')?.textContent.includes('DEMO'));
+  check('Fictional-data boundary is visible',doc.querySelector('.side-note')?.textContent.includes('fictional'));
+  check('Player cards are present',doc.querySelectorAll('.player').length>=3);
+  check('Opportunity examples are present',doc.querySelectorAll('.opp').length>=2);
+  const search=doc.querySelector('#searchInput');
+  search.value='Kabelo';
+  search.dispatchEvent(new Event('input',{bubbles:true}));
+  check('Player search filters the sample cards',doc.querySelector('.player[data-name="Kabelo Mokoena"]').style.display!=='none'&&doc.querySelector('.player[data-name="Lerato Nkosi"]').style.display==='none');
+  search.value='';
+  search.dispatchEvent(new Event('input',{bubbles:true}));
+  doc.querySelector('[data-view="safeguarding"]').click();
+  check('Safeguarding view opens',doc.querySelector('#safeSection').style.display!=='none');
+  check('Safety boundary is explicit',doc.querySelector('#safeSection').textContent.includes('No direct contact with minors'));
+  doc.querySelector('[data-view="players"]').click();
+  doc.querySelector('[data-player]').click();
+  check('Player passport detail opens',doc.querySelector('#modalBackdrop').classList.contains('show'));
+  doc.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
+  check('Escape closes the detail dialog',!doc.querySelector('#modalBackdrop').classList.contains('show'));
+ }catch(error){
+  failed++;
+  assert('Test runner could not complete',false,error.message);
+ }
+ summary.textContent=passed+' passed · '+failed+' failed';
+ summary.style.borderColor=failed?'#bd3d3d':'#16865e';
+}
+runButton.addEventListener('click',()=>{
+ if(frame.contentDocument?.readyState==='complete')run();
+ else frame.addEventListener('load',run,{once:true});
+});
+frame.addEventListener('load',()=>{summary.textContent='Prototype loaded. Select “Run smoke tests”.'},{once:true});
+</script>
+</body>
+</html>
