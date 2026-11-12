@@ -91,7 +91,7 @@ No transition is defined here for `APPROVED`, `INVITED`, `CONTACT_UNLOCKED`, `PU
 6. Membership must match exact player and organization IDs.
 7. Eligibility and safeguarding are distinct and independently required.
 8. A positive gate never overrides another failed gate.
-9. Missing, ambiguous, stale, conflicting or unavailable evidence fails closed. A PASS at intake is not cached as a permanent authorization; the same evaluation must be repeated at each future server-side transition that could expose data or initiate contact.
+9. Missing, ambiguous, stale, conflicting or unavailable evidence fails closed. Duplicate entity references and duplicate purpose grants are treated as ambiguous; the evaluator never silently chooses the first matching record. A PASS at intake is not cached as a permanent authorization; the same evaluation must be repeated at each future server-side transition that could expose data or initiate contact.
 10. No client-side result is trusted as a server authorization decision.
 11. No disclosure, direct private scout-to-minor contact, or payment-to-be-seen flow is authorized by this contract.
 12. No production, POPIA, Children’s Act, MySAFA, FIFA, or security-compliance claim is made by this draft.
