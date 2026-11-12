@@ -1,0 +1,14 @@
+/* ScoutSA synthetic organization membership fixture. Fictional records only. */
+window.SCOUTSA_DEMO_MEMBERSHIPS = {
+  organizations: [
+    { id: "ORG-DEMO-01", name: "Vaal Sample Academy", type: "Academy", area: "Sedibeng", identityStatus: "Unverified", note: "Fictional organization used for interface testing." },
+    { id: "ORG-DEMO-02", name: "Riverlands Sample Club", type: "Community club", area: "Emfuleni", identityStatus: "Unverified", note: "Fictional organization used for interface testing." },
+    { id: "ORG-DEMO-03", name: "Southside Demo Development", type: "Development programme", area: "Vaal Triangle", identityStatus: "Unverified", note: "Fictional organization used for interface testing." }
+  ],
+  memberships: [
+    { id: "MEM-DEMO-001", player: "Demo player 001 · Kabelo Mokoena", organizationId: "ORG-DEMO-01", role: "Player", period: "2025 season (illustrative)", status: "Pending", claimBy: "Fictional player-submitted claim", recordedAt: "2025-04-02", verification: "Not verified", evidence: "No supporting evidence supplied", detail: "A claim awaiting review in this demonstration." },
+    { id: "MEM-DEMO-002", player: "Demo player 002 · Lerato Nkosi", organizationId: "ORG-DEMO-02", role: "Player", period: "2024 season (illustrative)", status: "Active", claimBy: "Fictional organization-submitted claim", recordedAt: "2025-04-04", verification: "Not verified", evidence: "Illustrative roster reference only; source not supplied", detail: "The workflow state is Active in sample data; this does not mean the affiliation is verified." },
+    { id: "MEM-DEMO-003", player: "Demo player 001 · Kabelo Mokoena", organizationId: "ORG-DEMO-03", role: "Trial participant", period: "2023 programme (illustrative)", status: "Ended", claimBy: "Fictional player-submitted claim", recordedAt: "2025-04-06", verification: "Not verified", evidence: "No supporting evidence supplied", detail: "An illustrative historical entry with an ended workflow state." },
+    { id: "MEM-DEMO-004", player: "Demo player 002 · Lerato Nkosi", organizationId: "ORG-DEMO-01", role: "Player", period: "2025 season (illustrative)", status: "Disputed", claimBy: "Fictional organization-submitted claim", recordedAt: "2025-04-08", verification: "Not verified", evidence: "Conflicting synthetic assertions; no independent source", detail: "A dispute state requires a controlled review process; this screen does not resolve it." }
+  ]
+};
