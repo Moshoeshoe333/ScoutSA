@@ -64,8 +64,9 @@
 
     const player = find(players, item => item && item.id === r.playerId);
     const organization = find(organizations, item => item && item.id === r.organizationId);
-    const authority = find(authorities, item => item && item.organizationId === r.organizationId
-      && item.representativeId === r.representativeId);
+    const organizationAuthorities = authorities.filter(item => item && item.organizationId === r.organizationId);
+    const authority = find(organizationAuthorities, item => item.representativeId === r.representativeId)
+      || organizationAuthorities[0] || null;
     const membership = find(memberships, item => item && item.id === r.membershipId);
     const consent = find(consentCases, item => item && item.id === r.consentCaseId);
     const opportunity = find(opportunities, item => item && item.id === r.opportunityId);
@@ -264,7 +265,6 @@
     const safeguardingGate = gate(
       "safeguarding_review", "Safeguarding review",
       safeguardingOk ? "PASS" : "FAIL",
-      safeguardingOk ? "Reviewed" : "Not cleared",
       safeguardingOk ? "Separate safeguarding and invitation review conditions are satisfied."
         : "Safeguarding and/or invitation review remains unresolved.",
       safeguardingOk ? null : "SAFEGUARDING_NOT_CLEARED"
@@ -272,7 +272,6 @@
 
     const disclosureGate = gate(
       "disclosure_scope", "Disclosure scope", "FAIL",
-      "No disclosure permitted",
       "This evaluator never authorizes disclosure; a separately ratified release policy would be required.",
       "DISCLOSURE_NOT_IMPLEMENTED", false
     );
