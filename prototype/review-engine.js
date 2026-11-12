@@ -214,8 +214,9 @@
     if (consentPrerequisites) {
       const consentLife = current(consent, now);
       const expectedPurpose = PURPOSE_CODES[r.purpose] || r.purposeCode;
-      const purpose = consent && array(consent.purposes).find(p =>
-        p && (p.purposeCode === expectedPurpose || p.name === r.purpose));
+      const purpose = expectedPurpose
+        ? consent && array(consent.purposes).find(p => p && p.purposeCode === expectedPurpose) || null
+        : null;
       const linked = !!consent && consent.playerRef === r.playerRef;
       const purposeOk = !!purpose && purpose.state === "Given";
       const recipientOk = !!purpose && purpose.recipientOrganizationId === r.organizationId;
