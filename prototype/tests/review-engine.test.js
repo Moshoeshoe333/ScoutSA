@@ -121,6 +121,43 @@ test("duplicate Passport references fail closed instead of taking the first reco
   assert.equal(gate(result, "passport_reference").state, "FAIL");
   assert.ok(result.reasonCodes.includes("DUPLICATE_PASSPORT_REFERENCE"));
 });
+test("duplicate organization references fail closed", () => {
+  const context = validContext();
+  context.organizations.push(structuredClone(context.organizations[0]));
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "organization_identity").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("DUPLICATE_ORGANIZATION_REFERENCE"));
+  assert.equal(gate(result, "purpose_consent").state, "SKIPPED");
+});
+test("duplicate representative authority grants fail closed", () => {
+  const context = validContext();
+  context.representativeAuthorities.push(structuredClone(context.representativeAuthorities[0]));
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "representative_authority").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("DUPLICATE_REPRESENTATIVE_AUTHORITY"));
+});
+test("duplicate membership references fail closed", () => {
+  const context = validContext();
+  context.memberships.push(structuredClone(context.memberships[0]));
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "membership_linkage").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("DUPLICATE_MEMBERSHIP_REFERENCE"));
+});
+test("duplicate opportunity references fail closed", () => {
+  const context = validContext();
+  context.opportunities.push(structuredClone(context.opportunities[0]));
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "opportunity_source").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("DUPLICATE_OPPORTUNITY_REFERENCE"));
+  assert.equal(gate(result, "opportunity_eligibility").state, "SKIPPED");
+});
+test("duplicate invitation review references fail closed", () => {
+  const context = validContext();
+  context.invitationCases.push(structuredClone(context.invitationCases[0]));
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("DUPLICATE_INVITATION_REVIEW_REFERENCE"));
+});
 test("duplicate consent references fail closed", () => {
   const context = validContext();
   context.consentCases.push(structuredClone(context.consentCases[0]));
