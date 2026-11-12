@@ -52,3 +52,10 @@ The Passport fixture is loaded from `data/player-passports.demo.js`, separate fr
 Open `organization-memberships.html` to inspect the read-only organization and membership review screen. It uses a separate synthetic fixture at `data/organization-memberships.demo.js` and demonstrates Pending, Active, Ended and Disputed workflow states, organization identity status, claim authorship, evidence descriptions and a separate verification field. An Active workflow state is not proof of a verified affiliation.
 
 Open `organization-memberships-smoke-tests.html` to run local rendering and filtering checks. These checks have not been represented as executed until run in a browser, and they do not test authorization, RLS, security, privacy, safeguarding, verification or legal compliance. The page contains no create, edit, approve, reject, contact or other mutation actions.
+
+
+## Opportunity management prototype
+
+Open `opportunities.html` to inspect a read-only opportunity register backed by `data/opportunities.demo.js`. The synthetic examples distinguish a proposal, an identified organization, verification, eligibility, safeguarding, invitation and outcome fields. These are demonstration review dimensions, not ratified lifecycle states or completed checks. All examples remain fictional and unverified; no public listing, invitation, application or contact action exists.
+
+Open `opportunities-smoke-tests.html` to run local rendering and filtering checks. They have not been claimed as executed until run in a browser and do not test authorization, RLS, security, publication, safeguarding or legal compliance.
