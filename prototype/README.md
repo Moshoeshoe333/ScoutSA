@@ -98,3 +98,12 @@ Open `player-opportunity-matching.html` to inspect a private, explainable triage
 The current fixture deliberately supports zero match decisions. Existing player position and area labels are synthetic and unverified; opportunity eligibility criteria, dates, age, availability, venue and safe transport are not established. Under-18 or unknown-age safeguards remain a hard stop. A potential position or geographic overlap is not proof of suitability.
 
 Open `player-opportunity-matching-smoke-tests.html` for local fixture/UI checks. They have not been represented as executed until run in a browser and do not validate ability, eligibility, identity, age, consent, safeguarding, privacy, authorization, RLS, persistence or legal compliance.
+
+
+## Player development pathway tracker
+
+Open `player-development-pathways.html` to inspect a six-stage, synthetic pathway storyboard: Passport foundation, Evidence collection, Membership review, Development assessment, Opportunity review and Outcome record. Each stage shows its illustrative state, evidence limitations and a responsible next step. The sample data is fictional and is not a record of real activity, an audit log, a talent score, a selection decision or a promise of opportunity.
+
+Football Readiness and Opportunity Readiness remain distinct. Age is not supplied in the sample passports; any real process must apply under-18 safeguards until age is reliably established. No contact, invitation, publication, assessment submission or outcome mutation is enabled.
+
+Open `player-development-pathways-smoke-tests.html` for local fixture/UI checks. They have not been represented as executed until run in a browser and do not validate real development, identity, evidence, age, consent, safeguarding, authorization, privacy, persistence or legal compliance.
