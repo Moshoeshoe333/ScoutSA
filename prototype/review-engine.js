@@ -1,5 +1,6 @@
-/* ScoutSA pure review engine — synthetic prototype contract only.
+/* ScoutSA pure review engine v0.2.0 — deterministic synthetic policy evaluator.
  * No DOM, storage, network, authentication, authorization or disclosure side effects.
+ * All time-sensitive checks use the caller-supplied context.now (ISO timestamp).
  */
 (function (root, factory) {
   const api = factory();
@@ -8,208 +9,280 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
   "use strict";
 
-  const asArray = value => Array.isArray(value)
-    ? value
-    : value && typeof value === "object" ? Object.values(value) : [];
-  const byId = (items, id) => asArray(items).find(item => item && item.id === id) || null;
-  const makeGate = (key, label, satisfied, status, detail, reasonCode, blocking = true) => ({
-    key, label, satisfied: !!satisfied, status, detail,
-    blocking,
-    reasonCodes: !satisfied && reasonCode ? [reasonCode] : []
+  const PURPOSE_CODES = Object.freeze({
+    "Respond to a specific opportunity request": "RESPOND_TO_SPECIFIC_OPPORTUNITY_REQUEST",
+    "Share selected football evidence with a named academy": "SHARE_SELECTED_FOOTBALL_EVIDENCE"
   });
+  const BLOCKED_GUARDIAN_DECISIONS = new Set(["OBJECTION", "REVOKED", "WITHDRAWN"]);
+  const array = value => Array.isArray(value) ? value : [];
+  const find = (items, predicate) => array(items).find(predicate) || null;
+  const gate = (key, label, state, detail, reasonCode, blocking = true) => ({
+    key, label, state, satisfied: state === "PASS", blocking, status: state,
+    detail: detail || "", reasonCodes: state === "FAIL" && reasonCode ? [reasonCode] : []
+  });
+  const timestamp = value => {
+    if (typeof value !== "string" || !value.trim()) return NaN;
+    return Date.parse(value);
+  };
+  const current = (record, now) => {
+    if (!record || record.lifecycleStatus !== "ACTIVE") return { ok: false, code: "LIFECYCLE_NOT_ACTIVE" };
+    const expiry = timestamp(record.expiresAt);
+    if (!Number.isFinite(expiry)) return { ok: false, code: "LIFECYCLE_EXPIRY_MISSING_OR_INVALID" };
+    if (now >= expiry) return { ok: false, code: "LIFECYCLE_EXPIRED" };
+    return { ok: true, code: null };
+  };
+  const first = (...values) => values.find(value => value !== undefined && value !== null);
 
-  function evaluateRequest(request, context = {}) {
+  function evaluateRequest(request, context = {}, options = {}) {
     const r = request || {};
-    const players = asArray(context.players);
-    const consentCases = asArray(context.consentCases);
-    const organizations = asArray(context.organizations);
-    const memberships = asArray(context.memberships);
-    const authorities = asArray(context.representativeAuthorities);
-    const opportunities = asArray(context.opportunities);
-    const invitationCases = asArray(context.invitationCases);
+    const now = timestamp(options.now || context.now);
+    if (!Number.isFinite(now)) {
+      throw new TypeError("A valid deterministic evaluation time is required as options.now or context.now.");
+    }
 
-    const player = r.passportRef && r.passportRef === r.playerId
-      ? players.find(x => x && x.id === r.playerId) || null
-      : null;
-    const consentCase = byId(consentCases, r.consentCaseId);
-    const organization = byId(organizations, r.organizationId);
-    const membership = byId(memberships, r.membershipId);
-    const opportunity = byId(opportunities, r.opportunityId);
-    const invitation = byId(invitationCases, r.invitationCaseId);
-    const authority = byId(authorities, r.organizationId);
+    const players = array(context.players);
+    const organizations = array(context.organizations);
+    const authorities = array(context.representativeAuthorities);
+    const memberships = array(context.memberships);
+    const consentCases = array(context.consentCases);
+    const opportunities = array(context.opportunities);
+    const invitationCases = array(context.invitationCases);
 
-    const ageState = typeof r.ageState === "string" ? r.ageState : "";
-    const under18Protections = ageState.includes("Under 18") || ageState.includes("Unknown");
-    const adultVerified = ageState === "Adult — verified";
-    const safeRoute = under18Protections
-      ? typeof r.requestOrigin === "string" && r.requestOrigin.includes("Guardian-mediated")
-      : adultVerified;
+    const player = find(players, item => item && item.id === r.playerId);
+    const organization = find(organizations, item => item && item.id === r.organizationId);
+    const authority = find(authorities, item => item && item.organizationId === r.organizationId
+      && item.representativeId === r.representativeId);
+    const membership = find(memberships, item => item && item.id === r.membershipId);
+    const consent = find(consentCases, item => item && item.id === r.consentCaseId);
+    const opportunity = find(opportunities, item => item && item.id === r.opportunityId);
+    const invitation = find(invitationCases, item => item && item.id === r.invitationCaseId);
 
-    const guardianAuthoritySatisfied = under18Protections
-      ? !!consentCase && consentCase.guardianState === "Established"
-      : adultVerified;
-    const playerVoiceSatisfied = under18Protections
-      ? !!consentCase && consentCase.playerVoice === "Assent recorded"
-      : adultVerified && !!consentCase && consentCase.playerVoice === "Consent recorded";
+    // Tier 1: actor legitimacy. Tier 2 cannot evaluate consent until both pass.
+    const orgLife = current(organization, now);
+    const orgIdentityOk = !!organization && organization.identityStatus === "Verified" && orgLife.ok;
+    const orgGate = gate(
+      "organization_identity", "Organization identity",
+      orgIdentityOk ? "PASS" : "FAIL",
+      !organization ? "Organization record not found."
+        : organization.identityStatus !== "Verified" ? "Identity is not verified."
+        : !orgLife.ok ? "Organization lifecycle check failed: " + orgLife.code
+        : "Organization identity is verified and its lifecycle is current.",
+      !organization ? "ORGANIZATION_NOT_FOUND"
+        : organization.identityStatus !== "Verified" ? "ORGANIZATION_IDENTITY_UNVERIFIED" : orgLife.code
+    );
 
-    const consentLinked = !!consentCase && consentCase.playerRef === r.playerRef;
-    const purposeGrant = consentCase && Array.isArray(consentCase.purposes)
-      ? consentCase.purposes.find(item => item && item.name === r.purpose) || null
-      : null;
-    const consentOverallGiven = consentLinked && consentCase.consentState === "Given";
-    const consentPurposeGiven = !!purposeGrant && purposeGrant.state === "Given";
-    const consentRecipientMatches = !!purposeGrant && purposeGrant.recipientOrganizationId === r.organizationId;
-    const consentAuthorityConditions = guardianAuthoritySatisfied && playerVoiceSatisfied;
-    const consentSatisfied = consentOverallGiven && consentPurposeGiven && consentRecipientMatches && consentAuthorityConditions;
+    const authorityLife = current(authority, now);
+    const authorityOk = !!authority
+      && authority.authority === "Verified"
+      && authority.organizationId === r.organizationId
+      && authority.representativeId === r.representativeId
+      && authority.scope === "DISCOVERY_REQUEST_REVIEW"
+      && authorityLife.ok;
+    const authorityGate = gate(
+      "representative_authority", "Representative authority",
+      authorityOk ? "PASS" : "FAIL",
+      !authority ? "No authority grant exists for this exact organization and representative."
+        : authority.organizationId !== r.organizationId || authority.representativeId !== r.representativeId
+          ? "Authority grant is not bound to the requested organization and representative."
+        : authority.scope !== "DISCOVERY_REQUEST_REVIEW" ? "Authority grant does not cover this action."
+        : authority.authority !== "Verified" ? "Representative authority is not verified."
+        : !authorityLife.ok ? "Authority lifecycle check failed: " + authorityLife.code
+        : "Representative authority is verified, current and scoped to this review.",
+      !authority ? "REPRESENTATIVE_AUTHORITY_NOT_FOUND"
+        : authority.organizationId !== r.organizationId || authority.representativeId !== r.representativeId
+          ? "REPRESENTATIVE_AUTHORITY_SCOPE_MISMATCH"
+        : authority.scope !== "DISCOVERY_REQUEST_REVIEW" ? "REPRESENTATIVE_AUTHORITY_SCOPE_MISMATCH"
+        : authority.authority !== "Verified" ? "REPRESENTATIVE_AUTHORITY_UNVERIFIED" : authorityLife.code
+    );
 
-    const membershipIdentityMatches = !!membership
+    const actorLegitimacyPassed = orgIdentityOk && authorityOk;
+
+    // Tier 2: player and request linkage. All applicable checks are evaluated;
+    // only consent solicitation/evaluation is skipped when Tier 1 has not passed.
+    const passportLife = current(player, now);
+    const passportOk = !!player && player.id === r.playerId
+      && player.recordStatus === "ACTIVE" && passportLife.ok
+      && !!r.passportRef && r.passportRef === player.id;
+    const passportGate = gate(
+      "passport_reference", "Active Player Passport",
+      passportOk ? "PASS" : "FAIL",
+      !player ? "Player Passport record not found."
+        : !r.passportRef || r.passportRef !== player.id ? "Passport reference does not match the requested player."
+        : player.recordStatus !== "ACTIVE" ? "Passport record is not active."
+        : !passportLife.ok ? "Passport lifecycle check failed: " + passportLife.code
+        : "Exact Passport reference resolves to an active synthetic record.",
+      !player ? "PASSPORT_NOT_FOUND"
+        : !r.passportRef || r.passportRef !== player.id ? "PASSPORT_REFERENCE_MISMATCH"
+        : player.recordStatus !== "ACTIVE" ? "PASSPORT_NOT_ACTIVE" : passportLife.code
+    );
+
+    const membershipLife = current(membership, now);
+    const membershipPairMatches = !!membership
       && membership.playerId === r.playerId
       && membership.organizationId === r.organizationId;
-    const membershipVerified = membershipIdentityMatches
+    const membershipStatusOk = !!membership
       && membership.status === "Active"
-      && membership.verification === "Verified";
+      && membership.verification === "Verified"
+      && membershipLife.ok;
+    const membershipOk = membershipPairMatches && membershipStatusOk;
+    const membershipGate = gate(
+      "membership_linkage", "Membership linkage",
+      membershipOk ? "PASS" : "FAIL",
+      !membership ? "Membership claim not found."
+        : !membershipPairMatches ? "Membership does not bind this exact player and organization."
+        : membership.status !== "Active" || membership.verification !== "Verified"
+          ? "Membership is not both active and independently verified."
+        : !membershipLife.ok ? "Membership lifecycle check failed: " + membershipLife.code
+        : "Membership is active, verified and bound to the exact player and organization.",
+      !membership ? "MEMBERSHIP_NOT_FOUND"
+        : !membershipPairMatches ? "MEMBERSHIP_LINK_MISMATCH"
+        : membership.status !== "Active" || membership.verification !== "Verified"
+          ? "MEMBERSHIP_NOT_VERIFIED" : membershipLife.code
+    );
 
-    const opportunityOrganizationMatches = !!opportunity
-      && opportunity.organizationId === r.organizationId;
-    const opportunityVerified = opportunityOrganizationMatches
-      && opportunity.verification === "Verified";
-    const eligibilityVerified = !!opportunity && opportunity.eligibility === "Verified";
-    const safeguardingReviewed = !!opportunity
-      && opportunity.safeguarding === "Reviewed"
-      && !!invitation
-      && invitation.workflowState === "READY";
+    const ageState = typeof r.ageState === "string" ? r.ageState : "";
+    const under18 = ageState.includes("Under 18") || ageState.includes("Unknown");
+    const adultVerified = ageState === "Adult — verified";
+    const safeRouteOk = under18
+      ? typeof r.requestOrigin === "string" && r.requestOrigin.includes("Guardian-mediated")
+      : adultVerified && r.requestOrigin === "Adult self-directed";
+    const routeGate = gate(
+      "age_safe_route", "Age and safe request route",
+      safeRouteOk ? "PASS" : "FAIL",
+      under18 ? "Under-18 protections apply; guardian-mediated routing is required."
+        : adultVerified ? "Verified-adult scenario requires an adult self-directed route."
+        : "Adult status is not established; under-18 protections remain in force.",
+      under18 ? (safeRouteOk ? null : "SAFE_GUARDIAN_ROUTE_MISSING")
+        : adultVerified ? (safeRouteOk ? null : "SAFE_ADULT_ROUTE_MISSING") : "AGE_STATUS_UNVERIFIED"
+    );
+
+    let guardianConflict = false;
+    let guardianAuthorityOk = false;
+    let playerVoiceOk = false;
+    if (under18 && consent) {
+      const guardians = array(consent.guardians);
+      guardianConflict = guardians.some(g => g
+        && g.authorityStatus === "ESTABLISHED"
+        && BLOCKED_GUARDIAN_DECISIONS.has(g.decision));
+      guardianAuthorityOk = consent.guardianState === "Established"
+        || guardians.some(g => g && g.authorityStatus === "ESTABLISHED"
+          && g.primary === true && g.decision === "APPROVED");
+      playerVoiceOk = consent.playerVoice === "Assent recorded";
+    } else if (adultVerified) {
+      guardianAuthorityOk = true;
+      playerVoiceOk = !!consent && consent.playerVoice === "Consent recorded";
+    }
+
+    const guardianGate = gate(
+      "guardian_authority", "Guardian authority and conflict",
+      guardianConflict ? "FAIL" : guardianAuthorityOk ? "PASS" : "FAIL",
+      guardianConflict ? "Conflicting objection or revocation by an established guardian; review hold required."
+        : under18 ? guardianAuthorityOk ? "Required guardian authority is established."
+          : "Guardian authority is not established."
+        : adultVerified ? "Not required for this verified-adult scenario." : "Adult status not verified.",
+      guardianConflict ? "GUARDIAN_CONFLICT_HOLD"
+        : guardianAuthorityOk ? null : "GUARDIAN_AUTHORITY_NOT_ESTABLISHED"
+    );
+    const playerVoiceGate = gate(
+      "player_voice", "Player voice / assent",
+      playerVoiceOk ? "PASS" : "FAIL",
+      under18 ? playerVoiceOk ? "Player assent recorded." : "Player assent is not recorded."
+        : adultVerified ? playerVoiceOk ? "Adult consent recorded." : "Adult consent is not recorded."
+        : "Age/capacity is unresolved; player voice requirement is not satisfied.",
+      playerVoiceOk ? null : "PLAYER_VOICE_NOT_RECORDED"
+    );
+
+    const consentPrerequisites = actorLegitimacyPassed;
+    let consentState = "SKIPPED";
+    let consentReason = null;
+    let consentDetail = "Not evaluated: organization identity and representative authority must both pass first.";
+    if (consentPrerequisites) {
+      const consentLife = current(consent, now);
+      const expectedPurpose = PURPOSE_CODES[r.purpose] || r.purposeCode;
+      const purpose = consent && array(consent.purposes).find(p =>
+        p && (p.purposeCode === expectedPurpose || p.name === r.purpose));
+      const linked = !!consent && consent.playerRef === r.playerRef;
+      const purposeOk = !!purpose && purpose.state === "Given";
+      const recipientOk = !!purpose && purpose.recipientOrganizationId === r.organizationId;
+      const overallOk = !!consent && consent.consentState === "Given";
+      const lifecycleOk = consentLife.ok;
+      const consentAuthorityOk = guardianAuthorityOk && playerVoiceOk && !guardianConflict;
+      if (!linked) { consentReason = "CONSENT_PLAYER_MISMATCH"; consentDetail = "Consent record does not match this player."; }
+      else if (!overallOk) { consentReason = "CONSENT_NOT_GIVEN"; consentDetail = "Overall consent is not given."; }
+      else if (!purposeOk) { consentReason = "CONSENT_PURPOSE_NOT_GIVEN"; consentDetail = "The requested purpose category is not granted."; }
+      else if (!recipientOk) { consentReason = "CONSENT_RECIPIENT_MISMATCH"; consentDetail = "Consent recipient does not match this organization."; }
+      else if (!lifecycleOk) { consentReason = consentLife.code; consentDetail = "Consent lifecycle check failed: " + consentLife.code; }
+      else if (!consentAuthorityOk) { consentReason = guardianConflict ? "GUARDIAN_CONFLICT_HOLD" : "CONSENT_AUTHORITY_REQUIREMENTS_NOT_MET"; consentDetail = "Guardian authority/conflict or player voice requirements are not satisfied."; }
+      else { consentState = "PASS"; consentDetail = "Current consent matches player, purpose and recipient."; }
+      if (consentState !== "PASS") consentState = "FAIL";
+    }
+    const consentGate = gate(
+      "purpose_consent", "Purpose-bound consent",
+      consentState,
+      consentDetail,
+      consentReason
+    );
+
+    const opportunityLife = current(opportunity, now);
+    const opportunityOrgMatches = !!opportunity && opportunity.organizationId === r.organizationId;
+    const sourceOk = opportunityOrgMatches && opportunity.verification === "Verified" && opportunityLife.ok;
+    const opportunityGate = gate(
+      "opportunity_source", "Opportunity source and lifecycle",
+      sourceOk ? "PASS" : "FAIL",
+      !opportunity ? "Opportunity record not found."
+        : !opportunityOrgMatches ? "Opportunity belongs to a different organization."
+        : opportunity.verification !== "Verified" ? "Opportunity source is not verified."
+        : !opportunityLife.ok ? "Opportunity lifecycle check failed: " + opportunityLife.code
+        : "Opportunity source is verified and current.",
+      !opportunity ? "OPPORTUNITY_NOT_FOUND"
+        : !opportunityOrgMatches ? "OPPORTUNITY_ORGANIZATION_MISMATCH"
+        : opportunity.verification !== "Verified" ? "OPPORTUNITY_SOURCE_UNVERIFIED" : opportunityLife.code
+    );
+    const eligibilityOk = !!opportunity && opportunity.eligibility === "Verified";
+    const eligibilityGate = gate(
+      "opportunity_eligibility", "Opportunity-specific eligibility",
+      eligibilityOk ? "PASS" : "FAIL",
+      opportunity ? opportunity.eligibility : "Not assessed",
+      eligibilityOk ? null : "ELIGIBILITY_NOT_VERIFIED"
+    );
+    const safeguardingOk = !!opportunity && opportunity.safeguarding === "Reviewed"
+      && !!invitation && invitation.workflowState === "READY";
+    const safeguardingGate = gate(
+      "safeguarding_review", "Safeguarding review",
+      safeguardingOk ? "PASS" : "FAIL",
+      safeguardingOk ? "Reviewed" : "Not cleared",
+      safeguardingOk ? "Separate safeguarding and invitation review conditions are satisfied."
+        : "Safeguarding and/or invitation review remains unresolved.",
+      safeguardingOk ? null : "SAFEGUARDING_NOT_CLEARED"
+    );
+
+    const disclosureGate = gate(
+      "disclosure_scope", "Disclosure scope", "FAIL",
+      "No disclosure permitted",
+      "This evaluator never authorizes disclosure; a separately ratified release policy would be required.",
+      "DISCLOSURE_NOT_IMPLEMENTED", false
+    );
 
     const gates = [
-      makeGate(
-        "passport_reference", "Player Passport reference", !!player,
-        player ? "Linked synthetic Passport" : "Missing or unresolved",
-        player ? "Exact Passport reference resolves to the requested synthetic player; claims remain unverified."
-          : "Passport reference is missing, does not equal the request player ID, or does not resolve to a fixture.",
-        "PASSPORT_MISSING_OR_MISMATCHED"
-      ),
-      makeGate(
-        "age_safe_route", "Age and safe request route", safeRoute,
-        under18Protections
-          ? (safeRoute ? "Guardian-mediated route present" : "Guardian-mediated route not established")
-          : (adultVerified ? "Adult status verified" : "Adult status unverified"),
-        under18Protections
-          ? "Under-18 protections apply; a guardian-mediated route is required."
-          : adultVerified ? "Adult status is explicitly established in this synthetic scenario."
-          : "Adult status is not established; under-18 protections must not be bypassed.",
-        under18Protections ? "SAFE_GUARDIAN_ROUTE_MISSING" : "AGE_STATUS_UNVERIFIED"
-      ),
-      makeGate(
-        "purpose_consent", "Purpose-specific consent", consentSatisfied,
-        consentSatisfied ? "Recorded for exact purpose and recipient" : "Blocked",
-        !consentLinked ? "Consent record is absent or does not match the request player."
-          : !consentOverallGiven ? "Overall consent is not given."
-          : !consentPurposeGiven ? "The exact requested purpose is not given."
-          : !consentRecipientMatches ? "Consent recipient does not match the request organization."
-          : !consentAuthorityConditions ? "Guardian authority or player voice/assent requirements are not satisfied."
-          : "Purpose and recipient are bound to this request.",
-        !consentLinked ? "CONSENT_PLAYER_MISMATCH"
-          : !consentOverallGiven ? "CONSENT_NOT_GIVEN"
-          : !consentPurposeGiven ? "CONSENT_PURPOSE_NOT_GIVEN"
-          : !consentRecipientMatches ? "CONSENT_RECIPIENT_MISMATCH"
-          : !consentAuthorityConditions ? "CONSENT_AUTHORITY_REQUIREMENTS_NOT_MET" : null
-      ),
-      makeGate(
-        "guardian_authority", "Guardian authority",
-        guardianAuthoritySatisfied,
-        under18Protections
-          ? (guardianAuthoritySatisfied ? "Established" : "Blocked")
-          : adultVerified ? "Not required — adult verified" : "Adult status not verified",
-        under18Protections
-          ? (consentCase ? consentCase.guardianState : "No consent case linked")
-          : adultVerified ? "Guardian authority is not required for the verified-adult scenario."
-          : "Guardian authority cannot be bypassed until adult status is established.",
-        under18Protections ? "GUARDIAN_AUTHORITY_NOT_ESTABLISHED" : "AGE_STATUS_UNVERIFIED"
-      ),
-      makeGate(
-        "player_voice", "Player voice / assent", playerVoiceSatisfied,
-        playerVoiceSatisfied ? "Recorded" : "Blocked",
-        consentCase ? consentCase.playerVoice : "No consent case linked",
-        "PLAYER_VOICE_NOT_RECORDED"
-      ),
-      makeGate(
-        "organization_identity", "Organization identity",
-        !!organization && organization.identityStatus === "Verified",
-        organization && organization.identityStatus === "Verified" ? "Verified" : "Unverified",
-        organization ? organization.name + " — " + organization.identityStatus : "No organization record.",
-        "ORGANIZATION_IDENTITY_UNVERIFIED"
-      ),
-      makeGate(
-        "representative_authority", "Representative authority",
-        !!authority && authority.authority === "Verified",
-        authority ? authority.authority : "Not established",
-        authority ? "Authority record: " + authority.authority : "No authority record exists for this organization.",
-        "REPRESENTATIVE_AUTHORITY_UNVERIFIED"
-      ),
-      makeGate(
-        "membership_linkage", "Membership linkage",
-        membershipVerified,
-        !membership ? "Missing or mismatched"
-          : !membershipIdentityMatches ? "Missing or mismatched"
-          : membershipVerified ? "Verified active membership"
-          : "Linked claim; still unverified",
-        membership ? membership.player + " / " + membership.organizationId + " / " + membership.verification
-          : "No matching membership claim supplied.",
-        !membership ? "MEMBERSHIP_NOT_FOUND"
-          : !membershipIdentityMatches ? "MEMBERSHIP_LINK_MISMATCH"
-          : "MEMBERSHIP_NOT_VERIFIED"
-      ),
-      makeGate(
-        "opportunity_source", "Specific opportunity and source",
-        opportunityVerified,
-        !opportunity ? "Not verified"
-          : !opportunityOrganizationMatches ? "Organization mismatch"
-          : opportunityVerified ? "Verified" : "Not verified",
-        !opportunity ? "No opportunity record."
-          : !opportunityOrganizationMatches ? "Opportunity organization does not match the request organization."
-          : opportunity.title + " — " + opportunity.source + " — " + opportunity.verification,
-        !opportunity ? "OPPORTUNITY_NOT_FOUND"
-          : !opportunityOrganizationMatches ? "OPPORTUNITY_ORGANIZATION_MISMATCH"
-          : "OPPORTUNITY_SOURCE_UNVERIFIED"
-      ),
-      makeGate(
-        "opportunity_eligibility", "Opportunity-specific eligibility",
-        eligibilityVerified,
-        opportunity ? opportunity.eligibility : "Not assessed",
-        opportunity ? opportunity.eligibility : "No opportunity record.",
-        "ELIGIBILITY_NOT_VERIFIED"
-      ),
-      makeGate(
-        "safeguarding_review", "Safeguarding review",
-        safeguardingReviewed,
-        safeguardingReviewed ? "Reviewed" : "Blocked",
-        opportunity
-          ? "Opportunity safeguarding: " + opportunity.safeguarding + "; invitation workflow: " + (invitation ? invitation.workflowState : "No invitation review")
-          : "No opportunity record.",
-        "SAFEGUARDING_NOT_CLEARED"
-      ),
-      makeGate(
-        "disclosure_scope", "Disclosure scope", false,
-        "No disclosure permitted",
-        "This static prototype has no disclosure capability; passing review gates never releases player data.",
-        "DISCLOSURE_NOT_IMPLEMENTED",
-        false
-      )
+      orgGate, authorityGate, passportGate, membershipGate, routeGate,
+      guardianGate, playerVoiceGate, consentGate, opportunityGate,
+      eligibilityGate, safeguardingGate, disclosureGate
     ];
-
-    const blockingGates = gates.filter(item => item.blocking && !item.satisfied);
-    const reasonCodes = Array.from(new Set(gates.flatMap(item => item.reasonCodes)));
-    return {
+    const blockingFailures = gates.filter(g => g.blocking && g.state === "FAIL");
+    const skippedPrerequisites = gates.filter(g => g.state === "SKIPPED");
+    const reasonCodes = Array.from(new Set(gates.flatMap(g => g.reasonCodes)));
+    return Object.freeze({
+      engineVersion: "0.2.0",
       requestId: r.id || null,
-      disposition: blockingGates.length ? "HOLD" : "READY_FOR_SEPARATE_HUMAN_REVIEW",
-      allBlockingGatesSatisfied: blockingGates.length === 0,
+      evaluatedAt: new Date(now).toISOString(),
+      disposition: blockingFailures.length ? "HOLD" : "READY_FOR_SEPARATE_HUMAN_REVIEW",
+      allBlockingGatesSatisfied: blockingFailures.length === 0,
       disclosurePermitted: false,
       reasonCodes,
+      skippedPrerequisites: skippedPrerequisites.map(g => g.key),
       gates
-    };
+    });
   }
 
-  return Object.freeze({
-    version: "0.1.0",
-    evaluateRequest
-  });
+  return Object.freeze({ version: "0.2.0", evaluateRequest });
 });
