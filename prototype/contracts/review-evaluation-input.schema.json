@@ -1,0 +1,460 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:scoutsa:review-evaluation-input:1.0.0",
+  "title": "ScoutSA Review Evaluation Input",
+  "description": "Minimal pseudonymous input contract for synthetic review evaluation. No direct personal information is permitted.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractVersion",
+    "policyVersion",
+    "request",
+    "records"
+  ],
+  "properties": {
+    "contractVersion": {
+      "const": "1.0.0"
+    },
+    "policyVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "request": {
+      "$ref": "#/$defs/request"
+    },
+    "records": {
+      "$ref": "#/$defs/records"
+    }
+  },
+  "$defs": {
+    "opaqueId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requestId",
+        "playerId",
+        "playerRef",
+        "passportRef",
+        "ageClassification",
+        "requestRoute",
+        "purposeCode",
+        "organizationId",
+        "opportunityId",
+        "membershipClaimId",
+        "consentId",
+        "invitationReviewId",
+        "requestedDisclosure"
+      ],
+      "properties": {
+        "requestId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "playerId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "playerRef": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "passportRef": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/opaqueId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ageClassification": {
+          "enum": [
+            "UNDER_18",
+            "UNKNOWN",
+            "ADULT_UNVERIFIED",
+            "ADULT_VERIFIED"
+          ]
+        },
+        "requestRoute": {
+          "enum": [
+            "GUARDIAN_MEDIATED",
+            "ADULT_SELF_DIRECTED",
+            "NONE"
+          ]
+        },
+        "purposeCode": {
+          "enum": [
+            "SHARE_SELECTED_FOOTBALL_EVIDENCE",
+            "RESPOND_TO_SPECIFIC_OPPORTUNITY_REQUEST"
+          ]
+        },
+        "organizationId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "opportunityId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "membershipClaimId": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/opaqueId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "consentId": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/opaqueId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "invitationReviewId": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/opaqueId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "requestedDisclosure": {
+          "enum": [
+            "NONE",
+            "SELECTED_FOOTBALL_EVIDENCE"
+          ]
+        }
+      }
+    },
+    "records": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "players",
+        "consentGrants",
+        "organizations",
+        "representativeAuthorities",
+        "memberships",
+        "opportunities",
+        "invitationReviews"
+      ],
+      "properties": {
+        "players": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/player"
+          }
+        },
+        "consentGrants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/consentGrant"
+          }
+        },
+        "organizations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/organization"
+          }
+        },
+        "representativeAuthorities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/representativeAuthority"
+          }
+        },
+        "memberships": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/membership"
+          }
+        },
+        "opportunities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/opportunity"
+          }
+        },
+        "invitationReviews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/invitationReview"
+          }
+        }
+      }
+    },
+    "player": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "playerId",
+        "passportId",
+        "recordStatus"
+      ],
+      "properties": {
+        "playerId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "passportId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "recordStatus": {
+          "enum": [
+            "ACTIVE",
+            "INCOMPLETE",
+            "WITHDRAWN"
+          ]
+        }
+      }
+    },
+    "consentGrant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "consentId",
+        "playerId",
+        "purposeCode",
+        "recipientOrganizationId",
+        "status",
+        "guardianAuthorityStatus",
+        "playerAssentStatus",
+        "validUntil"
+      ],
+      "properties": {
+        "consentId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "playerId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "purposeCode": {
+          "enum": [
+            "SHARE_SELECTED_FOOTBALL_EVIDENCE",
+            "RESPOND_TO_SPECIFIC_OPPORTUNITY_REQUEST"
+          ]
+        },
+        "recipientOrganizationId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "status": {
+          "enum": [
+            "GIVEN",
+            "NOT_GIVEN",
+            "WITHDRAWN",
+            "EXPIRED",
+            "REVOKED"
+          ]
+        },
+        "guardianAuthorityStatus": {
+          "enum": [
+            "ESTABLISHED",
+            "NOT_ESTABLISHED",
+            "NOT_REQUIRED"
+          ]
+        },
+        "playerAssentStatus": {
+          "enum": [
+            "ASSENT_RECORDED",
+            "CONSENT_RECORDED",
+            "NOT_RECORDED",
+            "NOT_REQUIRED"
+          ]
+        },
+        "validUntil": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "organization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "organizationId",
+        "identityStatus"
+      ],
+      "properties": {
+        "organizationId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "identityStatus": {
+          "enum": [
+            "VERIFIED",
+            "UNVERIFIED",
+            "REVOKED"
+          ]
+        }
+      }
+    },
+    "representativeAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "organizationId",
+        "representativeId",
+        "authorityStatus",
+        "scope",
+        "validUntil"
+      ],
+      "properties": {
+        "organizationId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "representativeId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "authorityStatus": {
+          "enum": [
+            "VERIFIED",
+            "UNVERIFIED",
+            "REVOKED"
+          ]
+        },
+        "scope": {
+          "enum": [
+            "OPPORTUNITY_REVIEW",
+            "DISCOVERY_REQUEST_REVIEW",
+            "NONE"
+          ]
+        },
+        "validUntil": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "membership": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "membershipClaimId",
+        "playerId",
+        "organizationId",
+        "membershipStatus",
+        "verificationStatus"
+      ],
+      "properties": {
+        "membershipClaimId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "playerId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "organizationId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "membershipStatus": {
+          "enum": [
+            "PENDING",
+            "ACTIVE",
+            "ENDED",
+            "DISPUTED"
+          ]
+        },
+        "verificationStatus": {
+          "enum": [
+            "VERIFIED",
+            "UNVERIFIED",
+            "REJECTED"
+          ]
+        }
+      }
+    },
+    "opportunity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "opportunityId",
+        "organizationId",
+        "sourceStatus",
+        "eligibilityStatus",
+        "safeguardingStatus"
+      ],
+      "properties": {
+        "opportunityId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "organizationId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "sourceStatus": {
+          "enum": [
+            "VERIFIED",
+            "UNVERIFIED",
+            "REJECTED"
+          ]
+        },
+        "eligibilityStatus": {
+          "enum": [
+            "VERIFIED",
+            "NOT_ASSESSED",
+            "REJECTED"
+          ]
+        },
+        "safeguardingStatus": {
+          "enum": [
+            "CLEARED",
+            "NOT_ASSESSED",
+            "BLOCKED"
+          ]
+        }
+      }
+    },
+    "invitationReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "invitationReviewId",
+        "opportunityId",
+        "reviewStatus",
+        "secondReviewStatus"
+      ],
+      "properties": {
+        "invitationReviewId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "opportunityId": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "reviewStatus": {
+          "enum": [
+            "READY",
+            "HOLD",
+            "REJECTED"
+          ]
+        },
+        "secondReviewStatus": {
+          "enum": [
+            "COMPLETE",
+            "PENDING",
+            "REJECTED"
+          ]
+        }
+      }
+    }
+  }
+}
