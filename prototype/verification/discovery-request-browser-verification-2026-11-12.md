@@ -132,3 +132,34 @@ Structural cross-check results:
 - All three current synthetic fixtures still evaluate to `HOLD`, with twelve gates and `disclosurePermitted: false`.
 
 This was a JSON parse and contract/engine consistency check, **not** a full JSON Schema validator run or a backend integration test. The contract remains draft and unratified. No API, database, migration, RLS, authentication, identity vault, consent capture or disclosure implementation was created.
+
+
+## Review engine v0.2.0 — headless verification
+
+**Tested commit:** `03b055236e15238f27ae2236a93c3f69b1bb4702` (headless test suite; later UI/docs commits follow).  
+**Node runtime:** v26.12.1 in an isolated Node execution environment.  
+**Command:** `node --test prototype/tests/review-engine.test.js`  
+**Result:** **27 / 27 passed**, 0 failed, approximately 50.37 ms test duration.
+
+Additional checks on the current branch state:
+- `prototype/discovery-request.html` inline JavaScript syntax: PASS.
+- `prototype/discovery-request-smoke-tests.html` inline JavaScript syntax: PASS.
+- Input JSON Schema file parses as JSON: PASS.
+- Result JSON Schema file parses as JSON: PASS.
+
+The current browser-integrated smoke page was **not executed** against this updated engine. An unauthenticated hosted browser request to the private repository's raw GitHub URL returned 404, so no new browser pass is claimed. The earlier 32/32 browser result recorded above belongs to the prior engine baseline and must not be carried forward as proof of this refactor.
+
+A GitHub Actions workflow was added to run the headless suite on relevant branch changes. Its hosted run status was not independently retrieved in this verification session; the 27/27 result above is from the isolated Node run, not a claimed GitHub Actions result.
+
+## v0.2.0 policy changes
+
+- All time-sensitive evaluations require an explicit caller-supplied timestamp.
+- Passport, organization, representative authority, membership, consent and opportunity records require active lifecycle status and a valid future expiry.
+- Organization identity and representative authority form Tier 1. Purpose consent, guardian authority and player-voice checks are SKIPPED until both pass.
+- Representative authority is bound to the exact organization, representative and review scope.
+- Consent requires a controlled purpose code and exact recipient organization; free-text label matching alone is insufficient.
+- Any established guardian objection, revocation or withdrawal creates a conflict hold; an asserted guardian does not establish authority.
+- Re-evaluation after consent or authority revocation returns HOLD; the engine does not cache a prior pass.
+- The browser adapter supplies minimal pseudonymous projections to the engine. This is not server-side enforcement or a PII security boundary.
+
+The membership trust-tier model and legal guardian-authority resolution remain explicit open decisions. They were not silently invented or implemented.
