@@ -59,3 +59,8 @@ Open `organization-memberships-smoke-tests.html` to run local rendering and filt
 Open `opportunities.html` to inspect a read-only opportunity register backed by `data/opportunities.demo.js`. The synthetic examples distinguish a proposal, an identified organization, verification, eligibility, safeguarding, invitation and outcome fields. These are demonstration review dimensions, not ratified lifecycle states or completed checks. All examples remain fictional and unverified; no public listing, invitation, application or contact action exists.
 
 Open `opportunities-smoke-tests.html` to run local rendering and filtering checks. They have not been claimed as executed until run in a browser and do not test authorization, RLS, security, publication, safeguarding or legal compliance.
+
+
+### Opportunity register metric integrity
+
+The opportunity register summary counts are derived from the synthetic fixture at page load: total records, organization-identified stage, explicitly verified records and issued invitations. The smoke-test page checks these values against the fixture. This is client-side demo behavior only and is not a trusted reporting or authorization control.
