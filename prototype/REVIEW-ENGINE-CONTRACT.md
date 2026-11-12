@@ -33,6 +33,13 @@ An established guardian's objection, revocation or withdrawal creates `GUARDIAN_
 
 The result schema retains twelve sub-gates so the UI and future service can explain each blocker without collapsing separate decisions.
 
+## Open operational decisions — deliberately not invented
+
+- **Membership trust tiers:** the current evaluator requires an active, verified membership claim. It does not yet support a separate formal-club verification tier and community-coach attestation tier. This is not a finding that informal players are invalid. Before implementing tiered access, define evidence standards, accountable verifier identity, expiry/revocation, dispute handling, and which opportunity types may accept each tier.
+- **Multiple guardians and legal authority:** the prototype places a hold when any linked, established guardian records an objection, revocation or withdrawal. It does not determine legal custody, parental responsibility, who has decision-making authority, or how a dispute is resolved. An asserted or unverified guardian link does not become authority merely by being present.
+- **Purpose taxonomy:** the evaluator maps two current workflows to controlled purpose codes. The categories must be clear to a player and guardian, specific enough to describe the actual use, and broad enough to avoid needless repeated consent. Do not broaden them into blanket permission.
+- **Identity separation and release tokens:** this contract contains no identity vault, signed release token, cryptographic key management, or vault authorization design. The evaluator accepts only minimal pseudonymous projections in this prototype. Any future identity/contact vault requires a separate threat model, authorization design and ratified release policy.
+
 ## Minimal input contract
 
 The request contains only opaque references and controlled enums:
