@@ -11,7 +11,15 @@ This is a **contract proposal**, not backend implementation, database design, a 
 - Current prototype engine: `prototype/review-engine.js` version `0.1.0`
 - Contract version: `1.0.0`
 
-The current JavaScript engine uses prototype fixture labels and returns a prototype result object. It is **not yet a schema-valid instance** of the backend result contract: a future adapter must add the contract/policy versions and evaluation timestamp, map fixture labels to canonical enums, and project the engine result into the exact result schema. Do not treat the current client-side module as an authorization service.
+The current JavaScript engine is version `0.2.0`; it uses prototype fixture labels and returns a prototype result object. It is **not yet a schema-valid instance** of the backend result contract: a future adapter must add the contract/policy versions and evaluation timestamp, map fixture labels to canonical enums, and project the engine result into the exact result schema. Do not treat the current client-side module as an authorization service.
+
+## Evaluation precedence and lifecycle
+
+The evaluator requires an explicit evaluation timestamp; it never silently chooses the system clock. Passport, organization, representative authority, membership, consent and opportunity records must have an active lifecycle state and a valid future expiry. Missing, invalid, suspended, revoked, archived or expired records fail closed.
+
+Actor legitimacy is Tier 1: organization identity must pass, then representative authority must independently pass for the exact organization, representative and review scope. Purpose-bound consent is **SKIPPED**, not solicited or evaluated, until both Tier 1 checks pass. Tier 2 then evaluates Passport, membership, safe route, guardian authority/conflict, player voice, consent, opportunity, eligibility and safeguarding. Within Tier 2, all applicable gates are returned together so the reviewer can see concurrent blockers.
+
+An established guardian's objection, revocation or withdrawal creates `GUARDIAN_CONFLICT_HOLD`. An unverified guardian assertion does not establish authority. This is a conservative prototype rule, not a determination of legal custody or who must consent in a real case.
 
 ## Five gate groups
 
@@ -35,7 +43,7 @@ The request contains only opaque references and controlled enums:
 
 The referenced records are limited to the fields needed for the five gate groups. No player name, date of birth, ID number, phone number, email address, home address, guardian name/contact details, document image, video URL, or free-text personal narrative belongs in this evaluation payload.
 
-Consent is bound to **player + purpose + recipient organization + status + validity**. A generic “share with an academy” grant is not reusable for another organization. Withdrawn, expired, revoked, or not-given consent fails closed.
+Consent is bound to **player + purpose category + recipient organization + status + validity**. Guardian authority and player voice are separate prerequisites. A generic “share with an academy” grant is not reusable for another organization. The taxonomy must remain small and comprehensible; any purpose-category expansion requires a clear scope statement and versioned review. Withdrawn, expired, revoked, or not-given consent fails closed.
 
 ## Result contract
 
@@ -44,7 +52,7 @@ The evaluator returns:
 - contract and policy versions
 - request ID and evaluation timestamp
 - `HOLD` or `READY_FOR_SEPARATE_HUMAN_REVIEW`
-- twelve uniquely keyed gate results
+- twelve uniquely keyed gate results with `PASS`, `FAIL` or `SKIPPED` states
 - stable reason codes
 - `disclosurePermitted: false`
 
@@ -76,7 +84,7 @@ No transition is defined here for `APPROVED`, `INVITED`, `CONTACT_UNLOCKED`, `PU
 6. Membership must match exact player and organization IDs.
 7. Eligibility and safeguarding are distinct and independently required.
 8. A positive gate never overrides another failed gate.
-9. Missing, ambiguous, stale, conflicting or unavailable evidence fails closed.
+9. Missing, ambiguous, stale, conflicting or unavailable evidence fails closed. A PASS at intake is not cached as a permanent authorization; the same evaluation must be repeated at each future server-side transition that could expose data or initiate contact.
 10. No client-side result is trusted as a server authorization decision.
 11. No disclosure, direct private scout-to-minor contact, or payment-to-be-seen flow is authorized by this contract.
 12. No production, POPIA, Children’s Act, MySAFA, FIFA, or security-compliance claim is made by this draft.
