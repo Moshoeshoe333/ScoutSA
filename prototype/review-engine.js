@@ -16,8 +16,22 @@
   const BLOCKED_GUARDIAN_DECISIONS = new Set(["OBJECTION", "REVOKED", "WITHDRAWN"]);
   const array = value => Array.isArray(value) ? value : [];
   const find = (items, predicate) => array(items).find(predicate) || null;
+  const DISPLAY_STATUS = Object.freeze({
+    organization_identity: { PASS:"Verified", FAIL:"Unverified" },
+    representative_authority: { PASS:"Verified", FAIL:"Not established" },
+    passport_reference: { PASS:"Linked synthetic Passport", FAIL:"Missing or unresolved" },
+    membership_linkage: { PASS:"Verified active membership", FAIL:"Missing or mismatched" },
+    age_safe_route: { PASS:"Safe route present", FAIL:"Safe route not established" },
+    guardian_authority: { PASS:"Established", FAIL:"Blocked" },
+    player_voice: { PASS:"Recorded", FAIL:"Blocked" },
+    purpose_consent: { PASS:"Recorded for exact purpose and recipient", FAIL:"Blocked", SKIPPED:"Skipped — actor legitimacy" },
+    opportunity_source: { PASS:"Verified", FAIL:"Not verified" },
+    safeguarding_review: { PASS:"Reviewed", FAIL:"Blocked" },
+    disclosure_scope: { FAIL:"No disclosure permitted" }
+  });
   const gate = (key, label, state, detail, reasonCode, blocking = true) => ({
-    key, label, state, satisfied: state === "PASS", blocking, status: state,
+    key, label, state, satisfied: state === "PASS", blocking,
+    status: (DISPLAY_STATUS[key] && DISPLAY_STATUS[key][state]) || (key === "opportunity_eligibility" ? detail : state),
     detail: detail || "", reasonCodes: state === "FAIL" && reasonCode ? [reasonCode] : []
   });
   const timestamp = value => {
