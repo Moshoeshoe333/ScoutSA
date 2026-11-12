@@ -30,8 +30,8 @@ window.SCOUTSA_DISCOVERY_REQUESTS = {
       note:"Age is unknown, consent is absent, and the notice issuer and organization authority are unverified."
     },
     {
-      id:"REQ-DEMO-003", playerId:"DEMO-PLAYER-001", playerRef:"PLAYER-DEMO-C",
-      passportRef:"DEMO-PLAYER-001", opportunityId:"OPP-DEMO-002",
+      id:"REQ-DEMO-003", playerId:"DEMO-PLAYER-003", playerRef:"PLAYER-DEMO-C",
+      passportRef:null, opportunityId:"OPP-DEMO-002",
       consentCaseId:"GCS-DEMO-003", organizationId:"ORG-DEMO-02",
       membershipId:"MEM-DEMO-002", invitationCaseId:null,
       requestOrigin:"Adult self-directed scenario (adult status not verified)",
