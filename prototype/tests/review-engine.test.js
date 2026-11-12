@@ -132,6 +132,13 @@ test("Passport with missing expiry fails closed", () => {
   const result = evaluate(validRequest(), context);
   assert.ok(result.reasonCodes.includes("LIFECYCLE_EXPIRY_MISSING_OR_INVALID"));
 });
+test("an expiry timestamp is invalid at the exact boundary", () => {
+  const context = validContext();
+  context.players[0].expiresAt = NOW;
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "passport_reference").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("LIFECYCLE_EXPIRED"));
+});
 test("expired Passport fails at the supplied evaluation time", () => {
   const context = validContext();
   context.players[0].expiresAt = PAST;
@@ -215,6 +222,15 @@ test("guardian authority and player voice cannot be borrowed from another player
   assert.equal(gate(result, "guardian_authority").state, "FAIL");
   assert.equal(gate(result, "player_voice").state, "FAIL");
   assert.ok(result.reasonCodes.includes("CONSENT_PLAYER_MISMATCH"));
+});
+test("every established primary guardian must approve; silence is not consent", () => {
+  const context = validContext();
+  context.consentCases[0].guardians.push({
+    guardianRef:"GUARDIAN-2", authorityStatus:"ESTABLISHED", primary:true, decision:"NO_RESPONSE"
+  });
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "guardian_authority").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("GUARDIAN_AUTHORITY_NOT_ESTABLISHED"));
 });
 test("unverified guardian assertion alone does not establish authority", () => {
   const context = validContext();
