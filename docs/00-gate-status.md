@@ -4,7 +4,7 @@
 
 **Mainline remains:** documentation-first; implementation, schema migration, RLS, API, authentication, real identity processing, deployment and pilot remain on hold. The October 2026 gate decisions and unresolved seams below remain in force.
 
-**Isolated prototype branch:** a synthetic, static browser demonstration exists under `prototype/`. Its pure review engine is version 0.2.0. On 2026-11-12, 32/32 headless Node tests passed; both relevant inline scripts passed syntax checks; both JSON schema files parsed. The updated browser smoke page was not re-executed against v0.2.0 because unauthenticated access to this private repository returned 404. The prior 32/32 browser result belongs to the v0.1.0 baseline and is not current proof.
+**Isolated prototype branch:** a synthetic, static browser demonstration exists under `prototype/`. Its pure review engine is version 0.2.0. On 2026-11-12, 35/35 headless Node tests passed; both relevant inline scripts passed syntax checks; both JSON schema files parsed. The updated browser smoke page was not re-executed against v0.2.0 because unauthenticated access to this private repository returned 404. The prior 32/32 browser result belongs to the v0.1.0 baseline and is not current proof.
 
 **Prototype boundary:** synthetic fixtures only; no backend, persistence, authentication, authorization, RLS, API, identity vault, consent capture, disclosure, production security, legal compliance or pilot readiness. A successful policy evaluation can only reach separate human review and never authorizes disclosure.
 
