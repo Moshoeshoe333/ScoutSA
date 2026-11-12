@@ -51,3 +51,34 @@ Two in-memory mutations were performed in the hosted browser session and discard
 - A fixed screenshot artifact was not exported into the repository. The hosted session link above is the available session evidence; browser version metadata was not exposed.
 
 **Decision:** Browser smoke execution is complete, but the connected review workflow is **not yet accepted**. Fix the membership identity binding and recipient-bound consent, make representative authority evaluation explicit, add adversarial regression assertions, then rerun the browser suite. Do not extract/freeze the review engine until those defects are resolved.
+
+
+## Remediation and second browser run
+
+**Updated tested commit:** `af818dd6337a6ac594938f00687d05881c981de1`  
+**Follow-up date:** 2026-11-12 (SAST; exact execution time not exposed)  
+**Follow-up browser session:** https://hangar.firecrawl.dev/live#br_1170dd0625c740e3a7f4117aa295ffac.g_79391b76daee454d90690fe216c1d049.dnKWejJ2GPrdCkuymbtTKacSw6MfD85KK52S2m3lo1s
+
+The two confirmed defects were corrected in the synthetic prototype:
+
+- Membership claims now carry a stable `playerId`; linkage requires exact `playerId` and `organizationId` equality. Display names are no longer used as identity keys.
+- Each consent purpose now has an explicit `recipientOrganizationId`; the evaluator requires the exact player reference, overall consent state, exact purpose, exact recipient organization, and the applicable guardian/player-voice conditions.
+- Guardian authority and player voice/assent are displayed as separate gates. For under-18 or unknown-age scenarios, both established guardian authority and recorded player assent are required before purpose consent can pass. Adult consent remains blocked until adult status is explicitly verified.
+- Representative authority now renders from its own authority record, independently of organization identity.
+- Opportunity-specific eligibility and safeguarding review are now separate gates. A positive state in one cannot clear the other.
+
+**Second browser result: 21 / 21 checks passed (0 failures).** The suite now includes regression checks for the prior suffix-collision exploit, mismatched consent recipient, missing overall consent, missing guardian authority, missing player assent, independent representative authority, and eligibility/safeguarding separation.
+
+## Updated manual walkthrough
+
+The three cases were manually selected on the updated commit. All remained `HOLD — NOT SUBMITTABLE`; all had `No disclosure permitted`.
+
+- **REQ-DEMO-001:** Passport linked (synthetic only); under-18 safeguards required; purpose consent blocked; guardian authority blocked; player assent blocked; organization identity unverified; representative authority not established; membership linked as an unverified claim; opportunity/source not verified; eligibility not assessed; safeguarding blocked; disclosure prohibited.
+- **REQ-DEMO-002:** Passport linked (synthetic only); unknown age receives under-18 safeguards; purpose consent blocked; guardian authority blocked; player assent blocked; organization identity unverified; representative authority not established; membership missing/mismatched; opportunity/source not verified; eligibility not assessed; safeguarding blocked; disclosure prohibited.
+- **REQ-DEMO-003:** Passport missing/unresolved; adult status unverified; purpose consent blocked; guardian authority remains blocked pending adult-status verification; player voice not recorded; organization identity unverified; representative authority not established; membership missing/mismatched; opportunity/source not verified; eligibility not assessed; safeguarding blocked; disclosure prohibited.
+
+## Updated disposition
+
+The current synthetic browser workflow and its adversarial regression checks now pass. The next bounded engineering step is to extract the review logic into a pure, UI-independent module and run the same cases against that module. This is acceptance of the current **prototype logic checks only**—not production readiness, security validation, legal compliance, or pilot authorization.
+
+The original evidence limitations remain: the hosted runner did not expose browser name/version, and a fixed screenshot image was not exported into the repository. The session link is the available interactive evidence.
