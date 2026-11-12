@@ -49,7 +49,8 @@
         "membershipClaimId",
         "consentId",
         "invitationReviewId",
-        "requestedDisclosure"
+        "requestedDisclosure",
+        "representativeId"
       ],
       "properties": {
         "requestId": {
@@ -133,6 +134,9 @@
             "NONE",
             "SELECTED_FOOTBALL_EVIDENCE"
           ]
+        },
+        "representativeId": {
+          "$ref": "#/$defs/opaqueId"
         }
       }
     },
@@ -199,7 +203,9 @@
       "required": [
         "playerId",
         "passportId",
-        "recordStatus"
+        "recordStatus",
+        "lifecycleStatus",
+        "expiresAt"
       ],
       "properties": {
         "playerId": {
@@ -211,9 +217,17 @@
         "recordStatus": {
           "enum": [
             "ACTIVE",
-            "INCOMPLETE",
-            "WITHDRAWN"
+            "SUSPENDED",
+            "ARCHIVED",
+            "REVOKED"
           ]
+        },
+        "lifecycleStatus": {
+          "const": "ACTIVE"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -228,7 +242,9 @@
         "status",
         "guardianAuthorityStatus",
         "playerAssentStatus",
-        "validUntil"
+        "validUntil",
+        "lifecycleStatus",
+        "guardians"
       ],
       "properties": {
         "consentId": {
@@ -280,6 +296,48 @@
               "type": "null"
             }
           ]
+        },
+        "lifecycleStatus": {
+          "const": "ACTIVE"
+        },
+        "guardians": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "guardianRef",
+              "authorityStatus",
+              "primary",
+              "decision"
+            ],
+            "properties": {
+              "guardianRef": {
+                "$ref": "#/$defs/opaqueId"
+              },
+              "authorityStatus": {
+                "enum": [
+                  "ESTABLISHED",
+                  "ASSERTED",
+                  "DISPUTED",
+                  "REVOKED"
+                ]
+              },
+              "primary": {
+                "type": "boolean"
+              },
+              "decision": {
+                "enum": [
+                  "APPROVED",
+                  "OBJECTED",
+                  "OBJECTION",
+                  "REVOKED",
+                  "WITHDRAWN",
+                  "NO_RESPONSE"
+                ]
+              }
+            }
+          }
         }
       }
     },
@@ -288,7 +346,9 @@
       "additionalProperties": false,
       "required": [
         "organizationId",
-        "identityStatus"
+        "identityStatus",
+        "lifecycleStatus",
+        "expiresAt"
       ],
       "properties": {
         "organizationId": {
@@ -300,6 +360,13 @@
             "UNVERIFIED",
             "REVOKED"
           ]
+        },
+        "lifecycleStatus": {
+          "const": "ACTIVE"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -311,7 +378,8 @@
         "representativeId",
         "authorityStatus",
         "scope",
-        "validUntil"
+        "lifecycleStatus",
+        "expiresAt"
       ],
       "properties": {
         "organizationId": {
@@ -344,6 +412,13 @@
               "type": "null"
             }
           ]
+        },
+        "lifecycleStatus": {
+          "const": "ACTIVE"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -355,7 +430,9 @@
         "playerId",
         "organizationId",
         "membershipStatus",
-        "verificationStatus"
+        "verificationStatus",
+        "lifecycleStatus",
+        "expiresAt"
       ],
       "properties": {
         "membershipClaimId": {
@@ -381,6 +458,13 @@
             "UNVERIFIED",
             "REJECTED"
           ]
+        },
+        "lifecycleStatus": {
+          "const": "ACTIVE"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -392,7 +476,9 @@
         "organizationId",
         "sourceStatus",
         "eligibilityStatus",
-        "safeguardingStatus"
+        "safeguardingStatus",
+        "lifecycleStatus",
+        "expiresAt"
       ],
       "properties": {
         "opportunityId": {
@@ -421,6 +507,13 @@
             "NOT_ASSESSED",
             "BLOCKED"
           ]
+        },
+        "lifecycleStatus": {
+          "const": "ACTIVE"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
