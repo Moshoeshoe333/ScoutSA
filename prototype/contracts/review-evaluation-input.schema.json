@@ -223,7 +223,14 @@
           ]
         },
         "lifecycleStatus": {
-          "const": "ACTIVE"
+          "enum": [
+            "ACTIVE",
+            "SUSPENDED",
+            "REVOKED",
+            "EXPIRED",
+            "ARCHIVED",
+            "DISPUTED"
+          ]
         },
         "expiresAt": {
           "type": "string",
@@ -298,7 +305,14 @@
           ]
         },
         "lifecycleStatus": {
-          "const": "ACTIVE"
+          "enum": [
+            "ACTIVE",
+            "SUSPENDED",
+            "REVOKED",
+            "EXPIRED",
+            "ARCHIVED",
+            "DISPUTED"
+          ]
         },
         "guardians": {
           "type": "array",
@@ -362,7 +376,14 @@
           ]
         },
         "lifecycleStatus": {
-          "const": "ACTIVE"
+          "enum": [
+            "ACTIVE",
+            "SUSPENDED",
+            "REVOKED",
+            "EXPIRED",
+            "ARCHIVED",
+            "DISPUTED"
+          ]
         },
         "expiresAt": {
           "type": "string",
@@ -414,7 +435,14 @@
           ]
         },
         "lifecycleStatus": {
-          "const": "ACTIVE"
+          "enum": [
+            "ACTIVE",
+            "SUSPENDED",
+            "REVOKED",
+            "EXPIRED",
+            "ARCHIVED",
+            "DISPUTED"
+          ]
         },
         "expiresAt": {
           "type": "string",
@@ -460,7 +488,14 @@
           ]
         },
         "lifecycleStatus": {
-          "const": "ACTIVE"
+          "enum": [
+            "ACTIVE",
+            "SUSPENDED",
+            "REVOKED",
+            "EXPIRED",
+            "ARCHIVED",
+            "DISPUTED"
+          ]
         },
         "expiresAt": {
           "type": "string",
@@ -509,7 +544,14 @@
           ]
         },
         "lifecycleStatus": {
-          "const": "ACTIVE"
+          "enum": [
+            "ACTIVE",
+            "SUSPENDED",
+            "REVOKED",
+            "EXPIRED",
+            "ARCHIVED",
+            "DISPUTED"
+          ]
         },
         "expiresAt": {
           "type": "string",
