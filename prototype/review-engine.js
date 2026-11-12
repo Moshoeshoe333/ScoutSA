@@ -13,7 +13,7 @@
     "Respond to a specific opportunity request": "RESPOND_TO_SPECIFIC_OPPORTUNITY_REQUEST",
     "Share selected football evidence with a named academy": "SHARE_SELECTED_FOOTBALL_EVIDENCE"
   });
-  const BLOCKED_GUARDIAN_DECISIONS = new Set(["OBJECTION", "REVOKED", "WITHDRAWN"]);
+  const BLOCKED_GUARDIAN_DECISIONS = new Set(["OBJECTION", "OBJECTED", "REVOKED", "WITHDRAWN"]);
   const array = value => Array.isArray(value) ? value : [];
   const find = (items, predicate) => array(items).find(predicate) || null;
   const DISPLAY_STATUS = Object.freeze({
@@ -22,8 +22,8 @@
     passport_reference: { PASS:"Linked synthetic Passport", FAIL:"Missing or unresolved" },
     membership_linkage: { PASS:"Verified active membership", FAIL:"Missing or mismatched" },
     age_safe_route: { PASS:"Safe route present", FAIL:"Safe route not established" },
-    guardian_authority: { PASS:"Established", FAIL:"Blocked" },
-    player_voice: { PASS:"Recorded", FAIL:"Blocked" },
+    guardian_authority: { PASS:"Established", FAIL:"Blocked", SKIPPED:"Skipped — actor legitimacy" },
+    player_voice: { PASS:"Recorded", FAIL:"Blocked", SKIPPED:"Skipped — actor legitimacy" },
     purpose_consent: { PASS:"Recorded for exact purpose and recipient", FAIL:"Blocked", SKIPPED:"Skipped — actor legitimacy" },
     opportunity_source: { PASS:"Verified", FAIL:"Not verified" },
     safeguarding_review: { PASS:"Reviewed", FAIL:"Blocked" },
@@ -171,6 +171,7 @@
         : adultVerified ? (safeRouteOk ? null : "SAFE_ADULT_ROUTE_MISSING") : "AGE_STATUS_UNVERIFIED"
     );
 
+    const consentPrerequisites = actorLegitimacyPassed;
     let guardianConflict = false;
     let guardianAuthorityOk = false;
     let playerVoiceOk = false;
@@ -190,24 +191,23 @@
 
     const guardianGate = gate(
       "guardian_authority", "Guardian authority and conflict",
-      guardianConflict ? "FAIL" : guardianAuthorityOk ? "PASS" : "FAIL",
+      !consentPrerequisites ? "SKIPPED" : guardianConflict ? "FAIL" : guardianAuthorityOk ? "PASS" : "FAIL",
       guardianConflict ? "Conflicting objection or revocation by an established guardian; review hold required."
         : under18 ? guardianAuthorityOk ? "Required guardian authority is established."
           : "Guardian authority is not established."
         : adultVerified ? "Not required for this verified-adult scenario." : "Adult status not verified.",
-      guardianConflict ? "GUARDIAN_CONFLICT_HOLD"
+      !consentPrerequisites ? null : guardianConflict ? "GUARDIAN_CONFLICT_HOLD"
         : guardianAuthorityOk ? null : "GUARDIAN_AUTHORITY_NOT_ESTABLISHED"
     );
     const playerVoiceGate = gate(
       "player_voice", "Player voice / assent",
-      playerVoiceOk ? "PASS" : "FAIL",
+      !consentPrerequisites ? "SKIPPED" : playerVoiceOk ? "PASS" : "FAIL",
       under18 ? playerVoiceOk ? "Player assent recorded." : "Player assent is not recorded."
         : adultVerified ? playerVoiceOk ? "Adult consent recorded." : "Adult consent is not recorded."
         : "Age/capacity is unresolved; player voice requirement is not satisfied.",
-      playerVoiceOk ? null : "PLAYER_VOICE_NOT_RECORDED"
+      !consentPrerequisites ? null : playerVoiceOk ? null : "PLAYER_VOICE_NOT_RECORDED"
     );
 
-    const consentPrerequisites = actorLegitimacyPassed;
     let consentState = "SKIPPED";
     let consentReason = null;
     let consentDetail = "Not evaluated: organization identity and representative authority must both pass first.";
