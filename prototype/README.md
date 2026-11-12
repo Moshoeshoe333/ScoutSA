@@ -107,3 +107,12 @@ Open `player-development-pathways.html` to inspect a six-stage, synthetic pathwa
 Football Readiness and Opportunity Readiness remain distinct. Age is not supplied in the sample passports; any real process must apply under-18 safeguards until age is reliably established. No contact, invitation, publication, assessment submission or outcome mutation is enabled.
 
 Open `player-development-pathways-smoke-tests.html` for local fixture/UI checks. They have not been represented as executed until run in a browser and do not validate real development, identity, evidence, age, consent, safeguarding, authorization, privacy, persistence or legal compliance.
+
+
+## Coach and academy workspace
+
+Open `coach-academy-workspace.html` to inspect a read-only, organization-scoped workspace using a fictional academy. It summarizes organization identity and authority status, membership-claim workflow states, opportunity proposals and outstanding evidence actions. It intentionally shows no player roster, player names, contact details, Passport contents or individual readiness information.
+
+The workspace communicates a critical product boundary: an academy or coach role does not grant general permission to view player information. Organization identity, representative authority, membership claims, opportunity source, eligibility and safeguarding are separate review concerns. The page has no authentication, authorization, tenant isolation or RLS; its displayed scope is illustrative only and is not technically enforced.
+
+Open `coach-academy-workspace-smoke-tests.html` for local fixture/UI checks. They have not been represented as executed until run in a browser and do not validate real identity, role authority, access control, privacy, safeguarding, persistence or legal compliance.
