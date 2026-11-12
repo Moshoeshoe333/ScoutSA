@@ -31,3 +31,13 @@ Open `smoke-tests.html` in the same folder as `index.html`, then select **Run sm
 3. Resolve access-policy and safeguarding requirements before connecting any real data.
 4. Add automated accessibility, interaction and security tests.
 5. Obtain qualified review before any real-world pilot involving people, especially minors.
+
+## Player Passport prototype
+
+Open `player-passport.html` to inspect the focused Passport experience. It uses two fictional sample records and separates football profile, Assertions and supporting Evidence, Membership history, Verification status, Football Readiness and Opportunity Readiness. It does not calculate readiness or claim any sample is verified.
+
+Open `player-passport-smoke-tests.html` to run local interface smoke checks. These checks are not security, authorization, privacy, legal-compliance or backend tests.
+
+## Development boundary
+
+See [DEVELOPMENT-BOUNDARY.md](./DEVELOPMENT-BOUNDARY.md). Internal development without external validation is limited to a clearly labelled synthetic-data demonstration. This decision does not lift database, RLS, access-policy, safeguarding, legal or production holds.
