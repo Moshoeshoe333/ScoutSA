@@ -71,3 +71,12 @@ The opportunity register summary counts are derived from the synthetic fixture a
 Open `opportunity-evidence.html` to inspect a read-only evidence ledger using synthetic descriptions only. It separates submitter, source, source authority, review time, independent corroboration, limitations and next action. Missing, unreviewed, insufficient and conflicting evidence remain distinct. No real document is uploaded, opened, authenticated or retained; no evidence decision or publication is enabled.
 
 Open `opportunity-evidence-smoke-tests.html` to run local rendering, count and filter checks. These are UI checks only and do not validate evidence, identity, source authority, security, privacy, safeguarding or legal compliance.
+
+
+## Opportunity review decision worksheet
+
+Open `opportunity-decisions.html` to inspect the human-controlled, claim-scoped decision worksheet. It distinguishes Received, In Review, Accepted for Claim, Rejected, Needs Investigation, Second Review and Blocked. A decision requires a specific claim, reviewer identifier and written rationale. “Accepted for Claim” applies only to that exact claim and does not establish broader identity, organization legitimacy, opportunity safety or safeguarding status.
+
+The worksheet's new entries exist only in page memory and disappear on reload. The initial records are fictional examples, not an audit log. No automated scoring, evidence authentication, approval, publication, invitation or contact action exists.
+
+Open `opportunity-decisions-smoke-tests.html` for local UI checks. These have not been claimed as executed until run in a browser. They do not test persistence, audit integrity, authentication, authorization, RLS, security, privacy, safeguarding, evidence authenticity or legal compliance.
