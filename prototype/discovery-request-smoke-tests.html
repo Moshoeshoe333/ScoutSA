@@ -13,9 +13,6 @@ runButton.addEventListener("click",()=>{
  const findGate=(name)=>Array.from(d.querySelectorAll(".gate")).find(x=>x.querySelector("strong")?.textContent===name);
  const gateStatus=(name)=>findGate(name)?.querySelector("span")?.textContent||"";
  const clickRequest=(id)=>d.querySelector('button[data-id="'+id+'"]').click();
- const findGate=(name)=>Array.from(d.querySelectorAll(".gate")).find(x=>x.querySelector("strong")?.textContent===name);
- const gateStatus=(name)=>findGate(name)?.querySelector("span")?.textContent||"";
- const clickRequest=(id)=>d.querySelector('button[data-id="'+id+'"]').click();
  const engineContext=()=>({
    now:new Date().toISOString(),
    players:Object.values(w.SCOUTSA_DEMO_PLAYERS),
