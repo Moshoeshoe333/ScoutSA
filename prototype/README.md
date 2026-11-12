@@ -133,6 +133,8 @@ Open `discovery-request.html` to inspect a read-only flow connecting synthetic P
 
 The fixture at `data/discovery-requests.demo.js` contains only fictional opaque references. The page links to the related prototype workspaces but does not submit, create or persist requests. Unknown age remains subject to under-18 protections; no direct private contact with minors is enabled.
 
-Open `discovery-request-smoke-tests.html` to run local fixture and rendering checks. These checks have not been represented as executed until run in a browser. They do not test authentication, authorization, tenant isolation, RLS, secure storage, audit integrity, evidence authenticity, age assurance, consent validity, safeguarding or legal compliance.
+Open `discovery-request-smoke-tests.html` to run the browser smoke and pure review-engine regression checks. On 2026-11-12, the hosted browser run passed 32/32 assertions and all three cases were manually inspected. See `verification/discovery-request-browser-verification-2026-11-12.md` for the exact record and limitations. These are synthetic prototype checks only; they do not test authentication, authorization, tenant isolation, RLS, secure storage, audit integrity, evidence authenticity, age assurance, real consent validity, safeguarding effectiveness or legal compliance.
 
-No production implementation gate is lifted. Do not enter real personal information or use this prototype to collect consent or manage real requests.
+The UI now renders from `review-engine.js` (version 0.1.0), a UI-independent synthetic evaluator with twelve gates and stable reason codes. A result can reach only `READY_FOR_SEPARATE_HUMAN_REVIEW`; the prototype always returns `disclosurePermitted: false`.
+
+The draft backend gate contract is in `REVIEW-ENGINE-CONTRACT.md`, with input and result JSON Schemas under `contracts/`. It is not ratified and is not backend implementation. No production implementation gate is lifted. Do not enter real personal information or use this prototype to collect consent or manage real requests.
