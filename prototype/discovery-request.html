@@ -38,14 +38,23 @@
  const gate=(name,status,detail)=>({name,status,detail});
  function evaluate(r){
    const c=consent(r.consentCaseId),o=org(r.organizationId),p=opp(r.opportunityId),inv=invitation(r.invitationCaseId);
+   const player= r.passportRef ? Object.values(window.SCOUTSA_DEMO_PLAYERS).find(x=>x.id===r.passportRef) : null;
+   const m=r.membershipId ? window.SCOUTSA_DEMO_MEMBERSHIPS.memberships.find(x=>x.id===r.membershipId) : null;
+   const academy=window.SCOUTSA_ACADEMY_WORKSPACE_DEMO;
+   const authority=academy&&academy.organization.id===r.organizationId?academy.organization.authority:"Not established";
+   const consentLinked=!!c&&c.playerRef===r.playerRef;
+   const membershipLinked=!!m&&m.organizationId===r.organizationId&&m.player.includes(r.playerId.slice(-3));
+   const consentForPurpose=consentLinked&&c.purposes.some(x=>x.name===r.purpose&&x.state==="Given");
    return [
-    gate("Passport reference",r.passportRef?"Linked synthetic record":"Missing","A linked sample Passport is not independently verified."),
+    gate("Player Passport reference",player?"Linked synthetic Passport":"Missing or unresolved",player?"Fixture record "+player.id+"; its claims remain unverified.":"No matching Passport fixture is linked to this request."),
     gate("Age and safe request route",r.ageState.includes("Under 18")||r.ageState.includes("Unknown")?"Under-18 safeguards required":"Adult status unverified",r.requestOrigin),
-    gate("Purpose-specific consent",c&&c.purposes.some(x=>x.name===r.purpose&&x.state==="Given")?"Not satisfied":"Blocked",c?c.consentState+"; "+c.guardianState+"; player voice: "+c.playerVoice:"No consent record"),
-    gate("Organization identity and authority",o&&o.identityStatus==="Verified"?"Verified":"Unverified",o?o.name+" — "+o.identityStatus:"No organization record"),
-    gate("Specific opportunity and source",p&&p.verification==="Verified"?"Verified":"Not verified",p?p.title+" — "+p.source:"No opportunity record"),
+    gate("Purpose-specific consent",consentForPurpose?"Recorded for exact purpose":"Blocked",consentLinked?(c.consentState+"; guardian authority: "+c.guardianState+"; player voice: "+c.playerVoice):"Consent case does not match the request's player reference."),
+    gate("Organization identity",o&&o.identityStatus==="Verified"?"Verified":"Unverified",o?o.name+" — "+o.identityStatus:"No organization record"),
+    gate("Representative authority","Not established",authority),
+    gate("Membership linkage",membershipLinked?"Linked claim; still unverified":"Missing or mismatched",m?m.player+" / "+m.organizationId+" / "+m.verification:"No matching membership claim supplied."),
+    gate("Specific opportunity and source",p&&p.verification==="Verified"?"Verified":"Not verified",p?p.title+" — "+p.source+"; "+p.eligibility:"No opportunity record"),
     gate("Eligibility and safeguarding",inv&&inv.workflowState==="READY"?"Reviewed":"Blocked",inv?inv.workflowState:"No completed safeguarding review"),
-    gate("Disclosure scope", "No disclosure permitted",r.requestedDisclosure)
+    gate("Disclosure scope","No disclosure permitted",r.requestedDisclosure)
    ];
  }
  function render(r){
