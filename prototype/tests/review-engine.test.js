@@ -241,6 +241,32 @@ test("safeguarding passing does not verify opportunity source", () => {
   assert.equal(gate(result, "opportunity_source").state, "FAIL");
   assert.equal(gate(result, "safeguarding_review").state, "PASS");
 });
+test("revoked consent is rejected when the request is re-evaluated", () => {
+  const context = validContext();
+  const first = evaluate(validRequest(), context);
+  assert.equal(gate(first, "purpose_consent").state, "PASS");
+  context.consentCases[0].lifecycleStatus = "REVOKED";
+  const second = evaluate(validRequest(), context);
+  assert.equal(gate(second, "purpose_consent").state, "FAIL");
+  assert.ok(second.reasonCodes.includes("LIFECYCLE_NOT_ACTIVE"));
+});
+test("a free-text purpose label without its controlled purpose code is insufficient", () => {
+  const context = validContext();
+  delete context.consentCases[0].purposes[0].purposeCode;
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "purpose_consent").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("CONSENT_PURPOSE_NOT_GIVEN"));
+});
+test("representative authority revoked mid-review blocks the next evaluation", () => {
+  const context = validContext();
+  const first = evaluate(validRequest(), context);
+  assert.equal(first.disposition, "READY_FOR_SEPARATE_HUMAN_REVIEW");
+  context.representativeAuthorities[0].lifecycleStatus = "REVOKED";
+  const second = evaluate(validRequest(), context);
+  assert.equal(second.disposition, "HOLD");
+  assert.equal(gate(second, "purpose_consent").state, "SKIPPED");
+  assert.ok(second.reasonCodes.includes("LIFECYCLE_NOT_ACTIVE"));
+});
 test("a missing or invalid evaluation time is rejected, never inferred", () => {
   assert.throws(() => engine.evaluateRequest(validRequest(), validContext()), /deterministic evaluation time/);
   assert.throws(() => evaluate(validRequest(), validContext(), "not-a-date"), /deterministic evaluation time/);
