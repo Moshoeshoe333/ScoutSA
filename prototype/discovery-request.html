@@ -45,7 +45,7 @@
      memberships:window.SCOUTSA_DEMO_MEMBERSHIPS.memberships.map(x=>({id:x.id,playerId:x.playerId,organizationId:x.organizationId,status:x.status,verification:x.verification,lifecycleStatus:x.lifecycleStatus,expiresAt:x.expiresAt})),
      representativeAuthorities:[{organizationId:workspace.id,representativeId:workspace.representativeId,authority:workspace.authority,scope:workspace.scope,lifecycleStatus:workspace.lifecycleStatus,expiresAt:workspace.expiresAt}],
      opportunities:window.SCOUTSA_DEMO_OPPORTUNITIES.records.map(x=>({id:x.id,organizationId:x.organizationId,verification:x.verification,eligibility:x.eligibility,safeguarding:x.safeguarding,lifecycleStatus:x.lifecycleStatus,expiresAt:x.expiresAt})),
-     invitationCases:window.SCOUTSA_INVITATION_WORKFLOW.cases.map(x=>({id:x.id,workflowState:x.workflowState})),
+     invitationCases:window.SCOUTSA_INVITATION_WORKFLOW.cases.map(x=>({id:x.id,opportunityId:x.opportunityId,workflowState:x.workflowState,secondReviewStatus:x.secondReviewStatus})),
      now:new Date().toISOString()
    });
  }
