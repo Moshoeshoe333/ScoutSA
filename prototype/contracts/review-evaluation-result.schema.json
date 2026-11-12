@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:scoutsa:review-evaluation-result:1.0.0",
+  "title": "ScoutSA Review Evaluation Result",
+  "description": "A non-authorizing evaluation result. Disclosure is always false in this contract.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractVersion",
+    "policyVersion",
+    "requestId",
+    "evaluatedAt",
+    "disposition",
+    "allBlockingGatesSatisfied",
+    "disclosurePermitted",
+    "reasonCodes",
+    "gates"
+  ],
+  "properties": {
+    "contractVersion": {
+      "const": "1.0.0"
+    },
+    "policyVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requestId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "evaluatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "disposition": {
+      "enum": [
+        "HOLD",
+        "READY_FOR_SEPARATE_HUMAN_REVIEW"
+      ]
+    },
+    "allBlockingGatesSatisfied": {
+      "type": "boolean"
+    },
+    "disclosurePermitted": {
+      "const": false
+    },
+    "reasonCodes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/reasonCode"
+      }
+    },
+    "gates": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {
+        "$ref": "#/$defs/gate"
+      }
+    }
+  },
+  "$defs": {
+    "reasonCode": {
+      "enum": [
+        "PASSPORT_MISSING_OR_MISMATCHED",
+        "SAFE_GUARDIAN_ROUTE_MISSING",
+        "AGE_STATUS_UNVERIFIED",
+        "CONSENT_PLAYER_MISMATCH",
+        "CONSENT_NOT_GIVEN",
+        "CONSENT_PURPOSE_NOT_GIVEN",
+        "CONSENT_RECIPIENT_MISMATCH",
+        "CONSENT_AUTHORITY_REQUIREMENTS_NOT_MET",
+        "GUARDIAN_AUTHORITY_NOT_ESTABLISHED",
+        "PLAYER_VOICE_NOT_RECORDED",
+        "ORGANIZATION_IDENTITY_UNVERIFIED",
+        "REPRESENTATIVE_AUTHORITY_UNVERIFIED",
+        "MEMBERSHIP_NOT_FOUND",
+        "MEMBERSHIP_LINK_MISMATCH",
+        "MEMBERSHIP_NOT_VERIFIED",
+        "OPPORTUNITY_NOT_FOUND",
+        "OPPORTUNITY_ORGANIZATION_MISMATCH",
+        "OPPORTUNITY_SOURCE_UNVERIFIED",
+        "ELIGIBILITY_NOT_VERIFIED",
+        "SAFEGUARDING_NOT_CLEARED",
+        "DISCLOSURE_NOT_IMPLEMENTED"
+      ]
+    },
+    "gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "satisfied",
+        "blocking",
+        "status",
+        "reasonCodes"
+      ],
+      "properties": {
+        "key": {
+          "enum": [
+            "passport_reference",
+            "age_safe_route",
+            "purpose_consent",
+            "guardian_authority",
+            "player_voice",
+            "organization_identity",
+            "representative_authority",
+            "membership_linkage",
+            "opportunity_source",
+            "opportunity_eligibility",
+            "safeguarding_review",
+            "disclosure_scope"
+          ]
+        },
+        "satisfied": {
+          "type": "boolean"
+        },
+        "blocking": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reasonCodes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/reasonCode"
+          }
+        }
+      }
+    }
+  }
+}
