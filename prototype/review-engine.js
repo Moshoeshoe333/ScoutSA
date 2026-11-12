@@ -26,7 +26,7 @@
     player_voice: { PASS:"Recorded", FAIL:"Blocked", SKIPPED:"Skipped — actor legitimacy" },
     purpose_consent: { PASS:"Recorded for exact purpose and recipient", FAIL:"Blocked", SKIPPED:"Skipped — actor legitimacy" },
     opportunity_source: { PASS:"Verified", FAIL:"Not verified" },
-    safeguarding_review: { PASS:"Reviewed", FAIL:"Blocked" },
+    safeguarding_review: { PASS:"Reviewed", FAIL:"Blocked", SKIPPED:"Skipped — source not verified" },
     disclosure_scope: { FAIL:"No disclosure permitted" }
   });
   const gate = (key, label, state, detail, reasonCode, blocking = true) => ({
@@ -257,20 +257,34 @@
         : opportunity.verification !== "Verified" ? "OPPORTUNITY_SOURCE_UNVERIFIED" : opportunityLife.code
     );
     const eligibilityOk = !!opportunity && opportunity.eligibility === "Verified";
+    const eligibilityState = !sourceOk ? "SKIPPED" : eligibilityOk ? "PASS" : "FAIL";
     const eligibilityGate = gate(
       "opportunity_eligibility", "Opportunity-specific eligibility",
-      eligibilityOk ? "PASS" : "FAIL",
-      opportunity ? opportunity.eligibility : "Not assessed",
-      eligibilityOk ? null : "ELIGIBILITY_NOT_VERIFIED"
+      eligibilityState,
+      !sourceOk ? "Skipped until the opportunity source and lifecycle are verified."
+        : opportunity ? opportunity.eligibility : "Not assessed",
+      eligibilityState === "FAIL" ? "ELIGIBILITY_NOT_VERIFIED" : null
     );
-    const safeguardingOk = !!opportunity && opportunity.safeguarding === "Reviewed"
-      && !!invitation && invitation.workflowState === "READY";
+    const invitationOpportunityMatches = !!invitation && invitation.opportunityId === r.opportunityId;
+    const invitationSecondReviewComplete = !!invitation && invitation.secondReviewStatus === "COMPLETE";
+    const safeguardingOk = sourceOk && !!opportunity && opportunity.safeguarding === "Reviewed"
+      && invitationOpportunityMatches
+      && invitation.workflowState === "READY"
+      && invitationSecondReviewComplete;
+    const safeguardingState = !sourceOk ? "SKIPPED" : safeguardingOk ? "PASS" : "FAIL";
+    const safeguardingReason = !sourceOk ? null
+      : !invitationOpportunityMatches ? "INVITATION_OPPORTUNITY_MISMATCH"
+      : !invitationSecondReviewComplete ? "INVITATION_SECOND_REVIEW_INCOMPLETE"
+      : safeguardingOk ? null : "SAFEGUARDING_NOT_CLEARED";
     const safeguardingGate = gate(
       "safeguarding_review", "Safeguarding review",
-      safeguardingOk ? "PASS" : "FAIL",
-      safeguardingOk ? "Separate safeguarding and invitation review conditions are satisfied."
+      safeguardingState,
+      !sourceOk ? "Skipped until the opportunity source and lifecycle are verified."
+        : !invitationOpportunityMatches ? "Invitation review is not bound to this exact opportunity."
+        : !invitationSecondReviewComplete ? "Independent second review is incomplete."
+        : safeguardingOk ? "Safeguarding and opportunity-bound second review are complete."
         : "Safeguarding and/or invitation review remains unresolved.",
-      safeguardingOk ? null : "SAFEGUARDING_NOT_CLEARED"
+      safeguardingReason
     );
 
     const disclosureGate = gate(
