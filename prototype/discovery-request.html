@@ -44,17 +44,26 @@
    const authority=academy&&academy.organization.id===r.organizationId?academy.organization.authority:"Not established";
    const consentLinked=!!c&&c.playerRef===r.playerRef;
    const requestedPurpose=c?c.purposes.find(x=>x.name===r.purpose):null;
+   const requiresGuardian=r.ageState.includes("Under 18")||r.ageState.includes("Unknown");
+   const adultVerified=r.ageState==="Adult — verified";
+   const guardianAuthorityValid=requiresGuardian?!!c&&c.guardianState==="Established":adultVerified;
+   const playerVoiceValid=requiresGuardian?!!c&&c.playerVoice==="Assent recorded":adultVerified&&!!c&&c.playerVoice==="Consent recorded";
    const membershipLinked=!!m&&m.playerId===r.playerId&&m.organizationId===r.organizationId;
-   const consentForPurpose=consentLinked&&c.consentState==="Given"&&!!requestedPurpose&&requestedPurpose.state==="Given"&&requestedPurpose.recipientOrganizationId===r.organizationId;
+   const consentForPurpose=consentLinked&&c.consentState==="Given"&&!!requestedPurpose&&requestedPurpose.state==="Given"&&requestedPurpose.recipientOrganizationId===r.organizationId&&guardianAuthorityValid&&playerVoiceValid;
+   const eligibilityStatus=p?p.eligibility:"Not assessed";
+   const safeguardingReviewed=!!p&&p.safeguarding==="Reviewed"&&!!inv&&inv.workflowState==="READY";
    return [
     gate("Player Passport reference",player?"Linked synthetic Passport":"Missing or unresolved",player?"Fixture record "+player.id+"; its claims remain unverified.":"No matching Passport fixture is linked to this request."),
     gate("Age and safe request route",r.ageState.includes("Under 18")||r.ageState.includes("Unknown")?"Under-18 safeguards required":"Adult status unverified",r.requestOrigin),
-    gate("Purpose-specific consent",consentForPurpose?"Recorded for exact purpose and recipient":"Blocked",consentLinked?(c.consentState+"; purpose: "+(requestedPurpose?requestedPurpose.state:"Not recorded")+"; recipient: "+(requestedPurpose&&requestedPurpose.recipientOrganizationId?requestedPurpose.recipientOrganizationId:"Not bound")+"; guardian authority: "+c.guardianState+"; player voice: "+c.playerVoice):"Consent case does not match the request's player reference."),
+    gate("Purpose-specific consent",consentForPurpose?"Recorded for exact purpose and recipient":"Blocked",consentLinked?(c.consentState+"; purpose: "+(requestedPurpose?requestedPurpose.state:"Not recorded")+"; recipient: "+(requestedPurpose&&requestedPurpose.recipientOrganizationId?requestedPurpose.recipientOrganizationId:"Not bound")):"Consent case does not match the request's player reference."),
+    gate("Guardian authority",guardianAuthorityValid?(requiresGuardian?"Established":"Not required — adult verified"):(requiresGuardian?"Blocked":"Adult status not verified"),c?c.guardianState:"No consent case linked"),
+    gate("Player voice / assent",playerVoiceValid?"Recorded":"Blocked",c?c.playerVoice:"No consent case linked"),
     gate("Organization identity",o&&o.identityStatus==="Verified"?"Verified":"Unverified",o?o.name+" — "+o.identityStatus:"No organization record"),
     gate("Representative authority",authority,"Organization authority record: "+authority),
     gate("Membership linkage",membershipLinked?"Linked claim; still unverified":"Missing or mismatched",m?m.player+" / "+m.organizationId+" / "+m.verification:"No matching membership claim supplied."),
-    gate("Specific opportunity and source",p&&p.verification==="Verified"?"Verified":"Not verified",p?p.title+" — "+p.source+"; "+p.eligibility:"No opportunity record"),
-    gate("Eligibility and safeguarding",inv&&inv.workflowState==="READY"?"Reviewed":"Blocked",inv?inv.workflowState:"No completed safeguarding review"),
+    gate("Specific opportunity and source",p&&p.verification==="Verified"?"Verified":"Not verified",p?p.title+" — "+p.source:"No opportunity record"),
+    gate("Opportunity-specific eligibility",eligibilityStatus,eligibilityStatus),
+    gate("Safeguarding review",safeguardingReviewed?"Reviewed":"Blocked",p?("Opportunity safeguarding: "+p.safeguarding+"; invitation workflow: "+(inv?inv.workflowState:"No invitation review")):"No opportunity record"),
     gate("Disclosure scope","No disclosure permitted",r.requestedDisclosure)
    ];
  }
