@@ -15,7 +15,6 @@
   });
   const BLOCKED_GUARDIAN_DECISIONS = new Set(["OBJECTION", "OBJECTED", "REVOKED", "WITHDRAWN"]);
   const array = value => Array.isArray(value) ? value : [];
-  const find = (items, predicate) => array(items).find(predicate) || null;
   const uniqueLookup = (items, predicate) => {
     const matches = array(items).filter(predicate);
     return { record: matches.length === 1 ? matches[0] : null, duplicate: matches.length > 1 };
@@ -50,7 +49,6 @@
     if (now >= expiry) return { ok: false, code: "LIFECYCLE_EXPIRED" };
     return { ok: true, code: null };
   };
-  const first = (...values) => values.find(value => value !== undefined && value !== null);
 
   function evaluateRequest(request, context = {}, options = {}) {
     const r = request || {};
