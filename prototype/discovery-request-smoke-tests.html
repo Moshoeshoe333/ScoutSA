@@ -19,6 +19,17 @@ runButton.addEventListener("click",()=>{
  const findGate=(name)=>Array.from(d.querySelectorAll(".gate")).find(x=>x.querySelector("strong")?.textContent===name);
  const gateStatus=(name)=>findGate(name)?.querySelector("span")?.textContent||"";
  const clickRequest=(id)=>d.querySelector('button[data-id="'+id+'"]').click();
+ const engineContext=()=>({
+   players:Object.values(w.SCOUTSA_DEMO_PLAYERS),
+   consentCases:w.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases,
+   organizations:w.SCOUTSA_DEMO_MEMBERSHIPS.organizations,
+   memberships:w.SCOUTSA_DEMO_MEMBERSHIPS.memberships,
+   representativeAuthorities:[w.SCOUTSA_ACADEMY_WORKSPACE_DEMO.organization],
+   opportunities:w.SCOUTSA_DEMO_OPPORTUNITIES.records,
+   invitationCases:w.SCOUTSA_INVITATION_WORKFLOW.cases
+ });
+ const engineEval=(id,context=engineContext())=>w.SCOUTSA_REVIEW_ENGINE.evaluateRequest(w.SCOUTSA_DISCOVERY_REQUESTS.records.find(x=>x.id===id),context);
+ const gateByKey=(result,key)=>result.gates.find(g=>g.key===key);
  const checks=[
  ["Three synthetic request cases exist",()=>w.SCOUTSA_DISCOVERY_REQUESTS.records.length===3],
  ["Request page and fixture load in iframe",()=>!!d.getElementById("requestList")&&!!w.SCOUTSA_DISCOVERY_REQUESTS],
@@ -41,6 +52,18 @@ runButton.addEventListener("click",()=>{
  ["No request submission or contact control is rendered",()=>!d.querySelector("form")&&!d.querySelector("input,textarea")&&!Array.from(d.querySelectorAll("button")).some(b=>/submit|send|contact|invite/i.test(b.textContent))],
  ["Request boundary language is present",()=>d.body.innerText.includes("not an invitation")],
  ["No production security or persistence claim is made",()=>w.SCOUTSA_DISCOVERY_REQUESTS.limits.some(x=>x.includes("No authentication"))]
+ ["Pure review engine loads and exposes version",()=>!!w.SCOUTSA_REVIEW_ENGINE&&w.SCOUTSA_REVIEW_ENGINE.version==="0.1.0"],
+ ["Engine returns HOLD for all three synthetic cases",()=>w.SCOUTSA_DISCOVERY_REQUESTS.records.every(r=>w.SCOUTSA_REVIEW_ENGINE.evaluateRequest(r,engineContext()).disposition==="HOLD")],
+ ["Engine returns twelve uniquely keyed gates",()=>{const x=engineEval("REQ-DEMO-001");return x.gates.length===12&&new Set(x.gates.map(g=>g.key)).size===12}],
+ ["Engine reports missing Passport and exact membership mismatch reason codes",()=>{const x=engineEval("REQ-DEMO-003");return x.reasonCodes.includes("PASSPORT_MISSING_OR_MISMATCHED")&&x.reasonCodes.includes("MEMBERSHIP_LINK_MISMATCH")}],
+ ["Engine rejects a membership with the wrong stable player ID",()=>{const c=engineContext();const m=c.memberships.find(x=>x.id==="MEM-DEMO-002");m.playerId="UNRELATED-PLAYER-003";const x=engineEval("REQ-DEMO-003",c);return gateByKey(x,"membership_linkage").reasonCodes.includes("MEMBERSHIP_LINK_MISMATCH")}],
+ ["Engine rejects consent for a different recipient organization",()=>{const c=engineContext();const g=c.consentCases.find(x=>x.id==="GCS-DEMO-003");g.consentState="Given";const p=g.purposes.find(x=>x.name==="Share selected football evidence with a named academy");p.state="Given";p.recipientOrganizationId="ORG-DEMO-01";const x=engineEval("REQ-DEMO-003",c);return gateByKey(x,"purpose_consent").reasonCodes.includes("CONSENT_RECIPIENT_MISMATCH")}],
+ ["Engine rejects a purpose grant without overall consent",()=>{const c=engineContext();const g=c.consentCases.find(x=>x.id==="GCS-DEMO-003");g.consentState="Not given";const p=g.purposes.find(x=>x.name==="Share selected football evidence with a named academy");p.state="Given";p.recipientOrganizationId="ORG-DEMO-02";const x=engineEval("REQ-DEMO-003",c);return gateByKey(x,"purpose_consent").reasonCodes.includes("CONSENT_NOT_GIVEN")}],
+ ["Engine requires guardian authority and player assent for minors",()=>{const c=engineContext();const g=c.consentCases.find(x=>x.id==="GCS-DEMO-001");g.consentState="Given";g.guardianState="Authority not established";g.playerVoice="Assent recorded";const p=g.purposes.find(x=>x.name==="Respond to a specific opportunity request");p.state="Given";p.recipientOrganizationId="ORG-DEMO-01";const x=engineEval("REQ-DEMO-001",c);return gateByKey(x,"guardian_authority").satisfied===false&&gateByKey(x,"purpose_consent").satisfied===false&&x.disposition==="HOLD"}],
+ ["Engine keeps organization identity and representative authority independent",()=>{const c=engineContext();c.organizations.find(x=>x.id==="ORG-DEMO-01").identityStatus="Verified";const x=engineEval("REQ-DEMO-001",c);return gateByKey(x,"organization_identity").satisfied===true&&gateByKey(x,"representative_authority").satisfied===false}],
+ ["Engine keeps opportunity eligibility separate from safeguarding",()=>{const c=engineContext();c.opportunities.find(x=>x.id==="OPP-DEMO-001").eligibility="Verified";const x=engineEval("REQ-DEMO-001",c);return gateByKey(x,"opportunity_eligibility").satisfied===true&&gateByKey(x,"safeguarding_review").satisfied===false}],
+ ["Even a fully satisfied synthetic review never permits disclosure",()=>{const c=engineContext();const r=JSON.parse(JSON.stringify(w.SCOUTSA_DISCOVERY_REQUESTS.records.find(x=>x.id==="REQ-DEMO-001")));r.ageState="Adult — verified";r.requestOrigin="Adult self-directed";const g=c.consentCases.find(x=>x.id==="GCS-DEMO-001");g.consentState="Given";g.playerVoice="Consent recorded";const p=g.purposes.find(x=>x.name===r.purpose);p.state="Given";p.recipientOrganizationId=r.organizationId;c.organizations.find(x=>x.id===r.organizationId).identityStatus="Verified";c.representativeAuthorities[0].authority="Verified";const m=c.memberships.find(x=>x.id===r.membershipId);m.status="Active";m.verification="Verified";const o=c.opportunities.find(x=>x.id===r.opportunityId);o.verification="Verified";o.eligibility="Verified";o.safeguarding="Reviewed";c.invitationCases.find(x=>x.id===r.invitationCaseId).workflowState="READY";const x=w.SCOUTSA_REVIEW_ENGINE.evaluateRequest(r,c);return x.disposition==="READY_FOR_SEPARATE_HUMAN_REVIEW"&&x.disclosurePermitted===false&&gateByKey(x,"disclosure_scope").status==="No disclosure permitted"}],
+
  ];];
  const results=document.getElementById("results");results.innerHTML="";let passed=0;
  checks.forEach(([label,fn])=>{let ok=false;try{ok=!!fn()}catch(e){}if(ok)passed++;const li=document.createElement("li");li.className=ok?"pass":"fail";li.textContent=(ok?"PASS — ":"FAIL — ")+label;results.appendChild(li)});
