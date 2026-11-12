@@ -1,0 +1,35 @@
+name: ScoutSA prototype policy tests
+
+on:
+  push:
+    branches:
+      - prototype/internal-demo
+    paths:
+      - "prototype/review-engine.js"
+      - "prototype/tests/**"
+      - "prototype/data/**"
+      - ".github/workflows/prototype-policy-tests.yml"
+  pull_request:
+    paths:
+      - "prototype/review-engine.js"
+      - "prototype/tests/**"
+      - "prototype/data/**"
+      - ".github/workflows/prototype-policy-tests.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  policy-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run headless policy tests
+        run: node --test prototype/tests/review-engine.test.js
