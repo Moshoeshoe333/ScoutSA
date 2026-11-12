@@ -15,6 +15,9 @@ check('Assertions and evidence are shown separately',doc.querySelector('#claimsL
 check('Unverified assertion state is explicit',doc.querySelector('#claimsList').textContent.includes('Unverified'));
 doc.querySelector('[data-tab="membership"]').click();
 check('Membership history is displayed',doc.querySelector('#membershipList .record')!==null);
+check('Synthetic activity timeline renders',doc.querySelector('#timelineList .record')!==null);
+doc.querySelector('[data-tab="timeline"]').click();
+check('Timeline is explicitly not an audit log',doc.querySelector('#timeline').textContent.includes('not an audit log'));
 doc.querySelector('[data-tab="readiness"]').click();
 check('Football readiness is separate from opportunity readiness',doc.querySelector('.two-readiness').children.length===2);
 check('Opportunity readiness is not automatically scored',doc.querySelector('#opportunityReadiness').textContent==='Not assessed');
