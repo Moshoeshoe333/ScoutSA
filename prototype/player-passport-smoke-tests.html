@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ScoutSA Passport smoke tests</title>
+<style>body{font:15px/1.5 system-ui,sans-serif;background:#f4f6f8;color:#172334;padding:24px}button{background:#137d5a;color:white;border:0;border-radius:8px;padding:10px 14px;font-weight:700}#summary{padding:12px;background:white;border:1px solid #dce3ea;border-radius:8px;margin:14px 0}ul{padding:0;list-style:none;display:grid;gap:8px}li{padding:10px;background:white;border:1px solid #dce3ea;border-radius:8px}.pass{border-left:4px solid #16865e}.fail{border-left:4px solid #bd3d3d}iframe{width:100%;height:650px;border:1px solid #dce3ea;border-radius:10px}</style></head>
+<body><h1>Player Passport smoke tests</h1><p>Local interface checks against fictional sample records. This does not test authorization, privacy, legal compliance or a backend.</p><button id="run">Run smoke tests</button><div id="summary">Waiting to run.</div><ul id="results"></ul><iframe id="app" title="Player Passport under test" src="./player-passport.html"></iframe>
+<script>
+const frame=document.querySelector('#app'),summary=document.querySelector('#summary'),results=document.querySelector('#results');
+function run(){results.replaceChildren();let pass=0,fail=0;const doc=frame.contentDocument;function check(name,ok){const li=document.createElement('li');li.className=ok?'pass':'fail';li.textContent=(ok?'PASS — ':'FAIL — ')+name;results.append(li);ok?pass++:fail++}
+try{
+check('Internal demo warning is visible',doc.querySelector('.demo')?.textContent.includes('FICTIONAL DATA'));
+check('Initial sample passport loads',doc.querySelector('#playerName')?.textContent==='Kabelo Mokoena');
+check('Demo reference is not presented as an issued Scout ID',doc.querySelector('#demoId')?.textContent.startsWith('DEMO-'));
+check('Football profile fields render',doc.querySelectorAll('#profileFields .field').length>=5);
+doc.querySelector('[data-tab="claims"]').click();
+check('Assertions and evidence are shown separately',doc.querySelector('#claimsList').textContent.includes('Supporting evidence'));
+check('Unverified assertion state is explicit',doc.querySelector('#claimsList').textContent.includes('Unverified'));
+doc.querySelector('[data-tab="membership"]').click();
+check('Membership history is displayed',doc.querySelector('#membershipList .record')!==null);
+doc.querySelector('[data-tab="readiness"]').click();
+check('Football readiness is separate from opportunity readiness',doc.querySelector('.two-readiness').children.length===2);
+check('Opportunity readiness is not automatically scored',doc.querySelector('#opportunityReadiness').textContent==='Not assessed');
+doc.querySelector('#playerSelect').value='p2';doc.querySelector('#playerSelect').dispatchEvent(new Event('change',{bubbles:true}));
+check('Changing sample player updates the passport',doc.querySelector('#playerName').textContent==='Lerato Nkosi');
+check('Second player keeps verification explicitly unverified',doc.querySelector('#verificationTitle').textContent==='No verification record supplied');
+}catch(e){check('Test runner completed without an exception: '+e.message,false)}
+summary.textContent=pass+' passed · '+fail+' failed';summary.style.borderColor=fail?'#bd3d3d':'#16865e'}
+document.querySelector('#run').addEventListener('click',()=>{if(frame.contentDocument?.readyState==='complete')run();else frame.addEventListener('load',run,{once:true})});
+</script></body></html>
