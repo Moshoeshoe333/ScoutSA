@@ -82,3 +82,35 @@ The three cases were manually selected on the updated commit. All remained `HOLD
 The current synthetic browser workflow and its adversarial regression checks now pass. The next bounded engineering step is to extract the review logic into a pure, UI-independent module and run the same cases against that module. This is acceptance of the current **prototype logic checks only**—not production readiness, security validation, legal compliance, or pilot authorization.
 
 The original evidence limitations remain: the hosted runner did not expose browser name/version, and a fixed screenshot image was not exported into the repository. The session link is the available interactive evidence.
+
+
+## Pure review-engine extraction and browser verification
+
+**Engine:** `prototype/review-engine.js`  
+**Engine version:** `0.1.0`  
+**UI integration:** `prototype/discovery-request.html` now calls the engine and renders its returned gates.  
+**Tested commit:** `7580f4b5eca05747494bfecf5bab08dea75833ae`  
+**Browser session:** https://hangar.firecrawl.dev/live#br_bf36be73a2a24904b4eaffcb860c294c.g_d3042b597443447696795632a8f3da30.-rM02ivM8bqqGyCDId1SeIoYKzYY9XJgoVQZzzRo_Kk
+
+The evaluator is UI-independent and receives a request plus explicit fixture context. It does not access the DOM, storage, network, authentication, authorization, or disclosure systems. It returns twelve uniquely keyed gates, stable reason codes, a review disposition, and an explicit `disclosurePermitted: false`.
+
+**Browser result: 32 / 32 checks passed (0 failures).**
+
+The 32 checks include the 21 UI/regression checks and 11 pure-engine checks:
+- Engine loads and exposes version 0.1.0.
+- All three synthetic cases evaluate to HOLD.
+- Twelve unique gate keys are returned.
+- Missing Passport and membership mismatch produce reason codes.
+- Stable player ID mismatches are rejected.
+- Wrong-recipient consent and missing overall consent are rejected.
+- Guardian authority and player assent are both required for minors.
+- Organization identity and representative authority remain independent.
+- Opportunity eligibility and safeguarding remain independent.
+- A fully satisfied synthetic review reaches only `READY_FOR_SEPARATE_HUMAN_REVIEW`; disclosure remains prohibited.
+
+The three UI cases were also manually selected after engine integration:
+- **REQ-DEMO-001:** HOLD; linked synthetic Passport; guardian-mediated route present; consent, guardian authority and player assent blocked; organization and representative authority unverified; membership linked but unverified; source unverified; eligibility not assessed; safeguarding blocked; no disclosure.
+- **REQ-DEMO-002:** HOLD; linked synthetic Passport; guardian-mediated route not established; consent, guardian authority and player assent blocked; organization and representative authority unverified; membership missing/mismatched; source unverified; eligibility not assessed; safeguarding blocked; no disclosure.
+- **REQ-DEMO-003:** HOLD; Passport missing/unresolved; adult status unverified; consent blocked; guardian authority blocked pending adult verification; player voice blocked; organization and representative authority unverified; membership missing/mismatched; source unverified; eligibility not assessed; safeguarding blocked; no disclosure.
+
+**Updated disposition:** The UI and pure-engine synthetic checks pass. The next bounded step is to define a versioned backend gate contract and state-transition rules. This does not authorize backend implementation, real identity processing, RLS, deployment, pilot use, or disclosure.
