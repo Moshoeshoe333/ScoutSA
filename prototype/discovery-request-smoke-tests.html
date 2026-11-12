@@ -13,9 +13,6 @@ runButton.addEventListener("click",()=>{
  const findGate=(name)=>Array.from(d.querySelectorAll(".gate")).find(x=>x.querySelector("strong")?.textContent===name);
  const gateStatus=(name)=>findGate(name)?.querySelector("span")?.textContent||"";
  const clickRequest=(id)=>d.querySelector('button[data-id="'+id+'"]').click();
- const f=document.querySelector("iframe");
- const w=f.contentWindow;
- const d=w.document;
  const findGate=(name)=>Array.from(d.querySelectorAll(".gate")).find(x=>x.querySelector("strong")?.textContent===name);
  const gateStatus=(name)=>findGate(name)?.querySelector("span")?.textContent||"";
  const clickRequest=(id)=>d.querySelector('button[data-id="'+id+'"]').click();
