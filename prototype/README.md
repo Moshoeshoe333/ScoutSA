@@ -89,3 +89,12 @@ Open `safeguarded-invitations.html` to inspect a fail-closed, read-only invitati
 The page has no player selection, contact, invitation, payment or mutation controls. Its readiness function is a local illustrative rule, not a production policy engine or evidence of real checks. FIFA licensing, safeguarding, consent, identity and legal requirements are not verified by this prototype.
 
 Open `safeguarded-invitations-smoke-tests.html` for local fixture/UI checks. These checks do not test age assurance, consent, safeguarding, identity, authorization, RLS, persistence, security or legal compliance.
+
+
+## Player–opportunity matching review prototype
+
+Open `player-opportunity-matching.html` to inspect a private, explainable triage register of fictional Player Passport and opportunity pairs. Six review dimensions are shown separately: opportunity requirements, football-profile evidence, geographic feasibility, availability, membership/authority, and safeguarding/eligibility. Missing information remains explicit; there is no composite score, ranking, shortlist recommendation, public exposure or invitation.
+
+The current fixture deliberately supports zero match decisions. Existing player position and area labels are synthetic and unverified; opportunity eligibility criteria, dates, age, availability, venue and safe transport are not established. Under-18 or unknown-age safeguards remain a hard stop. A potential position or geographic overlap is not proof of suitability.
+
+Open `player-opportunity-matching-smoke-tests.html` for local fixture/UI checks. They have not been represented as executed until run in a browser and do not validate ability, eligibility, identity, age, consent, safeguarding, privacy, authorization, RLS, persistence or legal compliance.
