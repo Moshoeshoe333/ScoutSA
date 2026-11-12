@@ -26,6 +26,7 @@
     player_voice: { PASS:"Recorded", FAIL:"Blocked", SKIPPED:"Skipped — actor legitimacy" },
     purpose_consent: { PASS:"Recorded for exact purpose and recipient", FAIL:"Blocked", SKIPPED:"Skipped — actor legitimacy" },
     opportunity_source: { PASS:"Verified", FAIL:"Not verified" },
+    opportunity_eligibility: { PASS:"Verified", FAIL:"Not assessed", SKIPPED:"Skipped — source not verified" },
     safeguarding_review: { PASS:"Reviewed", FAIL:"Blocked", SKIPPED:"Skipped — source not verified" },
     disclosure_scope: { FAIL:"No disclosure permitted" }
   });
