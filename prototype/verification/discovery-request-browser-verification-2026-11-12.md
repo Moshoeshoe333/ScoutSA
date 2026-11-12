@@ -136,10 +136,11 @@ This was a JSON parse and contract/engine consistency check, **not** a full JSON
 
 ## Review engine v0.2.0 — headless verification
 
-**Tested commit:** `03b055236e15238f27ae2236a93c3f69b1bb4702` (headless test suite; later UI/docs commits follow).  
+**Engine commit:** `31d9a2904d7f39f7c5dfedccebca87cac7b20fc2`.  
+**Test suite commit:** `43d9c667a45b3fc78c789873cf1dd5dc7d5e4190`.  
 **Node runtime:** v26.12.1 in an isolated Node execution environment.  
 **Command:** `node --test prototype/tests/review-engine.test.js`  
-**Result:** **27 / 27 passed**, 0 failed, approximately 50.37 ms test duration.
+**Result:** **30 / 30 passed**, 0 failed, approximately 54.20 ms test duration.
 
 Additional checks on the current branch state:
 - `prototype/discovery-request.html` inline JavaScript syntax: PASS.
@@ -163,3 +164,12 @@ A GitHub Actions workflow was added to run the headless suite on relevant branch
 - The browser adapter supplies minimal pseudonymous projections to the engine. This is not server-side enforcement or a PII security boundary.
 
 The membership trust-tier model and legal guardian-authority resolution remain explicit open decisions. They were not silently invented or implemented.
+
+
+## Final v0.2.0 precedence and invitation checks
+
+The headless suite was extended to cover exact player binding for guardian/assent records, opportunity-source precedence, invitation-to-opportunity linkage, independent second-review completion, free-text-only purpose rejection, and re-evaluation after authority/consent revocation.
+
+Final headless result: **30 / 30 passed**, approximately 54.20 ms. The current discovery page and smoke-test page inline scripts both passed syntax compilation. Both JSON schemas parsed successfully.
+
+The current browser-integrated smoke page remains unexecuted against v0.2.0 because unauthenticated browser access to this private repository returns 404. Do not describe the browser suite as passing on this version.
