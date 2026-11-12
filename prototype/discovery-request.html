@@ -43,14 +43,15 @@
    const academy=window.SCOUTSA_ACADEMY_WORKSPACE_DEMO;
    const authority=academy&&academy.organization.id===r.organizationId?academy.organization.authority:"Not established";
    const consentLinked=!!c&&c.playerRef===r.playerRef;
-   const membershipLinked=!!m&&m.organizationId===r.organizationId&&m.player.includes(r.playerId.slice(-3));
-   const consentForPurpose=consentLinked&&c.purposes.some(x=>x.name===r.purpose&&x.state==="Given");
+   const requestedPurpose=c?c.purposes.find(x=>x.name===r.purpose):null;
+   const membershipLinked=!!m&&m.playerId===r.playerId&&m.organizationId===r.organizationId;
+   const consentForPurpose=consentLinked&&c.consentState==="Given"&&!!requestedPurpose&&requestedPurpose.state==="Given"&&requestedPurpose.recipientOrganizationId===r.organizationId;
    return [
     gate("Player Passport reference",player?"Linked synthetic Passport":"Missing or unresolved",player?"Fixture record "+player.id+"; its claims remain unverified.":"No matching Passport fixture is linked to this request."),
     gate("Age and safe request route",r.ageState.includes("Under 18")||r.ageState.includes("Unknown")?"Under-18 safeguards required":"Adult status unverified",r.requestOrigin),
-    gate("Purpose-specific consent",consentForPurpose?"Recorded for exact purpose":"Blocked",consentLinked?(c.consentState+"; guardian authority: "+c.guardianState+"; player voice: "+c.playerVoice):"Consent case does not match the request's player reference."),
+    gate("Purpose-specific consent",consentForPurpose?"Recorded for exact purpose and recipient":"Blocked",consentLinked?(c.consentState+"; purpose: "+(requestedPurpose?requestedPurpose.state:"Not recorded")+"; recipient: "+(requestedPurpose&&requestedPurpose.recipientOrganizationId?requestedPurpose.recipientOrganizationId:"Not bound")+"; guardian authority: "+c.guardianState+"; player voice: "+c.playerVoice):"Consent case does not match the request's player reference."),
     gate("Organization identity",o&&o.identityStatus==="Verified"?"Verified":"Unverified",o?o.name+" — "+o.identityStatus:"No organization record"),
-    gate("Representative authority","Not established",authority),
+    gate("Representative authority",authority,"Organization authority record: "+authority),
     gate("Membership linkage",membershipLinked?"Linked claim; still unverified":"Missing or mismatched",m?m.player+" / "+m.organizationId+" / "+m.verification:"No matching membership claim supplied."),
     gate("Specific opportunity and source",p&&p.verification==="Verified"?"Verified":"Not verified",p?p.title+" — "+p.source+"; "+p.eligibility:"No opportunity record"),
     gate("Eligibility and safeguarding",inv&&inv.workflowState==="READY"?"Reviewed":"Blocked",inv?inv.workflowState:"No completed safeguarding review"),
