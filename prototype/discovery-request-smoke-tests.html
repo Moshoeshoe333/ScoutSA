@@ -13,6 +13,12 @@ runButton.addEventListener("click",()=>{
  const findGate=(name)=>Array.from(d.querySelectorAll(".gate")).find(x=>x.querySelector("strong")?.textContent===name);
  const gateStatus=(name)=>findGate(name)?.querySelector("span")?.textContent||"";
  const clickRequest=(id)=>d.querySelector('button[data-id="'+id+'"]').click();
+ const f=document.querySelector("iframe");
+ const w=f.contentWindow;
+ const d=w.document;
+ const findGate=(name)=>Array.from(d.querySelectorAll(".gate")).find(x=>x.querySelector("strong")?.textContent===name);
+ const gateStatus=(name)=>findGate(name)?.querySelector("span")?.textContent||"";
+ const clickRequest=(id)=>d.querySelector('button[data-id="'+id+'"]').click();
  const checks=[
  ["Three synthetic request cases exist",()=>w.SCOUTSA_DISCOVERY_REQUESTS.records.length===3],
  ["Request page and fixture load in iframe",()=>!!d.getElementById("requestList")&&!!w.SCOUTSA_DISCOVERY_REQUESTS],
@@ -25,12 +31,17 @@ runButton.addEventListener("click",()=>{
  ["Suffix collision cannot create a false membership link",()=>{const m=w.SCOUTSA_DEMO_MEMBERSHIPS.memberships.find(x=>x.id==="MEM-DEMO-002");const old=m.player;m.player="Unrelated player 003";clickRequest("REQ-DEMO-003");const ok=gateStatus("Membership linkage")==="Missing or mismatched";m.player=old;clickRequest("REQ-DEMO-003");return ok}],
  ["Consent for a different organization is blocked",()=>{const c=w.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases.find(x=>x.id==="GCS-DEMO-003");const p=c.purposes.find(x=>x.name==="Share selected football evidence with a named academy");const oldState=c.consentState,oldPurpose=p.state,oldRecipient=p.recipientOrganizationId;c.consentState="Given";p.state="Given";p.recipientOrganizationId="ORG-DEMO-01";clickRequest("REQ-DEMO-003");const ok=gateStatus("Purpose-specific consent")==="Blocked";c.consentState=oldState;p.state=oldPurpose;p.recipientOrganizationId=oldRecipient;clickRequest("REQ-DEMO-003");return ok}],
  ["Purpose grant without overall consent is blocked",()=>{const c=w.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases.find(x=>x.id==="GCS-DEMO-003");const p=c.purposes.find(x=>x.name==="Share selected football evidence with a named academy");const oldState=c.consentState,oldPurpose=p.state,oldRecipient=p.recipientOrganizationId;c.consentState="Not given";p.state="Given";p.recipientOrganizationId="ORG-DEMO-02";clickRequest("REQ-DEMO-003");const ok=gateStatus("Purpose-specific consent")==="Blocked";c.consentState=oldState;p.state=oldPurpose;p.recipientOrganizationId=oldRecipient;clickRequest("REQ-DEMO-003");return ok}],
+ ["Minor consent without guardian authority is blocked",()=>{const c=w.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases.find(x=>x.id==="GCS-DEMO-001");const p=c.purposes.find(x=>x.name==="Respond to a specific opportunity request");const old=[c.consentState,p.state,p.recipientOrganizationId];c.consentState="Given";p.state="Given";p.recipientOrganizationId="ORG-DEMO-01";clickRequest("REQ-DEMO-001");const ok=gateStatus("Purpose-specific consent")==="Blocked"&&gateStatus("Guardian authority")==="Blocked";[c.consentState,p.state,p.recipientOrganizationId]=old;clickRequest("REQ-DEMO-001");return ok}],
+ ["Minor consent without player assent is blocked",()=>{const c=w.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases.find(x=>x.id==="GCS-DEMO-001");const p=c.purposes.find(x=>x.name==="Respond to a specific opportunity request");const old=[c.consentState,c.guardianState,c.playerVoice,p.state,p.recipientOrganizationId];c.consentState="Given";c.guardianState="Established";c.playerVoice="Not recorded";p.state="Given";p.recipientOrganizationId="ORG-DEMO-01";clickRequest("REQ-DEMO-001");const ok=gateStatus("Purpose-specific consent")==="Blocked"&&gateStatus("Player voice / assent")==="Blocked";[c.consentState,c.guardianState,c.playerVoice,p.state,p.recipientOrganizationId]=old;clickRequest("REQ-DEMO-001");return ok}],
  ["Representative authority status responds to its own record",()=>{const a=w.SCOUTSA_ACADEMY_WORKSPACE_DEMO.organization;const old=a.authority;a.authority="Verified";clickRequest("REQ-DEMO-001");const ok=gateStatus("Representative authority")==="Verified";a.authority=old;clickRequest("REQ-DEMO-001");return ok}],
+ ["Eligibility and safeguarding are displayed as separate gates",()=>{clickRequest("REQ-DEMO-001");return gateStatus("Opportunity-specific eligibility")==="Not assessed"&&gateStatus("Safeguarding review")==="Blocked"}],
+ ["Eligibility verification cannot clear a safeguarding hold",()=>{const p=w.SCOUTSA_DEMO_OPPORTUNITIES.records.find(x=>x.id==="OPP-DEMO-001");const old=p.eligibility;p.eligibility="Verified";clickRequest("REQ-DEMO-001");const ok=gateStatus("Opportunity-specific eligibility")==="Verified"&&gateStatus("Safeguarding review")==="Blocked";p.eligibility=old;clickRequest("REQ-DEMO-001");return ok}],
+ ["Safeguarding review cannot imply opportunity eligibility",()=>{const p=w.SCOUTSA_DEMO_OPPORTUNITIES.records.find(x=>x.id==="OPP-DEMO-001");const inv=w.SCOUTSA_INVITATION_WORKFLOW.cases.find(x=>x.id==="INV-DEMO-001");const old=[p.safeguarding,inv.workflowState];p.safeguarding="Reviewed";inv.workflowState="READY";clickRequest("REQ-DEMO-001");const ok=gateStatus("Opportunity-specific eligibility")==="Not assessed"&&gateStatus("Safeguarding review")==="Reviewed";[p.safeguarding,inv.workflowState]=old;clickRequest("REQ-DEMO-001");return ok}],
  ["No sample opportunity is verified",()=>w.SCOUTSA_DEMO_OPPORTUNITIES.records.every(o=>o.verification!=="Verified")],
  ["No request submission or contact control is rendered",()=>!d.querySelector("form")&&!d.querySelector("input,textarea")&&!Array.from(d.querySelectorAll("button")).some(b=>/submit|send|contact|invite/i.test(b.textContent))],
  ["Request boundary language is present",()=>d.body.innerText.includes("not an invitation")],
  ["No production security or persistence claim is made",()=>w.SCOUTSA_DISCOVERY_REQUESTS.limits.some(x=>x.includes("No authentication"))]
- ];;
+ ];];
  const results=document.getElementById("results");results.innerHTML="";let passed=0;
  checks.forEach(([label,fn])=>{let ok=false;try{ok=!!fn()}catch(e){}if(ok)passed++;const li=document.createElement("li");li.className=ok?"pass":"fail";li.textContent=(ok?"PASS — ":"FAIL — ")+label;results.appendChild(li)});
  document.getElementById("summary").textContent=passed+" / "+checks.length+" checks passed in this browser session.";
