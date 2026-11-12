@@ -16,6 +16,10 @@
   const BLOCKED_GUARDIAN_DECISIONS = new Set(["OBJECTION", "OBJECTED", "REVOKED", "WITHDRAWN"]);
   const array = value => Array.isArray(value) ? value : [];
   const find = (items, predicate) => array(items).find(predicate) || null;
+  const uniqueLookup = (items, predicate) => {
+    const matches = array(items).filter(predicate);
+    return { record: matches.length === 1 ? matches[0] : null, duplicate: matches.length > 1 };
+  };
   const DISPLAY_STATUS = Object.freeze({
     organization_identity: { PASS:"Verified", FAIL:"Unverified" },
     representative_authority: { PASS:"Verified", FAIL:"Not established" },
@@ -63,15 +67,24 @@
     const opportunities = array(context.opportunities);
     const invitationCases = array(context.invitationCases);
 
-    const player = find(players, item => item && item.id === r.playerId);
-    const organization = find(organizations, item => item && item.id === r.organizationId);
+    const playerLookup = uniqueLookup(players, item => item && item.id === r.playerId);
+    const organizationLookup = uniqueLookup(organizations, item => item && item.id === r.organizationId);
+    const membershipLookup = uniqueLookup(memberships, item => item && item.id === r.membershipId);
+    const consentLookup = uniqueLookup(consentCases, item => item && item.id === r.consentCaseId);
+    const opportunityLookup = uniqueLookup(opportunities, item => item && item.id === r.opportunityId);
+    const invitationLookup = uniqueLookup(invitationCases, item => item && item.id === r.invitationCaseId);
     const organizationAuthorities = authorities.filter(item => item && item.organizationId === r.organizationId);
-    const authority = find(organizationAuthorities, item => item.representativeId === r.representativeId)
-      || organizationAuthorities[0] || null;
-    const membership = find(memberships, item => item && item.id === r.membershipId);
-    const consent = find(consentCases, item => item && item.id === r.consentCaseId);
-    const opportunity = find(opportunities, item => item && item.id === r.opportunityId);
-    const invitation = find(invitationCases, item => item && item.id === r.invitationCaseId);
+    const exactAuthorities = organizationAuthorities.filter(item => item.representativeId === r.representativeId);
+    const authorityLookup = exactAuthorities.length
+      ? uniqueLookup(exactAuthorities, () => true)
+      : uniqueLookup(organizationAuthorities, () => true);
+    const player = playerLookup.record;
+    const organization = organizationLookup.record;
+    const authority = authorityLookup.record;
+    const membership = membershipLookup.record;
+    const consent = consentLookup.record;
+    const opportunity = opportunityLookup.record;
+    const invitation = invitationLookup.record;
 
     // Tier 1: actor legitimacy. Tier 2 cannot evaluate consent until both pass.
     const orgLife = current(organization, now);
@@ -79,11 +92,13 @@
     const orgGate = gate(
       "organization_identity", "Organization identity",
       orgIdentityOk ? "PASS" : "FAIL",
-      !organization ? "Organization record not found."
+      organizationLookup.duplicate ? "Multiple organization records resolve to the same reference."
+        : !organization ? "Organization record not found."
         : organization.identityStatus !== "Verified" ? "Identity is not verified."
         : !orgLife.ok ? "Organization lifecycle check failed: " + orgLife.code
         : "Organization identity is verified and its lifecycle is current.",
-      !organization ? "ORGANIZATION_NOT_FOUND"
+      organizationLookup.duplicate ? "DUPLICATE_ORGANIZATION_REFERENCE"
+        : !organization ? "ORGANIZATION_NOT_FOUND"
         : organization.identityStatus !== "Verified" ? "ORGANIZATION_IDENTITY_UNVERIFIED" : orgLife.code
     );
 
@@ -97,14 +112,16 @@
     const authorityGate = gate(
       "representative_authority", "Representative authority",
       authorityOk ? "PASS" : "FAIL",
-      !authority ? "No authority grant exists for this exact organization and representative."
+      authorityLookup.duplicate ? "Multiple authority grants resolve to this organization and representative."
+        : !authority ? "No authority grant exists for this exact organization and representative."
         : authority.organizationId !== r.organizationId || authority.representativeId !== r.representativeId
           ? "Authority grant is not bound to the requested organization and representative."
         : authority.scope !== "DISCOVERY_REQUEST_REVIEW" ? "Authority grant does not cover this action."
         : authority.authority !== "Verified" ? "Representative authority is not verified."
         : !authorityLife.ok ? "Authority lifecycle check failed: " + authorityLife.code
         : "Representative authority is verified, current and scoped to this review.",
-      !authority ? "REPRESENTATIVE_AUTHORITY_NOT_FOUND"
+      authorityLookup.duplicate ? "DUPLICATE_REPRESENTATIVE_AUTHORITY"
+        : !authority ? "REPRESENTATIVE_AUTHORITY_NOT_FOUND"
         : authority.organizationId !== r.organizationId || authority.representativeId !== r.representativeId
           ? "REPRESENTATIVE_AUTHORITY_SCOPE_MISMATCH"
         : authority.scope !== "DISCOVERY_REQUEST_REVIEW" ? "REPRESENTATIVE_AUTHORITY_SCOPE_MISMATCH"
@@ -122,12 +139,14 @@
     const passportGate = gate(
       "passport_reference", "Active Player Passport",
       passportOk ? "PASS" : "FAIL",
-      !player ? "Player Passport record not found."
+      playerLookup.duplicate ? "Multiple Passport records resolve to this player reference."
+        : !player ? "Player Passport record not found."
         : !r.passportRef || r.passportRef !== player.id ? "Passport reference does not match the requested player."
         : player.recordStatus !== "ACTIVE" ? "Passport record is not active."
         : !passportLife.ok ? "Passport lifecycle check failed: " + passportLife.code
         : "Exact Passport reference resolves to an active synthetic record.",
-      !player ? "PASSPORT_NOT_FOUND"
+      playerLookup.duplicate ? "DUPLICATE_PASSPORT_REFERENCE"
+        : !player ? "PASSPORT_NOT_FOUND"
         : !r.passportRef || r.passportRef !== player.id ? "PASSPORT_REFERENCE_MISMATCH"
         : player.recordStatus !== "ACTIVE" ? "PASSPORT_NOT_ACTIVE" : passportLife.code
     );
@@ -144,13 +163,15 @@
     const membershipGate = gate(
       "membership_linkage", "Membership linkage",
       membershipOk ? "PASS" : "FAIL",
-      !membership ? "Membership claim not found."
+      membershipLookup.duplicate ? "Multiple membership records resolve to this claim reference."
+        : !membership ? "Membership claim not found."
         : !membershipPairMatches ? "Membership does not bind this exact player and organization."
         : membership.status !== "Active" || membership.verification !== "Verified"
           ? "Membership is not both active and independently verified."
         : !membershipLife.ok ? "Membership lifecycle check failed: " + membershipLife.code
         : "Membership is active, verified and bound to the exact player and organization.",
-      !membership ? "MEMBERSHIP_NOT_FOUND"
+      membershipLookup.duplicate ? "DUPLICATE_MEMBERSHIP_REFERENCE"
+        : !membership ? "MEMBERSHIP_NOT_FOUND"
         : !membershipPairMatches ? "MEMBERSHIP_LINK_MISMATCH"
         : membership.status !== "Active" || membership.verification !== "Verified"
           ? "MEMBERSHIP_NOT_VERIFIED" : membershipLife.code
@@ -217,17 +238,20 @@
     if (consentPrerequisites) {
       const consentLife = current(consent, now);
       const expectedPurpose = PURPOSE_CODES[r.purpose] || r.purposeCode;
-      const purpose = expectedPurpose
-        ? consent && array(consent.purposes).find(p => p && p.purposeCode === expectedPurpose) || null
-        : null;
+      const purposeMatches = expectedPurpose && consent
+        ? array(consent.purposes).filter(p => p && p.purposeCode === expectedPurpose) : [];
+      const purposeAmbiguous = purposeMatches.length > 1;
+      const purpose = purposeMatches.length === 1 ? purposeMatches[0] : null;
       const linked = !!consent && consent.playerRef === r.playerRef;
       const purposeOk = !!purpose && purpose.state === "Given";
       const recipientOk = !!purpose && purpose.recipientOrganizationId === r.organizationId;
       const overallOk = !!consent && consent.consentState === "Given";
       const lifecycleOk = consentLife.ok;
       const consentAuthorityOk = guardianAuthorityOk && playerVoiceOk && !guardianConflict;
-      if (!linked) { consentReason = "CONSENT_PLAYER_MISMATCH"; consentDetail = "Consent record does not match this player."; }
+      if (consentLookup.duplicate) { consentReason = "DUPLICATE_CONSENT_REFERENCE"; consentDetail = "Multiple consent records resolve to this reference."; }
+      else if (!linked) { consentReason = "CONSENT_PLAYER_MISMATCH"; consentDetail = "Consent record does not match this player."; }
       else if (!overallOk) { consentReason = "CONSENT_NOT_GIVEN"; consentDetail = "Overall consent is not given."; }
+      else if (purposeAmbiguous) { consentReason = "CONSENT_PURPOSE_AMBIGUOUS"; consentDetail = "Multiple grants match this purpose code; human resolution is required."; }
       else if (!purposeOk) { consentReason = "CONSENT_PURPOSE_NOT_GIVEN"; consentDetail = "The requested purpose category is not granted."; }
       else if (!recipientOk) { consentReason = "CONSENT_RECIPIENT_MISMATCH"; consentDetail = "Consent recipient does not match this organization."; }
       else if (!lifecycleOk) { consentReason = consentLife.code; consentDetail = "Consent lifecycle check failed: " + consentLife.code; }
@@ -248,12 +272,14 @@
     const opportunityGate = gate(
       "opportunity_source", "Opportunity source and lifecycle",
       sourceOk ? "PASS" : "FAIL",
-      !opportunity ? "Opportunity record not found."
+      opportunityLookup.duplicate ? "Multiple opportunity records resolve to this reference."
+        : !opportunity ? "Opportunity record not found."
         : !opportunityOrgMatches ? "Opportunity belongs to a different organization."
         : opportunity.verification !== "Verified" ? "Opportunity source is not verified."
         : !opportunityLife.ok ? "Opportunity lifecycle check failed: " + opportunityLife.code
         : "Opportunity source is verified and current.",
-      !opportunity ? "OPPORTUNITY_NOT_FOUND"
+      opportunityLookup.duplicate ? "DUPLICATE_OPPORTUNITY_REFERENCE"
+        : !opportunity ? "OPPORTUNITY_NOT_FOUND"
         : !opportunityOrgMatches ? "OPPORTUNITY_ORGANIZATION_MISMATCH"
         : opportunity.verification !== "Verified" ? "OPPORTUNITY_SOURCE_UNVERIFIED" : opportunityLife.code
     );
@@ -266,7 +292,7 @@
         : opportunity ? opportunity.eligibility : "Not assessed",
       eligibilityState === "FAIL" ? "ELIGIBILITY_NOT_VERIFIED" : null
     );
-    const invitationOpportunityMatches = !!invitation && invitation.opportunityId === r.opportunityId;
+    const invitationOpportunityMatches = !invitationLookup.duplicate && !!invitation && invitation.opportunityId === r.opportunityId;
     const invitationSecondReviewComplete = !!invitation && invitation.secondReviewStatus === "COMPLETE";
     const safeguardingOk = sourceOk && !!opportunity && opportunity.safeguarding === "Reviewed"
       && invitationOpportunityMatches
@@ -274,6 +300,7 @@
       && invitationSecondReviewComplete;
     const safeguardingState = !sourceOk ? "SKIPPED" : safeguardingOk ? "PASS" : "FAIL";
     const safeguardingReason = !sourceOk ? null
+      : invitationLookup.duplicate ? "DUPLICATE_INVITATION_REVIEW_REFERENCE"
       : !invitationOpportunityMatches ? "INVITATION_OPPORTUNITY_MISMATCH"
       : !invitationSecondReviewComplete ? "INVITATION_SECOND_REVIEW_INCOMPLETE"
       : safeguardingOk ? null : "SAFEGUARDING_NOT_CLEARED";
