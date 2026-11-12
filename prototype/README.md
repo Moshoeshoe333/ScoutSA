@@ -80,3 +80,12 @@ Open `opportunity-decisions.html` to inspect the human-controlled, claim-scoped 
 The worksheet's new entries exist only in page memory and disappear on reload. The initial records are fictional examples, not an audit log. No automated scoring, evidence authentication, approval, publication, invitation or contact action exists.
 
 Open `opportunity-decisions-smoke-tests.html` for local UI checks. These have not been claimed as executed until run in a browser. They do not test persistence, audit integrity, authentication, authorization, RLS, security, privacy, safeguarding, evidence authenticity or legal compliance.
+
+
+## Safeguarded opportunity invitation workflow
+
+Open `safeguarded-invitations.html` to inspect a fail-closed, read-only invitation gate model. It separates source/current validity, organization and representative authority, opportunity-specific eligibility, guardian authority and consent, safe communication, safeguarding/supervision, venue/transport safety, and independent authorization. Under-18 and unknown-age scenarios require guardian safeguards; direct private contact with minors is prohibited in the model. The sample cases are fictional and deliberately held; no invitation-ready case is asserted.
+
+The page has no player selection, contact, invitation, payment or mutation controls. Its readiness function is a local illustrative rule, not a production policy engine or evidence of real checks. FIFA licensing, safeguarding, consent, identity and legal requirements are not verified by this prototype.
+
+Open `safeguarded-invitations-smoke-tests.html` for local fixture/UI checks. These checks do not test age assurance, consent, safeguarding, identity, authorization, RLS, persistence, security or legal compliance.
