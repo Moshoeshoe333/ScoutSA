@@ -46,7 +46,7 @@ function validContext(overrides = {}) {
       id:"OPP-1", organizationId:"ORG-1", verification:"Verified",
       lifecycleStatus:"ACTIVE", expiresAt:FUTURE, eligibility:"Verified", safeguarding:"Reviewed"
     }],
-    invitationCases:[{ id:"INV-1", workflowState:"READY" }],
+    invitationCases:[{ id:"INV-1", opportunityId:"OPP-1", workflowState:"READY", secondReviewStatus:"COMPLETE" }],
     ...overrides
   };
 }
@@ -242,12 +242,27 @@ test("eligibility passing does not clear safeguarding", () => {
   assert.equal(gate(result, "opportunity_eligibility").state, "PASS");
   assert.equal(gate(result, "safeguarding_review").state, "FAIL");
 });
-test("safeguarding passing does not verify opportunity source", () => {
+test("eligibility and safeguarding are skipped until opportunity source is verified", () => {
   const context = validContext();
   context.opportunities[0].verification = "Unverified";
   const result = evaluate(validRequest(), context);
   assert.equal(gate(result, "opportunity_source").state, "FAIL");
-  assert.equal(gate(result, "safeguarding_review").state, "PASS");
+  assert.equal(gate(result, "opportunity_eligibility").state, "SKIPPED");
+  assert.equal(gate(result, "safeguarding_review").state, "SKIPPED");
+});
+test("invitation review must bind to the exact opportunity", () => {
+  const context = validContext();
+  context.invitationCases[0].opportunityId = "OPP-OTHER";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("INVITATION_OPPORTUNITY_MISMATCH"));
+});
+test("invitation requires a completed independent second review", () => {
+  const context = validContext();
+  context.invitationCases[0].secondReviewStatus = "PENDING";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("INVITATION_SECOND_REVIEW_INCOMPLETE"));
 });
 test("revoked consent is rejected when the request is re-evaluated", () => {
   const context = validContext();
