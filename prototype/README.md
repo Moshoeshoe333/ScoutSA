@@ -41,3 +41,7 @@ Open `player-passport-smoke-tests.html` to run local interface smoke checks. The
 ## Development boundary
 
 See [DEVELOPMENT-BOUNDARY.md](./DEVELOPMENT-BOUNDARY.md). Internal development without external validation is limited to a clearly labelled synthetic-data demonstration. This decision does not lift database, RLS, access-policy, safeguarding, legal or production holds.
+
+### Structured sample data and activity timeline
+
+The Passport fixture is loaded from `data/player-passports.demo.js`, separate from the presentation markup. The Activity timeline combines dated synthetic claim and membership entries for display only. It is explicitly **not** an audit log and must not be represented as proof that an event occurred. The browser smoke-test page includes checks for the timeline's presence and warning.
