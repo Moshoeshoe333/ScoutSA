@@ -1,6 +1,6 @@
 # ScoutSA Backend Gate Contract — Draft v1.0.0
 
-<badge>Draft — not ratified</badge>
+**Draft — not ratified.**
 
 ## Purpose and boundary
 
@@ -11,7 +11,7 @@ This is a **contract proposal**, not backend implementation, database design, a 
 - Current prototype engine: `prototype/review-engine.js` version `0.1.0`
 - Contract version: `1.0.0`
 
-The current JavaScript engine uses prototype fixture labels. A future adapter must map those labels to the canonical enums in this contract. Do not treat the current client-side module as an authorization service.
+The current JavaScript engine uses prototype fixture labels and returns a prototype result object. It is **not yet a schema-valid instance** of the backend result contract: a future adapter must add the contract/policy versions and evaluation timestamp, map fixture labels to canonical enums, and project the engine result into the exact result schema. Do not treat the current client-side module as an authorization service.
 
 ## Five gate groups
 
