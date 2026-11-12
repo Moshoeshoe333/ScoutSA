@@ -7,20 +7,30 @@
 const testFrame=document.querySelector("iframe");const runButton=document.getElementById("run");
 testFrame.addEventListener("load",()=>{runButton.disabled=false;runButton.textContent="Run smoke tests";});
 runButton.addEventListener("click",()=>{
+ const f=document.querySelector("iframe");
+ const w=f.contentWindow;
+ const d=w.document;
+ const findGate=(name)=>Array.from(d.querySelectorAll(".gate")).find(x=>x.querySelector("strong")?.textContent===name);
+ const gateStatus=(name)=>findGate(name)?.querySelector("span")?.textContent||"";
+ const clickRequest=(id)=>d.querySelector('button[data-id="'+id+'"]').click();
  const checks=[
- ["Three synthetic request cases exist",()=>document.querySelector("iframe").contentWindow.SCOUTSA_DISCOVERY_REQUESTS.records.length===3],
- ["Request page and fixture load in iframe",()=>{const f=document.querySelector("iframe");return !!f.contentWindow.document.getElementById("requestList")&&!!f.contentWindow.SCOUTSA_DISCOVERY_REQUESTS}],
- ["Every sample request is held",()=>{const d=document.querySelector("iframe").contentWindow.SCOUTSA_DISCOVERY_REQUESTS;return d.records.length===3&&d.records.every(x=>x.state==="HOLD — NOT SUBMITTABLE")}],
- ["Unknown age has under-18 protections",()=>document.querySelector("iframe").contentWindow.SCOUTSA_DISCOVERY_REQUESTS.records.some(x=>x.ageState.startsWith("Unknown — under-18"))],
- ["No sample grants purpose-specific consent",()=>document.querySelector("iframe").contentWindow.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases.every(c=>c.consentState==="Not given"&&c.purposes.every(p=>p.state==="Not given"))],
- ["No sample organization is verified",()=>document.querySelector("iframe").contentWindow.SCOUTSA_DEMO_MEMBERSHIPS.organizations.every(o=>o.identityStatus!=="Verified")],
- ["Organization representative authority remains unestablished",()=>document.querySelector("iframe").contentWindow.SCOUTSA_ACADEMY_WORKSPACE_DEMO.organization.authority==="Not established"],
- ["Missing or mismatched Passport and membership links remain visible",()=>{const d=document.querySelector("iframe").contentWindow.document;const b=d.querySelector('button[data-id="REQ-DEMO-003"]');b.click();return d.body.innerText.includes("Missing or unresolved")&&d.body.innerText.includes("Missing or mismatched")}],
- ["No sample opportunity is verified",()=>document.querySelector("iframe").contentWindow.SCOUTSA_DEMO_OPPORTUNITIES.records.every(o=>o.verification!=="Verified")],
- ["No request submission or contact control is rendered",()=>{const d=document.querySelector("iframe").contentWindow.document;return !d.querySelector("form")&&!d.querySelector("input,textarea")&&!Array.from(d.querySelectorAll("button")).some(b=>/submit|send|contact|invite/i.test(b.textContent))}],
- ["Request boundary language is present",()=>document.querySelector("iframe").contentWindow.document.body.innerText.includes("not an invitation")],
- ["No production security or persistence claim is made",()=>document.querySelector("iframe").contentWindow.SCOUTSA_DISCOVERY_REQUESTS.limits.some(x=>x.includes("No authentication"))]
- ];
+ ["Three synthetic request cases exist",()=>w.SCOUTSA_DISCOVERY_REQUESTS.records.length===3],
+ ["Request page and fixture load in iframe",()=>!!d.getElementById("requestList")&&!!w.SCOUTSA_DISCOVERY_REQUESTS],
+ ["Every sample request is held",()=>w.SCOUTSA_DISCOVERY_REQUESTS.records.length===3&&w.SCOUTSA_DISCOVERY_REQUESTS.records.every(x=>x.state==="HOLD — NOT SUBMITTABLE")],
+ ["Unknown age has under-18 protections",()=>w.SCOUTSA_DISCOVERY_REQUESTS.records.some(x=>x.ageState.startsWith("Unknown — under-18"))],
+ ["No sample grants purpose-specific consent",()=>w.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases.every(c=>c.consentState==="Not given"&&c.purposes.every(p=>p.state==="Not given"&&p.recipientOrganizationId===null))],
+ ["No sample organization is verified",()=>w.SCOUTSA_DEMO_MEMBERSHIPS.organizations.every(o=>o.identityStatus!=="Verified")],
+ ["Representative authority is rendered independently from organization identity",()=>{clickRequest("REQ-DEMO-001");return gateStatus("Representative authority")==="Not established"&&w.SCOUTSA_DEMO_MEMBERSHIPS.organizations.find(o=>o.id==="ORG-DEMO-01").identityStatus==="Unverified"}],
+ ["Missing Passport and mismatched membership links remain visible",()=>{clickRequest("REQ-DEMO-003");return d.body.innerText.includes("Missing or unresolved")&&gateStatus("Membership linkage")==="Missing or mismatched"}],
+ ["Suffix collision cannot create a false membership link",()=>{const m=w.SCOUTSA_DEMO_MEMBERSHIPS.memberships.find(x=>x.id==="MEM-DEMO-002");const old=m.player;m.player="Unrelated player 003";clickRequest("REQ-DEMO-003");const ok=gateStatus("Membership linkage")==="Missing or mismatched";m.player=old;clickRequest("REQ-DEMO-003");return ok}],
+ ["Consent for a different organization is blocked",()=>{const c=w.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases.find(x=>x.id==="GCS-DEMO-003");const p=c.purposes.find(x=>x.name==="Share selected football evidence with a named academy");const oldState=c.consentState,oldPurpose=p.state,oldRecipient=p.recipientOrganizationId;c.consentState="Given";p.state="Given";p.recipientOrganizationId="ORG-DEMO-01";clickRequest("REQ-DEMO-003");const ok=gateStatus("Purpose-specific consent")==="Blocked";c.consentState=oldState;p.state=oldPurpose;p.recipientOrganizationId=oldRecipient;clickRequest("REQ-DEMO-003");return ok}],
+ ["Purpose grant without overall consent is blocked",()=>{const c=w.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases.find(x=>x.id==="GCS-DEMO-003");const p=c.purposes.find(x=>x.name==="Share selected football evidence with a named academy");const oldState=c.consentState,oldPurpose=p.state,oldRecipient=p.recipientOrganizationId;c.consentState="Not given";p.state="Given";p.recipientOrganizationId="ORG-DEMO-02";clickRequest("REQ-DEMO-003");const ok=gateStatus("Purpose-specific consent")==="Blocked";c.consentState=oldState;p.state=oldPurpose;p.recipientOrganizationId=oldRecipient;clickRequest("REQ-DEMO-003");return ok}],
+ ["Representative authority status responds to its own record",()=>{const a=w.SCOUTSA_ACADEMY_WORKSPACE_DEMO.organization;const old=a.authority;a.authority="Verified";clickRequest("REQ-DEMO-001");const ok=gateStatus("Representative authority")==="Verified";a.authority=old;clickRequest("REQ-DEMO-001");return ok}],
+ ["No sample opportunity is verified",()=>w.SCOUTSA_DEMO_OPPORTUNITIES.records.every(o=>o.verification!=="Verified")],
+ ["No request submission or contact control is rendered",()=>!d.querySelector("form")&&!d.querySelector("input,textarea")&&!Array.from(d.querySelectorAll("button")).some(b=>/submit|send|contact|invite/i.test(b.textContent))],
+ ["Request boundary language is present",()=>d.body.innerText.includes("not an invitation")],
+ ["No production security or persistence claim is made",()=>w.SCOUTSA_DISCOVERY_REQUESTS.limits.some(x=>x.includes("No authentication"))]
+ ];;
  const results=document.getElementById("results");results.innerHTML="";let passed=0;
  checks.forEach(([label,fn])=>{let ok=false;try{ok=!!fn()}catch(e){}if(ok)passed++;const li=document.createElement("li");li.className=ok?"pass":"fail";li.textContent=(ok?"PASS — ":"FAIL — ")+label;results.appendChild(li)});
  document.getElementById("summary").textContent=passed+" / "+checks.length+" checks passed in this browser session.";
