@@ -136,11 +136,11 @@ This was a JSON parse and contract/engine consistency check, **not** a full JSON
 
 ## Review engine v0.2.0 — headless verification
 
-**Engine commit:** `572fbc8052a29ab08c45d1e5028a7533d5b663c9`.  
+**Engine commit:** `34a93b4fb23b234859a48eef4a13e6a2d5de58a3`.  
 **Test suite commit:** `5cf5681a4e8bfa362d03caced80f14776c3dcd5e`.  
 **Node runtime:** v26.12.1 in an isolated Node execution environment.  
 **Command:** `node --test prototype/tests/review-engine.test.js`  
-**Result:** **35 / 35 passed**, 0 failed, approximately 120.25 ms test duration.
+**Result:** **35 / 35 passed**, 0 failed, approximately 54.57 ms test duration.
 
 Additional checks on the current branch state:
 - `prototype/discovery-request.html` inline JavaScript syntax: PASS.
@@ -195,3 +195,6 @@ The current browser UI remains unexecuted for v0.2.0; private-repository access 
 The engine now rejects duplicate records for a requested Passport, organization, representative-authority grant, membership, consent, opportunity or invitation review instead of silently selecting the first matching object. Duplicate grants for the same controlled purpose code are also treated as ambiguous and fail closed.
 
 Headless suite extended to **35 / 35 passed**, 0 failed, 120.25 ms. The JSON schema files parsed successfully. The updated browser smoke page has not been run in an authenticated browser session.
+
+
+Final rerun after unused-helper cleanup: **35 / 35 passed**, 0 failed, 54.57 ms. This is the current recorded headless result.
