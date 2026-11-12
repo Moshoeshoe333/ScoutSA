@@ -13,16 +13,19 @@ runButton.addEventListener("click",()=>{
  const findGate=(name)=>Array.from(d.querySelectorAll(".gate")).find(x=>x.querySelector("strong")?.textContent===name);
  const gateStatus=(name)=>findGate(name)?.querySelector("span")?.textContent||"";
  const clickRequest=(id)=>d.querySelector('button[data-id="'+id+'"]').click();
- const engineContext=()=>({
-   now:new Date().toISOString(),
-   players:Object.values(w.SCOUTSA_DEMO_PLAYERS),
-   consentCases:w.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases,
-   organizations:w.SCOUTSA_DEMO_MEMBERSHIPS.organizations,
-   memberships:w.SCOUTSA_DEMO_MEMBERSHIPS.memberships,
-   representativeAuthorities:[w.SCOUTSA_ACADEMY_WORKSPACE_DEMO.organization],
-   opportunities:w.SCOUTSA_DEMO_OPPORTUNITIES.records,
-   invitationCases:w.SCOUTSA_INVITATION_WORKFLOW.cases
- });
+ const engineContext=()=>{
+   const workspace=w.SCOUTSA_ACADEMY_WORKSPACE_DEMO.organization;
+   return {
+     now:new Date().toISOString(),
+     players:Object.values(w.SCOUTSA_DEMO_PLAYERS).map(x=>({id:x.id,recordStatus:x.recordStatus,lifecycleStatus:x.lifecycleStatus,expiresAt:x.expiresAt})),
+     consentCases:w.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases.map(x=>({id:x.id,playerRef:x.playerRef,consentState:x.consentState,guardianState:x.guardianState,playerVoice:x.playerVoice,lifecycleStatus:x.lifecycleStatus,expiresAt:x.expiresAt,guardians:x.guardians,purposes:x.purposes})),
+     organizations:w.SCOUTSA_DEMO_MEMBERSHIPS.organizations.map(x=>({id:x.id,identityStatus:x.identityStatus,lifecycleStatus:x.lifecycleStatus,expiresAt:x.expiresAt})),
+     memberships:w.SCOUTSA_DEMO_MEMBERSHIPS.memberships.map(x=>({id:x.id,playerId:x.playerId,organizationId:x.organizationId,status:x.status,verification:x.verification,lifecycleStatus:x.lifecycleStatus,expiresAt:x.expiresAt})),
+     representativeAuthorities:[{organizationId:workspace.id,representativeId:workspace.representativeId,authority:workspace.authority,scope:workspace.scope,lifecycleStatus:workspace.lifecycleStatus,expiresAt:workspace.expiresAt}],
+     opportunities:w.SCOUTSA_DEMO_OPPORTUNITIES.records.map(x=>({id:x.id,organizationId:x.organizationId,verification:x.verification,eligibility:x.eligibility,safeguarding:x.safeguarding,lifecycleStatus:x.lifecycleStatus,expiresAt:x.expiresAt})),
+     invitationCases:w.SCOUTSA_INVITATION_WORKFLOW.cases.map(x=>({id:x.id,workflowState:x.workflowState}))
+   };
+ };
  const engineEval=(id,context=engineContext())=>w.SCOUTSA_REVIEW_ENGINE.evaluateRequest(w.SCOUTSA_DISCOVERY_REQUESTS.records.find(x=>x.id===id),context);
  const gateByKey=(result,key)=>result.gates.find(g=>g.key===key);
  const checks=[
