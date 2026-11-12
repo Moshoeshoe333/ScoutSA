@@ -137,10 +137,10 @@ This was a JSON parse and contract/engine consistency check, **not** a full JSON
 ## Review engine v0.2.0 — headless verification
 
 **Engine commit:** `34a93b4fb23b234859a48eef4a13e6a2d5de58a3`.  
-**Test suite commit:** `5cf5681a4e8bfa362d03caced80f14776c3dcd5e`.  
+**Test suite commit:** `d6b7863a8c785e0f2e74aeafe47b746e56a5e9be`.  
 **Node runtime:** v26.12.1 in an isolated Node execution environment.  
 **Command:** `node --test prototype/tests/review-engine.test.js`  
-**Result:** **35 / 35 passed**, 0 failed, approximately 54.57 ms test duration.
+**Result:** **40 / 40 passed**, 0 failed, approximately 70.59 ms test duration.
 
 Additional checks on the current branch state:
 - `prototype/discovery-request.html` inline JavaScript syntax: PASS.
@@ -198,3 +198,10 @@ Headless suite extended to **35 / 35 passed**, 0 failed, 120.25 ms. The JSON sch
 
 
 Final rerun after unused-helper cleanup: **35 / 35 passed**, 0 failed, 54.57 ms. This is the current recorded headless result.
+
+
+## Duplicate-reference matrix extension
+
+The duplicate-reference tests now cover all referenced entity classes: Passport, organization, representative authority, membership, consent, opportunity and invitation review, plus duplicate purpose grants. Each ambiguous reference fails closed rather than silently selecting a first match.
+
+Final headless run: **40 / 40 passed**, 0 failed, 70.59 ms. Both schemas parse as JSON. The UI inline scripts were syntax-checked earlier and have not changed since that check. Current browser execution remains outstanding because the repository is private and the isolated browser receives no GitHub credentials.
