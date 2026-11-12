@@ -125,3 +125,14 @@ Open `guardian-consent.html` for fictional, read-only consent scenarios. It dist
 The fixture and interface are synthetic only. No authentication, secure storage, notifications, authorization, audit log or access enforcement exists. Do not use this prototype to collect real consent or personal information. Open `guardian-consent-smoke-tests.html` for local UI/fixture checks; these have not been represented as browser-executed.
 
 See `PRODUCT-DECISION-GATE.md` for the conditional A/B/C product strategy: narrow MVP, redesign, or pause/pivot. No path is currently validated by external stakeholder evidence; the 6–10 week Vaal pilot is a planning hypothesis subject to all release gates.
+
+
+## Discovery and request review prototype
+
+Open `discovery-request.html` to inspect a read-only flow connecting synthetic Player Passport references, purpose-specific consent scenarios, organization identity, a specific opportunity, opportunity evidence and invitation safeguards. Three fictional request scenarios are shown; all remain `HOLD — NOT SUBMITTABLE`. The review gates are explicit, and the screen distinguishes a request for consideration from an invitation, selection, trial, placement or guarantee. It does not expose player contact details or permit disclosure.
+
+The fixture at `data/discovery-requests.demo.js` contains only fictional opaque references. The page links to the related prototype workspaces but does not submit, create or persist requests. Unknown age remains subject to under-18 protections; no direct private contact with minors is enabled.
+
+Open `discovery-request-smoke-tests.html` to run local fixture and rendering checks. These checks have not been represented as executed until run in a browser. They do not test authentication, authorization, tenant isolation, RLS, secure storage, audit integrity, evidence authenticity, age assurance, consent validity, safeguarding or legal compliance.
+
+No production implementation gate is lifted. Do not enter real personal information or use this prototype to collect consent or manage real requests.
