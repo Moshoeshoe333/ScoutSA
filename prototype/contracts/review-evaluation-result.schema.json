@@ -64,27 +64,37 @@
   "$defs": {
     "reasonCode": {
       "enum": [
-        "PASSPORT_MISSING_OR_MISMATCHED",
+        "PASSPORT_NOT_FOUND",
+        "PASSPORT_REFERENCE_MISMATCH",
+        "PASSPORT_NOT_ACTIVE",
+        "ORGANIZATION_NOT_FOUND",
+        "ORGANIZATION_IDENTITY_UNVERIFIED",
+        "REPRESENTATIVE_AUTHORITY_NOT_FOUND",
+        "REPRESENTATIVE_AUTHORITY_SCOPE_MISMATCH",
+        "REPRESENTATIVE_AUTHORITY_UNVERIFIED",
+        "MEMBERSHIP_NOT_FOUND",
+        "MEMBERSHIP_LINK_MISMATCH",
+        "MEMBERSHIP_NOT_VERIFIED",
         "SAFE_GUARDIAN_ROUTE_MISSING",
+        "SAFE_ADULT_ROUTE_MISSING",
         "AGE_STATUS_UNVERIFIED",
+        "GUARDIAN_CONFLICT_HOLD",
+        "GUARDIAN_AUTHORITY_NOT_ESTABLISHED",
+        "PLAYER_VOICE_NOT_RECORDED",
         "CONSENT_PLAYER_MISMATCH",
         "CONSENT_NOT_GIVEN",
         "CONSENT_PURPOSE_NOT_GIVEN",
         "CONSENT_RECIPIENT_MISMATCH",
         "CONSENT_AUTHORITY_REQUIREMENTS_NOT_MET",
-        "GUARDIAN_AUTHORITY_NOT_ESTABLISHED",
-        "PLAYER_VOICE_NOT_RECORDED",
-        "ORGANIZATION_IDENTITY_UNVERIFIED",
-        "REPRESENTATIVE_AUTHORITY_UNVERIFIED",
-        "MEMBERSHIP_NOT_FOUND",
-        "MEMBERSHIP_LINK_MISMATCH",
-        "MEMBERSHIP_NOT_VERIFIED",
         "OPPORTUNITY_NOT_FOUND",
         "OPPORTUNITY_ORGANIZATION_MISMATCH",
         "OPPORTUNITY_SOURCE_UNVERIFIED",
         "ELIGIBILITY_NOT_VERIFIED",
         "SAFEGUARDING_NOT_CLEARED",
-        "DISCLOSURE_NOT_IMPLEMENTED"
+        "DISCLOSURE_NOT_IMPLEMENTED",
+        "LIFECYCLE_NOT_ACTIVE",
+        "LIFECYCLE_EXPIRY_MISSING_OR_INVALID",
+        "LIFECYCLE_EXPIRED"
       ]
     },
     "gate": {
@@ -92,6 +102,7 @@
       "additionalProperties": false,
       "required": [
         "key",
+        "state",
         "satisfied",
         "blocking",
         "status",
@@ -130,6 +141,13 @@
           "items": {
             "$ref": "#/$defs/reasonCode"
           }
+        },
+        "state": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "SKIPPED"
+          ]
         }
       }
     }
