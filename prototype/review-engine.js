@@ -15,7 +15,7 @@
   const makeGate = (key, label, satisfied, status, detail, reasonCode, blocking = true) => ({
     key, label, satisfied: !!satisfied, status, detail,
     blocking,
-    reasonCodes: reasonCode ? [reasonCode] : []
+    reasonCodes: !satisfied && reasonCode ? [reasonCode] : []
   });
 
   function evaluateRequest(request, context = {}) {
@@ -59,7 +59,8 @@
     const consentOverallGiven = consentLinked && consentCase.consentState === "Given";
     const consentPurposeGiven = !!purposeGrant && purposeGrant.state === "Given";
     const consentRecipientMatches = !!purposeGrant && purposeGrant.recipientOrganizationId === r.organizationId;
-    const consentSatisfied = consentOverallGiven && consentPurposeGiven && consentRecipientMatches;
+    const consentAuthorityConditions = guardianAuthoritySatisfied && playerVoiceSatisfied;
+    const consentSatisfied = consentOverallGiven && consentPurposeGiven && consentRecipientMatches && consentAuthorityConditions;
 
     const membershipIdentityMatches = !!membership
       && membership.playerId === r.playerId
@@ -104,11 +105,13 @@
           : !consentOverallGiven ? "Overall consent is not given."
           : !consentPurposeGiven ? "The exact requested purpose is not given."
           : !consentRecipientMatches ? "Consent recipient does not match the request organization."
+          : !consentAuthorityConditions ? "Guardian authority or player voice/assent requirements are not satisfied."
           : "Purpose and recipient are bound to this request.",
         !consentLinked ? "CONSENT_PLAYER_MISMATCH"
           : !consentOverallGiven ? "CONSENT_NOT_GIVEN"
           : !consentPurposeGiven ? "CONSENT_PURPOSE_NOT_GIVEN"
-          : !consentRecipientMatches ? "CONSENT_RECIPIENT_MISMATCH" : null
+          : !consentRecipientMatches ? "CONSENT_RECIPIENT_MISMATCH"
+          : !consentAuthorityConditions ? "CONSENT_AUTHORITY_REQUIREMENTS_NOT_MET" : null
       ),
       makeGate(
         "guardian_authority", "Guardian authority",
