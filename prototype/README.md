@@ -64,3 +64,10 @@ Open `opportunities-smoke-tests.html` to run local rendering and filtering check
 ### Opportunity register metric integrity
 
 The opportunity register summary counts are derived from the synthetic fixture at page load: total records, organization-identified stage, explicitly verified records and issued invitations. The smoke-test page checks these values against the fixture. This is client-side demo behavior only and is not a trusted reporting or authorization control.
+
+
+## Opportunity evidence review prototype
+
+Open `opportunity-evidence.html` to inspect a read-only evidence ledger using synthetic descriptions only. It separates submitter, source, source authority, review time, independent corroboration, limitations and next action. Missing, unreviewed, insufficient and conflicting evidence remain distinct. No real document is uploaded, opened, authenticated or retained; no evidence decision or publication is enabled.
+
+Open `opportunity-evidence-smoke-tests.html` to run local rendering, count and filter checks. These are UI checks only and do not validate evidence, identity, source authority, security, privacy, safeguarding or legal compliance.
