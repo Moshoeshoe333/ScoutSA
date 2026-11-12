@@ -116,3 +116,12 @@ Open `coach-academy-workspace.html` to inspect a read-only, organization-scoped 
 The workspace communicates a critical product boundary: an academy or coach role does not grant general permission to view player information. Organization identity, representative authority, membership claims, opportunity source, eligibility and safeguarding are separate review concerns. The page has no authentication, authorization, tenant isolation or RLS; its displayed scope is illustrative only and is not technically enforced.
 
 Open `coach-academy-workspace-smoke-tests.html` for local fixture/UI checks. They have not been represented as executed until run in a browser and do not validate real identity, role authority, access control, privacy, safeguarding, persistence or legal compliance.
+
+
+## Guardian and consent workspace
+
+Open `guardian-consent.html` for fictional, read-only consent scenarios. It distinguishes age state, guardian authority, the player's voice, overall consent, purpose-specific permissions, expiry, withdrawal and disclosure. Unknown age is handled with under-18 protections. The page does not collect signatures, identity documents, contact details or real consent.
+
+The fixture and interface are synthetic only. No authentication, secure storage, notifications, authorization, audit log or access enforcement exists. Do not use this prototype to collect real consent or personal information. Open `guardian-consent-smoke-tests.html` for local UI/fixture checks; these have not been represented as browser-executed.
+
+See `PRODUCT-DECISION-GATE.md` for the conditional A/B/C product strategy: narrow MVP, redesign, or pause/pivot. No path is currently validated by external stakeholder evidence; the 6–10 week Vaal pilot is a planning hypothesis subject to all release gates.
