@@ -8,6 +8,9 @@ on:
       - "prototype/review-engine.js"
       - "prototype/tests/**"
       - "prototype/data/**"
+      - "prototype/contracts/**"
+      - "prototype/discovery-request.html"
+      - "prototype/discovery-request-smoke-tests.html"
       - ".github/workflows/prototype-policy-tests.yml"
   pull_request:
     paths:
