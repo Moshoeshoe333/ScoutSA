@@ -208,6 +208,14 @@ test("any established guardian objection or revocation creates a conflict hold",
   assert.ok(result.reasonCodes.includes("GUARDIAN_CONFLICT_HOLD"));
   assert.equal(gate(result, "purpose_consent").state, "FAIL");
 });
+test("guardian authority and player voice cannot be borrowed from another player's consent case", () => {
+  const context = validContext();
+  context.consentCases[0].playerRef = "SOME-OTHER-PLAYER";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "guardian_authority").state, "FAIL");
+  assert.equal(gate(result, "player_voice").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("CONSENT_PLAYER_MISMATCH"));
+});
 test("unverified guardian assertion alone does not establish authority", () => {
   const context = validContext();
   context.consentCases[0].guardianState = "Not established";
