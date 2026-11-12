@@ -182,10 +182,10 @@
       guardianConflict = guardians.some(g => g
         && g.authorityStatus === "ESTABLISHED"
         && BLOCKED_GUARDIAN_DECISIONS.has(g.decision));
-      guardianAuthorityOk = guardians.some(g => g
-        && g.authorityStatus === "ESTABLISHED"
-        && g.primary === true
-        && g.decision === "APPROVED");
+      const primaryGuardians = guardians.filter(g => g
+        && g.authorityStatus === "ESTABLISHED" && g.primary === true);
+      guardianAuthorityOk = primaryGuardians.length > 0
+        && primaryGuardians.every(g => g.decision === "APPROVED");
       playerVoiceOk = consent.playerVoice === "Assent recorded";
     } else if (adultVerified && consentLinkedToPlayer) {
       guardianAuthorityOk = true;
