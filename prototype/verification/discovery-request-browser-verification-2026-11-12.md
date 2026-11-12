@@ -136,11 +136,11 @@ This was a JSON parse and contract/engine consistency check, **not** a full JSON
 
 ## Review engine v0.2.0 — headless verification
 
-**Engine commit:** `31d9a2904d7f39f7c5dfedccebca87cac7b20fc2`.  
-**Test suite commit:** `43d9c667a45b3fc78c789873cf1dd5dc7d5e4190`.  
+**Engine commit:** `17cd4a6811a36eab06012c88f01ae0c622ca5d95`.  
+**Test suite commit:** `9f488f0912216282b79dac98ddae9b49635ca2fb`.  
 **Node runtime:** v26.12.1 in an isolated Node execution environment.  
 **Command:** `node --test prototype/tests/review-engine.test.js`  
-**Result:** **30 / 30 passed**, 0 failed, approximately 54.20 ms test duration.
+**Result:** **32 / 32 passed**, 0 failed, approximately 166.94 ms test duration.
 
 Additional checks on the current branch state:
 - `prototype/discovery-request.html` inline JavaScript syntax: PASS.
@@ -173,3 +173,18 @@ The headless suite was extended to cover exact player binding for guardian/assen
 Final headless result: **30 / 30 passed**, approximately 54.20 ms. The current discovery page and smoke-test page inline scripts both passed syntax compilation. Both JSON schemas parsed successfully.
 
 The current browser-integrated smoke page remains unexecuted against v0.2.0 because unauthenticated browser access to this private repository returns 404. Do not describe the browser suite as passing on this version.
+
+
+## Final lifecycle and guardian conflict verification
+
+Additional adversarial cases were added and executed:
+- Expiry at the exact timestamp boundary is rejected.
+- Every established primary guardian must explicitly approve; silence is not consent.
+- Guardian authority and player voice cannot be borrowed from a consent case linked to a different player.
+- Established guardian objection/revocation/withdrawal causes a conflict hold.
+- Opportunity eligibility and safeguarding remain skipped until source verification.
+- Invitation review must bind to the exact opportunity and complete independent second review.
+
+Final Node test run: **32 / 32 passed**, 0 failed, 166.94 ms. Both inline page scripts compile successfully. Both contract schema files parse as JSON.
+
+The current browser UI remains unexecuted for v0.2.0; private-repository access limitations still prevent an unauthenticated hosted browser run. No browser pass is claimed.
