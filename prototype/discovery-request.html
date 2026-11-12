@@ -26,7 +26,7 @@
 <section class="panel" style="margin-top:18px"><h2>Non-negotiable boundaries</h2><ul class="rules" id="rules"></ul><p class="muted" id="limits"></p></section>
 <footer class="footer">ScoutSA · Internal prototype · Fictional records only · Not production-ready</footer>
 </main>
-<script src="./data/player-passports.demo.js"></script><script src="./data/guardian-consent.demo.js"></script><script src="./data/organization-memberships.demo.js"></script><script src="./data/coach-academy-workspace.demo.js"></script><script src="./data/opportunities.demo.js"></script><script src="./data/opportunity-evidence.demo.js"></script><script src="./data/opportunity-decisions.demo.js"></script><script src="./data/safeguarded-invitations.demo.js"></script><script src="./data/discovery-requests.demo.js"></script>
+<script src="./data/player-passports.demo.js"></script><script src="./data/guardian-consent.demo.js"></script><script src="./data/organization-memberships.demo.js"></script><script src="./data/coach-academy-workspace.demo.js"></script><script src="./data/opportunities.demo.js"></script><script src="./data/opportunity-evidence.demo.js"></script><script src="./data/opportunity-decisions.demo.js"></script><script src="./data/safeguarded-invitations.demo.js"></script><script src="./data/discovery-requests.demo.js"></script><script src="./review-engine.js"></script>
 <script>
 (()=>{
  const data=window.SCOUTSA_DISCOVERY_REQUESTS;
@@ -37,44 +37,25 @@
  const invitation=(id)=>id?window.SCOUTSA_INVITATION_WORKFLOW.cases.find(x=>x.id===id):null;
  const gate=(name,status,detail)=>({name,status,detail});
  function evaluate(r){
-   const c=consent(r.consentCaseId),o=org(r.organizationId),p=opp(r.opportunityId),inv=invitation(r.invitationCaseId);
-   const player= r.passportRef ? Object.values(window.SCOUTSA_DEMO_PLAYERS).find(x=>x.id===r.passportRef) : null;
-   const m=r.membershipId ? window.SCOUTSA_DEMO_MEMBERSHIPS.memberships.find(x=>x.id===r.membershipId) : null;
-   const academy=window.SCOUTSA_ACADEMY_WORKSPACE_DEMO;
-   const authority=academy&&academy.organization.id===r.organizationId?academy.organization.authority:"Not established";
-   const consentLinked=!!c&&c.playerRef===r.playerRef;
-   const requestedPurpose=c?c.purposes.find(x=>x.name===r.purpose):null;
-   const requiresGuardian=r.ageState.includes("Under 18")||r.ageState.includes("Unknown");
-   const adultVerified=r.ageState==="Adult — verified";
-   const guardianAuthorityValid=requiresGuardian?!!c&&c.guardianState==="Established":adultVerified;
-   const playerVoiceValid=requiresGuardian?!!c&&c.playerVoice==="Assent recorded":adultVerified&&!!c&&c.playerVoice==="Consent recorded";
-   const membershipLinked=!!m&&m.playerId===r.playerId&&m.organizationId===r.organizationId;
-   const consentForPurpose=consentLinked&&c.consentState==="Given"&&!!requestedPurpose&&requestedPurpose.state==="Given"&&requestedPurpose.recipientOrganizationId===r.organizationId&&guardianAuthorityValid&&playerVoiceValid;
-   const eligibilityStatus=p?p.eligibility:"Not assessed";
-   const safeguardingReviewed=!!p&&p.safeguarding==="Reviewed"&&!!inv&&inv.workflowState==="READY";
-   return [
-    gate("Player Passport reference",player?"Linked synthetic Passport":"Missing or unresolved",player?"Fixture record "+player.id+"; its claims remain unverified.":"No matching Passport fixture is linked to this request."),
-    gate("Age and safe request route",r.ageState.includes("Under 18")||r.ageState.includes("Unknown")?"Under-18 safeguards required":"Adult status unverified",r.requestOrigin),
-    gate("Purpose-specific consent",consentForPurpose?"Recorded for exact purpose and recipient":"Blocked",consentLinked?(c.consentState+"; purpose: "+(requestedPurpose?requestedPurpose.state:"Not recorded")+"; recipient: "+(requestedPurpose&&requestedPurpose.recipientOrganizationId?requestedPurpose.recipientOrganizationId:"Not bound")):"Consent case does not match the request's player reference."),
-    gate("Guardian authority",guardianAuthorityValid?(requiresGuardian?"Established":"Not required — adult verified"):(requiresGuardian?"Blocked":"Adult status not verified"),c?c.guardianState:"No consent case linked"),
-    gate("Player voice / assent",playerVoiceValid?"Recorded":"Blocked",c?c.playerVoice:"No consent case linked"),
-    gate("Organization identity",o&&o.identityStatus==="Verified"?"Verified":"Unverified",o?o.name+" — "+o.identityStatus:"No organization record"),
-    gate("Representative authority",authority,"Organization authority record: "+authority),
-    gate("Membership linkage",membershipLinked?"Linked claim; still unverified":"Missing or mismatched",m?m.player+" / "+m.organizationId+" / "+m.verification:"No matching membership claim supplied."),
-    gate("Specific opportunity and source",p&&p.verification==="Verified"?"Verified":"Not verified",p?p.title+" — "+p.source:"No opportunity record"),
-    gate("Opportunity-specific eligibility",eligibilityStatus,eligibilityStatus),
-    gate("Safeguarding review",safeguardingReviewed?"Reviewed":"Blocked",p?("Opportunity safeguarding: "+p.safeguarding+"; invitation workflow: "+(inv?inv.workflowState:"No invitation review")):"No opportunity record"),
-    gate("Disclosure scope","No disclosure permitted",r.requestedDisclosure)
-   ];
+   return window.SCOUTSA_REVIEW_ENGINE.evaluateRequest(r,{
+     players:Object.values(window.SCOUTSA_DEMO_PLAYERS),
+     consentCases:window.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases,
+     organizations:window.SCOUTSA_DEMO_MEMBERSHIPS.organizations,
+     memberships:window.SCOUTSA_DEMO_MEMBERSHIPS.memberships,
+     representativeAuthorities:[window.SCOUTSA_ACADEMY_WORKSPACE_DEMO.organization],
+     opportunities:window.SCOUTSA_DEMO_OPPORTUNITIES.records,
+     invitationCases:window.SCOUTSA_INVITATION_WORKFLOW.cases
+   });
  }
  function render(r){
    const c=consent(r.consentCaseId),o=org(r.organizationId),p=opp(r.opportunityId),inv=invitation(r.invitationCaseId);
+   const evaluation=evaluate(r);
    $("requestTitle").textContent=r.id;
-   $("requestState").textContent=r.state;
+   $("requestState").textContent=r.state+" · review engine: "+evaluation.disposition;
    $("summary").innerHTML=[
     ["Player reference",r.playerRef],["Age state",r.ageState],["Request route",r.requestOrigin],["Purpose",r.purpose],["Organization",o?o.name:r.organizationId],["Opportunity",p?p.title:r.opportunityId]
    ].map(([a,b])=>'<div class="field"><small>'+a+'</small><strong>'+b+'</strong></div>').join("");
-   $("gates").innerHTML=evaluate(r).map(g=>'<div class="gate"><div><strong>'+g.name+'</strong><p>'+g.detail+'</p></div><span>'+g.status+'</span></div>').join("");
+   $("gates").innerHTML=evaluation.gates.map(g=>'<div class="gate"><div><strong>'+g.label+'</strong><p>'+g.detail+'</p></div><span>'+g.status+'</span></div>').join("");
    const items=[
     ["Player Passport","./player-passport.html"],["Guardian & consent","./guardian-consent.html"],["Organization memberships","./organization-memberships.html"],["Opportunity register","./opportunities.html"],["Opportunity evidence","./opportunity-evidence.html"],["Claim decisions","./opportunity-decisions.html"],["Invitation safeguards","./safeguarded-invitations.html"],["Matching review","./player-opportunity-matching.html"]
    ];
