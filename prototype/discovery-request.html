@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ScoutSA — Discovery & Request Review</title>
+<style>
+:root{--ink:#17263a;--muted:#69798e;--line:#e3e9f0;--paper:#f4f7fa;--white:#fff;--navy:#101b2b;--green:#16835f;--amber:#986012;--red:#9c4141}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.55 Inter,system-ui,sans-serif}a{color:#176e55}button,select{font:inherit}.shell{max-width:1180px;margin:auto;padding:28px 22px 50px}.top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:25px}.brand{font-weight:850;font-size:18px}.tag{font-size:10px;letter-spacing:1px;font-weight:800;color:#8a5b18;background:#fff2d9;border:1px solid #efdfbf;border-radius:20px;padding:6px 10px}.eyebrow{color:var(--green);font-size:10px;font-weight:850;letter-spacing:1.6px;text-transform:uppercase}.h1{font-size:30px;letter-spacing:-.8px;margin:5px 0}.intro{max-width:760px;color:var(--muted);margin:0}.notice{background:#fff7e8;border:1px solid #efdfbf;color:#75521c;border-radius:11px;padding:13px 15px;margin:20px 0;font-size:12px}.layout{display:grid;grid-template-columns:310px 1fr;gap:18px;margin-top:20px}.panel,.detail{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:17px;min-width:0}.panel h2,.detail h2{font-size:15px;margin:0 0 12px}.request-list{display:grid;gap:8px}.request{border:1px solid var(--line);background:#fff;border-radius:10px;padding:12px;text-align:left;cursor:pointer;color:var(--ink)}.request.active{border-color:#77b99e;background:#f2faf6}.request strong{display:block;font-size:12px}.request small{color:var(--muted);display:block;margin-top:3px}.pill{display:inline-block;margin-top:7px;border-radius:5px;padding:3px 7px;font-size:10px;font-weight:800;background:#fff0e8;color:var(--red)}.fieldgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}.field{background:#f5f7fa;border-radius:9px;padding:10px}.field small{display:block;color:var(--muted);font-size:10px}.field strong{font-size:12px}.state{font-size:11px;font-weight:850;color:var(--red);margin:3px 0 12px}.gates{display:grid;gap:8px}.gate{display:grid;grid-template-columns:1fr auto;gap:12px;border:1px solid var(--line);border-radius:9px;padding:11px}.gate strong{display:block;font-size:12px}.gate p{margin:3px 0 0;color:var(--muted);font-size:11px}.gate span{font-size:10px;font-weight:850;color:var(--red);white-space:nowrap}.links{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.links a{font-size:11px;text-decoration:none;border:1px solid var(--line);border-radius:7px;padding:7px 9px}.subhead{font-size:12px;font-weight:850;margin:18px 0 8px}.muted{color:var(--muted);font-size:11px}.rules{padding-left:18px;color:var(--muted);font-size:11px}.footer{margin-top:22px;border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:11px}@media(max-width:760px){.layout{grid-template-columns:1fr}.shell{padding:20px 14px}.h1{font-size:25px}.fieldgrid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body><main class="shell">
+<header class="top"><div class="brand">ScoutSA <span class="muted">/ Discover · Verify · Connect</span></div><span class="tag">SYNTHETIC INTERNAL DEMO</span></header>
+<div class="eyebrow">Controlled discovery</div><h1 class="h1">Discovery & Request Review</h1>
+<p class="intro">A narrow review path connecting a Player Passport, purpose-specific consent, organization authority and a specific opportunity. The outcome is a controlled request status—not a talent ranking or invitation.</p>
+<div class="notice"><strong>Read-only demonstration.</strong> Every case is fictional. Nothing is submitted, shared, approved or persisted. All examples remain on hold because required evidence and permissions are absent.</div>
+<div class="layout">
+<aside class="panel"><h2>Sample request queue</h2><div class="request-list" id="requestList" aria-label="Sample request scenarios"></div><p class="muted">Opaque request IDs are used in the queue. Selecting a case only changes this local view.</p></aside>
+<section class="detail" aria-live="polite">
+<div class="eyebrow">Selected scenario</div><h2 id="requestTitle">Select a sample request</h2><div class="state" id="requestState">HOLD — NOT SUBMITTABLE</div>
+<div class="fieldgrid" id="summary"></div>
+<div class="subhead">Required review gates</div><div class="gates" id="gates"></div>
+<div class="subhead">Connected prototype records</div><div class="links" id="links"></div>
+<div class="subhead">Why the request is held</div><p class="muted" id="reason"></p>
+<div class="subhead">What this workflow does not mean</div><p class="muted">A request for consideration is not an invitation, selection, trial, placement or guarantee. A matching possibility is not proof of eligibility. No information is disclosed by viewing this screen.</p>
+</section></div>
+<section class="panel" style="margin-top:18px"><h2>Non-negotiable boundaries</h2><ul class="rules" id="rules"></ul><p class="muted" id="limits"></p></section>
+<footer class="footer">ScoutSA · Internal prototype · Fictional records only · Not production-ready</footer>
+</main>
+<script src="./data/player-passports.demo.js"></script><script src="./data/guardian-consent.demo.js"></script><script src="./data/organization-memberships.demo.js"></script><script src="./data/opportunities.demo.js"></script><script src="./data/opportunity-evidence.demo.js"></script><script src="./data/opportunity-decisions.demo.js"></script><script src="./data/safeguarded-invitations.demo.js"></script><script src="./data/discovery-requests.demo.js"></script>
+<script>
+(()=>{
+ const data=window.SCOUTSA_DISCOVERY_REQUESTS;
+ const $=id=>document.getElementById(id);
+ const consent=(id)=>window.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases.find(x=>x.id===id);
+ const org=(id)=>window.SCOUTSA_DEMO_MEMBERSHIPS.organizations.find(x=>x.id===id);
+ const opp=(id)=>window.SCOUTSA_DEMO_OPPORTUNITIES.records.find(x=>x.id===id);
+ const invitation=(id)=>id?window.SCOUTSA_INVITATION_WORKFLOW.cases.find(x=>x.id===id):null;
+ const gate=(name,status,detail)=>({name,status,detail});
+ function evaluate(r){
+   const c=consent(r.consentCaseId),o=org(r.organizationId),p=opp(r.opportunityId),inv=invitation(r.invitationCaseId);
+   return [
+    gate("Passport reference",r.passportRef?"Linked synthetic record":"Missing","A linked sample Passport is not independently verified."),
+    gate("Age and safe request route",r.ageState.includes("Under 18")||r.ageState.includes("Unknown")?"Under-18 safeguards required":"Adult status unverified",r.requestOrigin),
+    gate("Purpose-specific consent",c&&c.purposes.some(x=>x.name===r.purpose&&x.state==="Given")?"Not satisfied":"Blocked",c?c.consentState+"; "+c.guardianState+"; player voice: "+c.playerVoice:"No consent record"),
+    gate("Organization identity and authority",o&&o.identityStatus==="Verified"?"Verified":"Unverified",o?o.name+" — "+o.identityStatus:"No organization record"),
+    gate("Specific opportunity and source",p&&p.verification==="Verified"?"Verified":"Not verified",p?p.title+" — "+p.source:"No opportunity record"),
+    gate("Eligibility and safeguarding",inv&&inv.workflowState==="READY"?"Reviewed":"Blocked",inv?inv.workflowState:"No completed safeguarding review"),
+    gate("Disclosure scope", "No disclosure permitted",r.requestedDisclosure)
+   ];
+ }
+ function render(r){
+   const c=consent(r.consentCaseId),o=org(r.organizationId),p=opp(r.opportunityId),inv=invitation(r.invitationCaseId);
+   $("requestTitle").textContent=r.id;
+   $("requestState").textContent=r.state;
+   $("summary").innerHTML=[
+    ["Player reference",r.playerRef],["Age state",r.ageState],["Request route",r.requestOrigin],["Purpose",r.purpose],["Organization",o?o.name:r.organizationId],["Opportunity",p?p.title:r.opportunityId]
+   ].map(([a,b])=>'<div class="field"><small>'+a+'</small><strong>'+b+'</strong></div>').join("");
+   $("gates").innerHTML=evaluate(r).map(g=>'<div class="gate"><div><strong>'+g.name+'</strong><p>'+g.detail+'</p></div><span>'+g.status+'</span></div>').join("");
+   const items=[
+    ["Player Passport","./player-passport.html"],["Guardian & consent","./guardian-consent.html"],["Organization memberships","./organization-memberships.html"],["Opportunity register","./opportunities.html"],["Opportunity evidence","./opportunity-evidence.html"],["Claim decisions","./opportunity-decisions.html"],["Invitation safeguards","./safeguarded-invitations.html"],["Matching review","./player-opportunity-matching.html"]
+   ];
+   $("links").innerHTML=items.map(([label,url])=>'<a href="'+url+'">'+label+' ↗</a>').join("");
+   $("reason").textContent=r.note+" "+(c?"Consent state: "+c.consentState+". ":"")+(o?"Organization identity: "+o.identityStatus+". ":"")+(p?"Opportunity verification: "+p.verification+". ":"")+(inv?"Invitation workflow: "+inv.workflowState+".":"");
+   document.querySelectorAll(".request").forEach(b=>b.classList.toggle("active",b.dataset.id===r.id));
+ }
+ $("requestList").innerHTML=data.records.map(r=>'<button class="request" type="button" data-id="'+r.id+'"><strong>'+r.id+'</strong><small>'+r.purpose+'</small><span class="pill">HOLD</span></button>').join("");
+ $("requestList").addEventListener("click",e=>{const b=e.target.closest("button[data-id]");if(b){const r=data.records.find(x=>x.id===b.dataset.id);if(r)render(r);}});
+ $("rules").innerHTML=data.rules.map(x=>"<li>"+x+"</li>").join("");
+ $("limits").textContent=data.limits.join(" ");
+ if(data.records[0])render(data.records[0]);
+})();
+</script></body></html>
