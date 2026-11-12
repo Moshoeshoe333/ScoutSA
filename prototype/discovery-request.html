@@ -37,14 +37,15 @@
  const invitation=(id)=>id?window.SCOUTSA_INVITATION_WORKFLOW.cases.find(x=>x.id===id):null;
  const gate=(name,status,detail)=>({name,status,detail});
  function evaluate(r){
+   const workspace=window.SCOUTSA_ACADEMY_WORKSPACE_DEMO.organization;
    return window.SCOUTSA_REVIEW_ENGINE.evaluateRequest(r,{
-     players:Object.values(window.SCOUTSA_DEMO_PLAYERS),
-     consentCases:window.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases,
-     organizations:window.SCOUTSA_DEMO_MEMBERSHIPS.organizations,
-     memberships:window.SCOUTSA_DEMO_MEMBERSHIPS.memberships,
-     representativeAuthorities:[window.SCOUTSA_ACADEMY_WORKSPACE_DEMO.organization],
-     opportunities:window.SCOUTSA_DEMO_OPPORTUNITIES.records,
-     invitationCases:window.SCOUTSA_INVITATION_WORKFLOW.cases,
+     players:Object.values(window.SCOUTSA_DEMO_PLAYERS).map(x=>({id:x.id,recordStatus:x.recordStatus,lifecycleStatus:x.lifecycleStatus,expiresAt:x.expiresAt})),
+     consentCases:window.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases.map(x=>({id:x.id,playerRef:x.playerRef,consentState:x.consentState,guardianState:x.guardianState,playerVoice:x.playerVoice,lifecycleStatus:x.lifecycleStatus,expiresAt:x.expiresAt,guardians:x.guardians,purposes:x.purposes})),
+     organizations:window.SCOUTSA_DEMO_MEMBERSHIPS.organizations.map(x=>({id:x.id,identityStatus:x.identityStatus,lifecycleStatus:x.lifecycleStatus,expiresAt:x.expiresAt})),
+     memberships:window.SCOUTSA_DEMO_MEMBERSHIPS.memberships.map(x=>({id:x.id,playerId:x.playerId,organizationId:x.organizationId,status:x.status,verification:x.verification,lifecycleStatus:x.lifecycleStatus,expiresAt:x.expiresAt})),
+     representativeAuthorities:[{organizationId:workspace.id,representativeId:workspace.representativeId,authority:workspace.authority,scope:workspace.scope,lifecycleStatus:workspace.lifecycleStatus,expiresAt:workspace.expiresAt}],
+     opportunities:window.SCOUTSA_DEMO_OPPORTUNITIES.records.map(x=>({id:x.id,organizationId:x.organizationId,verification:x.verification,eligibility:x.eligibility,safeguarding:x.safeguarding,lifecycleStatus:x.lifecycleStatus,expiresAt:x.expiresAt})),
+     invitationCases:window.SCOUTSA_INVITATION_WORKFLOW.cases.map(x=>({id:x.id,workflowState:x.workflowState})),
      now:new Date().toISOString()
    });
  }
