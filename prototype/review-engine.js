@@ -172,21 +172,23 @@
     );
 
     const consentPrerequisites = actorLegitimacyPassed;
+    const consentLinkedToPlayer = !!consent && consent.playerRef === r.playerRef;
     let guardianConflict = false;
     let guardianAuthorityOk = false;
     let playerVoiceOk = false;
-    if (under18 && consent) {
+    if (under18 && consentLinkedToPlayer) {
       const guardians = array(consent.guardians);
       guardianConflict = guardians.some(g => g
         && g.authorityStatus === "ESTABLISHED"
         && BLOCKED_GUARDIAN_DECISIONS.has(g.decision));
-      guardianAuthorityOk = consent.guardianState === "Established"
-        || guardians.some(g => g && g.authorityStatus === "ESTABLISHED"
-          && g.primary === true && g.decision === "APPROVED");
+      guardianAuthorityOk = guardians.some(g => g
+        && g.authorityStatus === "ESTABLISHED"
+        && g.primary === true
+        && g.decision === "APPROVED");
       playerVoiceOk = consent.playerVoice === "Assent recorded";
-    } else if (adultVerified) {
+    } else if (adultVerified && consentLinkedToPlayer) {
       guardianAuthorityOk = true;
-      playerVoiceOk = !!consent && consent.playerVoice === "Consent recorded";
+      playerVoiceOk = consent.playerVoice === "Consent recorded";
     }
 
     const guardianGate = gate(
