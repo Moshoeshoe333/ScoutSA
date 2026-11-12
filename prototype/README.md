@@ -5,6 +5,10 @@ This directory contains the first responsive, browser-based ScoutSA interface pr
 ## Open locally
 Open `index.html` in a modern browser. No build step or package installation is required.
 
+## Run the browser smoke tests
+
+Open `smoke-tests.html` in the same folder as `index.html`, then select **Run smoke tests**. The test page loads the prototype in an iframe and checks its demo labels, sample records, player search, safeguarding view, passport modal, and Escape-key close behavior. These are local UI smoke checks only; they do not test a backend, authorization, RLS, privacy, or legal compliance.
+
 ## Scope of this prototype
 - Responsive overview dashboard
 - Player discovery cards with client-side search and filters
