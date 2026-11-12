@@ -114,3 +114,21 @@ The three UI cases were also manually selected after engine integration:
 - **REQ-DEMO-003:** HOLD; Passport missing/unresolved; adult status unverified; consent blocked; guardian authority blocked pending adult verification; player voice blocked; organization and representative authority unverified; membership missing/mismatched; source unverified; eligibility not assessed; safeguarding blocked; no disclosure.
 
 **Updated disposition:** The UI and pure-engine synthetic checks pass. The next bounded step is to define a versioned backend gate contract and state-transition rules. This does not authorize backend implementation, real identity processing, RLS, deployment, pilot use, or disclosure.
+
+
+## Draft backend contract consistency check
+
+Draft artifacts added on `prototype/internal-demo`:
+
+- `prototype/REVIEW-ENGINE-CONTRACT.md`
+- `prototype/contracts/review-evaluation-input.schema.json`
+- `prototype/contracts/review-evaluation-result.schema.json`
+
+Structural cross-check results:
+- Both schema files parse as JSON.
+- The result schema defines twelve gate keys; all twelve match the engine's gate keys.
+- All 21 reason-code enum values in the result schema are present in the engine source.
+- The request schema contains no direct PII fields such as name, date of birth, phone, email, address, identity number, document image or media URL.
+- All three current synthetic fixtures still evaluate to `HOLD`, with twelve gates and `disclosurePermitted: false`.
+
+This was a JSON parse and contract/engine consistency check, **not** a full JSON Schema validator run or a backend integration test. The contract remains draft and unratified. No API, database, migration, RLS, authentication, identity vault, consent capture or disclosure implementation was created.
