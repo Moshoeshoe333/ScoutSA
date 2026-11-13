@@ -4,7 +4,7 @@
 
 **Mainline remains:** documentation-first; implementation, schema migration, RLS, API, authentication, real identity processing, deployment and pilot remain on hold. The October 2026 gate decisions and unresolved seams below remain in force.
 
-**Isolated prototype branch:** a synthetic, static browser demonstration exists under `prototype/`. Its pure review engine is version 0.2.0. On 2026-11-12, the engine suite recorded 40/40 headless Node tests passing; both relevant inline scripts passed syntax checks; both JSON schema files parsed. The documentation-integrity suite now declares 5 checks. The previous 44-declaration baseline (40 engine + 4 documentation checks) passed hosted GitHub Actions on [run 43399919864](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399919864), commit `24afa22dd35d923ceffcaa0fbec7482a43209fed`. The current 45-declaration suite (40 engine + 5 documentation checks) is awaiting a new hosted result. See `prototype/verification/documentation-integrity-ci-2026-11-13.md`. The updated browser smoke page was not re-executed against v0.2.0 because unauthenticated access to this private repository returned 404. The prior 32/32 browser result belongs to the v0.1.0 baseline and is not current proof.
+**Isolated prototype branch:** a synthetic, static browser demonstration exists under `prototype/`. Its pure review engine is version 0.2.0. On 2026-11-12, the engine suite recorded 40/40 headless Node tests passing; both relevant inline scripts passed syntax checks; both JSON schema files parsed. The documentation-integrity suite now declares 5 checks. The current 45-declaration suite (40 engine + 5 documentation checks) passed hosted GitHub Actions on [run 43401455192](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401455192), commit `b5fca7ca7551e96027910790eddb83fdd7e26394`. See `prototype/verification/documentation-integrity-ci-2026-11-13.md`. The updated browser smoke page was not re-executed against v0.2.0 because unauthenticated access to this private repository returned 404. The prior 32/32 browser result belongs to the v0.1.0 baseline and is not current proof.
 
 **Prototype boundary:** synthetic fixtures only; no backend, persistence, authentication, authorization, RLS, API, identity vault, consent capture, disclosure, production security, legal compliance or pilot readiness. A successful policy evaluation can only reach separate human review and never authorizes disclosure.
 
@@ -303,4 +303,4 @@ Migration: **HOLD**.
 Database implementation: **HOLD**.
 
 
-Last successful prototype CI: [run 43399919864](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399919864) — 44-test baseline; the current 45-test suite is awaiting hosted verification.
+Last successful prototype CI: [run 43401455192](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401455192) — 45 tests passed (40 engine + 5 documentation checks).
