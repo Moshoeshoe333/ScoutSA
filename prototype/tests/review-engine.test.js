@@ -626,7 +626,7 @@ test("missing evidence inspection record fails closed", () => {
   context.evidenceRecords = context.evidenceRecords.filter(item => item.evidenceRef !== "SYNTHETIC-FIRST-REVIEW-1");
   const result = evaluate(validRequest(), context);
   assert.equal(gate(result, "safeguarding_review").state, "FAIL");
-  assert.ok(result.reasonCodes.includes("REVIEW_EVIDENCE_PROVENANCE_MISSING"));
+  assert.ok(result.reasonCodes.includes("REVIEW_EVIDENCE_VERSION_MISSING"));
 });
 
 test("duplicate evidence references fail closed", () => {
