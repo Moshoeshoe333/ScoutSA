@@ -254,6 +254,42 @@ async function main() {
       "an unknown player reference must return no request");
     passed.push("Discovery request selection, six-stage hold, no-decision boundary and invalid-handoff failures");
 
+
+    // 12. Shared rendering-escape contract: every specialist renderer defines h().
+    // Exercise the exact helper used by fixture interpolation, including hostile
+    // markup and malformed nullish values. This is a bounded rendering test,
+    // not a complete security audit.
+    const rendererPages = [
+      "player-passport.html", "organization-memberships.html", "opportunities.html",
+      "opportunity-evidence.html", "opportunity-decisions.html",
+      "safeguarded-invitations.html", "player-opportunity-matching.html",
+      "player-development-pathways.html", "coach-academy-workspace.html",
+      "guardian-consent.html", "discovery-request.html"
+    ];
+    for (const route of rendererPages) {
+      await page.goto(origin + "/" + route, { waitUntil: "load" });
+      const result = await page.evaluate(() => {
+        const hostile = '<img src=x onerror="window.__xss=1">';
+        const escaped = h(hostile);
+        const probe = document.createElement("div");
+        probe.innerHTML = escaped;
+        return {
+          escaped,
+          imageCount: probe.querySelectorAll("img").length,
+          literalText: probe.textContent,
+          nullValue: h(null),
+          undefinedValue: h(undefined)
+        };
+      });
+      assert.equal(result.imageCount, 0, route + " escape helper must not create an image element");
+      assert.equal(result.literalText, '<img src=x onerror="window.__xss=1">',
+        route + " hostile markup must remain literal text");
+      assert.equal(result.nullValue, "", route + " nullish values must render as empty text");
+      assert.equal(result.undefinedValue, "", route + " undefined values must render as empty text");
+      assert.match(result.escaped, /&lt;img/);
+    }
+    passed.push("HTML-escape helper hostile-string and nullish-value checks across all 11 workspaces");
+
     assert.deepEqual(errors, [], "browser must not emit uncaught page or console errors");
     process.stdout.write(passed.map((name, index) => "PASS " + (index + 1) + " — " + name).join("\n") +
       "\nWORKSPACE INTERACTION BROWSER SMOKE RESULT: " + passed.length + "/" + passed.length + " groups passed\n");
