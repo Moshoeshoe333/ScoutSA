@@ -157,3 +157,8 @@ Reason codes are machine-readable identifiers, not explanations by themselves. E
 This draft must be reviewed against the domain model and by appropriate safeguarding/legal stakeholders before implementation. Do not create database tables, migrations, RLS policies, API endpoints, identity vaults, real consent capture, notifications, or disclosure flows from this document alone.
 
 Implementation remains blocked until the contract is explicitly ratified and the responsible authority, legal basis, retention policy, access model, incident process, and independent review requirements are established.
+
+
+## Experimental audit-history companion (not part of this contract)
+
+The isolated prototype branch now contains `prototype/audit-history.js` v0.1.0 and `prototype/SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md`. This companion validates a caller-supplied synthetic event sequence but is **not integrated into this review engine or contract**. It cannot provide immutable storage, cryptographic integrity, trusted timestamps, identity proofing, durable audit history or automatic review invalidation. A valid sequence does not alter any gate or authorize a decision. The companion proposal is experimental and not ratified; it does not lift any implementation, real-data, disclosure, deployment or pilot hold.
