@@ -13,7 +13,7 @@ This directory contains the original responsive browser demonstration plus focus
 - Current recorded engine-suite result: **40/40 passed** on 2026-11-12 in an isolated Node v26.12.1 execution environment (70.59 ms).
 - Documentation-integrity suite: **5/5 checks passed** alongside the 40 engine tests; all 45 declarations passed on [run 43401455192](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401455192). See [CI verification record](verification/documentation-integrity-ci-2026-11-13.md).
 - The current browser-integrated discovery smoke page has **not** been rerun against v0.2.0. The previous 32/32 browser result belongs to the v0.1.0 baseline.
-- Last successful prototype CI: [run 43401455192](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401455192), 45 declarations (40 engine + 5 documentation checks), commit `b5fca7ca7551e96027910790eddb83fdd7e26394`. The workflow does not execute browser tests.
+- Last successful prototype CI: [run 43401779467](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401779467), 45 declarations (40 engine + 5 documentation checks), commit `b5fca7ca7551e96027910790eddb83fdd7e26394`. The workflow does not execute browser tests.
 
 The engine can only produce a separate-human-review disposition. It always returns `disclosurePermitted: false`. Its fixtures and projections are synthetic; it is not authentication, authorization, a security boundary or a production policy service.
 
