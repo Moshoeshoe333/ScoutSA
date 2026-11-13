@@ -65,6 +65,18 @@ async function main() {
       assert.equal(await page.locator("#requestTitle").innerText(), id);
       await assertSixStages();
       assert.equal(await page.locator("#links a").count(), 8, "all connected prototype links should render");
+      const destinations = await page.locator("#links a").evaluateAll(links => links.map(link => link.getAttribute("href")));
+      for (const href of destinations) {
+        const response = await page.request.get(new URL(href, page.url()).toString());
+        assert.equal(response.status(), 200, "connected prototype link must resolve: " + href);
+      }
+      const hubResponse = await page.request.get(new URL("./index.html", page.url()).toString());
+      assert.equal(hubResponse.status(), 200, "workspace return link must resolve");
+      if (id === "REQ-DEMO-001") {
+        await page.locator('#links a[href^="./player-passport.html"]').click();
+        assert.match(new URL(page.url()).pathname, /player-passport\\.html$/);
+        await open("");
+      }
     }
 
     // Guardian-mediated under-18 scenario.
