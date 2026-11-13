@@ -150,7 +150,7 @@ Additional checks on the current branch state:
 
 The current browser-integrated smoke page was **not executed** against this updated engine. An unauthenticated hosted browser request to the private repository's raw GitHub URL returned 404, so no new browser pass is claimed. The earlier 32/32 browser result recorded above belongs to the prior engine baseline and must not be carried forward as proof of this refactor.
 
-A GitHub Actions workflow was added to run the headless suite on relevant branch changes. Its hosted run status was not independently retrieved in this verification session; the 27/27 result above is from the isolated Node run, not a claimed GitHub Actions result.
+A GitHub Actions workflow was added to run the headless suite on relevant branch changes. Its hosted run status was not independently retrieved in this verification session; the 40/40 result above is from the isolated Node run, not a claimed GitHub Actions result.
 
 ## v0.2.0 policy changes
 
