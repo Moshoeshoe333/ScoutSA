@@ -3,7 +3,7 @@
 **Branch:** `prototype/internal-demo`  
 **Engine:** `review-engine.js` v0.3.0  
 **Audit validator:** `audit-history.js` v0.2.0  
-**Status:** Hosted verification pending for this integration.
+**Status:** Hosted verification passed on [run 43443050401](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43443050401), commit `802419b78c3dfa88923f3c997decee6fbc9061c5`.
 
 ## Scope
 
@@ -22,7 +22,13 @@ Missing history, incomplete review completion, invalid actor/authority/scope bin
 
 ## Verification result
 
-Pending. Do not cite the previous 100-test hosted run as verification of this integration. The new workflow must run against the exact commit containing these changes.
+Hosted GitHub Actions run [43443050401](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43443050401) passed on commit `802419b78c3dfa88923f3c997decee6fbc9061c5`:
+- **119/119 Node tests passed; 0 failed.**
+- **7/7** Discovery & Request Review browser groups passed.
+- **8/8** workspace-hub browser groups passed.
+- **12/12** specialist workspace interaction browser groups passed.
+
+This verifies the declared synthetic tests and browser paths only; it is not a security, legal, safeguarding-effectiveness or production-readiness certification. The new workflow must run against the exact commit containing these changes.
 
 ## Limits
 
