@@ -274,3 +274,5 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Final verification:** Hosted GitHub Actions [run 43414816865](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414816865), commit `43bf1c5f324e5761172d5f35f9acdb950d3cc760`, completed successfully; **48 passed, 0 failed**.
 - **Remaining limit:** Browser-integrated visual and click-through verification is outstanding. The hosted suite is headless Node verification only.
 - **Status:** Implemented and headless CI-verified on the isolated prototype branch. Mainline remains unchanged.
+
+The projection also requires `allBlockingGatesSatisfied === true` plus fully passing authority/evidence and safeguarding groups before it displays eligibility for separate human review; inconsistent readiness fails closed.
