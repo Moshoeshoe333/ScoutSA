@@ -34,6 +34,12 @@ test("current documentation reports the count derived from test declarations", (
   assert.ok(hasCurrentTestCount(verification), "verification record test count is stale");
 });
 
-test("root README links the documentation integrity control", () => {
+test("root README links the integrity policy and workflow directory has no empty files", () => {
   assert.ok(rootReadme.includes("docs/engineering-integrity.md"));
+  const workflowDir = path.join(root, ".github/workflows");
+  if (fs.existsSync(workflowDir)) {
+    for (const name of fs.readdirSync(workflowDir).filter(name => name.endsWith(".yml") || name.endsWith(".yaml"))) {
+      assert.ok(fs.statSync(path.join(workflowDir, name)).size > 0, `workflow file is empty: ${name}`);
+    }
+  }
 });
