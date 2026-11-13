@@ -215,3 +215,8 @@ The current engine test file contains **42/42 declared test cases** (this is a s
 ## Later source-inventory note — 2026-11-13
 
 This historical browser execution remains tied to the tested commit above and is not evidence for later source changes. The current `prototype/tests/review-engine.test.js` source now declares **49/49 test cases**. Later additions cover cross-player membership, cross-organization opportunity ownership, separation of opaque player references from internal Passport IDs, malformed nested guardian/purpose collections, invitation workflow holds, the boundary between second-review status and approval/selection, and guardian revocation between evaluations. These are committed after the historical browser run and await a new hosted workflow result; do not attribute this later test inventory to the historical execution.
+
+
+## Current engine source inventory — 2026-11-13
+
+The current `prototype/tests/review-engine.test.js` source declares **57/57 tests**. The eight latest additions require structured evidence-linked two-person invitation review: two distinct reviewers and authority grants, exact scope, current lifecycle, conflict-check evidence, a second-review independence reference and chronological ordering. The 57 current declarations are not all covered by the historical browser/CI run cited elsewhere in this file; use the latest workflow run linked in the current README and gate-status record for current verification. The historical browser result above remains scoped to the exact commit and test inventory it executed.
