@@ -151,3 +151,14 @@ Do not silently overwrite incidents. Append follow-up notes when a prevention me
 ## 8. Current boundary
 
 This control does not authorize implementation, database migration, RLS, API, authentication, real personal data, deployment or pilot activity. It governs the accuracy of the documentation and evidence for work that is already authorized.
+
+
+### DOC-005 — Prototype documentation referenced an older successful CI run
+
+- **Detected:** 2026-11-13
+- **Severity:** Low — the cited run was genuinely successful, but it was not the most recent successful prototype policy run available during this reconciliation.
+- **Finding:** The root README, prototype README, gate-status note and verification record emphasized earlier successful workflow runs while a later successful hosted run, [43398121693](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43398121693), existed on commit `fef7aaed3beb87746613d049340a216d82294029`.
+- **Impact:** Readers could mistake an older verification point for the current recorded CI evidence.
+- **Correction:** Updated the three branch-local summaries to reference run 43398121693 and added that run to the verification record. The older run links remain in the historical attempt table.
+- **Preventive measure:** Record exact run ID, branch, commit SHA and conclusion together; distinguish a historical successful run from a later verification. The documentation-integrity test now checks that the current recorded CI run is referenced consistently across the root README, prototype README and gate status.
+- **Status:** Corrected; verification will be refreshed after the documentation update's own hosted CI run.
