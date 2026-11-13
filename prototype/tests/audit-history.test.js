@@ -105,3 +105,15 @@ test("review cannot complete before its linked evidence is accepted", () => {
   events[3].occurredAt = "2026-11-13T09:02:00.000Z";
   assert.ok(validate(events).errors.some(item=>item.code==="AUDIT_REVIEW_EVIDENCE_NOT_ACCEPTED"));
 });
+
+test("evidence revocation after review completion requires a later invalidation event", () => {
+  const events = validEvents();
+  events.push(event("E-5","EVIDENCE_REVOKED","ACCEPTED","REVOKED","2026-11-13T09:04:00.000Z"));
+  assert.ok(validate(events).errors.some(item=>item.code==="AUDIT_REVIEW_INVALIDATION_EVENT_MISSING"));
+});
+test("a later review invalidation event closes the evidence-revocation chain", () => {
+  const events = validEvents();
+  events.push(event("E-5","EVIDENCE_REVOKED","ACCEPTED","REVOKED","2026-11-13T09:04:00.000Z"));
+  events.push(event("E-6","REVIEW_INVALIDATED","COMPLETE","INVALIDATED","2026-11-13T09:05:00.000Z",{reviewId:"REV-1"}));
+  assert.equal(validate(events).valid,true);
+});
