@@ -102,3 +102,8 @@ The objective is to make the eventual MVP **smaller, safer, and derivable** from
 ### Opportunity validation proposal
 
 The prototype branch contains a [synthetic Opportunity Validation Scenario Pack](prototype/OPPORTUNITY-VALIDATION-SCENARIO-PACK.md) with 14 fictional cases for evidence authority, fair eligibility, fees, safeguarding, privacy, disputes and stage boundaries. It also contains an [optional Vaal Stakeholder Validation Interview Guide](prototype/VAAL-STAKEHOLDER-VALIDATION-INTERVIEW-GUIDE.md). External interviews are not a prerequisite for continued internal development; the guide is parked for any future responses and does not claim validation has occurred. These are research instruments, not ratified policy or authorization for real-world processing.
+
+
+### Connected synthetic demo journey
+
+On the isolated `prototype/internal-demo` branch, the Player Passport now links to the matching Discovery & Request Review fixture using an opaque synthetic player reference. Discovery filters to that exact fixture and links back to the same Passport. This is a read-only URL handoff between static pages; it is not shared persistence, a live submission, authentication, authorization or a production workflow. Unknown or unmatched references show no request rather than creating one. All sample requests remain on hold.
