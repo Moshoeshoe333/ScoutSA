@@ -132,11 +132,13 @@ test("workspace hub links every existing synthetic review journey", () => {
   assert.equal((dashboard.match(/class="workspace-card"/g) || []).length, workspacePaths.length, "workspace card inventory must match the linked workspace files");
   const passport = read("prototype/player-passport.html");
   const discovery = read("prototype/discovery-request.html");
+  const opportunity = read("prototype/opportunities.html");
   const playerFixtures = read("prototype/data/player-passports.demo.js");
   const requestFixtures = read("prototype/data/discovery-requests.demo.js");
-  assert.ok(passport.includes('id="discoveryLink"') && passport.includes("discovery-request.html?player="), "Passport must hand off its selected synthetic player reference");
+  assert.ok(passport.includes('id="opportunityBrowseLink"') && passport.includes("opportunities.html?player="), "Passport must hand off its selected synthetic player reference to opportunity discovery");
   assert.ok(passport.includes("new URLSearchParams(window.location.search)") && passport.includes("render(initialKey)"), "Passport must restore the matching synthetic player from the handoff URL");
-  assert.ok(discovery.includes("params.get(\"player\")") && discovery.includes("data.records.filter(r=>r.playerId===handoffPlayerId)"), "discovery must filter to the exact handed-off player reference");
+  assert.ok(opportunity.includes("matchingRequest(opportunity)") && opportunity.includes("r.playerId===handoffPlayerId&&r.opportunityId===opportunity.id"), "opportunity discovery must expose a request link only for an exact player–opportunity fixture pair");
+  assert.ok(discovery.includes("params.get(\"player\")") && discovery.includes("r.playerId===handoffPlayerId&&(!handoffOpportunityId||r.opportunityId===handoffOpportunityId)"), "request review must filter to the exact handed-off player and opportunity references");
   assert.ok(discovery.includes("No matching synthetic request") && discovery.includes("No request has been created"), "missing handoff matches must fail closed without creating a request");
   assert.ok(discovery.includes("encodeURIComponent(passport.id)"), "return navigation must preserve the exact synthetic Passport reference");
   assert.ok(playerFixtures.includes("DEMO-PLAYER-001") && playerFixtures.includes("DEMO-PLAYER-002"), "the synthetic Passport fixtures must remain present");
