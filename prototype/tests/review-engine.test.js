@@ -788,8 +788,75 @@ test("a fresh review pinned to the new accepted version can pass", () => {
     versionId:"v2", fingerprint:"SYNTHETIC-FINGERPRINT-V2"
   };
   context.invitationCases[0].firstReview.completedAt = "2026-11-12T09:10:00.000Z";
+  context.auditEvents = buildAuditEvents(context);
   const result = evaluate(validRequest(), context);
   assert.equal(gate(result, "safeguarding_review").state, "PASS");
   assert.equal(result.disclosurePermitted, false);
 });
 
+
+
+test("missing audit history blocks invitation safeguarding review", () => {
+  const context = validContext();
+  delete context.auditEvents;
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result,"safeguarding_review").state,"FAIL");
+  assert.ok(result.reasonCodes.includes("INVITATION_AUDIT_HISTORY_MISSING"));
+  assert.equal(result.disclosurePermitted,false);
+});
+test("empty audit history blocks invitation safeguarding review", () => {
+  const context = validContext({auditEvents:[]});
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result,"safeguarding_review").state,"FAIL");
+  assert.ok(result.reasonCodes.includes("INVITATION_AUDIT_HISTORY_MISSING"));
+});
+test("incomplete audit history blocks invitation safeguarding review", () => {
+  const context = validContext();
+  context.auditEvents = context.auditEvents.filter(event=>event.eventType!=="REVIEW_COMPLETED" || event.reviewId!=="INV-1-SECOND");
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result,"safeguarding_review").state,"FAIL");
+  assert.ok(result.reasonCodes.includes("INVITATION_AUDIT_HISTORY_INVALID"));
+  assert.equal(result.disclosurePermitted,false);
+});
+test("a validly recorded review invalidation blocks the safeguarding gate", () => {
+  const context = validContext();
+  const first = context.invitationCases[0].firstReview;
+  context.auditEvents.push({
+    eventId:"AUDIT-INVALIDATE-FIRST",eventType:"REVIEW_INVALIDATED",
+    fromState:"COMPLETE",toState:"INVALIDATED",
+    occurredAt:"2026-11-12T09:31:00.000Z",
+    actorId:first.reviewerId,authorityId:first.authorityId,
+    organizationId:"ORG-1",scope:"INVITATION_SAFEGUARDING_REVIEW",
+    provenanceRef:"SYNTHETIC-INVALIDATION-PROVENANCE",
+    reviewId:first.reviewId,
+    evidenceRefs:[
+      {evidenceRef:first.evidenceRef,versionId:first.evidencePins.completion.versionId,fingerprint:first.evidencePins.completion.fingerprint},
+      {evidenceRef:first.conflictEvidenceRef,versionId:first.evidencePins.conflict.versionId,fingerprint:first.evidencePins.conflict.fingerprint}
+    ]
+  });
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result,"safeguarding_review").state,"FAIL");
+  assert.ok(result.reasonCodes.includes("INVITATION_REVIEW_HISTORY_INVALIDATED"));
+  assert.equal(result.disclosurePermitted,false);
+});
+test("freshly version-pinned evidence requires a rebuilt audit sequence", () => {
+  const context = validContext();
+  const old = context.evidenceRecords[0];
+  old.versionStatus="SUPERSEDED";
+  const next=structuredClone(old);
+  next.versionId="v2";next.versionStatus="CURRENT";
+  next.fingerprint="SYNTHETIC-FINGERPRINT-V2";
+  next.sourceLocator="SYNTHETIC-LOCATOR-V2";
+  next.findingRef="SYNTHETIC-FINDING-V2";
+  next.inspectedAt="2026-11-12T09:05:00.000Z";
+  context.evidenceRecords.push(next);
+  context.invitationCases[0].firstReview.evidencePins.completion={versionId:"v2",fingerprint:"SYNTHETIC-FINGERPRINT-V2"};
+  context.invitationCases[0].firstReview.completedAt="2026-11-12T09:10:00.000Z";
+  const result=evaluate(validRequest(),context);
+  assert.equal(gate(result,"safeguarding_review").state,"FAIL");
+  assert.ok(result.reasonCodes.includes("INVITATION_AUDIT_HISTORY_INVALID"));
+  context.auditEvents=buildAuditEvents(context);
+  const fresh=evaluate(validRequest(),context);
+  assert.equal(gate(fresh,"safeguarding_review").state,"PASS");
+  assert.equal(fresh.disclosurePermitted,false);
+});
