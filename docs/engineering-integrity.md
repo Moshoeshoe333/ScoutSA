@@ -162,3 +162,15 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Correction:** Updated the three branch-local summaries to reference run 43398121693 and added that run to the verification record. The older run links remain in the historical attempt table.
 - **Preventive measure:** Record exact run ID, branch, commit SHA and conclusion together; distinguish a historical successful run from a later verification. The documentation-integrity test now checks that the current recorded CI run is referenced consistently across the root README, prototype README and gate status.
 - **Status:** Corrected; verification will be refreshed after the documentation update's own hosted CI run.
+
+
+### DOC-006 — New proposal-link guard exposed a missing root README link
+
+- **Detected:** 2026-11-13
+- **Severity:** Low — a documentation-integrity test failed before the proposal could be considered fully reconciled.
+- **Affected branch/commit:** `prototype/internal-demo`, commit `4304c5a2fccf317053d14edc8194cc34283f4a9b`.
+- **Finding:** The new documentation test required the root README, prototype README and gate status to link the affiliation evidence proposal. The prototype README and gate status were updated, but the root README replacement did not match its actual wording, so the root link was omitted.
+- **Impact:** Hosted run [43399106967](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399106967) failed at the proposal-link assertion. The log confirms 43 tests passed and one documentation-integrity test failed. No product behavior, player data, or mainline code was affected.
+- **Correction:** Add the missing root README link, record the failed run in the verification record, and reconcile all documentation counts to the current 40 engine + 4 documentation checks (44 declarations).
+- **Preventive measure:** Keep the proposal-link assertion in the automated suite; add explicit count reconciliation for documentation tests; verify all changed files by reading them back from the intended branch; inspect job logs before diagnosing a failed workflow.
+- **Status:** Correction prepared; awaiting successful hosted verification.
