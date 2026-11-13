@@ -311,3 +311,18 @@ The projection also requires `allBlockingGatesSatisfied === true` plus fully pas
 - **Verification:** Hosted run [43422082698](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43422082698), commit `e6fab109253fab2091292ddef29d285251348c4e`, passed 48/48 headless tests, 7/7 request-review browser groups, 8/8 hub/navigation browser groups and 11/11 specialist interaction groups. Job logs report no uncaught browser page or console errors.
 - **Important boundary:** The Claim Decisions entry exists only in a page-session array and is lost on reload. Search/filter/selection are client-side presentation behavior. No backend persistence, authorization, RLS, API, consent capture, disclosure or contact is introduced. The Coach & Academy view remains static and does not expose a player roster.
 - **Result:** Closed for the scoped browser-interaction smoke checkpoint only. This does not constitute full accessibility, security, legal, safeguarding-effectiveness or production-readiness validation. Mainline remains unchanged at `9ea9ef69e57ebb057e7a869af6a4f462cdfbb673`.
+
+
+### UI-007 — Cross-workspace fixture reference integrity (2026-11-13)
+
+- **Scope:** Added `prototype/tests/workspace-data-integrity.test.js`; hardened `prototype/handoff-filter.js` against invalid/non-array input; expanded the specialist browser smoke test for invalid handoffs and hostile HTML-looking text in the Claim Decisions form.
+- **Defects discovered and corrected:** Coach & Academy referenced missing `MEM-DEMO-005`; a matching fictional and explicitly unverified central membership fixture was added. Coach & Academy for `ORG-DEMO-01` listed `OPP-DEMO-003` owned by `ORG-DEMO-03`; the foreign opportunity was removed and its summary count corrected. `REQ-DEMO-003` had no Passport but referenced `MEM-DEMO-002` belonging to another player; the membership reference was cleared. Handoff filtering now safely returns an empty collection for invalid record input.
+- **Verification:** Hosted GitHub Actions [run 43422932825](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43422932825), commit `ea3b8919b1240be43391ffbb679b3c1d17a5942e`, passed 50/50 headless tests, 7/7 request-review browser groups, 8/8 hub/navigation groups and 11/11 specialist interaction groups.
+- **Result:** Closed for the scoped fixture-reference and handoff failure-state checkpoint. All data remains fictional; no backend or real-data capability was added.
+
+### UI-008 — Safe rendering of fixture-derived content (OPEN)
+
+- **Finding:** Several static workspace pages construct HTML strings with `innerHTML` and interpolate fixture-derived fields without universal escaping. The current screens load bundled fictional JavaScript fixtures and do not expose external submissions, so this review does not claim a demonstrated exploit or a complete security assessment.
+- **Verified boundary:** The Claim Decisions form applies an `esc()` function; browser coverage confirms an HTML-looking string remains literal text and does not create an `img` element. That test does not cover the other renderers.
+- **Required preventive action:** Before any external, connected or user-supplied content is introduced, replace unsafe HTML-string interpolation with DOM element/text-node construction or rigorously context-appropriate escaping across all fixture renderers; add hostile-string tests for every affected workspace.
+- **Status:** OPEN. Do not connect untrusted data to these renderers until closed.
