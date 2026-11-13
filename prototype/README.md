@@ -1,6 +1,28 @@
 # ScoutSA Internal Web Prototype
 
-This directory contains the first responsive, browser-based ScoutSA interface prototype.
+**Branch:** `prototype/internal-demo`  
+**State as at:** 2026-11-13  
+**Purpose:** isolated synthetic-data design and policy-evaluation prototype only.
+
+This directory contains the original responsive browser demonstration plus focused synthetic review workspaces. It is not a production application and does not change mainline implementation holds.
+
+## Current review-engine status
+
+- Engine: `review-engine.js` **v0.2.0**.
+- Headless suite: `node --test prototype/tests/*.test.js`.
+- Current recorded engine-suite result: **40/40 passed** on 2026-11-12 in an isolated Node v26.12.1 execution environment (70.59 ms).
+- Documentation-integrity tests are being added to the same suite; until their first run is recorded, do not describe the expanded suite as passing.
+- The current browser-integrated discovery smoke page has **not** been rerun against v0.2.0. The previous 32/32 browser result belongs to the v0.1.0 baseline.
+- The GitHub Actions workflow is configured, but a hosted run result has not been independently confirmed.
+
+The engine can only produce a separate-human-review disposition. It always returns `disclosurePermitted: false`. Its fixtures and projections are synthetic; it is not authentication, authorization, a security boundary or a production policy service.
+
+See:
+- [Review engine contract](REVIEW-ENGINE-CONTRACT.md) — draft, not ratified.
+- [Verification record](verification/discovery-request-browser-verification-2026-11-12.md).
+- [Current gate status](../docs/00-gate-status.md).
+- [Documentation integrity and error prevention](../docs/engineering-integrity.md).
+
 
 ## Open locally
 Open `index.html` in a modern browser. No build step or package installation is required.
