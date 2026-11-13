@@ -125,6 +125,9 @@ test("workspace hub links every existing synthetic review journey", () => {
   for (const file of workspacePaths) {
     assert.ok(dashboard.includes('href="./' + file + '"'), "workspace hub link missing: " + file);
     assert.ok(fs.existsSync(path.join(root, "prototype", file)), "linked workspace file does not exist: " + file);
+    const destination = read("prototype/" + file);
+    assert.ok(destination.includes('aria-label="ScoutSA workspace return"'), "workspace must provide return navigation: " + file);
+    assert.ok(destination.includes('href="./index.html"'), "workspace must link back to the hub: " + file);
   }
   assert.equal((dashboard.match(/class="workspace-card"/g) || []).length, workspacePaths.length, "workspace card inventory must match the linked workspace files");
 });
