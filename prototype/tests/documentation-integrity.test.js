@@ -14,9 +14,10 @@ const gateStatus = read("docs/00-gate-status.md");
 const verification = read("prototype/verification/discovery-request-browser-verification-2026-11-12.md");
 const rootReadme = read("README.md");
 
-const version = engine.match(/review engine v([0-9]+\\.[0-9]+\\.[0-9]+)/i)?.[1];
-const declaredTestCount = (engineTests.match(/^test\\(/gm) || []).length;
-const countPattern = new RegExp(`${declaredTestCount}\\\\s*\\\\/\\\\s*${declaredTestCount}`);
+const versionLine = engine.split("\n").find(line => line.includes("review engine v"));
+const version = versionLine?.split("review engine v")[1]?.split(" ")[0];
+const declaredTestCount = engineTests.split("\n").filter(line => line.startsWith("test(")).length;
+const hasCurrentTestCount = source => source.includes(`${declaredTestCount}/${declaredTestCount}`) || source.includes(`${declaredTestCount} / ${declaredTestCount}`);
 
 test("contract, README and gate status identify the source engine version", () => {
   assert.ok(version, "engine version comment must be present");
@@ -28,9 +29,9 @@ test("contract, README and gate status identify the source engine version", () =
 
 test("current documentation reports the count derived from test declarations", () => {
   assert.ok(declaredTestCount > 0, "headless test declarations must be discoverable");
-  assert.match(prototypeReadme, countPattern, "prototype README test count is stale");
-  assert.match(gateStatus, countPattern, "gate status test count is stale");
-  assert.match(verification, countPattern, "verification record test count is stale");
+  assert.ok(hasCurrentTestCount(prototypeReadme), "prototype README test count is stale");
+  assert.ok(hasCurrentTestCount(gateStatus), "gate status test count is stale");
+  assert.ok(hasCurrentTestCount(verification), "verification record test count is stale");
 });
 
 test("root README links the documentation integrity control", () => {
