@@ -1,4 +1,4 @@
-/* ScoutSA pure review engine v0.2.1 — deterministic synthetic policy evaluator.
+/* ScoutSA pure review engine v0.3.0 — deterministic synthetic policy evaluator.
  * No DOM, storage, network, authentication, authorization or disclosure side effects.
  * All time-sensitive checks use the caller-supplied context.now (ISO timestamp).
  */
