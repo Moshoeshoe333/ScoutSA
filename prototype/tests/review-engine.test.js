@@ -22,6 +22,16 @@ function validRequest(overrides = {}) {
     ...overrides
   };
 }
+function evidenceRecord(evidenceRef, reviewerId, authorityId, claimType, inspectedAt) {
+  return {
+    evidenceRef, invitationId:"INV-1", organizationId:"ORG-1", reviewerId, authorityId,
+    claimType, reviewScope:"INVITATION_SAFEGUARDING_REVIEW",
+    sourceClass:"SYNTHETIC_FIXTURE", sourceLocator:"SYNTHETIC-LOCATOR-" + evidenceRef,
+    inspectionStatus:"ACCEPTED", inspectedBy:reviewerId, inspectedAt,
+    findingRef:"SYNTHETIC-FINDING-" + evidenceRef,
+    lifecycleStatus:"ACTIVE", expiresAt:FUTURE
+  };
+}
 function validContext(overrides = {}) {
   return {
     players: [{ id:"PLAYER-1", recordStatus:"ACTIVE", lifecycleStatus:"ACTIVE", expiresAt:FUTURE }],
@@ -53,6 +63,13 @@ function validContext(overrides = {}) {
     reviewerAuthorities:[
       {id:"REVIEW-AUTH-1",reviewerId:"REVIEWER-1",organizationId:"ORG-1",scope:"INVITATION_SAFEGUARDING_REVIEW",authority:"Verified",lifecycleStatus:"ACTIVE",expiresAt:FUTURE},
       {id:"REVIEW-AUTH-2",reviewerId:"REVIEWER-2",organizationId:"ORG-1",scope:"INVITATION_SAFEGUARDING_REVIEW",authority:"Verified",lifecycleStatus:"ACTIVE",expiresAt:FUTURE}
+    ],
+    evidenceRecords:[
+      evidenceRecord("SYNTHETIC-FIRST-REVIEW-1","REVIEWER-1","REVIEW-AUTH-1","REVIEW_COMPLETION","2026-11-12T08:55:00.000Z"),
+      evidenceRecord("SYNTHETIC-CONFLICT-CHECK-1","REVIEWER-1","REVIEW-AUTH-1","REVIEWER_CONFLICT_CHECK","2026-11-12T08:56:00.000Z"),
+      evidenceRecord("SYNTHETIC-SECOND-REVIEW-1","REVIEWER-2","REVIEW-AUTH-2","REVIEW_COMPLETION","2026-11-12T09:25:00.000Z"),
+      evidenceRecord("SYNTHETIC-CONFLICT-CHECK-2","REVIEWER-2","REVIEW-AUTH-2","REVIEWER_CONFLICT_CHECK","2026-11-12T09:26:00.000Z"),
+      evidenceRecord("SYNTHETIC-INDEPENDENCE-CHECK-1","REVIEWER-2","REVIEW-AUTH-2","REVIEWER_INDEPENDENCE_CHECK","2026-11-12T09:27:00.000Z")
     ],
     invitationCases:[{
       id:"INV-1", opportunityId:"OPP-1", workflowState:"READY", secondReviewStatus:"COMPLETE",
@@ -547,5 +564,84 @@ test("duplicate reviewer authority records fail closed", () => {
   const result = evaluate(validRequest(), context);
   assert.equal(gate(result, "safeguarding_review").state, "FAIL");
   assert.ok(result.reasonCodes.includes("DUPLICATE_REVIEWER_AUTHORITY"));
+});
+
+test("submitted or merely inspected evidence is not accepted for a review claim", () => {
+  const context = validContext();
+  context.evidenceRecords[0].inspectionStatus = "INSPECTED";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("REVIEW_EVIDENCE_NOT_ACCEPTED"));
+  assert.equal(result.disclosurePermitted, false);
+});
+
+test("evidence provenance must match the exact claim and review scope", () => {
+  const context = validContext();
+  context.evidenceRecords[0].claimType = "REVIEWER_CONFLICT_CHECK";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("REVIEW_EVIDENCE_PROVENANCE_MISMATCH"));
+});
+
+test("stale evidence invalidates a previously complete review on reevaluation", () => {
+  const context = validContext();
+  assert.equal(gate(evaluate(validRequest(), context), "safeguarding_review").state, "PASS");
+  context.evidenceRecords[0].inspectionStatus = "STALE";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("REVIEW_EVIDENCE_INVALIDATED"));
+  assert.equal(result.disposition, "HOLD");
+});
+
+test("revoked evidence invalidates a previously complete review on reevaluation", () => {
+  const context = validContext();
+  assert.equal(gate(evaluate(validRequest(), context), "safeguarding_review").state, "PASS");
+  context.evidenceRecords[0].lifecycleStatus = "REVOKED";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("REVIEW_EVIDENCE_INVALIDATED"));
+  assert.equal(result.disclosurePermitted, false);
+});
+
+test("evidence inspection must be performed by the reviewer recorded for that claim", () => {
+  const context = validContext();
+  context.evidenceRecords[1].inspectedBy = "REVIEWER-2";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("REVIEW_EVIDENCE_PROVENANCE_MISMATCH"));
+});
+
+test("expired evidence cannot support a review", () => {
+  const context = validContext();
+  context.evidenceRecords[0].expiresAt = PAST;
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("REVIEW_EVIDENCE_INVALIDATED"));
+});
+
+test("missing evidence inspection record fails closed", () => {
+  const context = validContext();
+  context.evidenceRecords = context.evidenceRecords.filter(item => item.evidenceRef !== "SYNTHETIC-FIRST-REVIEW-1");
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("REVIEW_EVIDENCE_PROVENANCE_MISSING"));
+});
+
+test("duplicate evidence references fail closed", () => {
+  const context = validContext();
+  context.evidenceRecords.push(structuredClone(context.evidenceRecords[0]));
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("DUPLICATE_REVIEW_EVIDENCE_REFERENCE"));
+});
+
+test("revoked reviewer authority invalidates the invitation review on reevaluation", () => {
+  const context = validContext();
+  assert.equal(gate(evaluate(validRequest(), context), "safeguarding_review").state, "PASS");
+  context.reviewerAuthorities[1].lifecycleStatus = "REVOKED";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("REVIEWER_AUTHORITY_LIFECYCLE_NOT_ACTIVE"));
+  assert.equal(result.disclosurePermitted, false);
 });
 
