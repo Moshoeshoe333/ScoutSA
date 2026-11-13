@@ -145,4 +145,4 @@ Added `prototype/OPPORTUNITY-REQUIREMENT-DECLARATION.md` as a non-ratified requi
 
 No engine, fixture, schema, contract, UI, database, RLS, API, authentication or mainline behavior changed. The declaration is linked from the root README, prototype README and gate status. A sixth documentation-integrity test checks the links, non-ratified status, implementation hold and core content.
 
-The current source inventory is **6 documentation-integrity test declarations + 40 engine tests = 46 total declarations**. The last hosted pass cited above remains the 45-declaration baseline; the 46-declaration suite is pending its own hosted run. No pass is claimed for the new test yet. The workflow does not execute browser tests.
+The current source inventory is **6 documentation-integrity test declarations (46 total)**, comprising 40 engine tests and 6 documentation-integrity checks. The last hosted pass cited above remains the 45-declaration baseline; the 46-declaration suite is pending its own hosted run. No pass is claimed for the new test yet. The workflow does not execute browser tests.
