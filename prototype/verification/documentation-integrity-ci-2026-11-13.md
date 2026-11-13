@@ -328,11 +328,11 @@ The audit-history model is experimental, not ratified and not connected to `revi
 The 33-tier assessment identified that the original validator could accept empty/incomplete histories and did not enforce causal invalidation. The validator is now v0.2.0 and the review engine is v0.3.0. The engine requires a non-empty event array, exact review IDs, completion events for both reviewers, evidence-version plus synthetic-fingerprint pins, current scoped event-authority fixtures, strictly increasing canonical UTC timestamps, completion-time equality, event/fixture final-state agreement, and a review-invalidation event after any later invalidation of linked evidence. A validly invalidated review is not eligible to pass the safeguarding gate.
 
 Current source inventory:
-- Review-engine tests: **78**.
-- Audit-history tests: **30**.
+- Review-engine tests: **79**.
+- Audit-history tests: **31**.
 - Documentation-integrity checks: **9**.
 - Workspace-data-integrity tests: **2**.
-- Engine plus documentation-integrity count: **87**.
-- Total Node test declarations: **119**.
+- Engine plus documentation-integrity count: **88**.
+- Total Node test declarations: **121**.
 
-Current guard phrase: **9 documentation-integrity test declarations (87 total)**. Hosted verification passed on [run 43443050401](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43443050401), commit `802419b78c3dfa88923f3c997decee6fbc9061c5`: **119/119 Node tests**, **7/7 request-review browser groups**, **8/8 workspace-hub browser groups** and **12/12 specialist interaction groups**. The previous 100-test run is a historical baseline. The model remains synthetic, caller-supplied and in-memory. No immutable storage, cryptographic integrity, trusted timestamps, real identity proofing, production authorization or disclosure is implemented. UI-008 remains OPEN; mainline, real-data, deployment and pilot holds remain unchanged.
+Current guard phrase: **9 documentation-integrity test declarations (88 total)**. The previous integration baseline passed on [run 43443050401](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43443050401), commit `802419b78c3dfa88923f3c997decee6fbc9061c5`: 119/119 Node tests. The current invitation-scoped revision has 121 declared Node tests and awaits its own hosted run. That earlier run passed **7/7 request-review browser groups**, **8/8 workspace-hub browser groups** and **12/12 specialist interaction groups**. The previous 100-test run is a historical baseline. The model remains synthetic, caller-supplied and in-memory. No immutable storage, cryptographic integrity, trusted timestamps, real identity proofing, production authorization or disclosure is implemented. UI-008 remains OPEN; mainline, real-data, deployment and pilot holds remain unchanged.
