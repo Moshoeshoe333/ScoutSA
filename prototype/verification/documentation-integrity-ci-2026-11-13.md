@@ -118,7 +118,7 @@ Added `prototype/OPPORTUNITY-EVIDENCE-ACCEPTANCE-MATRIX.md` as a non-ratified de
 
 No engine, schema, fixture, contract or mainline behavior changed. Root README, prototype README and gate status link the matrix and explicitly preserve the implementation hold.
 
-The documentation-integrity suite now declares **5 checks**; with 40 engine tests the expected total is **45 declarations**. The previous 44-declaration suite passed on [run 43399919864](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399919864). The current 45-declaration suite awaits its own hosted verification.
+The documentation-integrity suite now declares **5 checks**; with 40 engine tests the expected total is **45 declarations**. Current inventory: **5 documentation-integrity test declarations (45 total)**. The previous 44-declaration suite passed on [run 43399919864](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399919864). The current 45-declaration suite awaits its own hosted verification.
 
 
 Last successful prototype CI: [run 43399919864](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399919864) — 44-test baseline. The current 45-test suite is awaiting hosted verification.
