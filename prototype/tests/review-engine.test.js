@@ -105,7 +105,7 @@ function fixtureBundle() {
 }
 
 test("engine is pure CommonJS and has no DOM dependency", () => {
-  assert.equal(engine.version, "0.2.0");
+  assert.equal(engine.version, "0.2.1");
   assert.equal(typeof engine.evaluateRequest, "function");
 });
 test("all three committed synthetic request fixtures remain HOLD", () => {
