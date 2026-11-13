@@ -10,6 +10,7 @@ on:
       - "docs/engineering-integrity.md"
       - "prototype/README.md"
       - "prototype/index.html"
+      - "prototype/*.html"
       - "prototype/REVIEW-ENGINE-CONTRACT.md"
       - "prototype/review-engine.js"
       - "prototype/review-state.js"
