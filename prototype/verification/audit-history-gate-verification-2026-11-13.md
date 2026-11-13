@@ -3,7 +3,7 @@
 **Branch:** `prototype/internal-demo`  
 **Engine:** `review-engine.js` v0.3.0  
 **Audit validator:** `audit-history.js` v0.2.0  
-**Status:** Hosted verification passed on [run 43443050401](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43443050401), commit `802419b78c3dfa88923f3c997decee6fbc9061c5`.
+**Status:** The previous 119-test baseline passed; the latest invitation-scoped 121-test revision awaits hosted verification.
 
 ## Scope
 
@@ -17,18 +17,12 @@ Missing history, incomplete review completion, invalid actor/authority/scope bin
 - Documentation-integrity tests: **9**.
 - Audit-history tests: **31**.
 - Workspace-data-integrity tests: **2**.
-- Engine plus documentation-integrity count: **87**.
-- Total Node test declarations: **119**.
+- Engine plus documentation-integrity count: **88**.
+- Total Node test declarations: **121**.
 
 ## Verification result
 
-The previous baseline run [43443050401](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43443050401) passed 119 tests. The current 121-test invitation-scoped revision awaits a new run.
-- **121/121 Node tests passed; 0 failed.**
-- **7/7** Discovery & Request Review browser groups passed.
-- **8/8** workspace-hub browser groups passed.
-- **12/12** specialist workspace interaction browser groups passed.
-
-This verifies the declared synthetic tests and browser paths only; it is not a security, legal, safeguarding-effectiveness or production-readiness certification. The new workflow must run against the exact commit containing these changes.
+The previous baseline run [43443050401](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43443050401) passed 119 tests and all three browser suites. The current invitation-scoped 121-test revision requires a new hosted run. Do not carry forward the previous run's counts as evidence for this revision.
 
 ## Limits
 
