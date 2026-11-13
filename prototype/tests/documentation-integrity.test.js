@@ -58,7 +58,7 @@ test("affiliation evidence proposal is linked and explicitly non-ratified", () =
   assert.ok(proposal.includes("NOT RATIFIED"), "proposal must remain explicitly non-ratified");
   assert.ok(proposal.includes("No implementation is authorized"), "proposal must preserve implementation hold");
   assert.ok(rootReadme.includes("prototype/AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md"), "root README must link proposal");
-  const currentCiIds = [rootReadme, prototypeReadme, gateStatus, ciVerification].map(source => source.match(/Last successful prototype CI: \\[run (\\d+)\\]/)?.[1]);
+  const currentCiIds = [rootReadme, prototypeReadme, gateStatus, ciVerification].map(source => source.match(/Last successful prototype CI: \[run (\d+)\]/)?.[1]);
   assert.ok(currentCiIds.every(Boolean), "each current summary must identify the last successful prototype CI run");
   assert.ok(new Set(currentCiIds).size === 1, "current summaries must cite the same successful prototype CI run");
   assert.ok(prototypeReadme.includes("AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md"), "prototype README must link proposal");
