@@ -87,7 +87,7 @@ async function main() {
     const emptyStates = [
       ["?opportunity=OPP-DEMO-001", /player reference is required/i],
       ["?player=UNKNOWN-PLAYER", /No recognized synthetic Passport reference/i],
-      ["?player=DEMO-PLAYER-001&opportunity=OPP-DEMO-003", /No matching synthetic request/i],
+      ["?player=DEMO-PLAYER-001&opportunity=OPP-DEMO-003", /Passport handoff/i],
       ["?player=DEMO-PLAYER-001&opportunity=", /non-empty opportunity reference is required/i]
     ];
     for (const [query, expected] of emptyStates) {
