@@ -11,9 +11,9 @@ This directory contains the original responsive browser demonstration plus focus
 - Engine: `review-engine.js` **v0.2.0**.
 - Headless suite: `node --test prototype/tests/*.test.js`.
 - Current recorded engine-suite result: **40/40 passed** on 2026-11-12 in an isolated Node v26.12.1 execution environment (70.59 ms).
-- Documentation-integrity tests are being added to the same suite; until their first run is recorded, do not describe the expanded suite as passing.
+- Documentation-integrity suite: **3/3 checks passed** in hosted GitHub Actions alongside the 40 engine tests; see [CI verification record](verification/documentation-integrity-ci-2026-11-13.md).
 - The current browser-integrated discovery smoke page has **not** been rerun against v0.2.0. The previous 32/32 browser result belongs to the v0.1.0 baseline.
-- The GitHub Actions workflow is configured, but a hosted run result has not been independently confirmed.
+- Hosted GitHub Actions passed all 43 test declarations (40 engine + 3 documentation checks) on [run 43396595986](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396595986). The workflow does not execute browser tests.
 
 The engine can only produce a separate-human-review disposition. It always returns `disclosurePermitted: false`. Its fixtures and projections are synthetic; it is not authentication, authorization, a security boundary or a production policy service.
 
