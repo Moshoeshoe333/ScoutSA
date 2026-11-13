@@ -248,4 +248,5 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Source inventory:** 40 review-engine tests + 8 documentation-integrity checks = 48 declarations.
 - **Verification:** Hosted verification of the 48-declaration suite is pending. The previous 47-declaration run [43406164367](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43406164367) is historical and does not cover this change.
 - **Boundary:** This is a navigation/discoverability improvement only. No shared authentication, backend, persistence, authorization, role enforcement, live submissions, player contact or production behavior was added. Mainline is unchanged.
-- **Status:** Implemented; hosted CI verification pending.
+- **Verification:** Hosted GitHub Actions [run 43409104888](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43409104888), commit `14bcabb84e58fa8f286887d4125cddb6ee6a282e`, completed successfully. The job log records 48 tests, 48 passed, 0 failed.
+- **Status:** Closed — navigation hub and 48-declaration hosted test suite verified.
