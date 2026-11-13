@@ -1,4 +1,4 @@
-# ScoutSA Backend Gate Contract — Draft v1.1.0
+# ScoutSA Backend Gate Contract — Draft v1.2.0
 
 **Draft — not ratified.**
 
@@ -8,10 +8,10 @@ This is a **contract proposal**, not backend implementation, database design, a 
 
 - Input schema: `prototype/contracts/review-evaluation-input.schema.json`
 - Result schema: `prototype/contracts/review-evaluation-result.schema.json`
-- Current prototype engine: `prototype/review-engine.js` version `0.2.1`
-- Contract version: `1.1.0`
+- Current prototype engine: `prototype/review-engine.js` version `0.3.0`
+- Contract version: `1.2.0`
 
-The current JavaScript engine is version `0.2.1`; it uses prototype fixture labels and returns a prototype result object. It is **not yet a schema-valid instance** of the backend result contract: a future adapter must add the contract/policy versions and evaluation timestamp, map fixture labels to canonical enums, and project the engine result into the exact result schema. Do not treat the current client-side module as an authorization service.
+The current JavaScript engine is version `0.3.0`; it uses prototype fixture labels and returns a prototype result object. It is **not yet a schema-valid instance** of the backend result contract: a future adapter must add the contract/policy versions and evaluation timestamp, map fixture labels to canonical enums, and project the engine result into the exact result schema. Do not treat the current client-side module as an authorization service.
 
 ## Evaluation precedence and lifecycle
 
@@ -46,7 +46,7 @@ The isolated JavaScript evaluator now requires an invitation record to carry:
 
 The legacy `secondReviewStatus` flag is ignored by the evaluator. It cannot substitute for the structured records. Missing, duplicate, expired, mismatched, unordered or unevidenced records fail closed.
 
-**Evidence boundary:** these are synthetic fields and reference strings. They demonstrate what the prototype requires structurally; they do not prove that an identity was checked, a conflict was investigated, a reviewer is genuinely independent, a grant is legally authoritative, or an evidence source is authentic. No real evidence ingestion, signature verification, reviewer account, identity proofing, authorization service, audit ledger or conflict adjudication exists. This proposal is not ratified and is not a production control.
+**Evidence boundary:** these are synthetic fields and reference strings. They demonstrate what the prototype requires structurally; they do not prove that an identity was checked, a conflict was investigated, a reviewer is genuinely independent, a grant is legally authoritative, or an evidence source is authentic. No real evidence ingestion, signature verification, reviewer account, identity proofing, authorization service, durable audit ledger or conflict adjudication exists. This proposal is not ratified and is not a production control.
 
 ## Synthetic evidence inspection and revocation model — prototype only
 
@@ -159,6 +159,11 @@ This draft must be reviewed against the domain model and by appropriate safeguar
 Implementation remains blocked until the contract is explicitly ratified and the responsible authority, legal basis, retention policy, access model, incident process, and independent review requirements are established.
 
 
-## Experimental audit-history companion (not part of this contract)
+## Synthetic audit-history gate — prototype-only, not ratified
 
-The isolated prototype branch now contains `prototype/audit-history.js` v0.1.0 and `prototype/SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md`. This companion validates a caller-supplied synthetic event sequence but is **not integrated into this review engine or contract**. It cannot provide immutable storage, cryptographic integrity, trusted timestamps, identity proofing, durable audit history or automatic review invalidation. A valid sequence does not alter any gate or authorize a decision. The companion proposal is experimental and not ratified; it does not lift any implementation, real-data, disclosure, deployment or pilot hold.
+The isolated prototype contains `prototype/audit-history.js` v0.2.0 and `prototype/SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md`. The engine now requires a non-empty synthetic audit-event sequence for invitation safeguarding review. It checks exact evidence-version/fingerprint links, event authority fixture bindings, event chronology, required review-completion events, completion timestamps, final evidence state and review invalidation after later evidence invalidation. Missing or invalid history fails the safeguarding gate; a validly invalidated review also fails the gate.
+
+This is an in-memory structural validator integrated into the synthetic evaluator, not an immutable audit service. It does not provide append-only or durable storage, cryptographic integrity, trusted timestamps, identity proofing, actual authorization, external evidence authenticity or automatic propagation to previously displayed results. A valid sequence means only that the supplied synthetic history is internally consistent; it does not authorize a human decision, disclosure or contact. The proposal remains experimental and not ratified. Mainline, real-data, disclosure, deployment and pilot holds remain unchanged.
+
+
+The synthetic audit-history gate is a prototype-only supplement to this draft. It is not a ratified backend requirement or permission to implement persistent event storage. Any future production audit architecture requires separately approved source provenance, event authority, canonical serialization, cryptographic commitments, trusted time, retention, access controls, correction/supersession rules and dependent-review invalidation policy.
