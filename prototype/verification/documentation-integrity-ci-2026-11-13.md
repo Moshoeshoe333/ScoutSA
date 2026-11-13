@@ -204,3 +204,36 @@ The review identified that `?opportunity=...` without a `player` parameter previ
 Added `prototype/review-state.js` as a pure projection from the current synthetic review-engine result into six display stages: fictional fixture/not submitted; authority and evidence review; safeguarding review; separate human review eligibility; final decision/outcome not recorded; and disclosure/contact prohibited. The request-review page renders the projection using DOM text nodes. The evaluator and policy rules were not changed. Regression assertions inside the existing workspace-integrity test cover all-pass, blocking failure, skipped prerequisite, missing gate, no matching request and the prohibition on invented outcomes. The declaration inventory remains 40 engine + 8 documentation-integrity checks = 48. The workflow path filter now includes `prototype/review-state.js`. The first test attempts exposed a malformed escaped-quote source assertion in the existing workspace-integrity test; the assertion was corrected to search the fixture's literal `playerId:"DEMO-PLAYER-001"` form. Failed attempts remain recorded: [43414624909](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414624909), [43414650734](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414650734), [43414698380](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414698380), [43414704997](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414704997), [43414712123](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414712123), [43414719616](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414719616) and [43414728521](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414728521). A subsequent consistency-guard revision made the test fixture incomplete: it did not set `allBlockingGatesSatisfied: true` for the all-pass synthetic evaluation. [Run 43415035969](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43415035969) therefore failed at the expected-readiness assertion. The fixture was corrected in commit `038b913111b8b17d6a0de36bb07ca16934379884`; [run 43415050256](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43415050256) passed the complete suite: **48 passed, 0 failed**. The subsequent explicit `allBlockingGatesSatisfied` negative-case assertion was added in commit `ad6fb2f488b62b433ef95a5373fa79118a6e5a52` and passed on [run 43415259079](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43415259079): **48 passed, 0 failed**. Earlier escaped-quote failures remain recorded above. No browser-integrated visual or click-through test is claimed.
 
 A final consistency guard also requires `allBlockingGatesSatisfied === true` and both review groups to be fully passing before the UI can display eligibility for separate human review; an inconsistent readiness disposition is forced to HOLD.
+
+
+## Browser-integrated request-review smoke verification — 2026-11-13
+
+The workflow now runs both the 48-declaration Node policy/documentation suite and a separate Playwright/Chromium browser smoke script. It installs Playwright 1.56.1 and Chromium, using an `ubuntu-24.04` runner. The browser script is `prototype/tests/discovery-request.browser-smoke.cjs`; its extension intentionally keeps it separate from the Node `*.test.js` declaration inventory.
+
+### Browser test coverage
+
+1. Ordinary request queue renders all three synthetic scenarios and supports selecting each.
+2. Six read-only stages render; the fixture is not submitted, no final decision is invented, and disclosure/contact remain prohibited.
+3. Guardian-mediated under-18, unknown-age and adult-status-unverified scenarios remain on hold/protected.
+4. Opportunity-only, unknown-player, unmatched player/opportunity and empty-opportunity handoffs show no request records and no fabricated review stages.
+5. Exact player/opportunity and player-only handoffs return only their intended synthetic records.
+6. All eight connected workspace destinations and the workspace-hub return destination respond successfully; the Passport link is clicked in-browser.
+7. At 390px viewport width, the request layout and review stages stack without horizontal page overflow; no uncaught browser page or console errors occur.
+
+### Hosted attempts and corrections
+
+- [43417453416](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43417453416): the original source-only CI workflow passed 48/48; it did not yet run Playwright.
+- [43417473594](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43417473594): browser step was blocked because `ubuntu-latest` resolved to Ubuntu 26.04, unsupported by Playwright 1.56.1. The runner was pinned to `ubuntu-24.04`.
+- [43417528428](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43417528428): 48/48 headless tests passed; browser assertion incorrectly expected generic `FAIL/SKIPPED` text rather than the actual displayed gate labels. The assertion was corrected to the rendered labels.
+- [43417619789](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43417619789): 48/48 headless tests passed; the unmatched-pair test expected the handoff banner itself to say “No matching synthetic request”. The page correctly shows a recognized Passport handoff and a separate no-match state in the request panel; the test was aligned to that behavior.
+- [43417997207](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43417997207): 48/48 headless tests passed; the Passport click-through path assertion contained an over-escaped regular expression. Corrected before the final run.
+
+### Final verification
+
+- [x] Hosted GitHub Actions [run 43418015630](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43418015630), commit `70c6c8563325403bfff334bb8f6bdde67a23be41`, completed successfully.
+- [x] Node policy/documentation suite: **48 passed, 0 failed**.
+- [x] Chromium browser smoke: **7/7 groups passed**.
+- [x] Browser checks include actual rendered state, selecting request cases, URL handoffs, link destination responses, a Passport navigation click, mobile viewport layout and browser error reporting.
+- [ ] Full visual-design review, accessibility audit, security/authorization testing, real identity/consent/safeguarding validation and production-readiness testing remain outside this smoke-test scope.
+
+**Conclusion:** The current v0.2.0 Discovery & Request Review synthetic journey is browser-smoke verified for the scenarios and paths above. This is not a security, legal, safeguarding-effectiveness or production-readiness claim. Mainline implementation holds remain unchanged.
