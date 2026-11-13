@@ -84,6 +84,7 @@ The prototype engine is now **v0.2.1** and the draft contract is **v1.1.0**. Eve
 Seven additional engine tests cover missing version pins, unknown versions, superseded evidence, multiple current versions, duplicate version identifiers, fingerprint mismatch and successful fresh review against a new version.
 
 - Engine test declarations: **73**.
+- Engine test source count: **73/73**.
 - Documentation-integrity declarations: **8**.
 - Workspace-data-integrity declarations: **2**.
 - Total Node test declarations: **83**.
