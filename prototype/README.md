@@ -10,7 +10,7 @@ This branch contains a static browser prototype and a synthetic review engine. I
 
 - Review engine: `review-engine.js` **v0.3.0**.
 - Synthetic audit-history validator: `audit-history.js` **v0.2.0**, integrated as a mandatory structural gate in the synthetic invitation-review evaluation.
-- Node test declarations: **121 total** — **79/79 review-engine tests**, 9 documentation-integrity checks, 31 audit-history tests and 2 workspace-data-integrity checks.
+- Node test declarations: **121 total** — **79/79 review-engine tests**, 9 documentation-integrity checks (9 checks declared), 31 audit-history tests and 2 workspace-data-integrity checks.
 - Latest full engine/browser verification: [GitHub Actions run 43444088668](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43444088668), commit `0e95f7d47112b5276552f84e1d362106270ec91b`: **121/121 Node tests**, **7/7 Discovery & Request Review browser groups**, **8/8 workspace hub/navigation groups**, and **12/12 specialist interaction groups**.
 - The later session-ledger documentation commit `073655260ac86423182e613329842789a74d84ae` passed its configured hosted workflow: [run 43445376478](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43445376478). This is a later documentation-workflow result, not a new claim that the 121-test/browser suite was rerun on that commit.
 
