@@ -30,6 +30,8 @@
 </main>
 <script src="./data/player-passports.demo.js"></script><script src="./data/guardian-consent.demo.js"></script><script src="./data/organization-memberships.demo.js"></script><script src="./data/coach-academy-workspace.demo.js"></script><script src="./data/opportunities.demo.js"></script><script src="./data/opportunity-evidence.demo.js"></script><script src="./data/opportunity-decisions.demo.js"></script><script src="./data/safeguarded-invitations.demo.js"></script><script src="./data/discovery-requests.demo.js"></script><script src="./review-engine.js"></script><script src="./review-state.js"></script><script src="./handoff-filter.js"></script>
 <script>
+function h(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));}
+
 (()=>{
  const data=window.SCOUTSA_DISCOVERY_REQUESTS;
  const params=new URLSearchParams(window.location.search);
@@ -94,19 +96,19 @@
    $("requestState").textContent=r.state+" · review engine: "+evaluation.disposition;
    $("summary").innerHTML=[
     ["Player reference",r.playerRef],["Age state",r.ageState],["Request route",r.requestOrigin],["Purpose",r.purpose],["Organization",o?o.name:r.organizationId],["Opportunity",p?p.title:r.opportunityId]
-   ].map(([a,b])=>'<div class="field"><small>'+a+'</small><strong>'+b+'</strong></div>').join("");
-   $("gates").innerHTML=evaluation.gates.map(g=>'<div class="gate"><div><strong>'+g.label+'</strong><p>'+g.detail+'</p></div><span>'+g.status+'</span></div>').join("");
+   ].map(([a,b])=>'<div class="field"><small>'+h(a)+'</small><strong>'+h(b)+'</strong></div>').join("");
+   $("gates").innerHTML=evaluation.gates.map(g=>'<div class="gate"><div><strong>'+h(g.label)+'</strong><p>'+h(g.detail)+'</p></div><span>'+h(g.status)+'</span></div>').join("");
    const passport=Object.values(window.SCOUTSA_DEMO_PLAYERS).find(x=>x.id===r.playerId);
    const passportUrl=passport?"./player-passport.html?player="+encodeURIComponent(passport.id):"./player-passport.html";
    const opportunityUrl="./opportunities.html?player="+encodeURIComponent(r.playerId)+"&opportunity="+encodeURIComponent(r.opportunityId);
    const items=[
     ["Player Passport",passportUrl],["Opportunity register",opportunityUrl],["Guardian & consent","./guardian-consent.html"],["Organization memberships","./organization-memberships.html"],["Opportunity evidence","./opportunity-evidence.html"],["Claim decisions","./opportunity-decisions.html"],["Invitation safeguards","./safeguarded-invitations.html"],["Matching review","./player-opportunity-matching.html"]
    ];
-   $("links").innerHTML=items.map(([label,url])=>'<a href="'+url+'">'+label+' ↗</a>').join("");
+   $("links").innerHTML=items.map(([label,url])=>'<a href="'+h(url)+'">'+h(label)+' ↗</a>').join("");
    $("reason").textContent=r.note+" "+(c?"Consent state: "+c.consentState+". ":"")+(o?"Organization identity: "+o.identityStatus+". ":"")+(p?"Opportunity verification: "+p.verification+". ":"")+(inv?"Invitation workflow: "+inv.workflowState+".":"");
    document.querySelectorAll(".request").forEach(b=>b.classList.toggle("active",b.dataset.id===r.id));
  }
- $("requestList").innerHTML=playerRecords.map(r=>'<button class="request" type="button" data-id="'+r.id+'"><strong>'+r.id+'</strong><small>'+r.purpose+'</small><span class="pill">HOLD</span></button>').join("");
+ $("requestList").innerHTML=playerRecords.map(r=>'<button class="request" type="button" data-id="'+h(r.id)+'"><strong>'+h(r.id)+'</strong><small>'+h(r.purpose)+'</small><span class="pill">HOLD</span></button>').join("");
  $("requestList").addEventListener("click",e=>{const b=e.target.closest("button[data-id]");if(b){const r=playerRecords.find(x=>x.id===b.dataset.id);if(r)render(r);}});
  $("rules").innerHTML=data.rules.map(x=>"<li>"+x+"</li>").join("");
  $("limits").textContent=data.limits.join(" ");
