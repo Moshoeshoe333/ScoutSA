@@ -176,6 +176,6 @@ Implemented controls:
 - A validly invalidated review is not eligible to pass the safeguarding gate.
 - The review engine fails closed on missing or invalid audit history and keeps disclosure false.
 
-The preceding integration baseline passed hosted verification on [run 43443050401](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43443050401): 119/119 Node tests and all three browser suites. The subsequent invitation-isolation refinement increases the inventory to 121 declarations and requires a fresh hosted run.
+The invitation-scoped revision passed hosted verification on [run 43443819916](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43443819916), commit `0899062638e152a5236372f32dd98e4ed16491c3`: **121/121 Node tests**, **7/7 request-review browser groups**, **8/8 workspace-hub browser groups** and **12/12 specialist interaction groups**.
 
 This update supersedes the pre-integration findings in sections 1, 3 and 5 where they described those defects as still present. The remaining material gaps are not closed: no immutable or append-only store, cryptographic digest/signature, canonical serialization, trusted timestamp, parent-source registry, tamper-evident commitment, identity proofing, real authorization, source authentication, retention policy, concurrency control or durable invalidation propagation exists. The model remains synthetic, in-memory and not ratified. UI-008 remains OPEN; mainline and real-data/disclosure/deployment/pilot holds remain unchanged.
