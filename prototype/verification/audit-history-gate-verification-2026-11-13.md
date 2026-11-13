@@ -13,17 +13,17 @@ Missing history, incomplete review completion, invalid actor/authority/scope bin
 
 ## Current source inventory
 
-- Review-engine tests: **78/78**.
+- Review-engine tests: **79/79**.
 - Documentation-integrity tests: **9**.
-- Audit-history tests: **30**.
+- Audit-history tests: **31**.
 - Workspace-data-integrity tests: **2**.
 - Engine plus documentation-integrity count: **87**.
 - Total Node test declarations: **119**.
 
 ## Verification result
 
-Hosted GitHub Actions run [43443050401](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43443050401) passed on commit `802419b78c3dfa88923f3c997decee6fbc9061c5`:
-- **119/119 Node tests passed; 0 failed.**
+The previous baseline run [43443050401](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43443050401) passed 119 tests. The current 121-test invitation-scoped revision awaits a new run.
+- **121/121 Node tests passed; 0 failed.**
 - **7/7** Discovery & Request Review browser groups passed.
 - **8/8** workspace-hub browser groups passed.
 - **12/12** specialist workspace interaction browser groups passed.
