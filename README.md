@@ -108,7 +108,7 @@ The prototype branch contains a [synthetic Opportunity Validation Scenario Pack]
 
 The isolated prototype journey is **Player Passport → Opportunity Register → Discovery & Request Review**. The selected synthetic Passport reference is carried into the opportunity register; a request-review link appears only when the fixtures contain that exact player–opportunity pair. The request-review screen filters to that pair and links back to the same Passport and opportunity. This is a read-only URL handoff across static pages, not shared persistence, a live application, approval, disclosure, authentication, authorization or contact. Unmatched and incomplete references—including an opportunity parameter without a player parameter—fail closed; all sample requests remain on hold. The shared handoff filter has regression coverage for missing, empty, unknown and exact-match parameter combinations.
 
-The current suite contains 54 declarations (44 review-engine + 8 documentation-integrity + 2 workspace-data-integrity). The dedicated `prototype/tests/workspace-data-integrity.test.js` covers cross-workspace references and handoff failure cases; the current hosted result is recorded below.
+The current suite contains 56 declarations (46 review-engine + 8 documentation-integrity + 2 workspace-data-integrity). The dedicated `prototype/tests/workspace-data-integrity.test.js` covers cross-workspace references and handoff failure cases; the last successful hosted result is historical; the newest four engine regression tests await verification against the current head.
 
 
 ### Synthetic review-state presentation
