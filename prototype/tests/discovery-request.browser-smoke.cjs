@@ -71,7 +71,7 @@ async function main() {
     await page.locator('.request[data-id="REQ-DEMO-001"]').click();
     assert.match(await page.locator("#summary").innerText(), /Under 18/);
     assert.match(await page.locator("#gates").innerText(), /guardian/i);
-    assert.match(await page.locator("#gates").innerText(), /FAIL|SKIPPED/);
+    assert.match(await page.locator("#gates").innerText(), /Skipped — actor legitimacy|Missing or unresolved/);
 
     // Unknown-age scenario must remain protected and held.
     await page.locator('.request[data-id="REQ-DEMO-002"]').click();
