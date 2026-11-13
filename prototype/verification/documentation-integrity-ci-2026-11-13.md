@@ -132,3 +132,8 @@ Last successful prototype CI: [run 43401455192](https://github.com/Moshoeshoe333
 - [x] All 45 declarations passed on [run 43401455192](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401455192), commit `b5fca7ca7551e96027910790eddb83fdd7e26394`.
 - [x] The hosted job `policy-and-documentation-tests` and test step completed successfully.
 - [ ] Browser-integrated v0.2.0 verification remains outstanding; the hosted Node workflow does not execute browser tests.
+
+
+### Final summary-reconciliation attempts
+
+The following intermediate documentation commits failed the shared-CI-reference assertion while summary files were being updated one at a time: [43401588751](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401588751), [43401594717](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401594717), and [43401600241](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401600241). The final reconciled documentation commit passed all 45 declarations on [run 43401612251](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401612251). This later successful run is additional evidence; the 45-test baseline record above remains the earlier independently verified baseline.
