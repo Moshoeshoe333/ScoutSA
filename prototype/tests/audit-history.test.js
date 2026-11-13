@@ -8,13 +8,13 @@ const NOW = "2026-11-13T12:00:00.000Z";
 const evidenceRecords = [{
   evidenceRef:"EV-1", versionId:"v1", organizationId:"ORG-1",
   reviewScope:"INVITATION_SAFEGUARDING_REVIEW",
-  reviewerId:"REVIEWER-1", authorityId:"AUTH-1",
-  evidenceRefs:[{evidenceRef:"EV-1",versionId:"v1"}]
+  reviewerId:"REVIEWER-1", authorityId:"AUTH-1"
 }];
 const reviews = [{
   reviewId:"REV-1", organizationId:"ORG-1",
   scope:"INVITATION_SAFEGUARDING_REVIEW",
-  reviewerId:"REVIEWER-1", authorityId:"AUTH-1"
+  reviewerId:"REVIEWER-1", authorityId:"AUTH-1",
+  evidenceRefs:[{evidenceRef:"EV-1",versionId:"v1"}]
 }];
 function event(eventId, eventType, fromState, toState, occurredAt, extra = {}) {
   return {
