@@ -55,3 +55,13 @@ Several static fixture pages build HTML strings with `innerHTML` and interpolate
 ## Scope and gate boundary
 
 All changes are confined to `prototype/internal-demo`. No real player, guardian, coach, organization, opportunity, consent, contact or media data was introduced. No backend, authentication, authorization, RLS, API, database, durable storage, consent capture, disclosure, contact, invitation or placement was implemented. No implementation gate is lifted. Mainline remains unchanged.
+
+
+## Follow-on ownership regression coverage — awaiting hosted verification
+
+After the hosted run recorded above, two additional tests were added to `prototype/tests/review-engine.test.js`:
+
+- A membership reference whose `playerId` belongs to a different player must fail `membership_linkage` with `MEMBERSHIP_LINK_MISMATCH`.
+- An opportunity owned by a different organization must fail `opportunity_source` with `OPPORTUNITY_ORGANIZATION_MISMATCH`; eligibility and safeguarding remain skipped.
+
+These are tests of existing evaluator behavior, not new policy or a change to the engine. They are committed on `prototype/internal-demo`; no hosted result is yet confirmed for them. The current source inventory is 54 declarations: 44 review-engine, 8 documentation-integrity and 2 workspace-data-integrity tests. The historical PASS above applies only to its recorded commit and run.
