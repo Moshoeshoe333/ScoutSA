@@ -53,11 +53,26 @@
   // Synthetic evidence provenance check. References must resolve to one current,
   // accepted inspection record bound to the exact invitation, claim, reviewer and scope.
   // This validates fixture structure only; it does not authenticate external evidence.
-  function validateEvidenceRecord(context, evidenceRef, expected, now, completedAt) {
-    const lookup = uniqueLookup(context.evidenceRecords, item => item && item.evidenceRef === evidenceRef);
-    if (lookup.duplicate) return { ok: false, code: "DUPLICATE_REVIEW_EVIDENCE_REFERENCE" };
+  function validateEvidenceRecord(context, evidenceRef, pin, expected, now, completedAt) {
+    if (!pin || typeof pin.versionId !== "string" || !pin.versionId.trim()
+      || typeof pin.fingerprint !== "string" || !pin.fingerprint.trim()) {
+      return { ok: false, code: "REVIEW_EVIDENCE_VERSION_PIN_MISSING" };
+    }
+    const versions = array(context.evidenceRecords).filter(item => item && item.evidenceRef === evidenceRef);
+    const lookup = uniqueLookup(versions, item => item.versionId === pin.versionId);
+    if (lookup.duplicate) return { ok: false, code: "DUPLICATE_REVIEW_EVIDENCE_VERSION" };
     const record = lookup.record;
-    if (!record) return { ok: false, code: "REVIEW_EVIDENCE_PROVENANCE_MISSING" };
+    if (!record) return { ok: false, code: "REVIEW_EVIDENCE_VERSION_MISSING" };
+    const currentVersions = versions.filter(item => item.versionStatus === "CURRENT");
+    if (currentVersions.length !== 1) {
+      return { ok: false, code: "REVIEW_EVIDENCE_CURRENT_VERSION_AMBIGUOUS" };
+    }
+    if (record.versionStatus !== "CURRENT" || currentVersions[0].versionId !== pin.versionId) {
+      return { ok: false, code: "REVIEW_EVIDENCE_VERSION_SUPERSEDED" };
+    }
+    if (record.fingerprint !== pin.fingerprint) {
+      return { ok: false, code: "REVIEW_EVIDENCE_FINGERPRINT_MISMATCH" };
+    }
     if (record.inspectionStatus === "REJECTED") return { ok: false, code: "REVIEW_EVIDENCE_REJECTED" };
     if (record.inspectionStatus === "STALE" || record.inspectionStatus === "REVOKED"
       || record.lifecycleStatus !== "ACTIVE") {
@@ -86,7 +101,6 @@
     }
     return { ok: true, code: null };
   }
-
   // Synthetic evidence-linked two-person review check. It validates fixture structure,
   // not real-world identity, independence, authority or authenticity.
   function validateInvitationReview(invitation, context, organizationId, now) {
@@ -99,6 +113,7 @@
       || !first.reviewerId || !second.reviewerId
       || !first.authorityId || !second.authorityId
       || !first.evidenceRef || !second.evidenceRef
+      || !first.evidencePins || !second.evidencePins
       || !Number.isFinite(timestamp(first.completedAt))
       || !Number.isFinite(timestamp(second.completedAt))) {
       return { ok: false, code: "INVITATION_REVIEW_EVIDENCE_INCOMPLETE" };
@@ -133,17 +148,17 @@
       const authorityLife = current(authority, now);
       if (!authorityLife.ok) return { ok: false, code: "REVIEWER_AUTHORITY_" + authorityLife.code };
       const common = { invitationId: invitation.id, organizationId, reviewerId: review.reviewerId, authorityId: review.authorityId };
-      const completionEvidence = validateEvidenceRecord(context, review.evidenceRef,
+      const completionEvidence = validateEvidenceRecord(context, review.evidenceRef, review.evidencePins.completion,
         { ...common, claimType: "REVIEW_COMPLETION" }, now, review.completedAt);
       if (!completionEvidence.ok) return completionEvidence;
-      const conflictEvidence = validateEvidenceRecord(context, review.conflictEvidenceRef,
+      const conflictEvidence = validateEvidenceRecord(context, review.conflictEvidenceRef, review.evidencePins.conflict,
         { ...common, claimType: "REVIEWER_CONFLICT_CHECK" }, now, review.completedAt);
       if (!conflictEvidence.ok) return conflictEvidence;
     }
     if (second.independenceStatus !== "CONFIRMED" || !second.independenceEvidenceRef) {
       return { ok: false, code: "SECOND_REVIEW_INDEPENDENCE_NOT_EVIDENCED" };
     }
-    const independenceEvidence = validateEvidenceRecord(context, second.independenceEvidenceRef,
+    const independenceEvidence = validateEvidenceRecord(context, second.independenceEvidenceRef, second.evidencePins.independence,
       { invitationId: invitation.id, organizationId, reviewerId: second.reviewerId,
         authorityId: second.authorityId, claimType: "REVIEWER_INDEPENDENCE_CHECK" },
       now, second.completedAt);
