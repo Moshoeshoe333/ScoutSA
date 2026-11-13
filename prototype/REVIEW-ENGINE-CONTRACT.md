@@ -1,4 +1,4 @@
-# ScoutSA Backend Gate Contract — Draft v1.0.0
+# ScoutSA Backend Gate Contract — Draft v1.1.0
 
 **Draft — not ratified.**
 
@@ -8,10 +8,10 @@ This is a **contract proposal**, not backend implementation, database design, a 
 
 - Input schema: `prototype/contracts/review-evaluation-input.schema.json`
 - Result schema: `prototype/contracts/review-evaluation-result.schema.json`
-- Current prototype engine: `prototype/review-engine.js` version `0.2.0`
-- Contract version: `1.0.0`
+- Current prototype engine: `prototype/review-engine.js` version `0.2.1`
+- Contract version: `1.1.0`
 
-The current JavaScript engine is version `0.2.0`; it uses prototype fixture labels and returns a prototype result object. It is **not yet a schema-valid instance** of the backend result contract: a future adapter must add the contract/policy versions and evaluation timestamp, map fixture labels to canonical enums, and project the engine result into the exact result schema. Do not treat the current client-side module as an authorization service.
+The current JavaScript engine is version `0.2.1`; it uses prototype fixture labels and returns a prototype result object. It is **not yet a schema-valid instance** of the backend result contract: a future adapter must add the contract/policy versions and evaluation timestamp, map fixture labels to canonical enums, and project the engine result into the exact result schema. Do not treat the current client-side module as an authorization service.
 
 ## Evaluation precedence and lifecycle
 
@@ -63,6 +63,22 @@ The evaluator distinguishes these states: `SUBMITTED` is received but not inspec
 Reevaluation is the only behavior modeled: changing a synthetic record to stale/revoked or changing a reviewer authority lifecycle to revoked causes the next evaluation to return HOLD. There is no durable history, automatic event propagation, background invalidation, notification, or retroactive rewrite of prior results.
 
 **Evidence boundary:** all source classes, locators, findings, timestamps, inspectors and records are synthetic fixture data. This does not inspect a real source, authenticate a reviewer, establish authority, prove independence, verify authenticity, or implement a revocation service. The model is not ratified and is not a production control. No external evidence ingestion or real-person processing is authorized.
+
+
+## Synthetic evidence version pinning — prototype only
+
+Each review must pin every evidence claim to both an explicit `versionId` and a synthetic `fingerprint` in its `evidencePins` object:
+
+- First review: `completion` and `conflict`.
+- Second review: `completion`, `conflict` and `independence`.
+
+An evidence record is identified by the pair `evidenceRef + versionId`, not by `evidenceRef` alone. A record also declares `versionStatus` as `CURRENT` or `SUPERSEDED` and carries the fingerprint inspected by the reviewer. For each evidence reference, exactly one version must be current. The evaluator requires the review's version and fingerprint pins to match that unique current record.
+
+When a new version supersedes an old one, the old record remains as historical synthetic fixture data with `versionStatus: "SUPERSEDED"`; the new record is marked `CURRENT`. A review pinned to the old version fails with `REVIEW_EVIDENCE_VERSION_SUPERSEDED`. A fresh review can pass only after its evidence pins are updated to the new version and fingerprint and the new version's inspection timestamp precedes the new review completion. Missing pins, unknown versions, duplicate version IDs, multiple current versions and fingerprint mismatches fail closed.
+
+This is an evaluation-time rule only. The prototype does not implement an immutable evidence store, cryptographic hashing, digital signatures, append-only history, version creation workflow, notifications, or automatic review invalidation. The fingerprint is a synthetic value copied into the review pin; it is not computed from bytes and cannot detect a coordinated rewrite of both the record and its pin. A future implementation must define canonical content hashing, immutable storage, who may supersede a version, how re-review is triggered, how old decisions are retained, and how concurrent changes are handled.
+
+**Evidence boundary:** all versions, fingerprints, timestamps, inspectors and source locators remain synthetic. No real document or person is processed, and no production control or authorization is created.
 
 ## Open operational decisions — deliberately not invented
 
