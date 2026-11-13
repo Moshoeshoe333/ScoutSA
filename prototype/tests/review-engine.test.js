@@ -447,9 +447,9 @@ test("a missing or invalid evaluation time is rejected, never inferred", () => {
   assert.throws(() => evaluate(validRequest(), validContext(), "not-a-date"), /deterministic evaluation time/);
 });
 
-test("a completed second-review status never becomes approval, selection or invitation", () => {
+test("evidence-backed two-person review eligibility never becomes approval, selection or invitation", () => {
   const context = validContext();
-  // Deliberately no reviewer identities or approval/selection fields exist in this fixture.
+  // The synthetic reviewer records support only gate evaluation, never an outcome.
   const result = evaluate(validRequest(), context);
   assert.equal(gate(result, "safeguarding_review").state, "PASS");
   assert.equal(result.disposition, "READY_FOR_SEPARATE_HUMAN_REVIEW");
