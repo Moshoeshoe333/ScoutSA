@@ -310,7 +310,7 @@ Hosted verification for this revision is **PENDING**. Historical PASS runs do no
 
 ## Experimental audit-history validator checkpoint — 2026-11-13
 
-The isolated prototype now contains `prototype/audit-history.js` v0.1.0, a pure in-memory validator for caller-supplied synthetic evidence and review events. The companion design proposal is `prototype/SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md`. It checks unique event IDs, chronological timestamps, exact evidence-version/review targets, actor/authority/scope binding, provenance references and declared state transitions. Review-completion events must link the exact evidence versions declared by the review, and every linked version must already have an accepted event. If linked evidence is later rejected, marked stale, revoked or superseded, a later review-invalidation event is required.
+The isolated prototype now contains `prototype/audit-history.js` v0.1.0, a pure in-memory validator for caller-supplied synthetic evidence and review events. The companion design proposal is `prototype/SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md`. It checks unique event IDs, chronological timestamps, exact evidence-version/review targets, actor/authority/scope binding, provenance references and declared state transitions. Review-completion events must link the exact evidence versions declared by the review, and every linked version must already have an accepted event. If linked evidence is later rejected, marked stale, revoked or superseded, a review-invalidation event for that review must be present.
 
 Current source inventory:
 - Review-engine tests: **73**.
