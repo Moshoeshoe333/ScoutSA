@@ -110,7 +110,7 @@ function h(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;",
  }
  $("requestList").innerHTML=playerRecords.map(r=>'<button class="request" type="button" data-id="'+h(r.id)+'"><strong>'+h(r.id)+'</strong><small>'+h(r.purpose)+'</small><span class="pill">HOLD</span></button>').join("");
  $("requestList").addEventListener("click",e=>{const b=e.target.closest("button[data-id]");if(b){const r=playerRecords.find(x=>x.id===b.dataset.id);if(r)render(r);}});
- $("rules").innerHTML=data.rules.map(x=>"<li>"+x+"</li>").join("");
+ $("rules").innerHTML=data.rules.map(x=>"<li>"+h(x)+"</li>").join("");
  $("limits").textContent=data.limits.join(" ");
  if(playerRecords[0])render(playerRecords[0]);
  else if(hasHandoff){$("requestTitle").textContent="No matching synthetic request";$("requestState").textContent="NO REQUEST RECORD — READ ONLY";$("summary").textContent="";$("reviewStages").textContent="No review stages are available because no matching request fixture exists."; $("gates").textContent="";$("links").textContent="";$("reason").textContent="The supplied handoff is incomplete or has no exact matching sample request. No request has been created."; }
