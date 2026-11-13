@@ -3,7 +3,7 @@
 **Branch:** `prototype/internal-demo`  
 **Engine:** `review-engine.js` v0.3.0  
 **Audit validator:** `audit-history.js` v0.2.0  
-**Status:** Hosted verification passed on [run 43443819916](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43443819916), commit `0899062638e152a5236372f32dd98e4ed16491c3`.
+**Status:** Hosted verification passed on [run 43444088668](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43444088668), commit `0e95f7d47112b5276552f84e1d362106270ec91b`.
 
 ## Scope
 
@@ -22,7 +22,7 @@ Missing history, incomplete review completion, invalid actor/authority/scope bin
 
 ## Verification result
 
-Hosted GitHub Actions run [43443819916](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43443819916) passed on commit `0899062638e152a5236372f32dd98e4ed16491c3`:
+Hosted GitHub Actions run [43444088668](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43444088668) passed on commit `0e95f7d47112b5276552f84e1d362106270ec91b`:
 - **121/121 Node tests passed; 0 failed.**
 - **7/7** Discovery & Request Review browser groups passed.
 - **8/8** workspace-hub browser groups passed.
