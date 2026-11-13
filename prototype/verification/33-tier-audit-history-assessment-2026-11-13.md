@@ -158,3 +158,24 @@ UI-008 remains OPEN. Mainline remains separate and untouched. External validatio
 **Next engineering decision:** repair completeness, causal invalidation and state reconciliation first; then integrate as a mandatory synthetic gate and verify it with hosted CI. The core invariant is non-negotiable:
 
 > A decision must never outlive the evidence that justified it.
+
+
+## 10. Implementation update after assessment — 2026-11-13
+
+The critical defects D-01 through D-06 identified above were addressed in `audit-history.js` v0.2.0 and integrated into `review-engine.js` v0.3.0 as a mandatory synthetic invitation-review check.
+
+Implemented controls:
+- Empty/malformed event collections fail closed.
+- Each declared review must have exactly one valid completion event.
+- Exact review IDs, evidence references, version IDs and synthetic fingerprints are linked.
+- Event actors and authorities must resolve to one current, exact-scoped synthetic authority fixture.
+- Event timestamps must be canonical UTC ISO values, strictly increasing and not in the future relative to the explicit evaluation time.
+- Review completion event time must equal the review fixture's `completedAt`.
+- Event terminal evidence state must match the evidence fixture's declared state.
+- A review invalidation event must occur after the exact evidence invalidation it records.
+- A validly invalidated review is not eligible to pass the safeguarding gate.
+- The review engine fails closed on missing or invalid audit history and keeps disclosure false.
+
+Hosted verification on [run 43443050401](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43443050401), commit `802419b78c3dfa88923f3c997decee6fbc9061c5`, passed **119/119 Node tests**, **7/7 request-review browser groups**, **8/8 workspace-hub browser groups** and **12/12 specialist interaction groups**.
+
+This update supersedes the pre-integration findings in sections 1, 3 and 5 where they described those defects as still present. The remaining material gaps are not closed: no immutable or append-only store, cryptographic digest/signature, canonical serialization, trusted timestamp, parent-source registry, tamper-evident commitment, identity proofing, real authorization, source authentication, retention policy, concurrency control or durable invalidation propagation exists. The model remains synthetic, in-memory and not ratified. UI-008 remains OPEN; mainline and real-data/disclosure/deployment/pilot holds remain unchanged.
