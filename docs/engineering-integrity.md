@@ -97,13 +97,13 @@ When a new repeated fact is introduced into documentation, either add it to the 
 
 - **Detected:** 2026-11-13
 - **Severity:** Low — the new guard itself was not yet reliable; no product or player data was affected.
-- **Finding:** The first hosted run of the expanded workflow (run `43396315565`, commit `166d0495eece38d7cdbe7c1f221186602241242c`) failed in the test step. During construction, the guard's initial regular-expression escaping and contract-string assertion were too brittle for the actual Markdown formatting.
-- **Impact:** The new automated documentation check could not yet be relied upon. The failure was not a pass and must remain visible in the record.
-- **Correction:** Rewrote the guard to use simple source-line counting and literal version/count comparisons rather than fragile regular expressions. The next push will trigger a fresh hosted run.
-- **Preventive measure:** Prefer direct parsing/string comparisons for these fixed repository facts; require a successful hosted run before marking the guard active. Keep the failed run linked and never overwrite it with a later pass.
-- **Failed run:** https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396315565
-- **Correction commit:** `333e56fcc823b5c84fe24c1cb95b511525461919`.
-- **Status:** Guard corrected; successful rerun pending.
+- **Finding:** The first hosted run (run `43396315565`, commit `166d0495eece38d7cdbe7c1f221186602241242c`) and subsequent attempts (runs `43396391806`, `43396448839`, `43396467609`) failed in the test step. Source review found the guard had been generated with fragile regular-expression and escaped-template-literal syntax; the contract assertion was also too brittle for the Markdown formatting.
+- **Impact:** The new automated documentation check could not yet be relied upon. None of these runs is a pass; they remain part of the incident history.
+- **Correction:** Replaced the regular-expression approach with line counting and literal version/count comparisons, then replaced the escaped-template-literal assertion with plain string concatenation. A fresh hosted run will be triggered by the latest test correction.
+- **Preventive measure:** Prefer direct parsing/string comparisons for these fixed repository facts; inspect generated source and run the test locally before relying on CI; require a successful hosted run before marking the guard active. Keep failed runs linked and never overwrite them with a later pass.
+- **Failed runs:** https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396315565 · https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396391806 · https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396448839 · https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396467609
+- **Correction commits:** `333e56fcc823b5c84fe24c1cb95b511525461919`, `793868348eb01a7eadec8c3b015015602116d7f4`.
+- **Status:** Source correction committed; successful hosted rerun pending.
 
 ## 7. New incident template
 
