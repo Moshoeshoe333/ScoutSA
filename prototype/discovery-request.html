@@ -27,16 +27,29 @@
 <section class="panel" style="margin-top:18px"><h2>Non-negotiable boundaries</h2><ul class="rules" id="rules"></ul><p class="muted" id="limits"></p></section>
 <footer class="footer">ScoutSA · Internal prototype · Fictional records only · Not production-ready</footer>
 </main>
-<script src="./data/player-passports.demo.js"></script><script src="./data/guardian-consent.demo.js"></script><script src="./data/organization-memberships.demo.js"></script><script src="./data/coach-academy-workspace.demo.js"></script><script src="./data/opportunities.demo.js"></script><script src="./data/opportunity-evidence.demo.js"></script><script src="./data/opportunity-decisions.demo.js"></script><script src="./data/safeguarded-invitations.demo.js"></script><script src="./data/discovery-requests.demo.js"></script><script src="./review-engine.js"></script>
+<script src="./data/player-passports.demo.js"></script><script src="./data/guardian-consent.demo.js"></script><script src="./data/organization-memberships.demo.js"></script><script src="./data/coach-academy-workspace.demo.js"></script><script src="./data/opportunities.demo.js"></script><script src="./data/opportunity-evidence.demo.js"></script><script src="./data/opportunity-decisions.demo.js"></script><script src="./data/safeguarded-invitations.demo.js"></script><script src="./data/discovery-requests.demo.js"></script><script src="./review-engine.js"></script><script src="./handoff-filter.js"></script>
 <script>
 (()=>{
  const data=window.SCOUTSA_DISCOVERY_REQUESTS;
  const params=new URLSearchParams(window.location.search);
+ const hasPlayerParam=params.has("player");
+ const hasOpportunityParam=params.has("opportunity");
  const handoffPlayerId=params.get("player");
  const handoffOpportunityId=params.get("opportunity");
- const playerRecords=handoffPlayerId?data.records.filter(r=>r.playerId===handoffPlayerId&&(!handoffOpportunityId||r.opportunityId===handoffOpportunityId)):data.records;
+ const hasHandoff=hasPlayerParam||hasOpportunityParam;
+ const playerRecords=window.SCOUTSA_FILTER_HANDOFF_RECORDS(data.records,{hasPlayerParam,hasOpportunityParam,playerId:handoffPlayerId,opportunityId:handoffOpportunityId});
  const $=id=>document.getElementById(id);
- if(handoffPlayerId){const player=Object.values(window.SCOUTSA_DEMO_PLAYERS).find(p=>p.id===handoffPlayerId);$("passportHandoff").hidden=false;$("passportHandoff").textContent=player?"Passport handoff: "+player.id+" · "+player.name+(handoffOpportunityId?" · "+handoffOpportunityId:"")+". Showing only the exact matching fictional request record(s).":"No recognized synthetic Passport reference was supplied. No request records are shown."; }
+ if(hasHandoff){
+   $("passportHandoff").hidden=false;
+   const player=Object.values(window.SCOUTSA_DEMO_PLAYERS).find(p=>p.id===handoffPlayerId);
+   $("passportHandoff").textContent=!hasPlayerParam||!handoffPlayerId
+     ?"Incomplete handoff: a player reference is required. No request records are shown."
+     :!player
+       ?"No recognized synthetic Passport reference was supplied. No request records are shown."
+       :hasOpportunityParam&&!handoffOpportunityId
+         ?"Incomplete handoff: a non-empty opportunity reference is required. No request records are shown."
+         :"Passport handoff: "+player.id+" · "+player.name+(hasOpportunityParam?" · "+handoffOpportunityId:"")+". Showing only the exact matching fictional request record(s).";
+ }
  const consent=(id)=>window.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases.find(x=>x.id===id);
  const org=(id)=>window.SCOUTSA_DEMO_MEMBERSHIPS.organizations.find(x=>x.id===id);
  const opp=(id)=>window.SCOUTSA_DEMO_OPPORTUNITIES.records.find(x=>x.id===id);
@@ -79,6 +92,6 @@
  $("rules").innerHTML=data.rules.map(x=>"<li>"+x+"</li>").join("");
  $("limits").textContent=data.limits.join(" ");
  if(playerRecords[0])render(playerRecords[0]);
- else if(handoffPlayerId){$("requestTitle").textContent="No matching synthetic request";$("requestState").textContent="NO REQUEST RECORD — READ ONLY";$("summary").textContent="";$("gates").textContent="";$("links").textContent="";$("reason").textContent="This Passport reference has no matching sample request. No request has been created."; }
+ else if(hasHandoff){$("requestTitle").textContent="No matching synthetic request";$("requestState").textContent="NO REQUEST RECORD — READ ONLY";$("summary").textContent="";$("gates").textContent="";$("links").textContent="";$("reason").textContent="The supplied handoff is incomplete or has no exact matching sample request. No request has been created."; }
 })();
 </script></body></html>
