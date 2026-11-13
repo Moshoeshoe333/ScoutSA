@@ -33,7 +33,7 @@ window.SCOUTSA_DISCOVERY_REQUESTS = {
       id:"REQ-DEMO-003", playerId:"DEMO-PLAYER-003", playerRef:"PLAYER-DEMO-C",
       passportRef:null, opportunityId:"OPP-DEMO-002",
       consentCaseId:"GCS-DEMO-003", organizationId:"ORG-DEMO-02",
-      membershipId:"MEM-DEMO-002", invitationCaseId:null,
+      membershipId:null, invitationCaseId:null,
       requestOrigin:"Adult self-directed scenario (adult status not verified)",
       purpose:"Share selected football evidence with a named academy",
       requestedDisclosure:"No disclosure permitted",
