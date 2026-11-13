@@ -13,6 +13,7 @@
 <div class="eyebrow">Controlled discovery</div><h1 class="h1">Discovery & Request Review</h1>
 <p class="intro">A narrow review path connecting a Player Passport, purpose-specific consent, organization authority and a specific opportunity. The outcome is a controlled request status—not a talent ranking or invitation.</p>
 <div class="notice"><strong>Read-only demonstration.</strong> Every case is fictional. Nothing is submitted, shared, approved or persisted. All examples remain on hold because required evidence and permissions are absent.</div>
+<div class="notice" id="passportHandoff" hidden></div>
 <div class="layout">
 <aside class="panel"><h2>Sample request queue</h2><div class="request-list" id="requestList" aria-label="Sample request scenarios"></div><p class="muted">Opaque request IDs are used in the queue. Selecting a case only changes this local view.</p></aside>
 <section class="detail" aria-live="polite">
@@ -30,7 +31,11 @@
 <script>
 (()=>{
  const data=window.SCOUTSA_DISCOVERY_REQUESTS;
+ const params=new URLSearchParams(window.location.search);
+ const handoffPlayerId=params.get("player");
+ const playerRecords=handoffPlayerId?data.records.filter(r=>r.playerId===handoffPlayerId):data.records;
  const $=id=>document.getElementById(id);
+ if(handoffPlayerId){const player=Object.values(window.SCOUTSA_DEMO_PLAYERS).find(p=>p.id===handoffPlayerId);$("passportHandoff").hidden=false;$("passportHandoff").textContent=player?"Passport handoff: "+player.id+" · "+player.name+". Showing only the matching fictional request record(s).":"No recognized synthetic Passport reference was supplied. No request records are shown."; }
  const consent=(id)=>window.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases.find(x=>x.id===id);
  const org=(id)=>window.SCOUTSA_DEMO_MEMBERSHIPS.organizations.find(x=>x.id===id);
  const opp=(id)=>window.SCOUTSA_DEMO_OPPORTUNITIES.records.find(x=>x.id===id);
@@ -58,17 +63,20 @@
     ["Player reference",r.playerRef],["Age state",r.ageState],["Request route",r.requestOrigin],["Purpose",r.purpose],["Organization",o?o.name:r.organizationId],["Opportunity",p?p.title:r.opportunityId]
    ].map(([a,b])=>'<div class="field"><small>'+a+'</small><strong>'+b+'</strong></div>').join("");
    $("gates").innerHTML=evaluation.gates.map(g=>'<div class="gate"><div><strong>'+g.label+'</strong><p>'+g.detail+'</p></div><span>'+g.status+'</span></div>').join("");
+   const passport=Object.values(window.SCOUTSA_DEMO_PLAYERS).find(x=>x.id===r.playerId);
+   const passportUrl=passport?"./player-passport.html?player="+encodeURIComponent(passport.id):"./player-passport.html";
    const items=[
-    ["Player Passport","./player-passport.html"],["Guardian & consent","./guardian-consent.html"],["Organization memberships","./organization-memberships.html"],["Opportunity register","./opportunities.html"],["Opportunity evidence","./opportunity-evidence.html"],["Claim decisions","./opportunity-decisions.html"],["Invitation safeguards","./safeguarded-invitations.html"],["Matching review","./player-opportunity-matching.html"]
+    ["Player Passport",passportUrl],["Guardian & consent","./guardian-consent.html"],["Organization memberships","./organization-memberships.html"],["Opportunity register","./opportunities.html"],["Opportunity evidence","./opportunity-evidence.html"],["Claim decisions","./opportunity-decisions.html"],["Invitation safeguards","./safeguarded-invitations.html"],["Matching review","./player-opportunity-matching.html"]
    ];
    $("links").innerHTML=items.map(([label,url])=>'<a href="'+url+'">'+label+' ↗</a>').join("");
    $("reason").textContent=r.note+" "+(c?"Consent state: "+c.consentState+". ":"")+(o?"Organization identity: "+o.identityStatus+". ":"")+(p?"Opportunity verification: "+p.verification+". ":"")+(inv?"Invitation workflow: "+inv.workflowState+".":"");
    document.querySelectorAll(".request").forEach(b=>b.classList.toggle("active",b.dataset.id===r.id));
  }
- $("requestList").innerHTML=data.records.map(r=>'<button class="request" type="button" data-id="'+r.id+'"><strong>'+r.id+'</strong><small>'+r.purpose+'</small><span class="pill">HOLD</span></button>').join("");
- $("requestList").addEventListener("click",e=>{const b=e.target.closest("button[data-id]");if(b){const r=data.records.find(x=>x.id===b.dataset.id);if(r)render(r);}});
+ $("requestList").innerHTML=playerRecords.map(r=>'<button class="request" type="button" data-id="'+r.id+'"><strong>'+r.id+'</strong><small>'+r.purpose+'</small><span class="pill">HOLD</span></button>').join("");
+ $("requestList").addEventListener("click",e=>{const b=e.target.closest("button[data-id]");if(b){const r=playerRecords.find(x=>x.id===b.dataset.id);if(r)render(r);}});
  $("rules").innerHTML=data.rules.map(x=>"<li>"+x+"</li>").join("");
  $("limits").textContent=data.limits.join(" ");
- if(data.records[0])render(data.records[0]);
+ if(playerRecords[0])render(playerRecords[0]);
+ else if(handoffPlayerId){$("requestTitle").textContent="No matching synthetic request";$("requestState").textContent="NO REQUEST RECORD — READ ONLY";$("summary").textContent="";$("gates").textContent="";$("links").textContent="";$("reason").textContent="This Passport reference has no matching sample request. No request has been created."; }
 })();
 </script></body></html>
