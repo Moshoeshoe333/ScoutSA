@@ -32,6 +32,14 @@ The existing Claim Decisions form test still submits HTML-looking user text thro
 
 The hosted workflow path filter now includes `prototype/*.html`, so future specialist-page edits trigger the workflow.
 
+## Follow-on core-loop hardening — 2026-11-13
+
+After the initial safe-rendering mitigation, a source audit identified one remaining unescaped fixture-derived HTML interpolation in the Discovery & Request Review rules list. It now applies the page's escaping helper. Two search-only expressions had been escaped unnecessarily; those were reverted to raw string matching so search semantics are not changed by HTML encoding.
+
+The review engine now has two additional tests for missing/malformed context collections and missing request input. Both cases must remain HOLD, must not satisfy all blocking gates and must never permit disclosure. No engine policy or fixture content was changed.
+
+The product focus is now depth before breadth: strengthen the pure review engine and Discovery & Request Review loop before adding further workspace surfaces.
+
 ## Verification status
 
 - Hosted GitHub Actions [run 43426395229](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43426395229), commit `a7a72870ad63b52d722e4260a9c29e8cd7fad647`, completed successfully.
