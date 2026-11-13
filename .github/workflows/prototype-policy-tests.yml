@@ -13,6 +13,7 @@ on:
       - "prototype/REVIEW-ENGINE-CONTRACT.md"
       - "prototype/review-engine.js"
       - "prototype/review-state.js"
+      - "prototype/handoff-filter.js"
       - "prototype/tests/**"
       - "prototype/data/**"
       - "prototype/contracts/**"
