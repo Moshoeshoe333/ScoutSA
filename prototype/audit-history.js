@@ -105,7 +105,7 @@
           if (Number.isFinite(now) && occurredAt > now) fail("AUDIT_EVENT_FROM_FUTURE", i, "An event cannot occur after the supplied evaluation time.");
           checkEventAuthority(event, i, occurredAt);
         }
-        for (const field of ["actorId", "authorityId", "organizationId", "scope", "provenanceRef"]) {
+        for (const field of ["actorId", "authorityId", "organizationId", "scope", "provenanceRef", "invitationId"]) {
           if (!nonempty(event[field])) fail("AUDIT_EVENT_PROVENANCE_MISSING", i, "Missing " + field + ".");
         }
 
@@ -126,7 +126,7 @@
             fail("AUDIT_EVIDENCE_TARGET_UNRESOLVED", i, "Event must resolve to exactly one evidence version record.");
             continue;
           }
-          if (record.organizationId !== event.organizationId || record.reviewScope !== event.scope) {
+          if (record.invitationId !== event.invitationId || record.organizationId !== event.organizationId || record.reviewScope !== event.scope) {
             fail("AUDIT_EVIDENCE_SCOPE_MISMATCH", i, "Event organization and scope must match the exact evidence version.");
           }
           if (event.fingerprint !== record.fingerprint || !nonempty(event.fingerprint)) {
@@ -164,7 +164,7 @@
             fail("AUDIT_REVIEW_TARGET_UNRESOLVED", i, "Review event must resolve to exactly one review record.");
             continue;
           }
-          if (event.organizationId !== review.organizationId || event.scope !== review.scope
+          if (event.invitationId !== review.invitationId || event.organizationId !== review.organizationId || event.scope !== review.scope
             || event.actorId !== review.reviewerId || event.authorityId !== review.authorityId) {
             fail("AUDIT_REVIEW_ACTOR_OR_SCOPE_MISMATCH", i, "Review event actor, authority, organization and scope must match the review record.");
           }
