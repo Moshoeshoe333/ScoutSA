@@ -113,10 +113,15 @@ async function main() {
     await page.setViewportSize({ width: 390, height: 844 });
     for (const file of ["index.html", ...expected]) {
       await page.goto(origin + "/" + file, { waitUntil: "load" });
-      const dimensions = await page.evaluate(() => ({
-        viewport: document.documentElement.clientWidth,
-        page: document.documentElement.scrollWidth
-      }));
+      const dimensions = await page.evaluate(() => {
+        const viewport = document.documentElement.clientWidth;
+        const page = document.documentElement.scrollWidth;
+        const offenders = [...document.querySelectorAll("body *")].map(node => {
+          const rect = node.getBoundingClientRect();
+          return { tag: node.tagName, id: node.id, className: typeof node.className === "string" ? node.className : "", text: (node.innerText || "").trim().slice(0, 55), left: Math.round(rect.left), right: Math.round(rect.right), width: Math.round(rect.width) };
+        }).filter(node => node.right > viewport + 1 || node.left < -1).slice(0, 12);
+        return { viewport, page, offenders };
+      });
       mobileWidths.push({ file, ...dimensions });
       assert.ok(dimensions.page <= dimensions.viewport, "mobile page must not overflow horizontally: " + JSON.stringify({ file, ...dimensions }));
     }
