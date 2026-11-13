@@ -48,6 +48,22 @@ The legacy `secondReviewStatus` flag is ignored by the evaluator. It cannot subs
 
 **Evidence boundary:** these are synthetic fields and reference strings. They demonstrate what the prototype requires structurally; they do not prove that an identity was checked, a conflict was investigated, a reviewer is genuinely independent, a grant is legally authoritative, or an evidence source is authentic. No real evidence ingestion, signature verification, reviewer account, identity proofing, authorization service, audit ledger or conflict adjudication exists. This proposal is not ratified and is not a production control.
 
+## Synthetic evidence inspection and revocation model — prototype only
+
+The invitation review now resolves each evidence reference against exactly one record in `context.evidenceRecords`. The required evidence claims are:
+
+- `REVIEW_COMPLETION` — the record supporting each review completion.
+- `REVIEWER_CONFLICT_CHECK` — the conflict-check evidence for each reviewer.
+- `REVIEWER_INDEPENDENCE_CHECK` — the second reviewer's independence-check evidence.
+
+Each evidence record is bound to the exact invitation, organization, reviewer, authority grant and `INVITATION_SAFEGUARDING_REVIEW` scope. It also carries a synthetic source class and locator, inspection finding reference, inspector, inspection timestamp, lifecycle state and expiry. The inspector must match the reviewer associated with that claim, and inspection must predate or coincide with the review completion timestamp.
+
+The evaluator distinguishes these states: `SUBMITTED` is received but not inspected; `INSPECTED` is examined but not accepted; `ACCEPTED` is accepted only for its exact recorded claim and scope; `REJECTED` is not usable; `STALE` and `REVOKED` invalidate a previously accepted record. Only a unique, current, unexpired `ACCEPTED` record can satisfy a required claim. Missing, duplicate, mismatched, unchecked, rejected, stale, revoked or expired evidence fails closed. Reviewer identity or authority lifecycle revocation also blocks a fresh evaluation.
+
+Reevaluation is the only behavior modeled: changing a synthetic record to stale/revoked or changing a reviewer authority lifecycle to revoked causes the next evaluation to return HOLD. There is no durable history, automatic event propagation, background invalidation, notification, or retroactive rewrite of prior results.
+
+**Evidence boundary:** all source classes, locators, findings, timestamps, inspectors and records are synthetic fixture data. This does not inspect a real source, authenticate a reviewer, establish authority, prove independence, verify authenticity, or implement a revocation service. The model is not ratified and is not a production control. No external evidence ingestion or real-person processing is authorized.
+
 ## Open operational decisions — deliberately not invented
 
 - **Membership evidence classes — proposal only, not ratified or implemented:** the current evaluator requires an active, verified membership claim and therefore does not yet model informal affiliation evidence. A candidate distinction for review is:
