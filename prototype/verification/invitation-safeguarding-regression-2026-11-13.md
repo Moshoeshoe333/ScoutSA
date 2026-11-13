@@ -15,7 +15,7 @@ The evaluator currently treats `secondReviewStatus === "COMPLETE"` as a syntheti
 ## Verification state
 
 - Engine test declarations: 57.
-- Engine verification: 57/57 source tests pass in the latest completed headless attempt; the full workflow is being rerun after documentation reconciliation.
+- Engine verification: 57/57 passed as part of 67/67 total Node tests.
 - Documentation-integrity declarations: 8.
 - Workspace-data-integrity declarations: 2.
 - Total source declarations: 67.
@@ -50,6 +50,11 @@ The legacy `secondReviewStatus` field is ignored and cannot satisfy the gate. Ei
 - Documentation-integrity declarations: 8.
 - Workspace-data-integrity declarations: 2.
 - Total source declarations: 67.
-- Hosted verification: pending for this model revision.
+- Hosted verification: PASS — [run 43432903661](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43432903661), commit `8ea0ea7cac0f11875ac3431017d7868f8687629a`.
 - Mainline: untouched.
 - UI-008: OPEN.
+
+
+Hosted run [43432903661](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43432903661), commit `8ea0ea7cac0f11875ac3431017d7868f8687629a`, passed **67/67 Node tests**, **7/7 Discovery & Request Review browser groups**, **8/8 workspace hub browser groups**, and **12/12 specialist interaction browser groups**.
+
+The hosted run validates only deterministic synthetic behavior. It does not prove real reviewer identity, independence, legal authority, conflict adjudication or evidence authenticity. UI-008 remains OPEN; mainline and real-data/deployment/pilot holds remain unchanged.

@@ -285,3 +285,10 @@ Hosted run [43420141388](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/4
 ## Current source inventory note — 2026-11-13
 
 The current engine source declares 57 tests and the documentation-integrity source declares 8 checks. This produces **8 documentation-integrity test declarations (65 total)** for the documentation guard's engine-plus-documentation count; the separate workspace-data-integrity file adds 2 more declarations, for **67 total Node test declarations**. The latest eight engine tests require evidence-linked two-person invitation review and cover status-only bypass, same-person review, wrong authority scope, expired reviewer identity, missing conflict evidence, missing independence evidence, invalid review order and duplicate reviewer records. The engine tests passed in the latest headless attempt; a documentation count assertion failed because the verification note had not yet been reconciled. A fresh hosted run is required after this correction. Historical PASS records above are not evidence for the current head.
+
+
+## Current evidence-linked reviewer model checkpoint — 2026-11-13
+
+Hosted run [43432903661](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43432903661), commit `8ea0ea7cac0f11875ac3431017d7868f8687629a`, passed **67/67 Node tests**, **7/7 Discovery & Request Review browser groups**, **8/8 workspace hub browser groups**, and **12/12 specialist interaction browser groups**.
+
+Current source inventory: 57 engine + 8 documentation-integrity = 65 declarations in this workflow command; the separate workspace-data-integrity file adds 2, for 67 total Node declarations. The hosted result verifies this exact synthetic test and browser checkpoint only. It does not authenticate real identities, evidence, authority or independence, and it does not establish production readiness.
