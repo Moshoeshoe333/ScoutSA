@@ -193,3 +193,10 @@ From `player-passport.html`, choose either fictional sample Passport and open **
 The source declaration count remains 48 (40 engine + 8 documentation checks). Regression assertions cover the ordinary no-handoff queue, opportunity-only handoff, unknown player, exact player–opportunity pair, unmatched opportunity and empty opportunity value. The updated assertions require a fresh hosted run before they can be called CI-verified.
 
 The 3-step journey is synthetic only. The Opportunity Register remains read-only; it does not publish or rank opportunities. The request-review page does not submit, approve, disclose or contact. The exact-pair link is a navigation affordance, not an eligibility or matching decision.
+
+
+## Read-only review journey state
+
+The Discovery & Request Review page now renders six stages from the existing synthetic evaluator result: (1) fictional request fixture, not submitted; (2) authority and evidence review; (3) safeguarding review; (4) eligibility for separate human review; (5) final decision/outcome, explicitly not recorded; and (6) disclosure/contact, prohibited and not implemented. A failed gate yields a hold; skipped prerequisites are shown as waiting; incomplete or unknown gate output fails closed. A synthetic all-pass result may only say **eligible for separate human review** and explicitly states that no human review has occurred. No decline, approval, invitation, trial, placement or registration is invented.
+
+Implementation is isolated in `review-state.js`, a pure presentation projection. It does not change `review-engine.js`, policy rules, fixture records or lifecycle state. It performs no writes, transitions, authorization, disclosure or contact. The workflow now includes this file in its path filters. The test declaration inventory remains 40 engine + 8 documentation checks = 48; additional assertions exercise pass, hold, skipped, missing-gate and no-record behavior inside the existing workspace-integrity check. Hosted verification of this update is pending; no browser-integrated test is claimed.
