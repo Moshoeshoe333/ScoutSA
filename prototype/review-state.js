@@ -69,13 +69,16 @@ function deriveReviewStages(evaluation) {
   if (!evaluation || !Array.isArray(evaluation.gates)) return [];
   const evidence = summarizeGateGroup(evaluation, EVIDENCE_KEYS);
   const safeguarding = summarizeGateGroup(evaluation, SAFEGUARDING_KEYS);
-  const disposition = evaluation.disposition === "READY_FOR_SEPARATE_HUMAN_REVIEW"
+  const readinessIsConsistent = evaluation.allBlockingGatesSatisfied === true
+    && evidence.tone === "pass"
+    && safeguarding.tone === "pass";
+  const disposition = evaluation.disposition === "READY_FOR_SEPARATE_HUMAN_REVIEW" && readinessIsConsistent
     ? {
         status: "ELIGIBLE FOR SEPARATE HUMAN REVIEW",
         tone: "waiting",
         detail: "The synthetic evaluator found no blocking gate failure. No human review has occurred and this is not approval, selection or an invitation."
       }
-    : evaluation.disposition === "HOLD"
+    : evaluation.disposition === "HOLD" || evaluation.disposition === "READY_FOR_SEPARATE_HUMAN_REVIEW"
       ? {
           status: "NOT READY — HOLD",
           tone: "hold",
