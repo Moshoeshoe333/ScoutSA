@@ -13,6 +13,8 @@ on:
       - "prototype/*.html"
       - "prototype/REVIEW-ENGINE-CONTRACT.md"
       - "prototype/review-engine.js"
+      - "prototype/audit-history.js"
+      - "prototype/SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md"
       - "prototype/review-state.js"
       - "prototype/handoff-filter.js"
       - "prototype/tests/**"
