@@ -8,6 +8,9 @@ const root = path.resolve(__dirname, "../..");
 const read = relative => fs.readFileSync(path.join(root, relative), "utf8");
 const engine = read("prototype/review-engine.js");
 const engineTests = read("prototype/tests/review-engine.test.js");
+const auditModel = read("prototype/audit-history.js");
+const auditTests = read("prototype/tests/audit-history.test.js");
+const auditProposal = read("prototype/SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md");
 const contract = read("prototype/REVIEW-ENGINE-CONTRACT.md");
 const prototypeReadme = read("prototype/README.md");
 const gateStatus = read("docs/00-gate-status.md");
@@ -181,4 +184,16 @@ test("workspace hub links every existing synthetic review journey", () => {
   assert.equal(reviewState.deriveReviewStages(incompleteEvaluation)[1].status, "INCOMPLETE — HOLD", "missing required gate output must fail closed");
   assert.deepEqual(reviewState.deriveReviewStages(null), [], "no matching request must not show invented review stages");
   assert.ok(discovery.includes('id="reviewStages"') && discovery.includes("renderReviewStages(evaluation)") && discovery.includes('src="./review-state.js"'), "request review page must render the read-only review-state projection");
+});
+
+
+test("synthetic audit-history proposal and validator stay explicitly experimental and linked", () => {
+  const auditTestCount = auditTests.split("\\n").filter(line => line.startsWith("test(")).length;
+  assert.ok(auditModel.includes('version: "0.1.0"'), "audit-history module version must be declared");
+  assert.ok(auditTestCount >= 10, "audit-history regression coverage must remain present");
+  assert.ok(auditProposal.includes("EXPERIMENTAL / NOT RATIFIED / NOT CONNECTED TO THE REVIEW GATE"), "audit proposal must preserve its non-authoritative status");
+  assert.ok(auditProposal.includes("does not provide immutable storage"), "audit proposal must state its storage limitation");
+  assert.ok(rootReadme.includes("SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md"), "root README must link the audit proposal");
+  assert.ok(prototypeReadme.includes("SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md"), "prototype README must link the audit proposal");
+  assert.ok(gateStatus.includes("SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md"), "gate status must link the audit proposal");
 });
