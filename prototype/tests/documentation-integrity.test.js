@@ -135,10 +135,24 @@ test("workspace hub links every existing synthetic review journey", () => {
   const opportunity = read("prototype/opportunities.html");
   const playerFixtures = read("prototype/data/player-passports.demo.js");
   const requestFixtures = read("prototype/data/discovery-requests.demo.js");
+  const filterHandoffRecords = require("../handoff-filter.js");
   assert.ok(passport.includes('id="opportunityBrowseLink"') && passport.includes("opportunities.html?player="), "Passport must hand off its selected synthetic player reference to opportunity discovery");
   assert.ok(passport.includes("new URLSearchParams(window.location.search)") && passport.includes("render(initialKey)"), "Passport must restore the matching synthetic player from the handoff URL");
   assert.ok(opportunity.includes("matchingRequest(opportunity)") && opportunity.includes("r.playerId===handoffPlayerId&&r.opportunityId===opportunity.id"), "opportunity discovery must expose a request link only for an exact player–opportunity fixture pair");
-  assert.ok(discovery.includes("params.get(\"player\")") && discovery.includes("r.playerId===handoffPlayerId&&(!handoffOpportunityId||r.opportunityId===handoffOpportunityId)"), "request review must filter to the exact handed-off player and opportunity references");
+  assert.ok(discovery.includes("params.get(\\\"player\\\")") && discovery.includes("r.playerId===handoffPlayerId&&(!handoffOpportunityId||r.opportunityId===handoffOpportunityId)"), "request review must filter to the exact handed-off player and opportunity references");
+  assert.ok(discovery.includes('params.has("player")') && discovery.includes('params.has("opportunity")'), "request review must detect either handoff parameter independently");
+  assert.ok(discovery.includes("SCOUTSA_FILTER_HANDOFF_RECORDS") && discovery.includes('src="./handoff-filter.js"'), "request review must use the shared fail-closed handoff filter");
+  const sampleRecords = [
+    {id:"r1",playerId:"p1",opportunityId:"o1"},
+    {id:"r2",playerId:"p1",opportunityId:"o2"},
+    {id:"r3",playerId:"p2",opportunityId:"o1"}
+  ];
+  assert.deepEqual(filterHandoffRecords(sampleRecords, {}), sampleRecords, "ordinary navigation without handoff parameters must retain the sample queue");
+  assert.deepEqual(filterHandoffRecords(sampleRecords, {hasOpportunityParam:true,opportunityId:"o1"}), [], "opportunity-only handoff must fail closed instead of exposing the full queue");
+  assert.deepEqual(filterHandoffRecords(sampleRecords, {hasPlayerParam:true,playerId:"unknown"}), [], "unknown Passport handoff must fail closed");
+  assert.deepEqual(filterHandoffRecords(sampleRecords, {hasPlayerParam:true,hasOpportunityParam:true,playerId:"p1",opportunityId:"o1"}), [sampleRecords[0]], "complete handoff must return only the exact player–opportunity pair");
+  assert.deepEqual(filterHandoffRecords(sampleRecords, {hasPlayerParam:true,hasOpportunityParam:true,playerId:"p1",opportunityId:"missing"}), [], "unmatched opportunity must fail closed");
+  assert.deepEqual(filterHandoffRecords(sampleRecords, {hasPlayerParam:true,hasOpportunityParam:true,playerId:"p1",opportunityId:""}), [], "empty opportunity parameter must fail closed");
   assert.ok(discovery.includes("No matching synthetic request") && discovery.includes("No request has been created"), "missing handoff matches must fail closed without creating a request");
   assert.ok(discovery.includes("encodeURIComponent(passport.id)"), "return navigation must preserve the exact synthetic Passport reference");
   assert.ok(playerFixtures.includes("DEMO-PLAYER-001") && playerFixtures.includes("DEMO-PLAYER-002"), "the synthetic Passport fixtures must remain present");
