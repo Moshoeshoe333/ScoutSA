@@ -2,7 +2,7 @@
 
 **Branch:** `prototype/internal-demo`  
 **Scope:** Documentation version/count consistency guard and the prototype policy test workflow.  
-**Current state:** Corrective source changes committed; a successful hosted rerun has not yet been confirmed.
+**Current state:** <badge>Hosted CI passed</badge> on the corrected source. Two successful workflow runs confirm the policy and documentation test command completed successfully.
 
 ## What was added
 
@@ -19,6 +19,10 @@
 | [43396391806](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396391806) | `0b26adbbaf9ec8230b64ebbd8b521154c1d3980c` | **FAILURE** | Intermediate assertion correction was insufficient. |
 | [43396448839](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396448839) | `333e56fcc823b5c84fe24c1cb95b511525461919` | **FAILURE** | Intermediate source correction was insufficient. |
 | [43396467609](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396467609) | `d5bf6bf862c79109bc155e7ce2ddcd747b158908` | **FAILURE** | The generated assertion still contained fragile escaped-template-literal syntax. |
+| [43396561970](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396561970) | `793868348eb01a7eadec8c3b015015602116d7f4` | **FAILURE** | Duplicate/intermediate attempt; retained in history. |
+| [43396563700](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396563700) | `793868348eb01a7eadec8c3b015015602116d7f4` | **SUCCESS** | Corrected source; all workflow test files passed. |
+| [43396594044](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396594044) | `2a5cc8a3932930093dfe9a440b96f62b8ecd3b3f` | **FAILURE** | Duplicate/intermediate attempt; retained in history. |
+| [43396595986](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396595986) | `2a5cc8a3932930093dfe9a440b96f62b8ecd3b3f` | **SUCCESS** | Latest verification after the incident log was updated; all workflow test files passed. |
 
 These failed runs are retained as evidence. Do not count them as successful CI validation.
 
@@ -36,11 +40,12 @@ Relevant correction commits:
 
 A separate manual consistency inspection confirmed the current branch values: engine `0.2.0`, 40 engine-test declarations, contract version match, README/gate version match, all three documented 40-test counts, and the root README integrity-policy link.
 
-## Outstanding verification
+## Verification result
 
-- [ ] Obtain a successful hosted GitHub Actions run on the corrected test source.
-- [ ] Confirm the complete workflow runs both the 40 engine tests and the 3 documentation-integrity tests.
-- [ ] Only then mark the automated guard as active.
-- [ ] Keep browser-integrated discovery smoke verification separate; this workflow does not execute browser tests.
+- [x] Successful hosted GitHub Actions run on corrected test source: [run 43396563700](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396563700).
+- [x] Successful hosted GitHub Actions rerun after incident-log update: [run 43396595986](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396595986).
+- [x] The workflow command is `node --test prototype/tests/*.test.js`, which includes the 40 engine-test declarations and 3 documentation-integrity test declarations (43 total).
+- [x] The three documentation-integrity checks and the existing engine tests completed successfully in the hosted run.
+- [ ] Browser-integrated discovery smoke verification remains separate and outstanding; this workflow does not execute browser tests.
 
-**Important:** A manual text consistency inspection is not a substitute for executing the test suite. No successful CI result is claimed in this record.
+**Conclusion:** The automated documentation-integrity guard is active on `prototype/internal-demo`. It checks engine version and current engine-test count against the contract, prototype README, gate status and engine verification record, and checks the root README link to this policy. It is a targeted consistency guard, not a universal proof that every sentence in every document is correct.
