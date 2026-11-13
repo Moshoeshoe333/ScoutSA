@@ -299,3 +299,10 @@ Current source inventory: **66 review-engine + 8 documentation-integrity = 74 de
 
 Hosted verification for the current evidence-provenance revision is **PENDING**. The prior 67-test PASS remains historical and does not verify this revision. This model is synthetic structural validation only; it does not authenticate source material, establish real authority or independence, create an audit ledger, or implement automatic revocation propagation. UI-008 remains OPEN; mainline, real-data, disclosure, deployment and pilot holds remain unchanged.
 
+## Evidence version pinning checkpoint — 2026-11-13
+
+The prototype engine is **v0.2.1** and the draft contract is **v1.1.0**. The engine source declares **73 tests**; documentation-integrity source declares **8**; workspace-data-integrity adds **2**, for **83 total Node test declarations**. Seven new engine regressions cover absent pins, unknown versions, superseded evidence, multiple current versions, duplicate version IDs, fingerprint mismatch and successful re-review against a new current version.
+
+Every review claim now pins a version ID and synthetic fingerprint. Evidence references are versioned by `evidenceRef + versionId`; exactly one version must be current. Superseded versions invalidate their old review pins. A fresh review must reference the new current version and fingerprint.
+
+Hosted verification for this revision is **PENDING**. Historical PASS runs do not verify this version-pinning change. The fingerprint is not cryptographic; no immutable store, append-only ledger, event-driven invalidation or real evidence processing exists. UI-008 remains OPEN; mainline, real-data, disclosure, deployment and pilot holds remain unchanged.
