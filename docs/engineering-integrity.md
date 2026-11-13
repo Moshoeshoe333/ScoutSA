@@ -340,3 +340,11 @@ The projection also requires `allBlockingGatesSatisfied === true` plus fully pas
 - **Verification boundary:** These tests establish the helper contract, not that every dynamic interpolation has been identified or that every HTML context is safe. Attribute/URL policy, malformed fixture resilience and complete renderer review remain outstanding.
 - **Status:** OPEN. Do not connect untrusted data to these renderers until a complete audit and tests justify closure.
 
+### UI-007 extension — request/opportunity ownership consistency (2026-11-13)
+
+- **Finding:** The cross-workspace integrity test verified that a request's opportunity reference existed, but did not explicitly assert that the referenced opportunity belonged to the organization named by that request.
+- **Change:** Added an assertion that resolves the referenced opportunity and requires `opportunity.organizationId === request.organizationId`. Passport-ID consistency is checked only when `passportRef` is non-null; the distinct opaque `playerRef` is intentionally not equated with the internal Passport ID. The intentionally incomplete third request remains incomplete.
+- **Scope:** Synthetic fixture integrity test only. No engine policy, fixture, workflow state, authorization or product behavior changed.
+- **Commits:** Test change `0d8e09d710046bf1cd5169910b2735a4ca8d9937`; corrected opaque-reference assertion `ca97424852a72d049bb5e2c969e67d249d181321`; documentation reconciliation follows on the same prototype branch.
+- **Verification:** Hosted CI result is pending. Do not report the new assertions as passed until a workflow run for the updated branch commit completes successfully.
+- **Boundary:** Mainline remains untouched. This is synthetic data consistency, not proof of real-world organization authority or affiliation.
