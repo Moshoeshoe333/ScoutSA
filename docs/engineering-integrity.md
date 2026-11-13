@@ -250,3 +250,14 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Boundary:** This is a navigation/discoverability improvement only. No shared authentication, backend, persistence, authorization, role enforcement, live submissions, player contact or production behavior was added. Mainline is unchanged.
 - **Verification:** Hosted GitHub Actions [run 43409104888](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43409104888), commit `14bcabb84e58fa8f286887d4125cddb6ee6a282e`, completed successfully. The job log records 48 tests, 48 passed, 0 failed.
 - **Status:** Closed — navigation hub and 48-declaration hosted test suite verified.
+
+
+### UI-002 — Return navigation across specialist workspaces
+
+- **Recorded:** 2026-11-13
+- **Scope:** Frontend navigation on `prototype/internal-demo`.
+- **Change:** Added a consistent return-to-hub navigation strip to all 11 specialist HTML pages. Each strip labels the environment as internal demo / fictional data only.
+- **Test:** Extended the existing workspace-hub documentation-integrity check to require the return-navigation label and `./index.html` link on every destination. The test inventory remains 40 engine + 8 documentation checks = 48.
+- **Verification:** Hosted GitHub Actions [run 43409488949](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43409488949), commit `fc3d121becd267287eb37bc19ba4644ed9f39b0c`, completed successfully; 48 passed, 0 failed.
+- **Boundary:** This adds navigation only. It does not merge pages into one runtime or introduce shared state, authentication, authorization, persistence, real submissions or contact functionality. Mainline remains unchanged.
+- **Status:** Closed — return-link inventory and 48-declaration hosted test suite verified.
