@@ -327,7 +327,8 @@ The projection also requires `allBlockingGatesSatisfied === true` plus fully pas
 - Added two review-engine tests: malformed/missing context collections normalize to empty collections and fail closed; missing request input remains HOLD.
 - Both new tests assert no human-review eligibility and no disclosure permission.
 - No policy rules or fixture records changed. No new workspace was introduced.
-- **Headless declaration inventory:** 52 (42 engine + 8 documentation-integrity + 2 cross-workspace data-integrity). Hosted verification pending.
+- **Verification:** Hosted run [43427648705](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43427648705), commit `5945b75e05229427e430317b79f0541836cbe275`, passed 52/52 headless tests, 7/7 request-review browser groups, 8/8 hub/navigation groups and 12/12 specialist interaction groups.
+- **Headless declaration inventory:** 52 (42 engine + 8 documentation-integrity + 2 cross-workspace data-integrity).
 - **Priority:** depth before breadth; focus remains the review engine and Discovery & Request Review loop.
 
 ### UI-008 — Safe rendering of fixture-derived content (OPEN)
