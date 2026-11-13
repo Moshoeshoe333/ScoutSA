@@ -188,7 +188,7 @@ test("workspace hub links every existing synthetic review journey", () => {
 
 
 test("synthetic audit-history proposal and validator stay explicitly experimental and linked", () => {
-  const auditTestCount = auditTests.split("\\n").filter(line => line.startsWith("test(")).length;
+  const auditTestCount = auditTests.split("\n").filter(line => line.startsWith("test(")).length;
   assert.ok(auditModel.includes('version: "0.1.0"'), "audit-history module version must be declared");
   assert.ok(auditTestCount >= 10, "audit-history regression coverage must remain present");
   assert.ok(auditProposal.includes("EXPERIMENTAL / NOT RATIFIED / NOT CONNECTED TO THE REVIEW GATE"), "audit proposal must preserve its non-authoritative status");
