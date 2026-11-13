@@ -164,6 +164,8 @@ test("workspace hub links every existing synthetic review journey", () => {
   assert.equal(passingStages.length, 6, "review journey must expose six explicit, read-only stages");
   assert.equal(passingStages[0].status, "FICTIONAL FIXTURE — NOT SUBMITTED", "a displayed sample must never imply a received request");
   assert.equal(passingStages[3].status, "ELIGIBLE FOR SEPARATE HUMAN REVIEW", "evaluator readiness must be described as eligibility for separate human review only");
+  const unconfirmedEvaluation = {...passingEvaluation,allBlockingGatesSatisfied:false};
+  assert.equal(reviewState.deriveReviewStages(unconfirmedEvaluation)[3].status, "NOT READY — HOLD", "readiness without an explicit all-blocking-gates flag must fail closed");
   const inconsistentEvaluation = {disposition:"READY_FOR_SEPARATE_HUMAN_REVIEW",allBlockingGatesSatisfied:true,gates:stageKeys.map(key=>({key,label:key,state:key==="opportunity_source"?"FAIL":"PASS"}))};
   assert.equal(reviewState.deriveReviewStages(inconsistentEvaluation)[3].status, "NOT READY — HOLD", "a readiness disposition inconsistent with failed gate groups must fail closed");
   assert.equal(passingStages[4].status, "NO DECISION RECORDED", "the prototype must not invent a final decision or outcome");
