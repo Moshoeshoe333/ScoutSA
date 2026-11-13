@@ -34,8 +34,70 @@ function evidenceRecord(evidenceRef, reviewerId, authorityId, claimType, inspect
     lifecycleStatus:"ACTIVE", expiresAt:FUTURE
   };
 }
+function buildAuditEvents(context) {
+  const events = [];
+  const add = (eventType, fromState, toState, occurredAt, record, extra = {}) => {
+    const eventId = "AUDIT-EVENT-" + String(events.length + 1).padStart(3,"0");
+    events.push({
+      eventId,eventType,fromState,toState,occurredAt,
+      actorId:record.reviewerId,authorityId:record.authorityId,
+      organizationId:record.organizationId,scope:record.reviewScope,
+      provenanceRef:"SYNTHETIC-PROVENANCE-" + eventId,
+      evidenceRef:record.evidenceRef,versionId:record.versionId,
+      fingerprint:record.fingerprint,...extra
+    });
+  };
+  for (const record of context.evidenceRecords || []) {
+    const inspectedAt = Date.parse(record.inspectedAt);
+    add("EVIDENCE_CREATED",null,"SUBMITTED",new Date(inspectedAt-30000).toISOString(),record);
+    add("EVIDENCE_INSPECTED","SUBMITTED","INSPECTED",new Date(inspectedAt-15000).toISOString(),record);
+    if (record.inspectionStatus === "REJECTED") {
+      add("EVIDENCE_REJECTED","INSPECTED","REJECTED",new Date(inspectedAt).toISOString(),record);
+    } else {
+      add("EVIDENCE_ACCEPTED","INSPECTED","ACCEPTED",new Date(inspectedAt).toISOString(),record);
+      if (record.versionStatus === "SUPERSEDED") {
+        add("EVIDENCE_SUPERSEDED","ACCEPTED","SUPERSEDED",new Date(inspectedAt+15000).toISOString(),record);
+      } else if (record.inspectionStatus === "STALE") {
+        add("EVIDENCE_MARKED_STALE","ACCEPTED","STALE",new Date(inspectedAt+15000).toISOString(),record);
+      } else if (record.inspectionStatus === "REVOKED") {
+        add("EVIDENCE_REVOKED","ACCEPTED","REVOKED",new Date(inspectedAt+15000).toISOString(),record);
+      }
+    }
+  }
+  const reviews = [];
+  for (const invitation of context.invitationCases || []) {
+    for (const [key,includeIndependence] of [["firstReview",false],["secondReview",true]]) {
+      const review = invitation[key];
+      if (!review) continue;
+      const evidenceRefs = [
+        {evidenceRef:review.evidenceRef,versionId:review.evidencePins.completion.versionId,fingerprint:review.evidencePins.completion.fingerprint},
+        {evidenceRef:review.conflictEvidenceRef,versionId:review.evidencePins.conflict.versionId,fingerprint:review.evidencePins.conflict.fingerprint}
+      ];
+      if (includeIndependence) evidenceRefs.push({
+        evidenceRef:review.independenceEvidenceRef,
+        versionId:review.evidencePins.independence.versionId,
+        fingerprint:review.evidencePins.independence.fingerprint
+      });
+      reviews.push({
+        reviewId:review.reviewId,organizationId:invitation.organizationId || "ORG-1",
+        scope:"INVITATION_SAFEGUARDING_REVIEW",reviewerId:review.reviewerId,
+        authorityId:review.authorityId,completedAt:review.completedAt,evidenceRefs
+      });
+      const eventId = "AUDIT-EVENT-" + String(events.length + 1).padStart(3,"0");
+      events.push({
+        eventId,eventType:"REVIEW_COMPLETED",fromState:"PENDING",toState:"COMPLETE",
+        occurredAt:review.completedAt,actorId:review.reviewerId,authorityId:review.authorityId,
+        organizationId:invitation.organizationId || "ORG-1",
+        scope:"INVITATION_SAFEGUARDING_REVIEW",
+        provenanceRef:"SYNTHETIC-PROVENANCE-" + eventId,
+        reviewId:review.reviewId,evidenceRefs
+      });
+    }
+  }
+  return events.sort((a,b)=>Date.parse(a.occurredAt)-Date.parse(b.occurredAt));
+}
 function validContext(overrides = {}) {
-  return {
+  const context = {
     players: [{ id:"PLAYER-1", recordStatus:"ACTIVE", lifecycleStatus:"ACTIVE", expiresAt:FUTURE }],
     organizations: [{ id:"ORG-1", identityStatus:"Verified", lifecycleStatus:"ACTIVE", expiresAt:FUTURE }],
     representativeAuthorities: [{
@@ -74,12 +136,14 @@ function validContext(overrides = {}) {
       evidenceRecord("SYNTHETIC-INDEPENDENCE-CHECK-1","REVIEWER-2","REVIEW-AUTH-2","REVIEWER_INDEPENDENCE_CHECK","2026-11-12T09:27:00.000Z")
     ],
     invitationCases:[{
-      id:"INV-1", opportunityId:"OPP-1", workflowState:"READY", secondReviewStatus:"COMPLETE",
-      firstReview:{reviewerId:"REVIEWER-1",authorityId:"REVIEW-AUTH-1",status:"COMPLETE",completedAt:"2026-11-12T09:00:00.000Z",evidenceRef:"SYNTHETIC-FIRST-REVIEW-1",conflictStatus:"CLEARED",conflictEvidenceRef:"SYNTHETIC-CONFLICT-CHECK-1",evidencePins:{completion:{versionId:"v1",fingerprint:"SYNTHETIC-FINGERPRINT-SYNTHETIC-FIRST-REVIEW-1"},conflict:{versionId:"v1",fingerprint:"SYNTHETIC-FINGERPRINT-SYNTHETIC-CONFLICT-CHECK-1"}}},
-      secondReview:{reviewerId:"REVIEWER-2",authorityId:"REVIEW-AUTH-2",status:"COMPLETE",completedAt:"2026-11-12T09:30:00.000Z",evidenceRef:"SYNTHETIC-SECOND-REVIEW-1",conflictStatus:"CLEARED",conflictEvidenceRef:"SYNTHETIC-CONFLICT-CHECK-2",independenceStatus:"CONFIRMED",independenceEvidenceRef:"SYNTHETIC-INDEPENDENCE-CHECK-1",evidencePins:{completion:{versionId:"v1",fingerprint:"SYNTHETIC-FINGERPRINT-SYNTHETIC-SECOND-REVIEW-1"},conflict:{versionId:"v1",fingerprint:"SYNTHETIC-FINGERPRINT-SYNTHETIC-CONFLICT-CHECK-2"},independence:{versionId:"v1",fingerprint:"SYNTHETIC-FINGERPRINT-SYNTHETIC-INDEPENDENCE-CHECK-1"}}}
+      id:"INV-1",organizationId:"ORG-1",opportunityId:"OPP-1",workflowState:"READY",secondReviewStatus:"COMPLETE",
+      firstReview:{reviewId:"INV-1-FIRST",reviewerId:"REVIEWER-1",authorityId:"REVIEW-AUTH-1",status:"COMPLETE",completedAt:"2026-11-12T09:00:00.000Z",evidenceRef:"SYNTHETIC-FIRST-REVIEW-1",conflictStatus:"CLEARED",conflictEvidenceRef:"SYNTHETIC-CONFLICT-CHECK-1",evidencePins:{completion:{versionId:"v1",fingerprint:"SYNTHETIC-FINGERPRINT-SYNTHETIC-FIRST-REVIEW-1"},conflict:{versionId:"v1",fingerprint:"SYNTHETIC-FINGERPRINT-SYNTHETIC-CONFLICT-CHECK-1"}}},
+      secondReview:{reviewId:"INV-1-SECOND",reviewerId:"REVIEWER-2",authorityId:"REVIEW-AUTH-2",status:"COMPLETE",completedAt:"2026-11-12T09:30:00.000Z",evidenceRef:"SYNTHETIC-SECOND-REVIEW-1",conflictStatus:"CLEARED",conflictEvidenceRef:"SYNTHETIC-CONFLICT-CHECK-2",independenceStatus:"CONFIRMED",independenceEvidenceRef:"SYNTHETIC-INDEPENDENCE-CHECK-1",evidencePins:{completion:{versionId:"v1",fingerprint:"SYNTHETIC-FINGERPRINT-SYNTHETIC-SECOND-REVIEW-1"},conflict:{versionId:"v1",fingerprint:"SYNTHETIC-FINGERPRINT-SYNTHETIC-CONFLICT-CHECK-2"},independence:{versionId:"v1",fingerprint:"SYNTHETIC-FINGERPRINT-SYNTHETIC-INDEPENDENCE-CHECK-1"}}}
     }],
     ...overrides
   };
+  if (!Object.prototype.hasOwnProperty.call(overrides,"auditEvents")) context.auditEvents = buildAuditEvents(context);
+  return context;
 }
 function evaluate(request = validRequest(), context = validContext(), now = NOW) {
   return engine.evaluateRequest(request, context, { now });
@@ -105,7 +169,7 @@ function fixtureBundle() {
 }
 
 test("engine is pure CommonJS and has no DOM dependency", () => {
-  assert.equal(engine.version, "0.2.1");
+  assert.equal(engine.version, "0.3.0");
   assert.equal(typeof engine.evaluateRequest, "function");
 });
 test("all three committed synthetic request fixtures remain HOLD", () => {
