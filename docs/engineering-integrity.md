@@ -324,6 +324,7 @@ The projection also requires `allBlockingGatesSatisfied === true` plus fully pas
 
 - **Mitigation applied:** Ten fixture-driven workspaces now define `h(value)` and wrap identified dynamic HTML-string interpolations with it. Claim Decisions retains its existing `esc(value)` helper and escaped record fields.
 - **Regression coverage added:** The specialist browser smoke suite checks that hostile HTML-looking text remains literal when passed through each workspace's escape helper and that null/undefined values become empty strings. The existing Claim Decisions form test continues to exercise actual user-entered text through its renderer.
+- **Verification:** Hosted GitHub Actions [run 43426395229](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43426395229), commit `a7a72870ad63b52d722e4260a9c29e8cd7fad647`, passed 50/50 headless tests, 7/7 request-review browser groups, 8/8 hub/navigation groups and 12/12 specialist interaction groups; logs report no uncaught browser errors.
 - **Verification boundary:** These tests establish the helper contract, not that every dynamic interpolation has been identified or that every HTML context is safe. Attribute/URL policy, malformed fixture resilience and complete renderer review remain outstanding.
 - **Status:** OPEN. Do not connect untrusted data to these renderers until a complete audit and tests justify closure.
 
