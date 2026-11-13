@@ -43,7 +43,7 @@ The product focus is now depth before breadth: strengthen the pure review engine
 ## Verification status
 
 - Hosted GitHub Actions [run 43426395229](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43426395229), commit `a7a72870ad63b52d722e4260a9c29e8cd7fad647`, completed successfully.
-- The prior hosted run passed 50 declarations. The current source inventory is **52 declarations** (42/42 review-engine test declarations + 8 documentation-integrity + 2 workspace-data-integrity); the latest hosted result is pending.
+- The prior hosted run passed 50 declarations. The current source inventory is **52 declarations** (42/42 review-engine test declarations + 8 documentation-integrity + 2 workspace-data-integrity). Hosted run [43427648705](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43427648705), commit `5945b75e05229427e430317b79f0541836cbe275`, passed **52/52 headless tests**, **7/7 request-review browser groups**, **8/8 hub/navigation groups** and **12/12 specialist interaction groups**. The two malformed-input tests are included.
 - Discovery & Request Review browser suite: **7/7 groups passed**.
 - Workspace hub/navigation browser suite: **8/8 groups passed**.
 - Specialist workspace interaction suite: **12/12 groups passed**, including the new cross-workspace escape-helper contract group.
