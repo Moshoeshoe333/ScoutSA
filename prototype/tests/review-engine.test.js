@@ -277,6 +277,28 @@ test("opportunity owned by another organization fails closed", () => {
   assert.equal(gate(result, "safeguarding_review").state, "SKIPPED");
 });
 
+test("opaque player reference cannot be replaced by an internal Passport ID", () => {
+  const request = validRequest({ playerRef: "PLAYER-1" });
+  const result = evaluate(request, validContext());
+  assert.equal(gate(result, "passport_reference").state, "PASS");
+  assert.equal(gate(result, "guardian_authority").state, "FAIL");
+  assert.equal(gate(result, "player_voice").state, "FAIL");
+  assert.equal(gate(result, "purpose_consent").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("CONSENT_PLAYER_MISMATCH"));
+});
+
+test("malformed nested guardian and purpose collections fail closed", () => {
+  const context = validContext();
+  context.consentCases[0].guardians = { guardianRef: "GUARDIAN-1", authorityStatus: "ESTABLISHED", primary: true, decision: "APPROVED" };
+  context.consentCases[0].purposes = { purposeCode: "SHARE_SELECTED_FOOTBALL_EVIDENCE", state: "Given", recipientOrganizationId: "ORG-1" };
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "guardian_authority").state, "FAIL");
+  assert.equal(gate(result, "purpose_consent").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("GUARDIAN_AUTHORITY_NOT_ESTABLISHED"));
+  assert.ok(result.reasonCodes.includes("CONSENT_PURPOSE_NOT_GIVEN"));
+  assert.equal(result.disclosurePermitted, false);
+});
+
 test("membership lifecycle expiry is re-evaluated at review time", () => {
   const context = validContext();
   context.memberships[0].expiresAt = PAST;
