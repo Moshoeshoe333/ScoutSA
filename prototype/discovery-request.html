@@ -5,7 +5,7 @@
 <title>ScoutSA — Discovery & Request Review</title>
 <style>
 :root{--ink:#17263a;--muted:#69798e;--line:#e3e9f0;--paper:#f4f7fa;--white:#fff;--navy:#101b2b;--green:#16835f;--amber:#986012;--red:#9c4141}
-*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.55 Inter,system-ui,sans-serif}a{color:#176e55}button,select{font:inherit}.shell{max-width:1180px;margin:auto;padding:28px 22px 50px}.top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:25px}.brand{font-weight:850;font-size:18px}.tag{font-size:10px;letter-spacing:1px;font-weight:800;color:#8a5b18;background:#fff2d9;border:1px solid #efdfbf;border-radius:20px;padding:6px 10px}.eyebrow{color:var(--green);font-size:10px;font-weight:850;letter-spacing:1.6px;text-transform:uppercase}.h1{font-size:30px;letter-spacing:-.8px;margin:5px 0}.intro{max-width:760px;color:var(--muted);margin:0}.notice{background:#fff7e8;border:1px solid #efdfbf;color:#75521c;border-radius:11px;padding:13px 15px;margin:20px 0;font-size:12px}.layout{display:grid;grid-template-columns:310px 1fr;gap:18px;margin-top:20px}.panel,.detail{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:17px;min-width:0}.panel h2,.detail h2{font-size:15px;margin:0 0 12px}.request-list{display:grid;gap:8px}.request{border:1px solid var(--line);background:#fff;border-radius:10px;padding:12px;text-align:left;cursor:pointer;color:var(--ink)}.request.active{border-color:#77b99e;background:#f2faf6}.request strong{display:block;font-size:12px}.request small{color:var(--muted);display:block;margin-top:3px}.pill{display:inline-block;margin-top:7px;border-radius:5px;padding:3px 7px;font-size:10px;font-weight:800;background:#fff0e8;color:var(--red)}.fieldgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}.field{background:#f5f7fa;border-radius:9px;padding:10px}.field small{display:block;color:var(--muted);font-size:10px}.field strong{font-size:12px}.state{font-size:11px;font-weight:850;color:var(--red);margin:3px 0 12px}.gates{display:grid;gap:8px}.gate{display:grid;grid-template-columns:1fr auto;gap:12px;border:1px solid var(--line);border-radius:9px;padding:11px}.gate strong{display:block;font-size:12px}.gate p{margin:3px 0 0;color:var(--muted);font-size:11px}.gate span{font-size:10px;font-weight:850;color:var(--red);white-space:nowrap}.links{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.links a{font-size:11px;text-decoration:none;border:1px solid var(--line);border-radius:7px;padding:7px 9px}.subhead{font-size:12px;font-weight:850;margin:18px 0 8px}.muted{color:var(--muted);font-size:11px}.rules{padding-left:18px;color:var(--muted);font-size:11px}.footer{margin-top:22px;border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:11px}@media(max-width:760px){.layout{grid-template-columns:1fr}.shell{padding:20px 14px}.h1{font-size:25px}.fieldgrid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.55 Inter,system-ui,sans-serif}a{color:#176e55}button,select{font:inherit}.shell{max-width:1180px;margin:auto;padding:28px 22px 50px}.top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:25px}.brand{font-weight:850;font-size:18px}.tag{font-size:10px;letter-spacing:1px;font-weight:800;color:#8a5b18;background:#fff2d9;border:1px solid #efdfbf;border-radius:20px;padding:6px 10px}.eyebrow{color:var(--green);font-size:10px;font-weight:850;letter-spacing:1.6px;text-transform:uppercase}.h1{font-size:30px;letter-spacing:-.8px;margin:5px 0}.intro{max-width:760px;color:var(--muted);margin:0}.notice{background:#fff7e8;border:1px solid #efdfbf;color:#75521c;border-radius:11px;padding:13px 15px;margin:20px 0;font-size:12px}.layout{display:grid;grid-template-columns:310px 1fr;gap:18px;margin-top:20px}.panel,.detail{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:17px;min-width:0}.panel h2,.detail h2{font-size:15px;margin:0 0 12px}.request-list{display:grid;gap:8px}.request{border:1px solid var(--line);background:#fff;border-radius:10px;padding:12px;text-align:left;cursor:pointer;color:var(--ink)}.request.active{border-color:#77b99e;background:#f2faf6}.request strong{display:block;font-size:12px}.request small{color:var(--muted);display:block;margin-top:3px}.pill{display:inline-block;margin-top:7px;border-radius:5px;padding:3px 7px;font-size:10px;font-weight:800;background:#fff0e8;color:var(--red)}.fieldgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}.field{background:#f5f7fa;border-radius:9px;padding:10px}.field small{display:block;color:var(--muted);font-size:10px}.field strong{font-size:12px}.state{font-size:11px;font-weight:850;color:var(--red);margin:3px 0 12px}.gates{display:grid;gap:8px}.gate{display:grid;grid-template-columns:1fr auto;gap:12px;border:1px solid var(--line);border-radius:9px;padding:11px}.gate strong{display:block;font-size:12px}.gate p{margin:3px 0 0;color:var(--muted);font-size:11px}.gate span{font-size:10px;font-weight:850;color:var(--red);white-space:nowrap}.review-stages{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0 18px}.stage{border:1px solid var(--line);border-radius:10px;padding:11px;min-width:0;background:#fff}.stage strong{display:block;font-size:12px}.stage .stage-status{display:block;font-size:10px;font-weight:850;margin:6px 0}.stage p{margin:0;color:var(--muted);font-size:11px}.stage.hold{border-color:#edcece;background:#fff8f7}.stage.hold .stage-status,.stage.prohibited .stage-status{color:var(--red)}.stage.waiting{border-color:#efdfbf;background:#fffaf0}.stage.waiting .stage-status{color:var(--amber)}.stage.pass{border-color:#cde5d8;background:#f5fbf7}.stage.pass .stage-status{color:var(--green)}.stage.info{background:#f5f7fa}.stage.prohibited{border-color:#edcece;background:#fff8f7}@media(max-width:760px){.review-stages{grid-template-columns:1fr}}.links{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.links a{font-size:11px;text-decoration:none;border:1px solid var(--line);border-radius:7px;padding:7px 9px}.subhead{font-size:12px;font-weight:850;margin:18px 0 8px}.muted{color:var(--muted);font-size:11px}.rules{padding-left:18px;color:var(--muted);font-size:11px}.footer{margin-top:22px;border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font-size:11px}@media(max-width:760px){.layout{grid-template-columns:1fr}.shell{padding:20px 14px}.h1{font-size:25px}.fieldgrid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
 <body><nav aria-label="ScoutSA workspace return" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 18px;background:#101b2b;color:#d8e1eb;font:600 12px/1.4 system-ui,sans-serif"><a href="./index.html" style="color:#fff;text-decoration:none">← Back to ScoutSA workspace</a><span style="color:#9fb0c4;font-weight:500">INTERNAL DEMO · FICTIONAL DATA ONLY</span></nav><main class="shell">
@@ -19,6 +19,7 @@
 <section class="detail" aria-live="polite">
 <div class="eyebrow">Selected scenario</div><h2 id="requestTitle">Select a sample request</h2><div class="state" id="requestState">HOLD — NOT SUBMITTABLE</div>
 <div class="fieldgrid" id="summary"></div>
+<div class="subhead">Review journey — current synthetic state</div><div class="review-stages" id="reviewStages" aria-live="polite"></div>
 <div class="subhead">Required review gates</div><div class="gates" id="gates"></div>
 <div class="subhead">Connected prototype records</div><div class="links" id="links"></div>
 <div class="subhead">Why the request is held</div><p class="muted" id="reason"></p>
@@ -27,7 +28,7 @@
 <section class="panel" style="margin-top:18px"><h2>Non-negotiable boundaries</h2><ul class="rules" id="rules"></ul><p class="muted" id="limits"></p></section>
 <footer class="footer">ScoutSA · Internal prototype · Fictional records only · Not production-ready</footer>
 </main>
-<script src="./data/player-passports.demo.js"></script><script src="./data/guardian-consent.demo.js"></script><script src="./data/organization-memberships.demo.js"></script><script src="./data/coach-academy-workspace.demo.js"></script><script src="./data/opportunities.demo.js"></script><script src="./data/opportunity-evidence.demo.js"></script><script src="./data/opportunity-decisions.demo.js"></script><script src="./data/safeguarded-invitations.demo.js"></script><script src="./data/discovery-requests.demo.js"></script><script src="./review-engine.js"></script><script src="./handoff-filter.js"></script>
+<script src="./data/player-passports.demo.js"></script><script src="./data/guardian-consent.demo.js"></script><script src="./data/organization-memberships.demo.js"></script><script src="./data/coach-academy-workspace.demo.js"></script><script src="./data/opportunities.demo.js"></script><script src="./data/opportunity-evidence.demo.js"></script><script src="./data/opportunity-decisions.demo.js"></script><script src="./data/safeguarded-invitations.demo.js"></script><script src="./data/discovery-requests.demo.js"></script><script src="./review-engine.js"></script><script src="./review-state.js"></script><script src="./handoff-filter.js"></script>
 <script>
 (()=>{
  const data=window.SCOUTSA_DISCOVERY_REQUESTS;
@@ -68,9 +69,27 @@
      now:new Date().toISOString()
    });
  }
+ function renderReviewStages(evaluation){
+   const host=$("reviewStages");
+   host.replaceChildren();
+   window.SCOUTSA_REVIEW_STATE.deriveReviewStages(evaluation).forEach(stage=>{
+     const card=document.createElement("article");
+     card.className="stage "+stage.tone;
+     const heading=document.createElement("strong");
+     heading.textContent=stage.label;
+     const status=document.createElement("span");
+     status.className="stage-status";
+     status.textContent=stage.status;
+     const detail=document.createElement("p");
+     detail.textContent=stage.detail;
+     card.append(heading,status,detail);
+     host.append(card);
+   });
+ }
  function render(r){
    const c=consent(r.consentCaseId),o=org(r.organizationId),p=opp(r.opportunityId),inv=invitation(r.invitationCaseId);
    const evaluation=evaluate(r);
+   renderReviewStages(evaluation);
    $("requestTitle").textContent=r.id;
    $("requestState").textContent=r.state+" · review engine: "+evaluation.disposition;
    $("summary").innerHTML=[
@@ -92,6 +111,6 @@
  $("rules").innerHTML=data.rules.map(x=>"<li>"+x+"</li>").join("");
  $("limits").textContent=data.limits.join(" ");
  if(playerRecords[0])render(playerRecords[0]);
- else if(hasHandoff){$("requestTitle").textContent="No matching synthetic request";$("requestState").textContent="NO REQUEST RECORD — READ ONLY";$("summary").textContent="";$("gates").textContent="";$("links").textContent="";$("reason").textContent="The supplied handoff is incomplete or has no exact matching sample request. No request has been created."; }
+ else if(hasHandoff){$("requestTitle").textContent="No matching synthetic request";$("requestState").textContent="NO REQUEST RECORD — READ ONLY";$("summary").textContent="";$("reviewStages").textContent="No review stages are available because no matching request fixture exists."; $("gates").textContent="";$("links").textContent="";$("reason").textContent="The supplied handoff is incomplete or has no exact matching sample request. No request has been created."; }
 })();
 </script></body></html>
