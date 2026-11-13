@@ -101,4 +101,4 @@ The objective is to make the eventual MVP **smaller, safer, and derivable** from
 
 ### Opportunity validation proposal
 
-The prototype branch contains a [synthetic Opportunity Validation Scenario Pack](prototype/OPPORTUNITY-VALIDATION-SCENARIO-PACK.md) with 14 fictional cases for evidence authority, fair eligibility, fees, safeguarding, privacy, disputes and stage boundaries. It is **NOT RATIFIED** and does not authorize implementation or real-world processing.
+The prototype branch contains a [synthetic Opportunity Validation Scenario Pack](prototype/OPPORTUNITY-VALIDATION-SCENARIO-PACK.md) with 14 fictional cases for evidence authority, fair eligibility, fees, safeguarding, privacy, disputes and stage boundaries. It also contains an [optional Vaal Stakeholder Validation Interview Guide](prototype/VAAL-STAKEHOLDER-VALIDATION-INTERVIEW-GUIDE.md). External interviews are not a prerequisite for continued internal development; the guide is parked for any future responses and does not claim validation has occurred. These are research instruments, not ratified policy or authorization for real-world processing.
