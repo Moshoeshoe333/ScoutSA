@@ -81,9 +81,6 @@ test("all specialist workspace fixtures have unique IDs and resolvable cross-wor
   }
   for (const row of invitations) {
     assert.ok(opportunityIds.has(row.opportunityId), row.id + " must reference an existing opportunity");
-    const opportunity = opportunities.find(item => item.id === row.opportunityId);
-    assert.equal(opportunity.organizationId, row.organizationId,
-      row.id + " request organization must own the referenced opportunity");
   }
   for (const row of pairs) {
     assert.ok(playerIds.has(row.playerId), row.id + " must reference an existing Passport");
@@ -98,6 +95,9 @@ test("all specialist workspace fixtures have unique IDs and resolvable cross-wor
     assert.ok(guardianIds.has(row.consentCaseId), row.id + " must reference an existing consent case");
     assert.ok(organizationIds.has(row.organizationId), row.id + " must reference an existing organization");
     assert.ok(opportunityIds.has(row.opportunityId), row.id + " must reference an existing opportunity");
+    const opportunity = opportunities.find(item => item.id === row.opportunityId);
+    assert.equal(opportunity.organizationId, row.organizationId,
+      row.id + " request organization must own the referenced opportunity");
     const guardian = guardians.find(item => item.id === row.consentCaseId);
     assert.equal(guardian.playerRef, row.playerRef, row.id + " player reference must agree with its consent case");
     if (row.passportRef !== null) {
