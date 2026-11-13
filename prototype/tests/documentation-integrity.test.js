@@ -43,3 +43,14 @@ test("root README links the integrity policy and workflow directory has no empty
     }
   }
 });
+
+
+test("affiliation evidence proposal is linked and explicitly non-ratified", () => {
+  const proposal = read("prototype/AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md");
+  assert.ok(proposal.includes("NOT RATIFIED"), "proposal must remain explicitly non-ratified");
+  assert.ok(proposal.includes("No implementation is authorized"), "proposal must preserve implementation hold");
+  assert.ok(rootReadme.includes("prototype/AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md"), "root README must link proposal");
+  assert.ok(prototypeReadme.includes("AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md"), "prototype README must link proposal");
+  assert.ok(gateStatus.includes("AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md"), "gate status must link proposal");
+  assert.ok(proposal.includes("Player-reported experience") && proposal.includes("Community-coach attestation") && proposal.includes("Formal organization record"), "all three evidence classes must be documented");
+});
