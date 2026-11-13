@@ -284,7 +284,7 @@ Hosted run [43420141388](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/4
 
 ## Current source inventory note — 2026-11-13
 
-The current engine source declares 66 tests and the documentation-integrity source declares 8 checks. This produces **8 documentation-integrity test declarations (74 total)** for the documentation guard's engine-plus-documentation count; the separate workspace-data-integrity file adds 2 more declarations, for **76 total Node test declarations**. Nine new engine tests cover submitted/inspected-but-unaccepted evidence, claim/scope mismatch, stale evidence, revoked evidence, inspector mismatch, expiry, missing provenance, duplicate evidence references and reviewer-authority revocation. Hosted verification is pending for this revision. Historical PASS records above are not evidence for the current head.
+The current engine source declares 66 tests and the documentation-integrity source declares 8 checks. This produces **8 documentation-integrity test declarations (81 total)** for the documentation guard's engine-plus-documentation count; the separate workspace-data-integrity file adds 2 more declarations, for **76 total Node test declarations**. Nine new engine tests cover submitted/inspected-but-unaccepted evidence, claim/scope mismatch, stale evidence, revoked evidence, inspector mismatch, expiry, missing provenance, duplicate evidence references and reviewer-authority revocation. Hosted verification is pending for this revision. Historical PASS records above are not evidence for the current head.
 
 
 ## Current evidence-linked reviewer model checkpoint — 2026-11-13
