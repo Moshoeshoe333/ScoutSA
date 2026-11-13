@@ -270,15 +270,15 @@ async function main() {
       await page.goto(origin + "/" + route, { waitUntil: "load" });
       const result = await page.evaluate(() => {
         const hostile = '<img src=x onerror="window.__xss=1">';
-        const escaped = h(hostile);
+        const escape = typeof h === "function" ? h : esc;\n        const escaped = escape(hostile);
         const probe = document.createElement("div");
         probe.innerHTML = escaped;
         return {
           escaped,
           imageCount: probe.querySelectorAll("img").length,
           literalText: probe.textContent,
-          nullValue: h(null),
-          undefinedValue: h(undefined)
+          nullValue: escape(null),
+          undefinedValue: escape(undefined)
         };
       });
       assert.equal(result.imageCount, 0, route + " escape helper must not create an image element");
