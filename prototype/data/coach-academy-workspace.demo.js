@@ -8,8 +8,7 @@ window.SCOUTSA_ACADEMY_WORKSPACE_DEMO = {
     {id:"MEM-DEMO-005",state:"Active",verification:"Not verified",note:"Illustrative workflow state only; Active does not establish a verified affiliation."}
   ],
   opportunities:[
-    {id:"OPP-DEMO-001",name:"U17 Development Programme — Sample",state:"Proposal only",source:"Fictional planning note",blocker:"Issuer, eligibility, dates and safeguards are not established."},
-    {id:"OPP-DEMO-003",name:"Regional Talent Observation Session — Sample",state:"Verification required",source:"Fictional draft notice",blocker:"Issuer and accountable authority are unknown; do not publish or invite."}
+    {id:"OPP-DEMO-001",name:"U17 Development Programme — Sample",state:"Proposal only",source:"Fictional planning note",blocker:"Issuer, eligibility, dates and safeguards are not established."}
   ],
   evidenceActions:[
     {id:"ACT-001",area:"Organization identity",state:"Evidence absent",action:"Identify an independent, authoritative source for the entity."},
