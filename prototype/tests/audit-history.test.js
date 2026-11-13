@@ -8,7 +8,8 @@ const NOW = "2026-11-13T12:00:00.000Z";
 const evidenceRecords = [{
   evidenceRef:"EV-1", versionId:"v1", organizationId:"ORG-1",
   reviewScope:"INVITATION_SAFEGUARDING_REVIEW",
-  reviewerId:"REVIEWER-1", authorityId:"AUTH-1"
+  reviewerId:"REVIEWER-1", authorityId:"AUTH-1",
+  evidenceRefs:[{evidenceRef:"EV-1",versionId:"v1"}]
 }];
 const reviews = [{
   reviewId:"REV-1", organizationId:"ORG-1",
@@ -20,7 +21,7 @@ function event(eventId, eventType, fromState, toState, occurredAt, extra = {}) {
     eventId, eventType, fromState, toState, occurredAt,
     actorId:"REVIEWER-1", authorityId:"AUTH-1", organizationId:"ORG-1",
     scope:"INVITATION_SAFEGUARDING_REVIEW", provenanceRef:"SYNTHETIC-EVENT-SOURCE",
-    evidenceRef:"EV-1", versionId:"v1", ...extra
+    evidenceRef:"EV-1", versionId:"v1", evidenceRefs:[{evidenceRef:"EV-1",versionId:"v1"}], ...extra
   };
 }
 function validEvents() {
@@ -90,4 +91,17 @@ test("unknown event types and future timestamps fail closed", () => {
 test("missing provenance fields fail closed", () => {
   const events = validEvents(); events[0].provenanceRef = "";
   assert.ok(validate(events).errors.some(item=>item.code==="AUDIT_EVENT_PROVENANCE_MISSING"));
+});
+
+test("review completion requires exact evidence-version links", () => {
+  const events = validEvents(); events[3].evidenceRefs = [];
+  assert.ok(validate(events).errors.some(item=>item.code==="AUDIT_REVIEW_EVIDENCE_LINK_MISSING"));
+});
+test("review cannot complete before its linked evidence is accepted", () => {
+  const events = validEvents();
+  const acceptance = events.splice(2,1)[0];
+  events.splice(3,0,acceptance);
+  events[2].occurredAt = "2026-11-13T09:01:30.000Z";
+  events[3].occurredAt = "2026-11-13T09:02:00.000Z";
+  assert.ok(validate(events).errors.some(item=>item.code==="AUDIT_REVIEW_EVIDENCE_NOT_ACCEPTED"));
 });
