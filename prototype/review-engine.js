@@ -187,15 +187,15 @@
         fingerprint: review.evidencePins.independence.fingerprint
       });
       return {
-        reviewId: review.reviewId, organizationId,
+        reviewId: review.reviewId, invitationId: invitation.id, organizationId,
         scope: "INVITATION_SAFEGUARDING_REVIEW",
         reviewerId: review.reviewerId, authorityId: review.authorityId,
         completedAt: review.completedAt, evidenceRefs
       };
     };
     const auditResult = auditHistory.validateAuditHistory({
-      events: context.auditEvents,
-      evidenceRecords: context.evidenceRecords,
+      events: context.auditEvents.filter(event => event && event.invitationId === invitation.id),
+      evidenceRecords: array(context.evidenceRecords).filter(record => record && record.invitationId === invitation.id),
       reviews: [auditReviewRecord(first, false), auditReviewRecord(second, true)],
       eventAuthorities: context.reviewerAuthorities,
       now: new Date(now).toISOString()
