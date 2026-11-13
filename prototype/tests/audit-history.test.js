@@ -6,14 +6,14 @@ const audit = require("../audit-history.js");
 const NOW = "2026-11-13T12:00:00.000Z";
 const FUTURE = "2027-01-01T00:00:00.000Z";
 const evidenceRecords = [{
-  evidenceRef:"EV-1", versionId:"v1", versionStatus:"CURRENT",
+  invitationId:"INV-1", evidenceRef:"EV-1", versionId:"v1", versionStatus:"CURRENT",
   fingerprint:"FP-1", organizationId:"ORG-1",
   reviewScope:"INVITATION_SAFEGUARDING_REVIEW",
   reviewerId:"REVIEWER-1", authorityId:"AUTH-1",
   inspectionStatus:"ACCEPTED"
 }];
 const reviews = [{
-  reviewId:"REV-1", organizationId:"ORG-1",
+  reviewId:"REV-1", invitationId:"INV-1", organizationId:"ORG-1",
   scope:"INVITATION_SAFEGUARDING_REVIEW",
   reviewerId:"REVIEWER-1", authorityId:"AUTH-1",
   completedAt:"2026-11-13T09:03:00.000Z",
@@ -28,7 +28,7 @@ const eventAuthorities = [{
 function event(eventId,eventType,fromState,toState,occurredAt,extra={}) {
   return {
     eventId,eventType,fromState,toState,occurredAt,
-    actorId:"REVIEWER-1",authorityId:"AUTH-1",organizationId:"ORG-1",
+    invitationId:"INV-1",actorId:"REVIEWER-1",authorityId:"AUTH-1",organizationId:"ORG-1",
     scope:"INVITATION_SAFEGUARDING_REVIEW",provenanceRef:"SYNTHETIC-SOURCE-"+eventId,
     evidenceRef:"EV-1",versionId:"v1",fingerprint:"FP-1",
     evidenceRefs:[{evidenceRef:"EV-1",versionId:"v1",fingerprint:"FP-1"}],
@@ -187,4 +187,9 @@ test("missing provenance fields fail closed",()=>{
 test("duplicate review identifiers are ambiguous",()=>{
   const duplicate=[...reviews,structuredClone(reviews[0])];
   assert.ok(validate(validEvents(),{reviews:duplicate}).errors.some(x=>x.code==="AUDIT_REVIEW_TARGET_AMBIGUOUS"));
+});
+
+test("evidence and review events must bind to the exact invitation",()=>{
+  const events=validEvents();events[0].invitationId="INV-OTHER";
+  assert.ok(validate(events).errors.some(x=>x.code==="AUDIT_EVIDENCE_SCOPE_MISMATCH"));
 });
