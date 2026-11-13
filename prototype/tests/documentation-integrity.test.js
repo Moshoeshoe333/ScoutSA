@@ -14,14 +14,14 @@ const gateStatus = read("docs/00-gate-status.md");
 const verification = read("prototype/verification/discovery-request-browser-verification-2026-11-12.md");
 const rootReadme = read("README.md");
 
-const version = engine.match(/review engine v([0-9]+\.[0-9]+\.[0-9]+)/i)?.[1];
-const declaredTestCount = (engineTests.match(/^test\(/gm) || []).length;
-const countPattern = new RegExp(String.raw`\\b${declaredTestCount}\\s*\\/\\s*${declaredTestCount}\\b`);
+const version = engine.match(/review engine v([0-9]+\\.[0-9]+\\.[0-9]+)/i)?.[1];
+const declaredTestCount = (engineTests.match(/^test\\(/gm) || []).length;
+const countPattern = new RegExp(`${declaredTestCount}\\\\s*\\\\/\\\\s*${declaredTestCount}`);
 
 test("contract, README and gate status identify the source engine version", () => {
   assert.ok(version, "engine version comment must be present");
-  assert.match(contract, new RegExp(String.raw`review-engine\\.js` + String.raw` version \`${version}\\``));
-  assert.match(prototypeReadme, new RegExp(String.raw`review-engine\\.js`));
+  assert.ok(contract.includes(`prototype/review-engine.js version \\`${version}\\``), "contract engine version is stale");
+  assert.ok(prototypeReadme.includes("review-engine.js"), "prototype README must identify the engine");
   assert.ok(prototypeReadme.includes(version), "prototype README must state current engine version");
   assert.ok(gateStatus.includes(version), "gate status must state current engine version");
 });
@@ -34,5 +34,5 @@ test("current documentation reports the count derived from test declarations", (
 });
 
 test("root README links the documentation integrity control", () => {
-  assert.match(rootReadme, /docs\/engineering-integrity\.md/);
+  assert.ok(rootReadme.includes("docs/engineering-integrity.md"));
 });
