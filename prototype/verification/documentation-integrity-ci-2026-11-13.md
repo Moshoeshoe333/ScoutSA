@@ -98,3 +98,5 @@ The following successive commits failed because the new consistency guard expect
 - [43399608136](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399608136), [43399615854](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399615854), [43399624735](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399624735), [43399630906](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399630906): the same count mismatch plus a stale run-ID assertion that still expected 43398121693 after the summaries had been updated to 43399527448.
 
 These failures are not passes. The assertions have now been aligned to the actual documented wording and current successful verification reference. A new hosted run is required to close DOC-006.
+
+- [43399759324](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399759324) failed because the prototype README had changed to the valid verified form `4/4 checks passed`, while the guard accepted only `4 checks declared`. The guard now accepts either wording and still derives the expected count from test declarations.
