@@ -22,7 +22,8 @@
 | [43396561970](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396561970) | `793868348eb01a7eadec8c3b015015602116d7f4` | **FAILURE** | Duplicate/intermediate attempt; retained in history. |
 | [43396563700](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396563700) | `793868348eb01a7eadec8c3b015015602116d7f4` | **SUCCESS** | Corrected source; all workflow test files passed. |
 | [43396594044](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396594044) | `2a5cc8a3932930093dfe9a440b96f62b8ecd3b3f` | **FAILURE** | Duplicate/intermediate attempt; retained in history. |
-| [43396595986](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396595986) | `2a5cc8a3932930093dfe9a440b96f62b8ecd3b3f` | **SUCCESS** | Latest verification after the incident log was updated; all workflow test files passed. |
+| [43396595986](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396595986) | `2a5cc8a3932930093dfe9a440b96f62b8ecd3b3f` | **SUCCESS** | All workflow test files passed. |
+| [43396763965](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396763965) | `7c28ba630743f26bd712c39cd6b23b5d6a7a8170` | **SUCCESS** | Latest confirmed policy/documentation run; README and gate-status reconciliation passed.
 
 These failed runs are retained as evidence. Do not count them as successful CI validation.
 
@@ -44,6 +45,7 @@ A separate manual consistency inspection confirmed the current branch values: en
 
 - [x] Successful hosted GitHub Actions run on corrected test source: [run 43396563700](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396563700).
 - [x] Successful hosted GitHub Actions rerun after incident-log update: [run 43396595986](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396595986).
+- [x] Latest successful policy/documentation run after README and gate-status reconciliation: [run 43396763965](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396763965).
 - [x] The workflow command is `node --test prototype/tests/*.test.js`, which includes the 40 engine-test declarations and 3 documentation-integrity test declarations (43 total).
 - [x] The three documentation-integrity checks and the existing engine tests completed successfully in the hosted run.
 - [ ] Browser-integrated discovery smoke verification remains separate and outstanding; this workflow does not execute browser tests.
