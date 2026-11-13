@@ -11,9 +11,9 @@ This directory contains the original responsive browser demonstration plus focus
 - Engine: `review-engine.js` **v0.2.0**.
 - Headless suite: `node --test prototype/tests/*.test.js`.
 - Current recorded engine-suite result: **40/40 passed** on 2026-11-12 in an isolated Node v26.12.1 execution environment (70.59 ms).
-- Documentation-integrity suite: **4/4 checks passed** in hosted GitHub Actions alongside the 40 engine tests; the 44-declaration suite passed on [run 43399527448](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399527448). See [CI verification record](verification/documentation-integrity-ci-2026-11-13.md).
+- Previous documentation-integrity baseline: **4/4 checks passed** alongside the 40 engine tests on [run 43399919864](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399919864). The current suite declares **5 documentation checks (45 total)** and is awaiting hosted verification. See [CI verification record](verification/documentation-integrity-ci-2026-11-13.md).
 - The current browser-integrated discovery smoke page has **not** been rerun against v0.2.0. The previous 32/32 browser result belongs to the v0.1.0 baseline.
-- Current hosted evidence: all 44 declarations (40 engine + 4 documentation checks) passed on [run 43399527448](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399527448), commit `32d9053b83cca858a53276ec8f59d04b70f6360d`. The earlier 43-test run remains historical. The workflow does not execute browser tests.
+- Last successful prototype CI: [run 43399919864](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399919864), 44 declarations (40 engine + 4 documentation checks), commit `24afa22dd35d923ceffcaa0fbec7482a43209fed`. The current 45-declaration suite is awaiting a new hosted result. The workflow does not execute browser tests.
 
 The engine can only produce a separate-human-review disposition. It always returns `disclosurePermitted: false`. Its fixtures and projections are synthetic; it is not authentication, authorization, a security boundary or a production policy service.
 
@@ -165,3 +165,8 @@ The headless suite is `node --test prototype/tests/review-engine.test.js`; `.git
 ## Affiliation evidence model proposal
 
 See [Affiliation Evidence Model — Proposal](AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md). It distinguishes player-reported experience, community-coach attestation and formal organization records without treating them as trust tiers. **This is not ratified and does not change the current verified-membership rule or authorize implementation.**
+
+
+## Opportunity-specific evidence acceptance matrix
+
+See [Opportunity Evidence Acceptance Matrix](OPPORTUNITY-EVIDENCE-ACCEPTANCE-MATRIX.md). It proposes candidate evidence handling for community sessions, recurring community programmes, academy assessments, formal club/league registration, scouting observation and funded development opportunities. It is a decision aid only: **not ratified, not an eligibility policy, and not authorization to change the review engine or mainline.**
