@@ -33,9 +33,10 @@
  const data=window.SCOUTSA_DISCOVERY_REQUESTS;
  const params=new URLSearchParams(window.location.search);
  const handoffPlayerId=params.get("player");
- const playerRecords=handoffPlayerId?data.records.filter(r=>r.playerId===handoffPlayerId):data.records;
+ const handoffOpportunityId=params.get("opportunity");
+ const playerRecords=handoffPlayerId?data.records.filter(r=>r.playerId===handoffPlayerId&&(!handoffOpportunityId||r.opportunityId===handoffOpportunityId)):data.records;
  const $=id=>document.getElementById(id);
- if(handoffPlayerId){const player=Object.values(window.SCOUTSA_DEMO_PLAYERS).find(p=>p.id===handoffPlayerId);$("passportHandoff").hidden=false;$("passportHandoff").textContent=player?"Passport handoff: "+player.id+" · "+player.name+". Showing only the matching fictional request record(s).":"No recognized synthetic Passport reference was supplied. No request records are shown."; }
+ if(handoffPlayerId){const player=Object.values(window.SCOUTSA_DEMO_PLAYERS).find(p=>p.id===handoffPlayerId);$("passportHandoff").hidden=false;$("passportHandoff").textContent=player?"Passport handoff: "+player.id+" · "+player.name+(handoffOpportunityId?" · "+handoffOpportunityId:"")+". Showing only the exact matching fictional request record(s).":"No recognized synthetic Passport reference was supplied. No request records are shown."; }
  const consent=(id)=>window.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases.find(x=>x.id===id);
  const org=(id)=>window.SCOUTSA_DEMO_MEMBERSHIPS.organizations.find(x=>x.id===id);
  const opp=(id)=>window.SCOUTSA_DEMO_OPPORTUNITIES.records.find(x=>x.id===id);
@@ -65,8 +66,9 @@
    $("gates").innerHTML=evaluation.gates.map(g=>'<div class="gate"><div><strong>'+g.label+'</strong><p>'+g.detail+'</p></div><span>'+g.status+'</span></div>').join("");
    const passport=Object.values(window.SCOUTSA_DEMO_PLAYERS).find(x=>x.id===r.playerId);
    const passportUrl=passport?"./player-passport.html?player="+encodeURIComponent(passport.id):"./player-passport.html";
+   const opportunityUrl="./opportunities.html?player="+encodeURIComponent(r.playerId)+"&opportunity="+encodeURIComponent(r.opportunityId);
    const items=[
-    ["Player Passport",passportUrl],["Guardian & consent","./guardian-consent.html"],["Organization memberships","./organization-memberships.html"],["Opportunity register","./opportunities.html"],["Opportunity evidence","./opportunity-evidence.html"],["Claim decisions","./opportunity-decisions.html"],["Invitation safeguards","./safeguarded-invitations.html"],["Matching review","./player-opportunity-matching.html"]
+    ["Player Passport",passportUrl],["Opportunity register",opportunityUrl],["Guardian & consent","./guardian-consent.html"],["Organization memberships","./organization-memberships.html"],["Opportunity register","./opportunities.html"],["Opportunity evidence","./opportunity-evidence.html"],["Claim decisions","./opportunity-decisions.html"],["Invitation safeguards","./safeguarded-invitations.html"],["Matching review","./player-opportunity-matching.html"]
    ];
    $("links").innerHTML=items.map(([label,url])=>'<a href="'+url+'">'+label+' ↗</a>').join("");
    $("reason").textContent=r.note+" "+(c?"Consent state: "+c.consentState+". ":"")+(o?"Organization identity: "+o.identityStatus+". ":"")+(p?"Opportunity verification: "+p.verification+". ":"")+(inv?"Invitation workflow: "+inv.workflowState+".":"");
