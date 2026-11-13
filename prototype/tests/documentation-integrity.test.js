@@ -13,10 +13,14 @@ const prototypeReadme = read("prototype/README.md");
 const gateStatus = read("docs/00-gate-status.md");
 const verification = read("prototype/verification/discovery-request-browser-verification-2026-11-12.md");
 const rootReadme = read("README.md");
+const ciVerification = read("prototype/verification/documentation-integrity-ci-2026-11-13.md");
+const documentationTestSource = read("prototype/tests/documentation-integrity.test.js");
 
 const versionLine = engine.split("\n").find(line => line.includes("review engine v"));
 const version = versionLine?.split("review engine v")[1]?.split(" ")[0];
 const declaredTestCount = engineTests.split("\n").filter(line => line.startsWith("test(")).length;
+const declaredDocumentationTestCount = documentationTestSource.split("\n").filter(line => line.startsWith("test(")).length;
+const totalDeclaredTestCount = declaredTestCount + declaredDocumentationTestCount;
 const hasCurrentTestCount = source => source.includes(`${declaredTestCount}/${declaredTestCount}`) || source.includes(`${declaredTestCount} / ${declaredTestCount}`);
 
 test("contract, README and gate status identify the source engine version", () => {
@@ -32,6 +36,10 @@ test("current documentation reports the count derived from test declarations", (
   assert.ok(hasCurrentTestCount(prototypeReadme), "prototype README test count is stale");
   assert.ok(hasCurrentTestCount(gateStatus), "gate status test count is stale");
   assert.ok(hasCurrentTestCount(verification), "verification record test count is stale");
+  assert.ok(rootReadme.includes(`${declaredDocumentationTestCount} documentation-integrity checks`), "root README documentation-test count is stale");
+  assert.ok(prototypeReadme.includes(`${declaredDocumentationTestCount} checks declared`), "prototype README documentation-test count is stale");
+  assert.ok(gateStatus.includes(`${declaredDocumentationTestCount} checks`), "gate-status documentation-test count is stale");
+  assert.ok(ciVerification.includes(`${declaredDocumentationTestCount} documentation-integrity test declarations (${totalDeclaredTestCount} total)`), "CI verification documentation-test count is stale");
 });
 
 test("root README links the integrity policy and workflow directory has no empty files", () => {
@@ -50,6 +58,9 @@ test("affiliation evidence proposal is linked and explicitly non-ratified", () =
   assert.ok(proposal.includes("NOT RATIFIED"), "proposal must remain explicitly non-ratified");
   assert.ok(proposal.includes("No implementation is authorized"), "proposal must preserve implementation hold");
   assert.ok(rootReadme.includes("prototype/AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md"), "root README must link proposal");
+  for (const source of [rootReadme, prototypeReadme, gateStatus, ciVerification]) {
+    assert.ok(source.includes("43398121693"), "recorded successful CI run must be consistent across current summaries");
+  }
   assert.ok(prototypeReadme.includes("AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md"), "prototype README must link proposal");
   assert.ok(gateStatus.includes("AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md"), "gate status must link proposal");
   assert.ok(proposal.includes("Player-reported experience") && proposal.includes("Community-coach attestation") && proposal.includes("Formal organization record"), "all three evidence classes must be documented");
