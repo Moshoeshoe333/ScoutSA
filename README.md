@@ -107,3 +107,4 @@ The prototype branch contains a [synthetic Opportunity Validation Scenario Pack]
 ### Connected synthetic demo journey
 
 On the isolated `prototype/internal-demo` branch, the Player Passport now links to the matching Discovery & Request Review fixture using an opaque synthetic player reference. Discovery filters to that exact fixture and links back to the same Passport. This is a read-only URL handoff between static pages; it is not shared persistence, a live submission, authentication, authorization or a production workflow. Unknown or unmatched references show no request rather than creating one. All sample requests remain on hold.
+The 48-declaration hosted result cited above predates the Passport-to-discovery handoff assertions added on 2026-11-13. The source declaration count remains 48 (40 engine + 8 documentation checks); a new hosted run is required to verify the updated assertions.
