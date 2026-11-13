@@ -113,7 +113,6 @@
       || !first.reviewerId || !second.reviewerId
       || !first.authorityId || !second.authorityId
       || !first.evidenceRef || !second.evidenceRef
-      || !first.evidencePins || !second.evidencePins
       || !Number.isFinite(timestamp(first.completedAt))
       || !Number.isFinite(timestamp(second.completedAt))) {
       return { ok: false, code: "INVITATION_REVIEW_EVIDENCE_INCOMPLETE" };
@@ -148,17 +147,17 @@
       const authorityLife = current(authority, now);
       if (!authorityLife.ok) return { ok: false, code: "REVIEWER_AUTHORITY_" + authorityLife.code };
       const common = { invitationId: invitation.id, organizationId, reviewerId: review.reviewerId, authorityId: review.authorityId };
-      const completionEvidence = validateEvidenceRecord(context, review.evidenceRef, review.evidencePins.completion,
+      const completionEvidence = validateEvidenceRecord(context, review.evidenceRef, review.evidencePins && review.evidencePins.completion,
         { ...common, claimType: "REVIEW_COMPLETION" }, now, review.completedAt);
       if (!completionEvidence.ok) return completionEvidence;
-      const conflictEvidence = validateEvidenceRecord(context, review.conflictEvidenceRef, review.evidencePins.conflict,
+      const conflictEvidence = validateEvidenceRecord(context, review.conflictEvidenceRef, review.evidencePins && review.evidencePins.conflict,
         { ...common, claimType: "REVIEWER_CONFLICT_CHECK" }, now, review.completedAt);
       if (!conflictEvidence.ok) return conflictEvidence;
     }
     if (second.independenceStatus !== "CONFIRMED" || !second.independenceEvidenceRef) {
       return { ok: false, code: "SECOND_REVIEW_INDEPENDENCE_NOT_EVIDENCED" };
     }
-    const independenceEvidence = validateEvidenceRecord(context, second.independenceEvidenceRef, second.evidencePins.independence,
+    const independenceEvidence = validateEvidenceRecord(context, second.independenceEvidenceRef, second.evidencePins && second.evidencePins.independence,
       { invitationId: invitation.id, organizationId, reviewerId: second.reviewerId,
         authorityId: second.authorityId, claimType: "REVIEWER_INDEPENDENCE_CHECK" },
       now, second.completedAt);
