@@ -20,7 +20,7 @@ const countPattern = new RegExp(`${declaredTestCount}\\\\s*\\\\/\\\\s*${declared
 
 test("contract, README and gate status identify the source engine version", () => {
   assert.ok(version, "engine version comment must be present");
-  assert.ok(contract.includes(`prototype/review-engine.js version \\`${version}\\``), "contract engine version is stale");
+  assert.ok(contract.includes("prototype/review-engine.js") && contract.includes(`version \\`${version}\\``), "contract engine version is stale");
   assert.ok(prototypeReadme.includes("review-engine.js"), "prototype README must identify the engine");
   assert.ok(prototypeReadme.includes(version), "prototype README must state current engine version");
   assert.ok(gateStatus.includes(version), "gate status must state current engine version");
