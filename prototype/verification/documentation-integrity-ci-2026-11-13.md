@@ -317,7 +317,7 @@ Current source inventory:
 - Documentation-integrity tests: **9**.
 - Audit-history tests: **12**.
 - Workspace-data-integrity tests: **2**.
-- Engine plus documentation count used by the existing guard: **82**.
+- Engine plus documentation count used by the existing guard: **82** (9 documentation-integrity test declarations (82 total)).
 - Total Node test declarations across all four files: **96**.
 
 The audit-history model is experimental, not ratified and not connected to `review-engine.js`. It does not provide immutable storage, cryptographic integrity, trusted timestamps, identity proofing, durable audit history or automatic invalidation. A valid event sequence does not change an invitation gate or authorize a human decision. Hosted verification for this revision is **PENDING**; historical CI passes do not verify this addition. Mainline, real-data, disclosure, deployment and pilot holds remain unchanged.
