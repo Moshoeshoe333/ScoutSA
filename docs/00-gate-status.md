@@ -304,3 +304,8 @@ Database implementation: **HOLD**.
 
 
 Recorded 45-test CI baseline: [run 43401941704](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401941704) — historical baseline only (40 engine + 5 documentation checks). Current 46-test CI verification: [run 43403854544](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403854544).
+
+
+## Opportunity validation proposal — 2026-11-13
+
+The [Opportunity Validation Scenario Pack](../prototype/OPPORTUNITY-VALIDATION-SCENARIO-PACK.md) provides 14 fictional cases for testing the proposed opportunity evidence and declaration artifacts. It is **NOT RATIFIED** and does not change current gates, implementation holds or pilot authority. No real people or organizations are described.

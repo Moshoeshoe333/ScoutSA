@@ -209,3 +209,17 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Preventive follow-up:** The derived count remains source-driven; keep the verification wording synchronized with the guard's exact asserted phrase and retain the failed run as evidence.
 - **Verification:** The shared-marker guard revision exposed an over-escaped regular-expression literal and missing marker in the verification record. Runs [43403560768](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403560768) and [43403764236](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403764236) failed in the documentation-integrity test step and are not counted as passes. The regex and verification marker were corrected; the current 46-declaration suite passed on [run 43403854544](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403854544), commit `50566e1902b9fa409515103bc81511f4af638881`. The `policy-and-documentation-tests` job and test step completed successfully. Browser-integrated v0.2.0 verification remains outstanding.
 - **Status:** Closed — declaration links/content and shared-CI-marker guards passed hosted CI. Failed runs [43403172054](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403172054), [43403560768](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403560768) and [43403764236](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403764236) remain preserved as evidence and are not counted as passes.
+
+
+### DOC-009 — Opportunity validation scenario pack and count reconciliation
+
+- **Detected:** 2026-11-13
+- **Severity:** Low — synthetic validation artifact and synchronized documentation/test inventory update.
+- **Affected branch:** `prototype/internal-demo` only; mainline untouched.
+- **Finding:** A 14-case scenario pack is added to stress-test opportunity evidence, fairness, authority, safeguarding, privacy and stage boundaries. The suite increases from 46 to 47 declared tests (40 engine + 7 documentation checks). A read-back audit also found that the prior verification record paired the current 46-test run marker with the earlier commit SHA; the exact successful run-to-commit relationship must be kept aligned.
+- **Impact:** Without reconciliation, readers could mistake a historical CI marker or mismatched commit reference for verification of the new source.
+- **Correction:** Add a documentation guard for all 14 scenario IDs, synthetic framing, non-ratified status, implementation hold and repository links. Preserve the 46-test run as historical evidence until the 47-test suite passes. Correct the verification record's current run/commit pair and synchronize the new run marker after CI.
+- **Preventive measure:** Keep source test counts derived from declarations; verify the exact workflow run head SHA before recording it; keep one shared current marker across summaries; never treat synthetic scenarios as real reports or stakeholder validation.
+- **Failed runs:** None recorded for this artifact at the time of writing.
+- **Verification:** Pending hosted CI for the 47-declaration suite. Browser-integrated v0.2.0 verification remains outstanding.
+- **Status:** Open — proposal added; hosted verification pending.

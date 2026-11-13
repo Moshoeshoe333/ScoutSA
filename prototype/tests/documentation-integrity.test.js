@@ -92,3 +92,13 @@ test("opportunity requirement declaration is linked and explicitly non-ratified"
   assert.ok(currentCiIds.every(Boolean), "each current summary must identify the hosted 46-test verification");
   assert.ok(new Set(currentCiIds).size === 1 && currentCiIds[0] === "43403854544", "current summaries must cite the same successful 46-test run");
 });
+
+test("opportunity validation scenario pack is linked, synthetic and non-ratified", () => {
+  const pack = read("prototype/OPPORTUNITY-VALIDATION-SCENARIO-PACK.md");
+  assert.ok(pack.includes("NOT RATIFIED") && pack.includes("No implementation is authorized"), "scenario pack must preserve authority and implementation boundaries");
+  assert.ok(pack.includes("All people, organizations, venues, messages, amounts and records in the cases below are fictional"), "scenarios must be explicitly synthetic");
+  for (const id of ["V-01","V-02","V-03","V-04","V-05","V-06","V-07","V-08","V-09","V-10","V-11","V-12","V-13","V-14"]) assert.ok(pack.includes("### "+id), "scenario missing: "+id);
+  assert.ok(rootReadme.includes("OPPORTUNITY-VALIDATION-SCENARIO-PACK.md"), "root README must link scenario pack");
+  assert.ok(prototypeReadme.includes("OPPORTUNITY-VALIDATION-SCENARIO-PACK.md"), "prototype README must link scenario pack");
+  assert.ok(gateStatus.includes("OPPORTUNITY-VALIDATION-SCENARIO-PACK.md"), "gate status must link scenario pack");
+});

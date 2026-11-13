@@ -175,3 +175,8 @@ See [Opportunity Evidence Acceptance Matrix](OPPORTUNITY-EVIDENCE-ACCEPTANCE-MAT
 ## Opportunity requirement declaration proposal
 
 See [Opportunity Requirement Declaration](OPPORTUNITY-REQUIREMENT-DECLARATION.md). It proposes the information an opportunity owner should disclose before independent review: owner and representative authority, the actual offer, mandatory criteria versus preferences, claim-specific evidence, safeguarding, privacy, stage transitions, disputes, expiry and change control. It is a requirements template only: **NOT RATIFIED; no implementation, publication, invitation or player-data processing is authorized.**
+
+
+## Opportunity validation scenario pack
+
+See [Opportunity Validation Scenario Pack](OPPORTUNITY-VALIDATION-SCENARIO-PACK.md). It contains 14 fictional adversarial cases and a reviewer worksheet for stress-testing evidence, fairness, authority, safeguarding, privacy and lifecycle boundaries. It is a research/validation proposal only: **NOT RATIFIED; no implementation or real-world player processing is authorized.**

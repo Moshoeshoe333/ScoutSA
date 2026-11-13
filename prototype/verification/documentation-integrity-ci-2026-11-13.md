@@ -156,3 +156,10 @@ The current source inventory is **6 documentation-integrity test declarations (4
 - [x] Root README, prototype README, gate status and this verification record carry the same current 46-test run marker; the automated test checks that consistency.
 - [ ] Browser-integrated v0.2.0 verification remains outstanding; this hosted workflow runs Node tests only.
 - [ ] No mainline implementation, database, RLS, API, authentication, production or pilot authorization is implied.
+
+
+## Opportunity validation scenario pack proposal — 2026-11-13
+
+Added `prototype/OPPORTUNITY-VALIDATION-SCENARIO-PACK.md` as a synthetic, non-ratified validation artifact containing 14 fictional cases, a common outcome vocabulary, cross-case adversarial checks, a reviewer worksheet and proposed exit criteria. The pack covers informal community sessions, undefined eligibility, representative authority, expired mandates, pay-to-be-seen fees, unconfirmed venues, changed terms, misuse of coach attestations, stale registration, unsafe supervision/transport, private minor contact, disputes, excessive scholarship data requests and false corroboration from shared sources.
+
+No implementation or policy behavior changed. The new documentation-integrity check verifies the pack's synthetic/non-ratified boundary, all 14 case IDs and links from the root README, prototype README and gate status. The suite now declares 40 engine tests + 7 documentation checks = 47 total. The current 46-test CI marker is a historical baseline for the prior source; a new hosted run is required for the 47-declaration suite. Browser-integrated v0.2.0 verification remains outstanding.

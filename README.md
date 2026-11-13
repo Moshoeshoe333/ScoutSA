@@ -97,3 +97,8 @@ The `docs/research/` directory contains Gate witnesses, re-witnesses, ratificati
 **Mainline implementation remains on hold.** The isolated prototype branch is a synthetic design/evaluation artifact only; it is not production implementation and does not authorize database, RLS, API, authentication, real-data, deployment or pilot work.
 
 The objective is to make the eventual MVP **smaller, safer, and derivable** from ratified domain and relationship decisions. Unresolved operational, legal, access and safeguarding questions remain explicit rather than being guessed into code.
+
+
+### Opportunity validation proposal
+
+The prototype branch contains a [synthetic Opportunity Validation Scenario Pack](prototype/OPPORTUNITY-VALIDATION-SCENARIO-PACK.md) with 14 fictional cases for evidence authority, fair eligibility, fees, safeguarding, privacy, disputes and stage boundaries. It is **NOT RATIFIED** and does not authorize implementation or real-world processing.
