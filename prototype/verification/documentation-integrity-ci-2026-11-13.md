@@ -45,7 +45,8 @@ A separate manual consistency inspection confirmed the current branch values: en
 
 - [x] Successful hosted GitHub Actions run on corrected test source: [run 43396563700](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396563700).
 - [x] Successful hosted GitHub Actions rerun after incident-log update: [run 43396595986](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396595986).
-- [x] Latest successful policy/documentation run after README and gate-status reconciliation: [run 43396763965](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396763965).
+- [x] Successful policy/documentation run after README and gate-status reconciliation: [run 43396763965](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396763965).
+- [x] Latest successful run after the incident-log and workflow-placeholder correction: [run 43396965878](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396965878).
 - [x] The workflow command is `node --test prototype/tests/*.test.js`, which includes the 40 engine-test declarations and 3 documentation-integrity test declarations (43 total).
 - [x] The three documentation-integrity checks and the existing engine tests completed successfully in the hosted run.
 - [ ] Browser-integrated discovery smoke verification remains separate and outstanding; this workflow does not execute browser tests.
