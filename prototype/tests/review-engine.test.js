@@ -634,7 +634,7 @@ test("duplicate evidence references fail closed", () => {
   context.evidenceRecords.push(structuredClone(context.evidenceRecords[0]));
   const result = evaluate(validRequest(), context);
   assert.equal(gate(result, "safeguarding_review").state, "FAIL");
-  assert.ok(result.reasonCodes.includes("DUPLICATE_REVIEW_EVIDENCE_REFERENCE"));
+  assert.ok(result.reasonCodes.includes("DUPLICATE_REVIEW_EVIDENCE_VERSION"));
 });
 
 test("revoked reviewer authority invalidates the invitation review on reevaluation", () => {
