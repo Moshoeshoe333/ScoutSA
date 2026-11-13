@@ -2,7 +2,7 @@
 
 **Branch:** `prototype/internal-demo`  
 **Scope:** Documentation version/count consistency guard and the prototype policy test workflow.  
-**Current state:** <badge>Hosted CI passed</badge> on the corrected source. Two successful workflow runs confirm the policy and documentation test command completed successfully.
+**Current state:** **HOSTED CI PASSED** on the corrected source. Two successful workflow runs confirm the policy and documentation test command completed successfully.
 
 ## What was added
 
