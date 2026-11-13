@@ -46,7 +46,19 @@ function validContext(overrides = {}) {
       id:"OPP-1", organizationId:"ORG-1", verification:"Verified",
       lifecycleStatus:"ACTIVE", expiresAt:FUTURE, eligibility:"Verified", safeguarding:"Reviewed"
     }],
-    invitationCases:[{ id:"INV-1", opportunityId:"OPP-1", workflowState:"READY", secondReviewStatus:"COMPLETE" }],
+    reviewers:[
+      {id:"REVIEWER-1",identityStatus:"Verified",lifecycleStatus:"ACTIVE",expiresAt:FUTURE},
+      {id:"REVIEWER-2",identityStatus:"Verified",lifecycleStatus:"ACTIVE",expiresAt:FUTURE}
+    ],
+    reviewerAuthorities:[
+      {id:"REVIEW-AUTH-1",reviewerId:"REVIEWER-1",organizationId:"ORG-1",scope:"INVITATION_SAFEGUARDING_REVIEW",authority:"Verified",lifecycleStatus:"ACTIVE",expiresAt:FUTURE},
+      {id:"REVIEW-AUTH-2",reviewerId:"REVIEWER-2",organizationId:"ORG-1",scope:"INVITATION_SAFEGUARDING_REVIEW",authority:"Verified",lifecycleStatus:"ACTIVE",expiresAt:FUTURE}
+    ],
+    invitationCases:[{
+      id:"INV-1", opportunityId:"OPP-1", workflowState:"READY", secondReviewStatus:"COMPLETE",
+      firstReview:{reviewerId:"REVIEWER-1",authorityId:"REVIEW-AUTH-1",status:"COMPLETE",completedAt:"2026-11-12T09:00:00.000Z",evidenceRef:"SYNTHETIC-FIRST-REVIEW-1",conflictStatus:"CLEARED",conflictEvidenceRef:"SYNTHETIC-CONFLICT-CHECK-1"},
+      secondReview:{reviewerId:"REVIEWER-2",authorityId:"REVIEW-AUTH-2",status:"COMPLETE",completedAt:"2026-11-12T09:30:00.000Z",evidenceRef:"SYNTHETIC-SECOND-REVIEW-1",conflictStatus:"CLEARED",conflictEvidenceRef:"SYNTHETIC-CONFLICT-CHECK-2",independenceStatus:"CONFIRMED",independenceEvidenceRef:"SYNTHETIC-INDEPENDENCE-CHECK-1"}
+    }],
     ...overrides
   };
 }
@@ -395,12 +407,14 @@ test("invitation review must bind to the exact opportunity", () => {
   assert.equal(gate(result, "safeguarding_review").state, "FAIL");
   assert.ok(result.reasonCodes.includes("INVITATION_OPPORTUNITY_MISMATCH"));
 });
-test("invitation requires a completed independent second review", () => {
+test("legacy second-review status is ignored without structured reviewer evidence", () => {
   const context = validContext();
-  context.invitationCases[0].secondReviewStatus = "PENDING";
+  delete context.invitationCases[0].firstReview;
+  delete context.invitationCases[0].secondReview;
+  context.invitationCases[0].secondReviewStatus = "COMPLETE";
   const result = evaluate(validRequest(), context);
   assert.equal(gate(result, "safeguarding_review").state, "FAIL");
-  assert.ok(result.reasonCodes.includes("INVITATION_SECOND_REVIEW_INCOMPLETE"));
+  assert.ok(result.reasonCodes.includes("INVITATION_REVIEW_EVIDENCE_INCOMPLETE"));
 });
 test("revoked consent is rejected when the request is re-evaluated", () => {
   const context = validContext();
@@ -468,5 +482,70 @@ test("guardian revocation between evaluations blocks the next consent review", (
   assert.ok(second.reasonCodes.includes("GUARDIAN_CONFLICT_HOLD"));
   assert.equal(second.disposition, "HOLD");
   assert.equal(second.disclosurePermitted, false);
+});
+
+test("the second reviewer must be a different person with a distinct authority grant", () => {
+  const context = validContext();
+  context.invitationCases[0].secondReview.reviewerId = "REVIEWER-1";
+  context.invitationCases[0].secondReview.authorityId = "REVIEW-AUTH-1";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("REVIEWER_NOT_INDEPENDENT"));
+});
+
+test("reviewer authority must match reviewer, organization and exact safeguarding scope", () => {
+  const context = validContext();
+  context.reviewerAuthorities[1].scope = "DISCOVERY_REQUEST_REVIEW";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("REVIEWER_AUTHORITY_SCOPE_MISMATCH"));
+});
+
+test("expired reviewer identity or authority cannot satisfy the review gate", () => {
+  const context = validContext();
+  context.reviewers[1].expiresAt = PAST;
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("REVIEWER_IDENTITY_LIFECYCLE_EXPIRED"));
+});
+
+test("reviewers must have cleared conflict checks with evidence references", () => {
+  const context = validContext();
+  context.invitationCases[0].firstReview.conflictEvidenceRef = "";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("REVIEWER_CONFLICT_CHECK_NOT_EVIDENCED"));
+});
+
+test("second-review independence requires an explicit evidence reference", () => {
+  const context = validContext();
+  context.invitationCases[0].secondReview.independenceEvidenceRef = "";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("SECOND_REVIEW_INDEPENDENCE_NOT_EVIDENCED"));
+});
+
+test("second review cannot predate the first review", () => {
+  const context = validContext();
+  context.invitationCases[0].secondReview.completedAt = "2026-11-12T08:30:00.000Z";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("INVITATION_REVIEW_ORDER_INVALID"));
+});
+
+test("duplicate reviewer identities fail closed", () => {
+  const context = validContext();
+  context.reviewers.push(structuredClone(context.reviewers[0]));
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("DUPLICATE_REVIEWER_IDENTITY"));
+});
+
+test("duplicate reviewer authority records fail closed", () => {
+  const context = validContext();
+  context.reviewerAuthorities.push(structuredClone(context.reviewerAuthorities[1]));
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("DUPLICATE_REVIEWER_AUTHORITY"));
 });
 
