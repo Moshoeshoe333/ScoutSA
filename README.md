@@ -37,21 +37,15 @@ Every Player Passport should progressively answer:
 
 ScoutSA begins in the **Vaal Triangle**, with expansion intended through Sedibeng, Greater Gauteng, and eventually nationally.
 
-## Current Gate Status — 6 October 2026
+## Current Repository Status — 13 November 2026
 
-**Gate 1: CLOSED**  
-**Gate 2: CLOSED AT CONCEPTUAL LEVEL**  
-**Conceptual ERD: FROZEN** · **Schema: HOLD** · **Implementation: DEFERRED**
+**Mainline:** the governing domain and relationship decisions remain the authority. Gate 1 and Gate 2 are closed at their stated conceptual levels; the MVP relationship subset and schema boundary are frozen; the physical table boundary is frozen; SQL remains a reviewed draft with an isolated PostgreSQL runtime witness. Migration/database execution, RLS, API, authentication, real identity processing, deployment and pilot remain on hold. See the [canonical Gate Status](docs/00-gate-status.md) for the full control table and evidence references.
 
-Three additional semantic concepts have been explicitly ratified through Gate 2 adversarial work:
+**Isolated prototype branch:** `prototype/internal-demo` contains a synthetic, static browser demonstration and a pure review engine v0.2.0. Its headless test suite currently contains 40 tests; the verification record reports 40/40 passing in an isolated Node run on 2026-11-12. The current browser-integrated smoke page has not been rerun against v0.2.0, and hosted GitHub Actions status has not been independently confirmed. These prototype results do not lift mainline holds.
 
-- **Assertion**
-- **Safeguarding Case / Response**
-- **Child Participation / Voice Record**
+**Prototype documentation and inventory:** see [Prototype README](prototype/README.md). Synthetic fixtures only; no real player data, production backend, persistence, authentication, authorization, RLS, identity vault, consent capture, disclosure or pilot readiness.
 
-The remaining relationship/cardinality, authorization-process, lifecycle, correction/dispute, access, retention, and legal questions are explicitly carried forward rather than hidden in the ERD. No additional semantic entity is currently warranted.
-
-See the canonical current status: **[Gate Status](docs/00-gate-status.md)**.
+**Documentation integrity:** documentation consistency is a high-priority engineering control. See [Documentation Integrity and Error Prevention](docs/engineering-integrity.md) for the synchronization checklist, incident log and preventive controls.
 
 ### Gate 2 carry-forward decisions
 
@@ -98,8 +92,6 @@ The `docs/research/` directory contains Gate witnesses, re-witnesses, ratificati
 
 ## Implementation boundary
 
-**Implementation is intentionally deferred.**
+**Mainline implementation remains on hold.** The isolated prototype branch is a synthetic design/evaluation artifact only; it is not production implementation and does not authorize database, RLS, API, authentication, real-data, deployment or pilot work.
 
-The objective is not documentation for its own sake. The objective is to make the eventual MVP **smaller, safer, and derivable** from ratified domain and relationship decisions.
-
-**Next phase: MVP Boundary Freeze.** The frozen conceptual relationship model will be reduced to the smallest MVP scope and explicit non-scope before schema or implementation work begins.
+The objective is to make the eventual MVP **smaller, safer, and derivable** from ratified domain and relationship decisions. Unresolved operational, legal, access and safeguarding questions remain explicit rather than being guessed into code.
