@@ -1,7 +1,7 @@
 /* Fictional academy workspace fixture. No real organization, coach or player records. */
 window.SCOUTSA_ACADEMY_WORKSPACE_DEMO = {
   organization:{id:"ORG-DEMO-01",name:"Vaal Sample Academy",type:"Academy",area:"Sedibeng · illustrative",identity:"Unverified",authority:"Not established",membership:"Claims present; none independently verified",workspaceRole:"Sample academy reviewer (fictional)",scope:"Organization-level summaries only; no player-level records supplied"},
-  summary:{membershipClaims:3,claimsNeedingReview:3,opportunityProposals:2,evidenceActions:4},
+  summary:{membershipClaims:3,claimsNeedingReview:3,opportunityProposals:1,evidenceActions:4},
   memberships:[
     {id:"MEM-DEMO-001",state:"Pending",verification:"Not verified",note:"A fictional player-submitted affiliation claim is awaiting independent evidence."},
     {id:"MEM-DEMO-004",state:"Disputed",verification:"Not verified",note:"Conflicting synthetic affiliation assertions require separate resolution."},
