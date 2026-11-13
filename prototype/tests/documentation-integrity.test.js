@@ -139,7 +139,7 @@ test("workspace hub links every existing synthetic review journey", () => {
   assert.ok(passport.includes('id="opportunityBrowseLink"') && passport.includes("opportunities.html?player="), "Passport must hand off its selected synthetic player reference to opportunity discovery");
   assert.ok(passport.includes("new URLSearchParams(window.location.search)") && passport.includes("render(initialKey)"), "Passport must restore the matching synthetic player from the handoff URL");
   assert.ok(opportunity.includes("matchingRequest(opportunity)") && opportunity.includes("r.playerId===handoffPlayerId&&r.opportunityId===opportunity.id"), "opportunity discovery must expose a request link only for an exact player–opportunity fixture pair");
-  assert.ok(discovery.includes("params.get(\\\"player\\\")") && discovery.includes("r.playerId===handoffPlayerId&&(!handoffOpportunityId||r.opportunityId===handoffOpportunityId)"), "request review must filter to the exact handed-off player and opportunity references");
+  assert.ok(discovery.includes('params.get("player")') && discovery.includes("r.playerId===handoffPlayerId&&(!handoffOpportunityId||r.opportunityId===handoffOpportunityId)"), "request review must filter to the exact handed-off player and opportunity references");
   assert.ok(discovery.includes('params.has("player")') && discovery.includes('params.has("opportunity")'), "request review must detect either handoff parameter independently");
   assert.ok(discovery.includes("SCOUTSA_FILTER_HANDOFF_RECORDS") && discovery.includes('src="./handoff-filter.js"'), "request review must use the shared fail-closed handoff filter");
   const sampleRecords = [
