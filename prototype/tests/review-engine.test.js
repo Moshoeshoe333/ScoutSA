@@ -432,3 +432,41 @@ test("a missing or invalid evaluation time is rejected, never inferred", () => {
   assert.throws(() => engine.evaluateRequest(validRequest(), validContext()), /deterministic evaluation time/);
   assert.throws(() => evaluate(validRequest(), validContext(), "not-a-date"), /deterministic evaluation time/);
 });
+
+test("a completed second-review status never becomes approval, selection or invitation", () => {
+  const context = validContext();
+  // Deliberately no reviewer identities or approval/selection fields exist in this fixture.
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "PASS");
+  assert.equal(result.disposition, "READY_FOR_SEPARATE_HUMAN_REVIEW");
+  assert.equal(result.disclosurePermitted, false);
+  assert.equal(result.invitationIssued, undefined);
+  assert.equal(result.approved, undefined);
+  assert.equal(result.selected, undefined);
+});
+
+test("invitation workflow must be READY even when second-review status is COMPLETE", () => {
+  const context = validContext();
+  context.invitationCases[0].workflowState = "HOLD";
+  context.invitationCases[0].secondReviewStatus = "COMPLETE";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("SAFEGUARDING_NOT_CLEARED"));
+  assert.equal(result.disposition, "HOLD");
+  assert.equal(result.disclosurePermitted, false);
+});
+
+test("guardian revocation between evaluations blocks the next consent review", () => {
+  const context = validContext();
+  const first = evaluate(validRequest(), context);
+  assert.equal(gate(first, "guardian_authority").state, "PASS");
+  assert.equal(gate(first, "purpose_consent").state, "PASS");
+  context.consentCases[0].guardians[0].decision = "REVOKED";
+  const second = evaluate(validRequest(), context);
+  assert.equal(gate(second, "guardian_authority").state, "FAIL");
+  assert.equal(gate(second, "purpose_consent").state, "FAIL");
+  assert.ok(second.reasonCodes.includes("GUARDIAN_CONFLICT_HOLD"));
+  assert.equal(second.disposition, "HOLD");
+  assert.equal(second.disclosurePermitted, false);
+});
+
