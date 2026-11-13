@@ -68,7 +68,7 @@
    const passportUrl=passport?"./player-passport.html?player="+encodeURIComponent(passport.id):"./player-passport.html";
    const opportunityUrl="./opportunities.html?player="+encodeURIComponent(r.playerId)+"&opportunity="+encodeURIComponent(r.opportunityId);
    const items=[
-    ["Player Passport",passportUrl],["Opportunity register",opportunityUrl],["Guardian & consent","./guardian-consent.html"],["Organization memberships","./organization-memberships.html"],["Opportunity register","./opportunities.html"],["Opportunity evidence","./opportunity-evidence.html"],["Claim decisions","./opportunity-decisions.html"],["Invitation safeguards","./safeguarded-invitations.html"],["Matching review","./player-opportunity-matching.html"]
+    ["Player Passport",passportUrl],["Opportunity register",opportunityUrl],["Guardian & consent","./guardian-consent.html"],["Organization memberships","./organization-memberships.html"],["Opportunity evidence","./opportunity-evidence.html"],["Claim decisions","./opportunity-decisions.html"],["Invitation safeguards","./safeguarded-invitations.html"],["Matching review","./player-opportunity-matching.html"]
    ];
    $("links").innerHTML=items.map(([label,url])=>'<a href="'+url+'">'+label+' ↗</a>').join("");
    $("reason").textContent=r.note+" "+(c?"Consent state: "+c.consentState+". ":"")+(o?"Organization identity: "+o.identityStatus+". ":"")+(p?"Opportunity verification: "+p.verification+". ":"")+(inv?"Invitation workflow: "+inv.workflowState+".":"");
