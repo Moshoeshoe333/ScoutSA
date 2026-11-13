@@ -50,7 +50,44 @@
     return { ok: true, code: null };
   };
 
-  // Synthetic evidence-linked two-person review check. This validates fixture structure,
+  // Synthetic evidence provenance check. References must resolve to one current,
+  // accepted inspection record bound to the exact invitation, claim, reviewer and scope.
+  // This validates fixture structure only; it does not authenticate external evidence.
+  function validateEvidenceRecord(context, evidenceRef, expected, now, completedAt) {
+    const lookup = uniqueLookup(context.evidenceRecords, item => item && item.evidenceRef === evidenceRef);
+    if (lookup.duplicate) return { ok: false, code: "DUPLICATE_REVIEW_EVIDENCE_REFERENCE" };
+    const record = lookup.record;
+    if (!record) return { ok: false, code: "REVIEW_EVIDENCE_PROVENANCE_MISSING" };
+    if (record.inspectionStatus === "REJECTED") return { ok: false, code: "REVIEW_EVIDENCE_REJECTED" };
+    if (record.inspectionStatus === "STALE" || record.inspectionStatus === "REVOKED"
+      || record.lifecycleStatus !== "ACTIVE") {
+      return { ok: false, code: "REVIEW_EVIDENCE_INVALIDATED" };
+    }
+    const expiry = timestamp(record.expiresAt);
+    if (!Number.isFinite(expiry) || now >= expiry) {
+      return { ok: false, code: "REVIEW_EVIDENCE_INVALIDATED" };
+    }
+    if (record.inspectionStatus !== "ACCEPTED") {
+      return { ok: false, code: "REVIEW_EVIDENCE_NOT_ACCEPTED" };
+    }
+    const inspectedAt = timestamp(record.inspectedAt);
+    if (record.invitationId !== expected.invitationId
+      || record.organizationId !== expected.organizationId
+      || record.reviewerId !== expected.reviewerId
+      || record.authorityId !== expected.authorityId
+      || record.claimType !== expected.claimType
+      || record.reviewScope !== "INVITATION_SAFEGUARDING_REVIEW"
+      || record.inspectedBy !== expected.reviewerId
+      || typeof record.sourceClass !== "string" || !record.sourceClass.trim()
+      || typeof record.sourceLocator !== "string" || !record.sourceLocator.trim()
+      || typeof record.findingRef !== "string" || !record.findingRef.trim()
+      || !Number.isFinite(inspectedAt) || inspectedAt > timestamp(completedAt)) {
+      return { ok: false, code: "REVIEW_EVIDENCE_PROVENANCE_MISMATCH" };
+    }
+    return { ok: true, code: null };
+  }
+
+  // Synthetic evidence-linked two-person review check. It validates fixture structure,
   // not real-world identity, independence, authority or authenticity.
   function validateInvitationReview(invitation, context, organizationId, now) {
     if (!invitation || !invitation.firstReview || !invitation.secondReview) {
@@ -95,10 +132,22 @@
       }
       const authorityLife = current(authority, now);
       if (!authorityLife.ok) return { ok: false, code: "REVIEWER_AUTHORITY_" + authorityLife.code };
+      const common = { invitationId: invitation.id, organizationId, reviewerId: review.reviewerId, authorityId: review.authorityId };
+      const completionEvidence = validateEvidenceRecord(context, review.evidenceRef,
+        { ...common, claimType: "REVIEW_COMPLETION" }, now, review.completedAt);
+      if (!completionEvidence.ok) return completionEvidence;
+      const conflictEvidence = validateEvidenceRecord(context, review.conflictEvidenceRef,
+        { ...common, claimType: "REVIEWER_CONFLICT_CHECK" }, now, review.completedAt);
+      if (!conflictEvidence.ok) return conflictEvidence;
     }
     if (second.independenceStatus !== "CONFIRMED" || !second.independenceEvidenceRef) {
       return { ok: false, code: "SECOND_REVIEW_INDEPENDENCE_NOT_EVIDENCED" };
     }
+    const independenceEvidence = validateEvidenceRecord(context, second.independenceEvidenceRef,
+      { invitationId: invitation.id, organizationId, reviewerId: second.reviewerId,
+        authorityId: second.authorityId, claimType: "REVIEWER_INDEPENDENCE_CHECK" },
+      now, second.completedAt);
+    if (!independenceEvidence.ok) return independenceEvidence;
     return { ok: true, code: null };
   }
 
