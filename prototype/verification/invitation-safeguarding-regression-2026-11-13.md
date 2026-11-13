@@ -77,3 +77,17 @@ Only `ACCEPTED` evidence that is unique, current, unexpired, correctly scoped an
 
 This remains synthetic structural validation. It does not authenticate source material, real reviewers, authority, independence or evidence authenticity. No durable audit history, evidence ingestion, event-driven revocation, disclosure, contact or production authorization is implemented. The existing mainline, real-data, deployment and pilot holds remain unchanged.
 
+## Evidence version pinning — 2026-11-13
+
+The prototype engine is now **v0.2.1** and the draft contract is **v1.1.0**. Every review claim must pin both a `versionId` and synthetic `fingerprint`. Evidence records are versioned by the pair `evidenceRef + versionId`; exactly one version per reference may be current. A superseded version invalidates its earlier review. A fresh review pinned to the new current version and fingerprint can pass only when the new inspection timestamp precedes its completion time.
+
+Seven additional engine tests cover missing version pins, unknown versions, superseded evidence, multiple current versions, duplicate version identifiers, fingerprint mismatch and successful fresh review against a new version.
+
+- Engine test declarations: **73**.
+- Documentation-integrity declarations: **8**.
+- Workspace-data-integrity declarations: **2**.
+- Total Node test declarations: **83**.
+- Hosted verification: **PENDING** for this version-pinning revision.
+- UI-008: OPEN; mainline, real-data, disclosure, deployment and pilot holds unchanged.
+
+The version ID and fingerprint are synthetic fixture values. No cryptographic hash is computed, no immutable store or append-only history exists, and no automatic invalidation workflow is implemented. A coordinated rewrite of both a fixture fingerprint and its review pin is outside this model's detection capability.
