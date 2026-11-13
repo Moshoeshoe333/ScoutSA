@@ -145,4 +145,14 @@ Added `prototype/OPPORTUNITY-REQUIREMENT-DECLARATION.md` as a non-ratified requi
 
 No engine, fixture, schema, contract, UI, database, RLS, API, authentication or mainline behavior changed. The declaration is linked from the root README, prototype README and gate status. A sixth documentation-integrity test checks the links, non-ratified status, implementation hold and core content.
 
-The current source inventory is **6 documentation-integrity test declarations (46 total)**, comprising 40 engine tests and 6 documentation-integrity checks. Current 46-test CI verification: [run 43403316466](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403316466) — all 46 declarations passed on commit `fa0daed79f401b7daff3db2d6367c76680622adb`. The workflow does not execute browser tests.
+The current source inventory is **6 documentation-integrity test declarations (46 total)**, comprising 40 engine tests and 6 documentation-integrity checks. Current 46-test CI verification: [run 43403854544](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403854544) — all 46 declarations passed on commit `fa0daed79f401b7daff3db2d6367c76680622adb`. The workflow does not execute browser tests.
+
+
+## Final declaration and documentation-guard verification
+
+- [x] The current source inventory is 40 engine tests + 6 documentation-integrity checks = **46 declarations**.
+- [x] Current 46-test CI verification: [run 43403854544](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403854544) passed on commit `50566e1902b9fa409515103bc81511f4af638881`.
+- [x] The hosted `policy-and-documentation-tests` job and `Run headless policy and documentation tests` step completed successfully.
+- [x] Root README, prototype README, gate status and this verification record carry the same current 46-test run marker; the automated test checks that consistency.
+- [ ] Browser-integrated v0.2.0 verification remains outstanding; this hosted workflow runs Node tests only.
+- [ ] No mainline implementation, database, RLS, API, authentication, production or pilot authorization is implied.
