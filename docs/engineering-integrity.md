@@ -238,3 +238,14 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Safety and authority boundary:** This decision does not lift holds on real player/minor data, public child profiles, real consent capture, database execution, RLS, API, authentication, identity processing, disclosure, deployment or pilot activity. A working demonstration does not establish demand, legal compliance, safeguarding effectiveness or production readiness.
 - **Preventive measure:** Project status must distinguish (1) internal work authorized now, (2) external evidence sought but not received, and (3) decisions requiring formal ratification or separate release authorization. Do not label an unanswered outreach item as a build blocker unless a specific safety or authority gate actually requires it.
 - **Status:** Recorded; documentation and hosted CI reconciliation pending.
+
+### UI-001 — Unified synthetic workspace hub
+
+- **Recorded:** 2026-11-13
+- **Scope:** Frontend navigation and documentation-integrity coverage on `prototype/internal-demo`.
+- **Change:** Updated `prototype/index.html` with an All workspaces navigation view and an 11-card workspace directory linking to the existing synthetic review screens. Replaced the crowded header link row with a focused workspace entry point. Kept each specialist screen as its existing separate static prototype.
+- **Test:** Added a documentation-integrity check confirming the hub exists, navigation state is wired, synthetic-only wording is present, all 11 destinations are linked and each destination file exists. Added `prototype/index.html` to push and pull-request path filters for the policy/documentation workflow.
+- **Source inventory:** 40 review-engine tests + 8 documentation-integrity checks = 48 declarations.
+- **Verification:** Hosted verification of the 48-declaration suite is pending. The previous 47-declaration run [43406164367](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43406164367) is historical and does not cover this change.
+- **Boundary:** This is a navigation/discoverability improvement only. No shared authentication, backend, persistence, authorization, role enforcement, live submissions, player contact or production behavior was added. Mainline is unchanged.
+- **Status:** Implemented; hosted CI verification pending.
