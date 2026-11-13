@@ -121,6 +121,33 @@ async function main() {
     assert.equal(await page.locator(".request").count(), 1);
     assert.equal(await page.locator(".request").first().getAttribute("data-id"), "REQ-DEMO-002");
 
+    // Mutate the live synthetic fixture, then exercise the real renderer with hostile text.
+    await open("");
+    await page.evaluate(() => {
+      const hostile = '<img src=x onerror="window.__scoutsaXss=1"> <svg onload="window.__scoutsaXss=2">';
+      window.SCOUTSA_DISCOVERY_REQUESTS.records[0].purpose = hostile;
+      window.SCOUTSA_DISCOVERY_REQUESTS.records[0].requestOrigin = hostile;
+      window.SCOUTSA_DISCOVERY_REQUESTS.records[0].note = hostile;
+      window.SCOUTSA_DISCOVERY_REQUESTS.rules[0] = hostile;
+      window.SCOUTSA_DISCOVERY_REQUESTS.limits[0] = hostile;
+    });
+    await page.locator('.request[data-id="REQ-DEMO-001"]').click();
+    assert.equal(await page.locator('#summary img, #summary svg, #requestList img, #requestList svg, #rules img, #rules svg').count(), 0,
+      "hostile fixture text must not create markup in actual rendered regions");
+    assert.match(await page.locator('#summary').innerText(), /<img src=x onerror=/,
+      "hostile request values must remain visible as literal text");
+    assert.match(await page.locator('#reason').innerText(), /<img src=x onerror=/,
+      "hostile reason text must remain literal");
+    assert.match(await page.locator('#rules').innerText(), /<img src=x onerror=/,
+      "hostile rule text must remain literal");
+    assert.match(await page.locator('#limits').innerText(), /<img src=x onerror=/,
+      "hostile limit text must remain literal");
+    assert.equal(await page.evaluate(() => window.__scoutsaXss || 0), 0,
+      "hostile fixture text must not execute event handlers");
+    const renderedHrefs = await page.locator('#links a').evaluateAll(links => links.map(link => link.getAttribute('href')));
+    assert.ok(renderedHrefs.every(href => href.startsWith('./') && !href.startsWith('//')),
+      "rendered navigation destinations must remain fixed internal relative paths");
+
     // Narrow mobile viewport: no horizontal page overflow; review stages stack.
     await page.setViewportSize({ width: 390, height: 844 });
     await open("");
