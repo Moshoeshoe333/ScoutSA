@@ -173,3 +173,10 @@ No implementation or policy behavior changed. The new documentation-integrity ch
 - [x] The first three failed attempts are preserved in DOC-009; the failures were documentation count/marker reconciliation, not engine behavior.
 - [ ] Browser-integrated v0.2.0 verification remains outstanding; the hosted workflow runs Node tests only.
 - [ ] This research artifact does not authorize implementation, publication, real player-data processing or pilot activity.
+
+
+## Unified workspace hub — 2026-11-13
+
+Added a workspace hub to `prototype/index.html` with 11 direct links to the existing synthetic review screens. The hub includes Player Passport, organization membership review, opportunity management, evidence review, decision worksheet, safeguarded invitations, matching review, development pathways, coach/academy workspace, guardian/consent and discovery/request review. A new documentation-integrity test checks the hub, navigation state, synthetic-data notice, all 11 links and the existence of each destination file. The workflow now runs when `prototype/index.html` changes for both push and pull-request events.
+
+The source inventory is now **8 documentation-integrity test declarations (48 total)**: 40 engine tests plus 8 documentation checks. The 47-declaration suite passed previously on [run 43406164367](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43406164367), commit `25108a07320a2e70cd86573a4d950024b8211273`; that run is now a historical baseline and does not verify the workspace hub. **A new hosted run is required to verify the 48-declaration suite.** Browser-integrated v0.2.0 verification remains separate and outstanding.
