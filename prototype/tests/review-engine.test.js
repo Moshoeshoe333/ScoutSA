@@ -47,7 +47,7 @@ function buildAuditEvents(context) {
       fingerprint:record.fingerprint,...extra
     });
   };
-  for (const record of context.evidenceRecords || []) {
+  for (const record of Array.isArray(context.evidenceRecords) ? context.evidenceRecords : []) {
     const inspectedAt = Date.parse(record.inspectedAt);
     add("EVIDENCE_CREATED",null,"SUBMITTED",new Date(inspectedAt-30000).toISOString(),record);
     add("EVIDENCE_INSPECTED","SUBMITTED","INSPECTED",new Date(inspectedAt-15000).toISOString(),record);
@@ -65,7 +65,7 @@ function buildAuditEvents(context) {
     }
   }
   const reviews = [];
-  for (const invitation of context.invitationCases || []) {
+  for (const invitation of Array.isArray(context.invitationCases) ? context.invitationCases : []) {
     for (const [key,includeIndependence] of [["firstReview",false],["secondReview",true]]) {
       const review = invitation[key];
       if (!review) continue;
