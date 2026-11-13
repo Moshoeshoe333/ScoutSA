@@ -59,7 +59,7 @@
     const reviewInvalidatedAt = new Map();
     const reviewEvidenceLinks = new Map();
     const evidenceInvalidations = new Map();
-    const evidenceKey = (ref, version) => ref + "::" + version;
+    const evidenceKey = (ref, version) => JSON.stringify([ref, version]);
     const unique = (items, predicate) => {
       const matches = list(items).filter(predicate);
       return { record: matches.length === 1 ? matches[0] : null, count: matches.length };
@@ -219,7 +219,7 @@
       }
 
       for (const [key, finalState] of evidenceState) {
-        const [ref, version] = key.split("::");
+        const [ref, version] = JSON.parse(key);
         const found = evidenceLookup(ref, version);
         if (found.record) {
           const record = found.record;
