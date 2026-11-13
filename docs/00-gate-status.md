@@ -1,4 +1,10 @@
-# ScoutSA Gate Status — 2026-10-06
+# ScoutSA Gate Status — canonical history with current note 2026-11-13
+
+> **Current note — 2026-11-13:** The historical sections below preserve the decision and evidence chronology. For the current executive position, use Section 13 and the Access-Policy Control section. Gate 1 and Gate 2 remain closed at their recorded levels; the MVP boundary and relationship subset, schema boundary and physical table boundary are frozen; SQL remains a reviewed draft with an isolated PostgreSQL 17 runtime witness. Migration/database execution, RLS, API, production implementation and pilot remain on hold or unauthorized. The controlled next move is external validation.
+>
+> **Branch boundary:** this is the mainline gate record. Synthetic prototype work on `prototype/internal-demo` is isolated and does not change these holds.
+>
+> **Documentation integrity:** all READMEs and status summaries must reconcile to this record and current evidence. The required synchronization, incident-log and prevention process is defined in [Documentation Integrity and Error Prevention](engineering-integrity.md).
 
 **Current phase:** MVP Authorization / External Validation Hold  
 **Gate 1:** CLOSED  
