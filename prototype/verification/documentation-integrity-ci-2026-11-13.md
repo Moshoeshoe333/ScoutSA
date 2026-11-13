@@ -145,13 +145,13 @@ Added `prototype/OPPORTUNITY-REQUIREMENT-DECLARATION.md` as a non-ratified requi
 
 No engine, fixture, schema, contract, UI, database, RLS, API, authentication or mainline behavior changed. The declaration is linked from the root README, prototype README and gate status. A sixth documentation-integrity test checks the links, non-ratified status, implementation hold and core content.
 
-The current source inventory is **6 documentation-integrity test declarations (46 total)**, comprising 40 engine tests and 6 documentation-integrity checks. Current 46-test CI verification: [run 43403854544](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403854544) — all 46 declarations passed on commit `fa0daed79f401b7daff3db2d6367c76680622adb`. The workflow does not execute browser tests.
+The prior source inventory was 6 documentation-integrity test declarations (46 total), comprising 40 engine tests and 6 documentation-integrity checks. Historical 46-test CI verification: [run 43403854544](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403854544) — all 46 declarations passed on commit `50566e1902b9fa409515103bc81511f4af638881`. The workflow does not execute browser tests.
 
 
 ## Final declaration and documentation-guard verification
 
 - [x] The current source inventory is 40 engine tests + 6 documentation-integrity checks = **46 declarations**.
-- [x] Current 46-test CI verification: [run 43403854544](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403854544) passed on commit `50566e1902b9fa409515103bc81511f4af638881`.
+- [x] Historical 46-test CI verification: [run 43403854544](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403854544) passed on commit `50566e1902b9fa409515103bc81511f4af638881`.
 - [x] The hosted `policy-and-documentation-tests` job and `Run headless policy and documentation tests` step completed successfully.
 - [x] Root README, prototype README, gate status and this verification record carry the same current 46-test run marker; the automated test checks that consistency.
 - [ ] Browser-integrated v0.2.0 verification remains outstanding; this hosted workflow runs Node tests only.
@@ -162,4 +162,4 @@ The current source inventory is **6 documentation-integrity test declarations (4
 
 Added `prototype/OPPORTUNITY-VALIDATION-SCENARIO-PACK.md` as a synthetic, non-ratified validation artifact containing 14 fictional cases, a common outcome vocabulary, cross-case adversarial checks, a reviewer worksheet and proposed exit criteria. The pack covers informal community sessions, undefined eligibility, representative authority, expired mandates, pay-to-be-seen fees, unconfirmed venues, changed terms, misuse of coach attestations, stale registration, unsafe supervision/transport, private minor contact, disputes, excessive scholarship data requests and false corroboration from shared sources.
 
-No implementation or policy behavior changed. The new documentation-integrity check verifies the pack's synthetic/non-ratified boundary, all 14 case IDs and links from the root README, prototype README and gate status. The suite now declares 40 engine tests + 7 documentation checks = 47 total. The current 46-test CI marker is a historical baseline for the prior source; a new hosted run is required for the 47-declaration suite. Browser-integrated v0.2.0 verification remains outstanding.
+No implementation or policy behavior changed. The new documentation-integrity check verifies the pack's synthetic/non-ratified boundary, all 14 case IDs and links from the root README, prototype README and gate status. The suite now declares 40 engine tests + 7 documentation checks = 47 total. The first hosted run [43405608125](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43405608125) failed one documentation assertion: the root README still said 6 documentation checks. The other 46 tests passed. The count and run/commit references have been corrected; a new hosted run is required. Browser-integrated v0.2.0 verification remains outstanding.

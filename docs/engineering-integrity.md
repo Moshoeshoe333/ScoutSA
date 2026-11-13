@@ -220,6 +220,8 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Impact:** Without reconciliation, readers could mistake a historical CI marker or mismatched commit reference for verification of the new source.
 - **Correction:** Add a documentation guard for all 14 scenario IDs, synthetic framing, non-ratified status, implementation hold and repository links. Preserve the 46-test run as historical evidence until the 47-test suite passes. Correct the verification record's current run/commit pair and synchronize the new run marker after CI.
 - **Preventive measure:** Keep source test counts derived from declarations; verify the exact workflow run head SHA before recording it; keep one shared current marker across summaries; never treat synthetic scenarios as real reports or stakeholder validation.
-- **Failed runs:** None recorded for this artifact at the time of writing.
-- **Verification:** Pending hosted CI for the 47-declaration suite. Browser-integrated v0.2.0 verification remains outstanding.
+- **Failed run:** [43405608125](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43405608125) — 46/47 passed; the `current documentation reports the count derived from test declarations` check failed because the root README still said 6 documentation checks. The 40 engine tests and remaining six documentation checks passed. The run is not counted as a pass.
+- **Correction:** Updated the root README to 7 documentation checks and 47 total; synchronized the prototype README, gate status and verification record; corrected the prior run 43403854544 commit reference to its actual head SHA `50566e1902b9fa409515103bc81511f4af638881`. Made the shared-current-marker guard check consistency across summaries without pinning a stale run ID.
+- **Preventive measure:** Keep all summary counts derived from test declarations and verify exact run-to-commit identity before recording CI evidence.
+- **Verification:** Pending hosted CI for the corrected 47-declaration suite. Browser-integrated v0.2.0 verification remains outstanding.
 - **Status:** Open — proposal added; hosted verification pending.

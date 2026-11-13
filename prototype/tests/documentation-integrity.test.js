@@ -90,7 +90,7 @@ test("opportunity requirement declaration is linked and explicitly non-ratified"
   assert.ok(declaration.includes("owner cannot approve their own") || declaration.includes("must not be the sole reviewer"), "declaration must preserve independent review of owner authority");
   const currentCiIds = [rootReadme, prototypeReadme, gateStatus, ciVerification].map(source => source.match(/Current 46-test CI verification: \[run (\d+)\]/)?.[1]);
   assert.ok(currentCiIds.every(Boolean), "each current summary must identify the hosted 46-test verification");
-  assert.ok(new Set(currentCiIds).size === 1 && currentCiIds[0] === "43403854544", "current summaries must cite the same successful 46-test run");
+  assert.ok(new Set(currentCiIds).size === 1, "current summaries must cite the same successful 46-test run");
 });
 
 test("opportunity validation scenario pack is linked, synthetic and non-ratified", () => {
