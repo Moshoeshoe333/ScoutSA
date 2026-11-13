@@ -89,3 +89,12 @@ The documentation-integrity file declares **4 checks**. With 40 engine tests, th
 - [x] Both hosted jobs completed the `Run headless policy and documentation tests` step successfully.
 - [x] The proposal is linked from root README, prototype README and gate status; the test suite checks those links, the non-ratified/implementation-hold language, current engine version, and synchronized test counts.
 - [ ] Browser-integrated v0.2.0 verification remains outstanding and is not covered by these runs.
+
+
+## Follow-up failed runs — documentation guard assertions
+
+The following successive commits failed because the new consistency guard expected wording/run identifiers that no longer matched the current summaries. Job logs confirmed the failing assertions; the engine tests continued to pass:
+- [43399600727](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399600727): root README count phrase mismatch.
+- [43399608136](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399608136), [43399615854](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399615854), [43399624735](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399624735), [43399630906](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399630906): the same count mismatch plus a stale run-ID assertion that still expected 43398121693 after the summaries had been updated to 43399527448.
+
+These failures are not passes. The assertions have now been aligned to the actual documented wording and current successful verification reference. A new hosted run is required to close DOC-006.
