@@ -79,4 +79,13 @@ This run is the CI evidence cited in the current README and gate-status summarie
 
 ## Current suite after DOC-006 correction
 
-The documentation-integrity file declares **4 checks**. With 40 engine tests, the expected workflow total is **44 declarations**. Current automated test inventory: **4 documentation-integrity test declarations (44 total)**. The root README, prototype README, gate status and this record now distinguish the earlier 43-test successful run from the current 44-test suite, which must receive a new successful hosted run before being called verified.
+The documentation-integrity file declares **4 checks**. With 40 engine tests, the expected workflow total is **44 declarations**. Current automated test inventory: **4 documentation-integrity test declarations (44 total)**. The root README, prototype README, gate status and this record distinguish the earlier 43-test run from the current 44-test suite. The current suite has now passed hosted verification on run 43399520523 and run 43399527448.
+
+
+## Successful verification after DOC-006 correction
+
+- [x] Current 44-declaration suite passed on [run 43399520523](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399520523), commit `5bdd80c60a6559ff9a923a9b9d1b9c10c9681bb5`.
+- [x] Current 44-declaration suite passed again on [run 43399527448](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399527448), commit `32d9053b83cca858a53276ec8f59d04b70f6360d`.
+- [x] Both hosted jobs completed the `Run headless policy and documentation tests` step successfully.
+- [x] The proposal is linked from root README, prototype README and gate status; the test suite checks those links, the non-ratified/implementation-hold language, current engine version, and synchronized test counts.
+- [ ] Browser-integrated v0.2.0 verification remains outstanding and is not covered by these runs.
