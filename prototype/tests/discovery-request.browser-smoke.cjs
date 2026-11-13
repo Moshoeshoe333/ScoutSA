@@ -74,7 +74,7 @@ async function main() {
       assert.equal(hubResponse.status(), 200, "workspace return link must resolve");
       if (id === "REQ-DEMO-001") {
         await page.locator('#links a[href^="./player-passport.html"]').click();
-        assert.match(new URL(page.url()).pathname, /player-passport\\.html$/);
+        assert.match(new URL(page.url()).pathname, /player-passport\.html$/);
         await open("");
       }
     }
