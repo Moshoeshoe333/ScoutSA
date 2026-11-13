@@ -303,4 +303,4 @@ Migration: **HOLD**.
 Database implementation: **HOLD**.
 
 
-Last successful prototype CI: [run 43401779467](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401779467) — 45 tests passed (40 engine + 5 documentation checks).
+Recorded 45-test CI baseline: [run 43401941704](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401941704) — 45 tests passed (40 engine + 5 documentation checks).

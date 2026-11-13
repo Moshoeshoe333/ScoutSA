@@ -121,7 +121,7 @@ No engine, schema, fixture, contract or mainline behavior changed. Root README, 
 The documentation-integrity suite now declares **5 checks**; with 40 engine tests the expected total is **45 declarations**. Current inventory: **5 documentation-integrity test declarations (45 total)**. The previous 44-declaration suite passed on [run 43399919864](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399919864). The current 45-declaration suite awaits its own hosted verification.
 
 
-Last successful prototype CI: [run 43401779467](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401779467) — 45 declarations passed (40 engine + 5 documentation checks), commit `b5fca7ca7551e96027910790eddb83fdd7e26394`.
+Recorded 45-test CI baseline: [run 43401941704](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401941704) — 45 declarations passed (40 engine + 5 documentation checks), commit `b5fca7ca7551e96027910790eddb83fdd7e26394`.
 
 
 ## Final opportunity-matrix documentation verification
