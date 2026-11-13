@@ -8,7 +8,7 @@
 
 **Prototype boundary:** synthetic fixtures only; no backend, persistence, authentication, authorization, RLS, API, identity vault, consent capture, disclosure, production security, legal compliance or pilot readiness. A successful policy evaluation can only reach separate human review and never authorizes disclosure.
 
-**Operational seams still open:** membership evidence classes (formal-organization records, community-coach attestations and player-reported claims) remain a proposal only; see `prototype/AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md`. No class is a trust tier, and minimum evidence and opportunity-specific acceptance rules remain unresolved. Multi-guardian legal authority and dispute resolution; purpose-category scope; user/player delegation; retention and access policy; and a server-side release authorization design also remain open. The current engine's verified-membership rule is unchanged. No implementation is authorized by the prototype work.
+**Operational seams still open:** membership evidence classes (formal-organization records, community-coach attestations and player-reported claims) remain a proposal only; see `prototype/AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md`. No class is a trust tier, and minimum evidence and opportunity-specific acceptance rules remain unresolved. The [Opportunity Evidence Acceptance Matrix](../prototype/OPPORTUNITY-EVIDENCE-ACCEPTANCE-MATRIX.md) records candidate handling by opportunity type; it is not ratified. Multi-guardian legal authority and dispute resolution; purpose-category scope; user/player delegation; retention and access policy; and a server-side release authorization design also remain open. The current engine's verified-membership rule is unchanged. No implementation is authorized by the prototype work.
 
 **Documentation integrity:** `docs/engineering-integrity.md` defines the high-priority synchronization protocol and incident log. Root README, prototype README, gate status, contract and verification records have been reconciled. The automated documentation-integrity checks are part of the hosted prototype test workflow; see the 2026-11-13 verification record.
 
@@ -301,3 +301,6 @@ RLS / Access / Disclosure remains **CONDITIONAL PASS / POLICY-LEGAL HOLD**.
 RLS implementation: **NOT AUTHORIZED**.
 Migration: **HOLD**.
 Database implementation: **HOLD**.
+
+
+Last successful prototype CI: [run 43399919864](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399919864) — 44-test baseline; the current 45-test suite is awaiting hosted verification.
