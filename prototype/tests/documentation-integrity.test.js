@@ -36,7 +36,7 @@ test("current documentation reports the count derived from test declarations", (
   assert.ok(hasCurrentTestCount(prototypeReadme), "prototype README test count is stale");
   assert.ok(hasCurrentTestCount(gateStatus), "gate status test count is stale");
   assert.ok(hasCurrentTestCount(verification), "verification record test count is stale");
-  assert.ok(rootReadme.includes(`${declaredDocumentationTestCount} documentation-integrity checks`), "root README documentation-test count is stale");
+  assert.ok(rootReadme.includes(`${declaredDocumentationTestCount} documentation checks`), "root README documentation-test count is stale");
   assert.ok(prototypeReadme.includes(`${declaredDocumentationTestCount} checks declared`), "prototype README documentation-test count is stale");
   assert.ok(gateStatus.includes(`${declaredDocumentationTestCount} checks`), "gate-status documentation-test count is stale");
   assert.ok(ciVerification.includes(`${declaredDocumentationTestCount} documentation-integrity test declarations (${totalDeclaredTestCount} total)`), "CI verification documentation-test count is stale");
@@ -59,7 +59,7 @@ test("affiliation evidence proposal is linked and explicitly non-ratified", () =
   assert.ok(proposal.includes("No implementation is authorized"), "proposal must preserve implementation hold");
   assert.ok(rootReadme.includes("prototype/AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md"), "root README must link proposal");
   for (const source of [rootReadme, prototypeReadme, gateStatus, ciVerification]) {
-    assert.ok(source.includes("43398121693"), "recorded successful CI run must be consistent across current summaries");
+    assert.ok(source.includes("43399527448"), "recorded successful CI run must be consistent across current summaries");
   }
   assert.ok(prototypeReadme.includes("AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md"), "prototype README must link proposal");
   assert.ok(gateStatus.includes("AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md"), "gate status must link proposal");
