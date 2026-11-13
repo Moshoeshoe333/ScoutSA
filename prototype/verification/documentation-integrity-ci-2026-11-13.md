@@ -110,3 +110,12 @@ The corrected 44-declaration suite passed on:
 - [43399847997](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399847997) — commit `4b57458eba34e0f06c9a6c6b10f07978cdf52a76`.
 
 Each run's `policy-and-documentation-tests` job and test step completed successfully. DOC-006 is closed. The failed attempts remain linked above and are not counted as passes.
+
+
+## Opportunity evidence matrix — 2026-11-13
+
+Added `prototype/OPPORTUNITY-EVIDENCE-ACCEPTANCE-MATRIX.md` as a non-ratified decision aid. It maps candidate evidence handling to community development sessions, recurring community programmes, academy assessments, formal club/league registration, scouting observations and funded development opportunities. It also defines neutral “not established” handling, decision-role separation, adversarial scenarios and unresolved decisions.
+
+No engine, schema, fixture, contract or mainline behavior changed. Root README, prototype README and gate status link the matrix and explicitly preserve the implementation hold.
+
+The documentation-integrity suite now declares **5 checks**; with 40 engine tests the expected total is **45 declarations**. The previous 44-declaration suite passed on [run 43399919864](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399919864). The current 45-declaration suite awaits its own hosted verification.
