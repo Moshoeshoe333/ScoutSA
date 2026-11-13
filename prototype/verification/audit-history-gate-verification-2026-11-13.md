@@ -13,7 +13,7 @@ Missing history, incomplete review completion, invalid actor/authority/scope bin
 
 ## Current source inventory
 
-- Review-engine tests: **78**.
+- Review-engine tests: **78/78**.
 - Documentation-integrity tests: **9**.
 - Audit-history tests: **30**.
 - Workspace-data-integrity tests: **2**.
