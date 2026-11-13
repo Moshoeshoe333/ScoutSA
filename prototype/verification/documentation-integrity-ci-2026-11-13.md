@@ -306,3 +306,18 @@ The prototype engine is **v0.2.1** and the draft contract is **v1.1.0**. The eng
 Every review claim now pins a version ID and synthetic fingerprint. Evidence references are versioned by `evidenceRef + versionId`; exactly one version must be current. Superseded versions invalidate their old review pins. A fresh review must reference the new current version and fingerprint.
 
 Hosted verification for this revision is **PENDING**. Historical PASS runs do not verify this version-pinning change. The fingerprint is not cryptographic; no immutable store, append-only ledger, event-driven invalidation or real evidence processing exists. UI-008 remains OPEN; mainline, real-data, disclosure, deployment and pilot holds remain unchanged.
+
+
+## Experimental audit-history validator checkpoint — 2026-11-13
+
+The isolated prototype now contains `prototype/audit-history.js` v0.1.0, a pure in-memory validator for caller-supplied synthetic evidence and review events. The companion design proposal is `prototype/SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md`. It checks unique event IDs, chronological timestamps, exact evidence-version/review targets, actor/authority/scope binding, provenance references and declared state transitions.
+
+Current source inventory:
+- Review-engine tests: **73**.
+- Documentation-integrity tests: **9**.
+- Audit-history tests: **12**.
+- Workspace-data-integrity tests: **2**.
+- Engine plus documentation count used by the existing guard: **82**.
+- Total Node test declarations across all four files: **96**.
+
+The audit-history model is experimental, not ratified and not connected to `review-engine.js`. It does not provide immutable storage, cryptographic integrity, trusted timestamps, identity proofing, durable audit history or automatic invalidation. A valid event sequence does not change an invitation gate or authorize a human decision. Hosted verification for this revision is **PENDING**; historical CI passes do not verify this addition. Mainline, real-data, disclosure, deployment and pilot holds remain unchanged.
