@@ -159,11 +159,13 @@ test("workspace hub links every existing synthetic review journey", () => {
   assert.ok(playerFixtures.includes("DEMO-PLAYER-001") && playerFixtures.includes("DEMO-PLAYER-002"), "the synthetic Passport fixtures must remain present");
   assert.ok(requestFixtures.includes('playerId:"DEMO-PLAYER-001"') && requestFixtures.includes('playerId:"DEMO-PLAYER-002"'), "each sample Passport must have a corresponding synthetic request fixture");
   const stageKeys = ["organization_identity","representative_authority","passport_reference","membership_linkage","opportunity_source","opportunity_eligibility","age_safe_route","guardian_authority","player_voice","purpose_consent","safeguarding_review"];
-  const passingEvaluation = {disposition:"READY_FOR_SEPARATE_HUMAN_REVIEW",gates:stageKeys.map(key=>({key,label:key,state:"PASS"}))};
+  const passingEvaluation = {disposition:"READY_FOR_SEPARATE_HUMAN_REVIEW",allBlockingGatesSatisfied:true,gates:stageKeys.map(key=>({key,label:key,state:"PASS"}))};
   const passingStages = reviewState.deriveReviewStages(passingEvaluation);
   assert.equal(passingStages.length, 6, "review journey must expose six explicit, read-only stages");
   assert.equal(passingStages[0].status, "FICTIONAL FIXTURE — NOT SUBMITTED", "a displayed sample must never imply a received request");
   assert.equal(passingStages[3].status, "ELIGIBLE FOR SEPARATE HUMAN REVIEW", "evaluator readiness must be described as eligibility for separate human review only");
+  const inconsistentEvaluation = {disposition:"READY_FOR_SEPARATE_HUMAN_REVIEW",allBlockingGatesSatisfied:true,gates:stageKeys.map(key=>({key,label:key,state:key==="opportunity_source"?"FAIL":"PASS"}))};
+  assert.equal(reviewState.deriveReviewStages(inconsistentEvaluation)[3].status, "NOT READY — HOLD", "a readiness disposition inconsistent with failed gate groups must fail closed");
   assert.equal(passingStages[4].status, "NO DECISION RECORDED", "the prototype must not invent a final decision or outcome");
   assert.equal(passingStages[5].status, "PROHIBITED — NOT IMPLEMENTED", "disclosure and contact must remain prohibited");
   const heldEvaluation = {disposition:"HOLD",gates:stageKeys.map(key=>({key,label:key,state:key==="opportunity_source"?"FAIL":key==="opportunity_eligibility"?"SKIPPED":"PASS"}))};
