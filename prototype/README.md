@@ -13,7 +13,7 @@ This directory contains the original responsive browser demonstration plus focus
 - Current recorded engine-suite result: **40/40 passed** on 2026-11-12 in an isolated Node v26.12.1 execution environment (70.59 ms).
 - Documentation-integrity suite: **3/3 checks passed** in hosted GitHub Actions alongside the 40 engine tests; see [CI verification record](verification/documentation-integrity-ci-2026-11-13.md).
 - The current browser-integrated discovery smoke page has **not** been rerun against v0.2.0. The previous 32/32 browser result belongs to the v0.1.0 baseline.
-- Hosted GitHub Actions passed all 43 test declarations (40 engine + 3 documentation checks) on [run 43396965878](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396965878). The workflow does not execute browser tests.
+- Hosted GitHub Actions passed all 43 test declarations (40 engine + 3 documentation checks) on [run 43398121693](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43398121693), commit `fef7aaed3beb87746613d049340a216d82294029`. The workflow does not execute browser tests.
 
 The engine can only produce a separate-human-review disposition. It always returns `disclosurePermitted: false`. Its fixtures and projections are synthetic; it is not authentication, authorization, a security boundary or a production policy service.
 
@@ -160,3 +160,8 @@ Open `discovery-request-smoke-tests.html` to run the browser smoke checks. The e
 The UI now renders from `review-engine.js` (version 0.2.0), a UI-independent synthetic evaluator with twelve gates, explicit actor-legitimacy precedence, lifecycle/expiry checks and stable reason codes. Consent, guardian-authority and player-voice evaluation are skipped until organization identity and representative authority both pass. Every time-sensitive evaluation receives an explicit clock value. The UI passes minimal pseudonymous projections to the engine rather than full Passport, membership or opportunity fixture objects; this is data minimization in a synthetic client, not a security boundary. A result can reach only `READY_FOR_SEPARATE_HUMAN_REVIEW`; the prototype always returns `disclosurePermitted: false`.
 
 The headless suite is `node --test prototype/tests/review-engine.test.js`; `.github/workflows/prototype-policy-tests.yml` is configured to run it on relevant prototype changes. The draft backend gate contract is in `REVIEW-ENGINE-CONTRACT.md`, with input and result JSON Schemas under `contracts/`. It is not ratified and is not backend implementation. No production implementation gate is lifted. Do not enter real personal information or use this prototype to collect consent or manage real requests.
+
+
+## Affiliation evidence model proposal
+
+See [Affiliation Evidence Model — Proposal](AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md). It distinguishes player-reported experience, community-coach attestation and formal organization records without treating them as trust tiers. **This is not ratified and does not change the current verified-membership rule or authorize implementation.**
