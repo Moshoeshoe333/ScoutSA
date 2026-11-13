@@ -142,6 +142,11 @@ async function main() {
     await page.locator("#claimScope").fill("Synthetic issuer authority");
     await page.locator("#status").selectOption("Needs Investigation");
     await page.locator("#reviewer").fill("REVIEWER-DEMO");
+    await page.locator("#reason").fill("Too short");
+    assert.equal(await page.locator("#decisionForm").evaluate(form => form.checkValidity()), false,
+      "short rationale must fail the declared minimum-length validation");
+    assert.equal(await page.locator("#items article").count(), initialDecisionCount,
+      "invalid form input must not add a session decision");
     await page.locator("#reason").fill("Only the fictional issuer label was inspected; independent authority remains unresolved.");
     assert.equal(await page.locator("#decisionForm").evaluate(form => form.checkValidity()), true,
       "complete decision form must satisfy declared browser validation");
