@@ -114,6 +114,30 @@ test("evaluation does not mutate request or context inputs", () => {
   evaluate(request, context);
   assert.deepEqual({ request, context }, before);
 });
+test("malformed or missing context collections normalize to empty and fail closed", () => {
+  for (const malformed of [null, undefined, {}, "not-an-array"]) {
+    const context = validContext({
+      players: malformed,
+      organizations: malformed,
+      representativeAuthorities: malformed,
+      memberships: malformed,
+      consentCases: malformed,
+      opportunities: malformed,
+      invitationCases: malformed
+    });
+    const result = evaluate(validRequest(), context);
+    assert.equal(result.disposition, "HOLD");
+    assert.equal(result.allBlockingGatesSatisfied, false);
+    assert.equal(result.disclosurePermitted, false);
+    assert.equal(gate(result, "disclosure_scope").state, "FAIL");
+  }
+});
+test("missing request input is treated as an unresolved request and fails closed", () => {
+  const result = evaluate(null, validContext());
+  assert.equal(result.disposition, "HOLD");
+  assert.equal(result.allBlockingGatesSatisfied, false);
+  assert.equal(result.disclosurePermitted, false);
+});
 test("duplicate Passport references fail closed instead of taking the first record", () => {
   const context = validContext();
   context.players.push(structuredClone(context.players[0]));
