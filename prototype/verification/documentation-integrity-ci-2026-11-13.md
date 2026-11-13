@@ -192,3 +192,8 @@ Hosted verification: [run 43409488949](https://github.com/Moshoeshoe333/ScoutSA/
 ## Passport → Opportunity Register → Request Review handoff — verification pending
 
 On 2026-11-13, the existing workspace-hub integrity test was extended to check the synthetic Player Passport → Opportunity Register → Discovery & Request Review URL handoff, exact-fixture filtering, return navigation and fail-closed behavior for unmatched references. The source inventory remains 40 engine tests + 8 documentation-integrity checks = 48 declarations. The previously recorded 48/48 hosted run predates these assertions and is historical for this change. A new hosted run is required before the updated assertions can be reported as passing. No browser-integrated test, persistence, submission, authorization or production behavior is implied.
+
+
+## Incomplete request handoff edge-case correction — verification pending
+
+The review identified that `?opportunity=...` without a `player` parameter previously fell back to the full fictional request queue. Corrected on `prototype/internal-demo` by adding `prototype/handoff-filter.js`, detecting both parameter presences independently, and returning an empty record set for incomplete, empty, unknown or unmatched handoffs. The ordinary queue remains available only when neither handoff parameter is present. The existing workspace-integrity test now exercises: no parameters, opportunity-only, unknown player, exact player–opportunity match, unmatched opportunity and empty opportunity. The declaration inventory remains 40 engine tests + 8 documentation-integrity checks = 48; no new test declaration was added. A fresh hosted run is required before this correction can be reported as CI-verified. Browser click-through remains outstanding.
