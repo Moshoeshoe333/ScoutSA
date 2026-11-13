@@ -50,6 +50,58 @@
     return { ok: true, code: null };
   };
 
+  // Synthetic evidence-linked two-person review check. This validates fixture structure,
+  // not real-world identity, independence, authority or authenticity.
+  function validateInvitationReview(invitation, context, organizationId, now) {
+    if (!invitation || !invitation.firstReview || !invitation.secondReview) {
+      return { ok: false, code: "INVITATION_REVIEW_EVIDENCE_INCOMPLETE" };
+    }
+    const first = invitation.firstReview;
+    const second = invitation.secondReview;
+    if (first.status !== "COMPLETE" || second.status !== "COMPLETE"
+      || !first.reviewerId || !second.reviewerId
+      || !first.authorityId || !second.authorityId
+      || !first.evidenceRef || !second.evidenceRef
+      || !Number.isFinite(timestamp(first.completedAt))
+      || !Number.isFinite(timestamp(second.completedAt))) {
+      return { ok: false, code: "INVITATION_REVIEW_EVIDENCE_INCOMPLETE" };
+    }
+    if (first.reviewerId === second.reviewerId || first.authorityId === second.authorityId) {
+      return { ok: false, code: "REVIEWER_NOT_INDEPENDENT" };
+    }
+    if (timestamp(second.completedAt) < timestamp(first.completedAt)) {
+      return { ok: false, code: "INVITATION_REVIEW_ORDER_INVALID" };
+    }
+    for (const review of [first, second]) {
+      if (review.conflictStatus !== "CLEARED" || !review.conflictEvidenceRef) {
+        return { ok: false, code: "REVIEWER_CONFLICT_CHECK_NOT_EVIDENCED" };
+      }
+      const reviewerLookup = uniqueLookup(context.reviewers, item => item && item.id === review.reviewerId);
+      if (reviewerLookup.duplicate) return { ok: false, code: "DUPLICATE_REVIEWER_IDENTITY" };
+      const reviewer = reviewerLookup.record;
+      if (!reviewer || reviewer.identityStatus !== "Verified") {
+        return { ok: false, code: "REVIEWER_IDENTITY_NOT_VERIFIED" };
+      }
+      const reviewerLife = current(reviewer, now);
+      if (!reviewerLife.ok) return { ok: false, code: "REVIEWER_IDENTITY_" + reviewerLife.code };
+      const authorityLookup = uniqueLookup(context.reviewerAuthorities, item => item && item.id === review.authorityId);
+      if (authorityLookup.duplicate) return { ok: false, code: "DUPLICATE_REVIEWER_AUTHORITY" };
+      const authority = authorityLookup.record;
+      if (!authority || authority.reviewerId !== review.reviewerId
+        || authority.organizationId !== organizationId
+        || authority.scope !== "INVITATION_SAFEGUARDING_REVIEW"
+        || authority.authority !== "Verified") {
+        return { ok: false, code: "REVIEWER_AUTHORITY_SCOPE_MISMATCH" };
+      }
+      const authorityLife = current(authority, now);
+      if (!authorityLife.ok) return { ok: false, code: "REVIEWER_AUTHORITY_" + authorityLife.code };
+    }
+    if (second.independenceStatus !== "CONFIRMED" || !second.independenceEvidenceRef) {
+      return { ok: false, code: "SECOND_REVIEW_INDEPENDENCE_NOT_EVIDENCED" };
+    }
+    return { ok: true, code: null };
+  }
+
   function evaluateRequest(request, context = {}, options = {}) {
     const r = request || {};
     const now = timestamp(options.now || context.now);
@@ -291,24 +343,24 @@
       eligibilityState === "FAIL" ? "ELIGIBILITY_NOT_VERIFIED" : null
     );
     const invitationOpportunityMatches = !invitationLookup.duplicate && !!invitation && invitation.opportunityId === r.opportunityId;
-    const invitationSecondReviewComplete = !!invitation && invitation.secondReviewStatus === "COMPLETE";
+    const invitationReview = validateInvitationReview(invitation, context, r.organizationId, now);
     const safeguardingOk = sourceOk && !!opportunity && opportunity.safeguarding === "Reviewed"
       && invitationOpportunityMatches
       && invitation.workflowState === "READY"
-      && invitationSecondReviewComplete;
+      && invitationReview.ok;
     const safeguardingState = !sourceOk ? "SKIPPED" : safeguardingOk ? "PASS" : "FAIL";
     const safeguardingReason = !sourceOk ? null
       : invitationLookup.duplicate ? "DUPLICATE_INVITATION_REVIEW_REFERENCE"
       : !invitationOpportunityMatches ? "INVITATION_OPPORTUNITY_MISMATCH"
-      : !invitationSecondReviewComplete ? "INVITATION_SECOND_REVIEW_INCOMPLETE"
+      : !invitationReview.ok ? invitationReview.code
       : safeguardingOk ? null : "SAFEGUARDING_NOT_CLEARED";
     const safeguardingGate = gate(
       "safeguarding_review", "Safeguarding review",
       safeguardingState,
       !sourceOk ? "Skipped until the opportunity source and lifecycle are verified."
         : !invitationOpportunityMatches ? "Invitation review is not bound to this exact opportunity."
-        : !invitationSecondReviewComplete ? "Independent second review is incomplete."
-        : safeguardingOk ? "Safeguarding and opportunity-bound second review are complete."
+        : !invitationReview.ok ? "Two-person review evidence is incomplete or unresolved: " + invitationReview.code
+        : safeguardingOk ? "Synthetic two-person review evidence is structurally complete; real-world verification is not established."
         : "Safeguarding and/or invitation review remains unresolved.",
       safeguardingReason
     );
