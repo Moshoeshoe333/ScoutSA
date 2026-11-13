@@ -1,14 +1,16 @@
-# ScoutSA Gate Status — current note 2026-11-12
+# ScoutSA Gate Status — current note 2026-11-13
 
 > This note is on `prototype/internal-demo`. It records the isolated prototype branch and does not alter or lift any mainline implementation hold.
 
 **Mainline remains:** documentation-first; implementation, schema migration, RLS, API, authentication, real identity processing, deployment and pilot remain on hold. The October 2026 gate decisions and unresolved seams below remain in force.
 
-**Isolated prototype branch:** a synthetic, static browser demonstration exists under `prototype/`. Its pure review engine is version 0.2.0. On 2026-11-12, 40/40 headless Node tests passed; both relevant inline scripts passed syntax checks; both JSON schema files parsed. The updated browser smoke page was not re-executed against v0.2.0 because unauthenticated access to this private repository returned 404. The prior 32/32 browser result belongs to the v0.1.0 baseline and is not current proof.
+**Isolated prototype branch:** a synthetic, static browser demonstration exists under `prototype/`. Its pure review engine is version 0.2.0. On 2026-11-12, the engine suite recorded 40/40 headless Node tests passing; both relevant inline scripts passed syntax checks; both JSON schema files parsed. A documentation-integrity test has since been added; its first execution is not yet recorded, so the expanded test suite must not yet be described as passing. The updated browser smoke page was not re-executed against v0.2.0 because unauthenticated access to this private repository returned 404. The prior 32/32 browser result belongs to the v0.1.0 baseline and is not current proof.
 
 **Prototype boundary:** synthetic fixtures only; no backend, persistence, authentication, authorization, RLS, API, identity vault, consent capture, disclosure, production security, legal compliance or pilot readiness. A successful policy evaluation can only reach separate human review and never authorizes disclosure.
 
-**Operational seams still open:** membership trust tiers for formal clubs vs community attestations; multi-guardian legal authority and dispute resolution; purpose-category scope; user/player delegation; retention and access policy; and a server-side release authorization design. No implementation is authorized by the prototype work.
+**Operational seams still open:** membership evidence classes (formal-club corroboration, community-coach attestation and player-reported claims) are a proposal only; minimum evidence and opportunity-specific acceptance rules remain unresolved. Multi-guardian legal authority and dispute resolution; purpose-category scope; user/player delegation; retention and access policy; and a server-side release authorization design also remain open. The current engine's verified-membership rule is unchanged. No implementation is authorized by the prototype work.
+
+**Documentation integrity:** `docs/engineering-integrity.md` defines the high-priority synchronization protocol and incident log. Root and prototype README files must be reconciled to this status; the documentation-integrity test is being added to the prototype test workflow.
 
 ---
 
