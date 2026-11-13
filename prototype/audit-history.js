@@ -103,6 +103,22 @@ function validateAuditHistory(input = {}) {
         || event.actorId !== review.reviewerId || event.authorityId !== review.authorityId) {
         fail("AUDIT_REVIEW_ACTOR_OR_SCOPE_MISMATCH", i, "Review event actor, authority, organization and scope must match the review record.");
       }
+      const declaredPins = list(review.evidenceRefs);
+      const eventPins = list(event.evidenceRefs);
+      const samePins = declaredPins.length > 0 && eventPins.length === declaredPins.length
+        && declaredPins.every(pin => eventPins.some(item => item
+          && item.evidenceRef === pin.evidenceRef && item.versionId === pin.versionId));
+      if (!samePins) {
+        fail("AUDIT_REVIEW_EVIDENCE_LINK_MISSING", i, "Review event must carry the exact evidence-version links declared by the review record.");
+      } else if (event.eventType === "REVIEW_COMPLETED") {
+        for (const pin of eventPins) {
+          const key = nonempty(pin.evidenceRef) && nonempty(pin.versionId)
+            ? evidenceKey(pin.evidenceRef, pin.versionId) : "";
+          if (!key || evidenceState.get(key) !== "ACCEPTED") {
+            fail("AUDIT_REVIEW_EVIDENCE_NOT_ACCEPTED", i, "A review cannot complete unless every linked evidence version has an earlier ACCEPTED event.");
+          }
+        }
+      }
       const prior = reviewState.has(event.reviewId) ? reviewState.get(event.reviewId) : "PENDING";
       if (event.fromState !== prior || event.toState !== reviewTransition.to
         || prior !== reviewTransition.from) {
