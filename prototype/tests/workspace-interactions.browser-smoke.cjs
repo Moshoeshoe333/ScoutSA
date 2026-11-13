@@ -139,7 +139,8 @@ async function main() {
     await page.locator("#search").fill("");
 
     await page.locator("#evidenceId").fill("EVD-SESSION-TEST");
-    await page.locator("#claimScope").fill("Synthetic issuer authority");
+    const hostileText = "<img src=x onerror=alert(1)>";
+    await page.locator("#claimScope").fill(hostileText);
     await page.locator("#status").selectOption("Needs Investigation");
     await page.locator("#reviewer").fill("REVIEWER-DEMO");
     await page.locator("#reason").fill("Too short");
@@ -155,6 +156,10 @@ async function main() {
       "valid decision must appear in the current page session");
     assert.match(await page.locator("#items").innerText(), /EVD-SESSION-TEST/);
     assert.match(await page.locator("#items").innerText(), /This page session only|REVIEWER-DEMO/);
+    assert.ok((await page.locator("#items").innerText()).includes(hostileText),
+      "user-entered markup must remain visible as literal text");
+    assert.equal(await page.locator("#items img").count(), 0,
+      "user-entered markup must not create executable HTML elements");
     await page.reload({ waitUntil: "load" });
     assert.equal(await page.locator("#items article").count(), initialDecisionCount,
       "session-only decision must disappear after reload; no persistence may be implied");
@@ -230,7 +235,24 @@ async function main() {
     assert.match(await page.locator("#reviewStages").innerText(), /PROHIBITED — NOT IMPLEMENTED/);
     assert.equal(await page.locator("#requestList input, #requestList select, #requestList textarea, #requestList form").count(), 0,
       "request queue must remain a local read-only selector");
-    passed.push("Discovery request selection, six-stage hold and no-decision/disclosure boundary");
+
+    await page.goto(origin + "/discovery-request.html?opportunity=OPP-DEMO-001", { waitUntil: "load" });
+    assert.match(await page.locator("#requestTitle").innerText(), /No matching synthetic request/);
+    assert.equal(await page.locator(".request").count(), 0,
+      "an opportunity-only handoff must not expose the ordinary request queue");
+    assert.equal(await page.locator("#reviewStages .stage").count(), 0,
+      "an incomplete handoff must not render invented review stages");
+
+    await page.goto(origin + "/discovery-request.html?player=DEMO-PLAYER-001&opportunity=OPP-DEMO-003", { waitUntil: "load" });
+    assert.match(await page.locator("#requestTitle").innerText(), /No matching synthetic request/);
+    assert.equal(await page.locator(".request").count(), 0,
+      "a valid player with a mismatched opportunity must return no request");
+
+    await page.goto(origin + "/discovery-request.html?player=UNKNOWN-PLAYER", { waitUntil: "load" });
+    assert.match(await page.locator("#requestTitle").innerText(), /No matching synthetic request/);
+    assert.equal(await page.locator(".request").count(), 0,
+      "an unknown player reference must return no request");
+    passed.push("Discovery request selection, six-stage hold, no-decision boundary and invalid-handoff failures");
 
     assert.deepEqual(errors, [], "browser must not emit uncaught page or console errors");
     process.stdout.write(passed.map((name, index) => "PASS " + (index + 1) + " — " + name).join("\n") +
