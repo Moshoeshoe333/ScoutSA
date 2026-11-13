@@ -321,3 +321,18 @@ Current source inventory:
 - Total Node test declarations across all four files: **96**.
 
 The audit-history model is experimental, not ratified and not connected to `review-engine.js`. It does not provide immutable storage, cryptographic integrity, trusted timestamps, identity proofing, durable audit history or automatic invalidation. A valid event sequence does not change an invitation gate or authorize a human decision. Hosted verification passed on [run 43440108660](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43440108660), commit `d8dbd16c0762dec7234cc40f0f48b3563427c49c`: **100/100 Node tests**, **7/7 Discovery & Request Review browser groups**, **8/8 workspace hub browser groups** and **12/12 specialist interaction browser groups**. This run verifies the synthetic event validator and tested browser suites only; it does not establish immutable storage, real-world identity, authorization or production readiness. Mainline, real-data, disclosure, deployment and pilot holds remain unchanged.
+
+
+## Mandatory synthetic audit-history gate integration — 2026-11-13
+
+The 33-tier assessment identified that the original validator could accept empty/incomplete histories and did not enforce causal invalidation. The validator is now v0.2.0 and the review engine is v0.3.0. The engine requires a non-empty event array, exact review IDs, completion events for both reviewers, evidence-version plus synthetic-fingerprint pins, current scoped event-authority fixtures, strictly increasing canonical UTC timestamps, completion-time equality, event/fixture final-state agreement, and a review-invalidation event after any later invalidation of linked evidence. A validly invalidated review is not eligible to pass the safeguarding gate.
+
+Current source inventory:
+- Review-engine tests: **78**.
+- Audit-history tests: **30**.
+- Documentation-integrity checks: **9**.
+- Workspace-data-integrity tests: **2**.
+- Engine plus documentation-integrity count: **87**.
+- Total Node test declarations: **119**.
+
+Current guard phrase: **9 documentation-integrity test declarations (87 total)**. Hosted verification for this integration is pending; the prior 100-test run is historical and does not verify the current engine/module integration. The model remains synthetic, caller-supplied and in-memory. No immutable storage, cryptographic integrity, trusted timestamps, real identity proofing, production authorization or disclosure is implemented. UI-008 remains OPEN; mainline, real-data, deployment and pilot holds remain unchanged.
