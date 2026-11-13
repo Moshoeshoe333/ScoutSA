@@ -58,3 +58,22 @@ The legacy `secondReviewStatus` field is ignored and cannot satisfy the gate. Ei
 Hosted run [43432903661](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43432903661), commit `8ea0ea7cac0f11875ac3431017d7868f8687629a`, passed **67/67 Node tests**, **7/7 Discovery & Request Review browser groups**, **8/8 workspace hub browser groups**, and **12/12 specialist interaction browser groups**.
 
 The hosted run validates only deterministic synthetic behavior. It does not prove real reviewer identity, independence, legal authority, conflict adjudication or evidence authenticity. UI-008 remains OPEN; mainline and real-data/deployment/pilot holds remain unchanged.
+
+## Evidence provenance and review revocation — 2026-11-13
+
+The evaluator now resolves all five required evidence references (two review-completion records, two reviewer conflict-check records and one second-review independence record) against a unique synthetic evidence-inspection record. Each record is bound to the exact invitation, organization, reviewer, authority grant, claim type and review scope. It carries a synthetic source class/locator, inspection finding, inspector, inspection timestamp, lifecycle and expiry.
+
+Only `ACCEPTED` evidence that is unique, current, unexpired, correctly scoped and inspected by the reviewer associated with the claim can satisfy the gate. `SUBMITTED` and `INSPECTED` are not acceptance; `REJECTED` is unusable; `STALE`, `REVOKED` and expired records invalidate the review on reevaluation. Missing, duplicate, mismatched or unaccepted evidence fails closed. Revoked reviewer authority also blocks reevaluation.
+
+- Engine test declarations: **66**.
+- Engine test source count: **66/66**.
+- Documentation-integrity declarations: **8**.
+- Engine plus documentation declarations: **74**.
+- Workspace-data-integrity declarations: **2**.
+- Total Node test declarations: **76**.
+- Hosted verification: **PENDING** for this evidence-provenance revision.
+- Mainline: untouched.
+- UI-008: OPEN.
+
+This remains synthetic structural validation. It does not authenticate source material, real reviewers, authority, independence or evidence authenticity. No durable audit history, evidence ingestion, event-driven revocation, disclosure, contact or production authorization is implemented. The existing mainline, real-data, deployment and pilot holds remain unchanged.
+
