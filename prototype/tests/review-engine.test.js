@@ -259,6 +259,24 @@ test("membership must match exact player and organization", () => {
   assert.equal(gate(result, "membership_linkage").state, "FAIL");
   assert.ok(result.reasonCodes.includes("MEMBERSHIP_LINK_MISMATCH"));
 });
+test("membership bound to another player fails closed", () => {
+  const context = validContext();
+  context.memberships[0].playerId = "PLAYER-OTHER";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "membership_linkage").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("MEMBERSHIP_LINK_MISMATCH"));
+});
+
+test("opportunity owned by another organization fails closed", () => {
+  const context = validContext();
+  context.opportunities[0].organizationId = "ORG-OTHER";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "opportunity_source").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("OPPORTUNITY_ORGANIZATION_MISMATCH"));
+  assert.equal(gate(result, "opportunity_eligibility").state, "SKIPPED");
+  assert.equal(gate(result, "safeguarding_review").state, "SKIPPED");
+});
+
 test("membership lifecycle expiry is re-evaluated at review time", () => {
   const context = validContext();
   context.memberships[0].expiresAt = PAST;
