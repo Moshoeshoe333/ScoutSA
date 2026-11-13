@@ -58,10 +58,23 @@ test("affiliation evidence proposal is linked and explicitly non-ratified", () =
   assert.ok(proposal.includes("NOT RATIFIED"), "proposal must remain explicitly non-ratified");
   assert.ok(proposal.includes("No implementation is authorized"), "proposal must preserve implementation hold");
   assert.ok(rootReadme.includes("prototype/AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md"), "root README must link proposal");
-  for (const source of [rootReadme, prototypeReadme, gateStatus, ciVerification]) {
-    assert.ok(source.includes("43399527448"), "recorded successful CI run must be consistent across current summaries");
-  }
+  const currentCiIds = [rootReadme, prototypeReadme, gateStatus, ciVerification].map(source => source.match(/Last successful prototype CI: \\[run (\\d+)\\]/)?.[1]);
+  assert.ok(currentCiIds.every(Boolean), "each current summary must identify the last successful prototype CI run");
+  assert.ok(new Set(currentCiIds).size === 1, "current summaries must cite the same successful prototype CI run");
   assert.ok(prototypeReadme.includes("AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md"), "prototype README must link proposal");
   assert.ok(gateStatus.includes("AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md"), "gate status must link proposal");
   assert.ok(proposal.includes("Player-reported experience") && proposal.includes("Community-coach attestation") && proposal.includes("Formal organization record"), "all three evidence classes must be documented");
+});
+
+
+test("opportunity evidence acceptance matrix is linked and explicitly non-ratified", () => {
+  const matrix = read("prototype/OPPORTUNITY-EVIDENCE-ACCEPTANCE-MATRIX.md");
+  assert.ok(matrix.includes("NOT RATIFIED"), "matrix must remain explicitly non-ratified");
+  assert.ok(matrix.includes("No implementation is authorized"), "matrix must preserve implementation hold");
+  assert.ok(rootReadme.includes("prototype/OPPORTUNITY-EVIDENCE-ACCEPTANCE-MATRIX.md"), "root README must link matrix");
+  assert.ok(prototypeReadme.includes("OPPORTUNITY-EVIDENCE-ACCEPTANCE-MATRIX.md"), "prototype README must link matrix");
+  assert.ok(gateStatus.includes("OPPORTUNITY-EVIDENCE-ACCEPTANCE-MATRIX.md"), "gate status must link matrix");
+  for (const term of ["Open community development session", "Academy assessment / trial invitation", "Formal club membership / registration", "League eligibility / competition registration", "Scouting observation"]) {
+    assert.ok(matrix.includes(term), "matrix missing opportunity category: " + term);
+  }
 });
