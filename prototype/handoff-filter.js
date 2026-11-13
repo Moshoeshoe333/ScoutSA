@@ -8,6 +8,7 @@
  * match exactly.
  */
 function filterHandoffRecords(records, options = {}) {
+  const source = Array.isArray(records) ? records : [];
   const {
     hasPlayerParam = false,
     hasOpportunityParam = false,
@@ -15,9 +16,9 @@ function filterHandoffRecords(records, options = {}) {
     opportunityId = null
   } = options;
   const hasHandoff = hasPlayerParam || hasOpportunityParam;
-  if (!hasHandoff) return records.slice();
+  if (!hasHandoff) return source.slice();
   if (!hasPlayerParam || typeof playerId !== "string" || playerId.length === 0) return [];
-  return records.filter(record =>
+  return source.filter(record =>
     record.playerId === playerId &&
     (!hasOpportunityParam || (typeof opportunityId === "string" && opportunityId.length > 0 && record.opportunityId === opportunityId))
   );
