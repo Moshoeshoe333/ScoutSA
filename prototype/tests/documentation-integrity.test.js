@@ -157,7 +157,7 @@ test("workspace hub links every existing synthetic review journey", () => {
   assert.ok(discovery.includes("No matching synthetic request") && discovery.includes("No request has been created"), "missing handoff matches must fail closed without creating a request");
   assert.ok(discovery.includes("encodeURIComponent(passport.id)"), "return navigation must preserve the exact synthetic Passport reference");
   assert.ok(playerFixtures.includes("DEMO-PLAYER-001") && playerFixtures.includes("DEMO-PLAYER-002"), "the synthetic Passport fixtures must remain present");
-  assert.ok(requestFixtures.includes("playerId:\\\"DEMO-PLAYER-001\\\"") && requestFixtures.includes("playerId:\\\"DEMO-PLAYER-002\\\""), "each sample Passport must have a corresponding synthetic request fixture");
+  assert.ok(requestFixtures.includes('playerId:"DEMO-PLAYER-001"') && requestFixtures.includes('playerId:"DEMO-PLAYER-002"'), "each sample Passport must have a corresponding synthetic request fixture");
   const stageKeys = ["organization_identity","representative_authority","passport_reference","membership_linkage","opportunity_source","opportunity_eligibility","age_safe_route","guardian_authority","player_voice","purpose_consent","safeguarding_review"];
   const passingEvaluation = {disposition:"READY_FOR_SEPARATE_HUMAN_REVIEW",gates:stageKeys.map(key=>({key,label:key,state:"PASS"}))};
   const passingStages = reviewState.deriveReviewStages(passingEvaluation);
