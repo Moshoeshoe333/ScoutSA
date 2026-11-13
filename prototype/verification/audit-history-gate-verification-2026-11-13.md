@@ -3,7 +3,7 @@
 **Branch:** `prototype/internal-demo`  
 **Engine:** `review-engine.js` v0.3.0  
 **Audit validator:** `audit-history.js` v0.2.0  
-**Status:** The previous 119-test baseline passed; the latest invitation-scoped 121-test revision awaits hosted verification.
+**Status:** Hosted verification passed on [run 43443819916](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43443819916), commit `0899062638e152a5236372f32dd98e4ed16491c3`.
 
 ## Scope
 
@@ -22,7 +22,13 @@ Missing history, incomplete review completion, invalid actor/authority/scope bin
 
 ## Verification result
 
-The previous baseline run [43443050401](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43443050401) passed 119 tests and all three browser suites. The current invitation-scoped 121-test revision requires a new hosted run. Do not carry forward the previous run's counts as evidence for this revision.
+Hosted GitHub Actions run [43443819916](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43443819916) passed on commit `0899062638e152a5236372f32dd98e4ed16491c3`:
+- **121/121 Node tests passed; 0 failed.**
+- **7/7** Discovery & Request Review browser groups passed.
+- **8/8** workspace-hub browser groups passed.
+- **12/12** specialist workspace interaction browser groups passed.
+
+The prior 119-test run is historical. This verifies the declared synthetic tests and browser paths only; it is not a security, legal, safeguarding-effectiveness or production-readiness certification.
 
 ## Limits
 
