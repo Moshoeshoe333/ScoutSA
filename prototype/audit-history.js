@@ -29,6 +29,10 @@ function validateAuditHistory(input = {}) {
   const ids = new Set();
   const evidenceState = new Map();
   const reviewState = new Map();
+  const evidenceInvalidations = new Map();
+  const reviewCompletedAt = new Map();
+  const reviewInvalidatedAt = new Map();
+  const reviewEvidenceLinks = new Map();
   let previousTime = -Infinity;
 
   const fail = (code, index, detail) => errors.push({ code, index, detail });
@@ -84,6 +88,7 @@ function validateAuditHistory(input = {}) {
         fail("AUDIT_EVIDENCE_TRANSITION_INVALID", i, "Evidence event does not follow the allowed state transition.");
       } else {
         evidenceState.set(key, transition.to);
+        if (["REJECTED", "STALE", "REVOKED", "SUPERSEDED"].includes(transition.to)) evidenceInvalidations.set(key, i);
       }
       continue;
     }
@@ -125,10 +130,28 @@ function validateAuditHistory(input = {}) {
         fail("AUDIT_REVIEW_TRANSITION_INVALID", i, "Review event does not follow the allowed review transition.");
       } else {
         reviewState.set(event.reviewId, reviewTransition.to);
+        if (event.eventType === "REVIEW_COMPLETED") {
+          reviewCompletedAt.set(event.reviewId, i);
+          reviewEvidenceLinks.set(event.reviewId, eventPins);
+        } else {
+          reviewInvalidatedAt.set(event.reviewId, i);
+        }
       }
       continue;
     }
     fail("AUDIT_EVENT_TYPE_UNKNOWN", i, "Event type is not in the declared evidence/review event vocabulary.");
+  }
+
+  for (const [reviewId, completedIndex] of reviewCompletedAt) {
+    for (const pin of list(reviewEvidenceLinks.get(reviewId))) {
+      const key = evidenceKey(pin.evidenceRef, pin.versionId);
+      const invalidatedIndex = evidenceInvalidations.get(key);
+      if (Number.isInteger(invalidatedIndex) && invalidatedIndex > completedIndex
+        && !(reviewInvalidatedAt.get(reviewId) > invalidatedIndex)) {
+        fail("AUDIT_REVIEW_INVALIDATION_EVENT_MISSING", events.length,
+          "A completed review must have a later invalidation event when a linked evidence version is later rejected, stale, revoked or superseded.");
+      }
+    }
   }
 
   return Object.freeze({
