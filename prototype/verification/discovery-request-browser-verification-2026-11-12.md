@@ -205,3 +205,8 @@ Final rerun after unused-helper cleanup: **35 / 35 passed**, 0 failed, 54.57 ms.
 The duplicate-reference tests now cover all referenced entity classes: Passport, organization, representative authority, membership, consent, opportunity and invitation review, plus duplicate purpose grants. Each ambiguous reference fails closed rather than silently selecting a first match.
 
 Final headless run: **40 / 40 passed**, 0 failed, 70.59 ms. Both schemas parse as JSON. The UI inline scripts were syntax-checked earlier and have not changed since that check. Current browser execution remains outstanding because the repository is private and the isolated browser receives no GitHub credentials.
+
+
+## Current source-count reconciliation — 2026-11-13
+
+The current engine test file contains **42/42 declared test cases** (this is a source declaration count, not a claim that the latest hosted run passed). The current documentation-integrity suite contains 8 declarations; together these are 50 declarations in the count checked by `documentation-integrity.test.js`. Two additional cross-workspace data-integrity tests bring the full Node test inventory to 52. The latest malformed-input cases require fresh hosted verification.
