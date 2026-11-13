@@ -34,10 +34,12 @@ The hosted workflow path filter now includes `prototype/*.html`, so future speci
 
 ## Verification status
 
-- Headless Node declaration inventory remains **50** (40 review-engine + 8 documentation-integrity + 2 workspace-data-integrity); no new Node test declarations were added.
-- Specialist browser smoke suite now contains **12 groups** (previously 11).
-- Request-review and workspace-hub browser suites remain unchanged.
-- A new hosted workflow result is **pending / not yet verified** at the time this record is authored. Do not claim CI success until the run completes and its logs are inspected.
+- Hosted GitHub Actions [run 43426395229](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43426395229), commit `a7a72870ad63b52d722e4260a9c29e8cd7fad647`, completed successfully.
+- Headless Node declaration inventory: **50 passed, 0 failed** (40 review-engine + 8 documentation-integrity + 2 workspace-data-integrity).
+- Discovery & Request Review browser suite: **7/7 groups passed**.
+- Workspace hub/navigation browser suite: **8/8 groups passed**.
+- Specialist workspace interaction suite: **12/12 groups passed**, including the new cross-workspace escape-helper contract group.
+- Logs report no uncaught browser errors. An earlier run exposed a malformed nested interpolation and a test-source newline error; both were corrected before this successful run. The failed runs are not counted as successful verification.
 
 ## Limitations and open work
 
