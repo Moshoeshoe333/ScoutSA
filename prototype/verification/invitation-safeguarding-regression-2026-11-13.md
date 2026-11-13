@@ -28,3 +28,27 @@ These tests exercise a deterministic synthetic evaluator only. They do not valid
 
 
 The first hosted attempt exposed two test-harness defects rather than evaluator failures: the cross-workspace ownership assertion was attached to invitation fixtures that do not carry an organization ID, and the hostile-rendering browser test mutated rules/limits after their one-time renderer had already run. Both test defects were corrected. The final hosted run above passed the full headless and browser suites.
+
+
+## Follow-on evidence-linked reviewer model — 2026-11-13
+
+The earlier status-only approach described above has been superseded on the isolated prototype branch. The current evaluator now requires:
+
+- Distinct first and second reviewer IDs and distinct authority grant IDs.
+- Unique, current reviewer identity fixture records marked verified.
+- Unique, current authority grants bound to the exact reviewer and organization, scoped to `INVITATION_SAFEGUARDING_REVIEW`.
+- Both reviews marked complete, timestamped in chronological order, and carrying evidence references.
+- A cleared conflict check and evidence reference for each reviewer.
+- A confirmed independence check and evidence reference for the second reviewer.
+
+The legacy `secondReviewStatus` field is ignored and cannot satisfy the gate. Eight new tests cover status-only bypass, same-person review, authority-scope mismatch, expired identity, missing conflict evidence, missing independence evidence, invalid chronology and duplicate records.
+
+**Limit:** all fields and evidence references are synthetic. No real identity proofing, authority verification, evidence authenticity, conflict adjudication, independent reviewer service, signed attestation, or enforceable authorization exists. The contract remains not ratified; no real data, disclosure, deployment or pilot is authorized.
+
+- Engine test declarations: 57.
+- Documentation-integrity declarations: 8.
+- Workspace-data-integrity declarations: 2.
+- Total source declarations: 67.
+- Hosted verification: pending for this model revision.
+- Mainline: untouched.
+- UI-008: OPEN.
