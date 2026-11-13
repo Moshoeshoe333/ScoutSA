@@ -147,9 +147,9 @@ function validateAuditHistory(input = {}) {
       const key = evidenceKey(pin.evidenceRef, pin.versionId);
       const invalidatedIndex = evidenceInvalidations.get(key);
       if (Number.isInteger(invalidatedIndex) && invalidatedIndex > completedIndex
-        && !(reviewInvalidatedAt.get(reviewId) > invalidatedIndex)) {
+        && !Number.isInteger(reviewInvalidatedAt.get(reviewId))) {
         fail("AUDIT_REVIEW_INVALIDATION_EVENT_MISSING", events.length,
-          "A completed review must have a later invalidation event when a linked evidence version is later rejected, stale, revoked or superseded.");
+          "A completed review must have an invalidation event when a linked evidence version is rejected, stale, revoked or superseded after completion.");
       }
     }
   }
