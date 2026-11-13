@@ -17,7 +17,7 @@ The current JavaScript engine is version `0.2.0`; it uses prototype fixture labe
 
 The evaluator requires an explicit evaluation timestamp; it never silently chooses the system clock. Passport, organization, representative authority, membership, consent and opportunity records must have an active lifecycle state and a valid future expiry. Missing, invalid, suspended, revoked, archived or expired records fail closed.
 
-Actor legitimacy is Tier 1: organization identity must pass, then representative authority must independently pass for the exact organization, representative and review scope. Purpose-bound consent is **SKIPPED**, not solicited or evaluated, until both Tier 1 checks pass. Tier 2 then evaluates Passport, membership, safe route, guardian authority/conflict, player voice, consent and opportunity source. Eligibility and safeguarding are skipped until the opportunity source and lifecycle are verified. The invitation review must bind to the exact opportunity and include a completed independent second review before the safeguarding/invitation gate can pass. Within Tier 2, all applicable gates are returned together so the reviewer can see concurrent blockers.
+Actor legitimacy is Tier 1: organization identity must pass, then representative authority must independently pass for the exact organization, representative and review scope. Purpose-bound consent is **SKIPPED**, not solicited or evaluated, until both Tier 1 checks pass. Tier 2 then evaluates Passport, membership, safe route, guardian authority/conflict, player voice, consent and opportunity source. Eligibility and safeguarding are skipped until the opportunity source and lifecycle are verified. The invitation review must bind to the exact opportunity and include structured evidence for two distinct reviewers, each with a current scoped authority record and an evidenced conflict check, before the safeguarding/invitation gate can pass. The second review must also carry a separate independence-check evidence reference. The current engine validates only synthetic fixture structure; it does not authenticate real identities, authority or evidence. Within Tier 2, all applicable gates are returned together so the reviewer can see concurrent blockers.
 
 An established guardian's objection, revocation or withdrawal creates `GUARDIAN_CONFLICT_HOLD`. An unverified guardian assertion does not establish authority. This is a conservative prototype rule, not a determination of legal custody or who must consent in a real case.
 
@@ -32,6 +32,21 @@ An established guardian's objection, revocation or withdrawal creates `GUARDIAN_
 | 5. Opportunity clearance | Opportunity/source verification; opportunity-specific eligibility; safeguarding review and second review | Source, eligibility and safeguarding are separate decisions. None can substitute for another. Opportunity must belong to the requested organization. |
 
 The result schema retains twelve sub-gates so the UI and future service can explain each blocker without collapsing separate decisions.
+
+## Synthetic two-person invitation-review evidence model — prototype only
+
+The isolated JavaScript evaluator now requires an invitation record to carry:
+
+- `firstReview` and `secondReview`, each with a distinct `reviewerId`, distinct `authorityId`, `status: "COMPLETE"`, a valid completion timestamp and a non-empty evidence reference.
+- Two unique reviewer records in `context.reviewers`, each with `identityStatus: "Verified"` and a current lifecycle.
+- Two unique authority records in `context.reviewerAuthorities`, each bound to the exact reviewer and organization, scoped to `INVITATION_SAFEGUARDING_REVIEW`, marked verified and current.
+- A cleared conflict check and non-empty conflict-evidence reference for each reviewer.
+- A second-review independence status of `CONFIRMED` and a non-empty independence-evidence reference.
+- A second-review timestamp no earlier than the first-review timestamp.
+
+The legacy `secondReviewStatus` flag is ignored by the evaluator. It cannot substitute for the structured records. Missing, duplicate, expired, mismatched, unordered or unevidenced records fail closed.
+
+**Evidence boundary:** these are synthetic fields and reference strings. They demonstrate what the prototype requires structurally; they do not prove that an identity was checked, a conflict was investigated, a reviewer is genuinely independent, a grant is legally authoritative, or an evidence source is authentic. No real evidence ingestion, signature verification, reviewer account, identity proofing, authorization service, audit ledger or conflict adjudication exists. This proposal is not ratified and is not a production control.
 
 ## Open operational decisions — deliberately not invented
 
