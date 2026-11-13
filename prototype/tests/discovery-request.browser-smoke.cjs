@@ -121,16 +121,26 @@ async function main() {
     assert.equal(await page.locator(".request").count(), 1);
     assert.equal(await page.locator(".request").first().getAttribute("data-id"), "REQ-DEMO-002");
 
-    // Mutate the live synthetic fixture, then exercise the real renderer with hostile text.
-    await open("");
-    await page.evaluate(() => {
-      const hostile = '<img src=x onerror="window.__scoutsaXss=1"> <svg onload="window.__scoutsaXss=2">';
-      window.SCOUTSA_DISCOVERY_REQUESTS.records[0].purpose = hostile;
-      window.SCOUTSA_DISCOVERY_REQUESTS.records[0].requestOrigin = hostile;
-      window.SCOUTSA_DISCOVERY_REQUESTS.records[0].note = hostile;
-      window.SCOUTSA_DISCOVERY_REQUESTS.rules[0] = hostile;
-      window.SCOUTSA_DISCOVERY_REQUESTS.limits[0] = hostile;
+    // Inject hostile fixture values before the page's actual renderers initialize.
+    // The fixture script assigns this global after init scripts have run.
+    await page.addInitScript(() => {
+      if (!location.pathname.endsWith("/discovery-request.html") || location.search !== "") return;
+      Object.defineProperty(window, "SCOUTSA_DISCOVERY_REQUESTS", {
+        configurable: true,
+        set(value) {
+          const hostile = '<img src=x onerror="window.__scoutsaXss=1"> <svg onload="window.__scoutsaXss=2">';
+          value.records[0].purpose = hostile;
+          value.records[0].requestOrigin = hostile;
+          value.records[0].note = hostile;
+          value.rules[0] = hostile;
+          value.limits[0] = hostile;
+          Object.defineProperty(window, "SCOUTSA_DISCOVERY_REQUESTS", {
+            configurable: true, writable: true, value
+          });
+        }
+      });
     });
+    await open("");
     await page.locator('.request[data-id="REQ-DEMO-001"]').click();
     assert.equal(await page.locator('#summary img, #summary svg, #requestList img, #requestList svg, #rules img, #rules svg').count(), 0,
       "hostile fixture text must not create markup in actual rendered regions");
