@@ -11,9 +11,9 @@ This directory contains the original responsive browser demonstration plus focus
 - Engine: `review-engine.js` **v0.2.0**.
 - Headless suite: `node --test prototype/tests/*.test.js`.
 - Current recorded engine-suite result: **40/40 passed** on 2026-11-12 in an isolated Node v26.12.1 execution environment (70.59 ms).
-- Documentation-integrity suite: **3/3 checks passed** in hosted GitHub Actions alongside the 40 engine tests; see [CI verification record](verification/documentation-integrity-ci-2026-11-13.md).
+- Documentation-integrity suite: **4 checks declared**; the new proposal-link guard is awaiting hosted verification. The previous **3/3** checks passed alongside the 40 engine tests; see [CI verification record](verification/documentation-integrity-ci-2026-11-13.md).
 - The current browser-integrated discovery smoke page has **not** been rerun against v0.2.0. The previous 32/32 browser result belongs to the v0.1.0 baseline.
-- Hosted GitHub Actions passed all 43 test declarations (40 engine + 3 documentation checks) on [run 43398121693](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43398121693), commit `fef7aaed3beb87746613d049340a216d82294029`. The workflow does not execute browser tests.
+- Previous hosted evidence: all 43 declarations (40 engine + 3 documentation checks) passed on [run 43398121693](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43398121693), commit `fef7aaed3beb87746613d049340a216d82294029`. The current suite has 44 declarations (40 + 4) and is awaiting a successful hosted run. The workflow does not execute browser tests.
 
 The engine can only produce a separate-human-review disposition. It always returns `disclosurePermitted: false`. Its fixtures and projections are synthetic; it is not authentication, authorization, a security boundary or a production policy service.
 
