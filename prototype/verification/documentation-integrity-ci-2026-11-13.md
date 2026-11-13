@@ -79,4 +79,4 @@ This run is the CI evidence cited in the current README and gate-status summarie
 
 ## Current suite after DOC-006 correction
 
-The documentation-integrity file declares **4 checks**. With 40 engine tests, the expected workflow total is **44 declarations**. The root README, prototype README, gate status and this record now distinguish the earlier 43-test successful run from the current 44-test suite, which must receive a new successful hosted run before being called verified.
+The documentation-integrity file declares **4 checks**. With 40 engine tests, the expected workflow total is **44 declarations**. Current automated test inventory: **4 documentation-integrity test declarations (44 total)**. The root README, prototype README, gate status and this record now distinguish the earlier 43-test successful run from the current 44-test suite, which must receive a new successful hosted run before being called verified.
