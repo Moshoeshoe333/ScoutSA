@@ -24,7 +24,9 @@ function validRequest(overrides = {}) {
 }
 function evidenceRecord(evidenceRef, reviewerId, authorityId, claimType, inspectedAt) {
   return {
-    evidenceRef, invitationId:"INV-1", organizationId:"ORG-1", reviewerId, authorityId,
+    evidenceRef, versionId:"v1", versionStatus:"CURRENT",
+    fingerprint:"SYNTHETIC-FINGERPRINT-" + evidenceRef,
+    invitationId:"INV-1", organizationId:"ORG-1", reviewerId, authorityId,
     claimType, reviewScope:"INVITATION_SAFEGUARDING_REVIEW",
     sourceClass:"SYNTHETIC_FIXTURE", sourceLocator:"SYNTHETIC-LOCATOR-" + evidenceRef,
     inspectionStatus:"ACCEPTED", inspectedBy:reviewerId, inspectedAt,
@@ -73,8 +75,8 @@ function validContext(overrides = {}) {
     ],
     invitationCases:[{
       id:"INV-1", opportunityId:"OPP-1", workflowState:"READY", secondReviewStatus:"COMPLETE",
-      firstReview:{reviewerId:"REVIEWER-1",authorityId:"REVIEW-AUTH-1",status:"COMPLETE",completedAt:"2026-11-12T09:00:00.000Z",evidenceRef:"SYNTHETIC-FIRST-REVIEW-1",conflictStatus:"CLEARED",conflictEvidenceRef:"SYNTHETIC-CONFLICT-CHECK-1"},
-      secondReview:{reviewerId:"REVIEWER-2",authorityId:"REVIEW-AUTH-2",status:"COMPLETE",completedAt:"2026-11-12T09:30:00.000Z",evidenceRef:"SYNTHETIC-SECOND-REVIEW-1",conflictStatus:"CLEARED",conflictEvidenceRef:"SYNTHETIC-CONFLICT-CHECK-2",independenceStatus:"CONFIRMED",independenceEvidenceRef:"SYNTHETIC-INDEPENDENCE-CHECK-1"}
+      firstReview:{reviewerId:"REVIEWER-1",authorityId:"REVIEW-AUTH-1",status:"COMPLETE",completedAt:"2026-11-12T09:00:00.000Z",evidenceRef:"SYNTHETIC-FIRST-REVIEW-1",conflictStatus:"CLEARED",conflictEvidenceRef:"SYNTHETIC-CONFLICT-CHECK-1",evidencePins:{completion:{versionId:"v1",fingerprint:"SYNTHETIC-FINGERPRINT-SYNTHETIC-FIRST-REVIEW-1"},conflict:{versionId:"v1",fingerprint:"SYNTHETIC-FINGERPRINT-SYNTHETIC-CONFLICT-CHECK-1"}}},
+      secondReview:{reviewerId:"REVIEWER-2",authorityId:"REVIEW-AUTH-2",status:"COMPLETE",completedAt:"2026-11-12T09:30:00.000Z",evidenceRef:"SYNTHETIC-SECOND-REVIEW-1",conflictStatus:"CLEARED",conflictEvidenceRef:"SYNTHETIC-CONFLICT-CHECK-2",independenceStatus:"CONFIRMED",independenceEvidenceRef:"SYNTHETIC-INDEPENDENCE-CHECK-1",evidencePins:{completion:{versionId:"v1",fingerprint:"SYNTHETIC-FINGERPRINT-SYNTHETIC-SECOND-REVIEW-1"},conflict:{versionId:"v1",fingerprint:"SYNTHETIC-FINGERPRINT-SYNTHETIC-CONFLICT-CHECK-2"},independence:{versionId:"v1",fingerprint:"SYNTHETIC-FINGERPRINT-SYNTHETIC-INDEPENDENCE-CHECK-1"}}}
     }],
     ...overrides
   };
@@ -642,6 +644,88 @@ test("revoked reviewer authority invalidates the invitation review on reevaluati
   const result = evaluate(validRequest(), context);
   assert.equal(gate(result, "safeguarding_review").state, "FAIL");
   assert.ok(result.reasonCodes.includes("REVIEWER_AUTHORITY_LIFECYCLE_NOT_ACTIVE"));
+  assert.equal(result.disclosurePermitted, false);
+});
+
+test("review without an explicit evidence version and fingerprint pin fails closed", () => {
+  const context = validContext();
+  delete context.invitationCases[0].firstReview.evidencePins;
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("REVIEW_EVIDENCE_VERSION_PIN_MISSING"));
+});
+
+test("a pinned evidence version must exist", () => {
+  const context = validContext();
+  context.invitationCases[0].firstReview.evidencePins.completion.versionId = "v99";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("REVIEW_EVIDENCE_VERSION_MISSING"));
+});
+
+test("a superseded evidence version invalidates its prior review", () => {
+  const context = validContext();
+  assert.equal(gate(evaluate(validRequest(), context), "safeguarding_review").state, "PASS");
+  const old = context.evidenceRecords[0];
+  old.versionStatus = "SUPERSEDED";
+  const next = structuredClone(old);
+  next.versionId = "v2";
+  next.versionStatus = "CURRENT";
+  next.fingerprint = "SYNTHETIC-FINGERPRINT-V2";
+  next.sourceLocator = "SYNTHETIC-LOCATOR-V2";
+  next.findingRef = "SYNTHETIC-FINDING-V2";
+  context.evidenceRecords.push(next);
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("REVIEW_EVIDENCE_VERSION_SUPERSEDED"));
+  assert.equal(result.disclosurePermitted, false);
+});
+
+test("two current versions of the same evidence reference are ambiguous", () => {
+  const context = validContext();
+  const next = structuredClone(context.evidenceRecords[0]);
+  next.versionId = "v2";
+  next.fingerprint = "SYNTHETIC-FINGERPRINT-V2";
+  context.evidenceRecords.push(next);
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("REVIEW_EVIDENCE_CURRENT_VERSION_AMBIGUOUS"));
+});
+
+test("duplicate evidence version identifiers fail closed", () => {
+  const context = validContext();
+  context.evidenceRecords.push(structuredClone(context.evidenceRecords[0]));
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("DUPLICATE_REVIEW_EVIDENCE_VERSION"));
+});
+
+test("a changed fingerprint cannot reuse an earlier review pin", () => {
+  const context = validContext();
+  context.evidenceRecords[0].fingerprint = "SYNTHETIC-FINGERPRINT-CHANGED";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "FAIL");
+  assert.ok(result.reasonCodes.includes("REVIEW_EVIDENCE_FINGERPRINT_MISMATCH"));
+});
+
+test("a fresh review pinned to the new accepted version can pass", () => {
+  const context = validContext();
+  const old = context.evidenceRecords[0];
+  old.versionStatus = "SUPERSEDED";
+  const next = structuredClone(old);
+  next.versionId = "v2";
+  next.versionStatus = "CURRENT";
+  next.fingerprint = "SYNTHETIC-FINGERPRINT-V2";
+  next.sourceLocator = "SYNTHETIC-LOCATOR-V2";
+  next.findingRef = "SYNTHETIC-FINDING-V2";
+  next.inspectedAt = "2026-11-12T09:05:00.000Z";
+  context.evidenceRecords.push(next);
+  context.invitationCases[0].firstReview.evidencePins.completion = {
+    versionId:"v2", fingerprint:"SYNTHETIC-FINGERPRINT-V2"
+  };
+  context.invitationCases[0].firstReview.completedAt = "2026-11-12T09:10:00.000Z";
+  const result = evaluate(validRequest(), context);
+  assert.equal(gate(result, "safeguarding_review").state, "PASS");
   assert.equal(result.disclosurePermitted, false);
 });
 
