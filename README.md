@@ -32,6 +32,8 @@ Latest recorded source inventory:
 | Workspace data integrity | 2 |
 | **Total Node tests** | **121** |
 
+Source inventory includes **79/79 review-engine tests** and **9 documentation checks** (alongside 31 audit-history and 2 workspace-data-integrity declarations). Historical reference points: Recorded 45-test CI baseline: [run 43401941704](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401941704). Historical 46-test CI verification: [run 43403854544](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403854544).
+
 Hosted workflow [43444088668](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43444088668), commit `0e95f7d47112b5276552f84e1d362106270ec91b`, passed **121/121 Node tests**, **7/7 Discovery & Request Review browser groups**, **8/8 workspace hub/navigation groups**, and **12/12 specialist interaction groups**.
 
 The subsequent session-ledger documentation commit `073655260ac86423182e613329842789a74d84ae` also passed its hosted workflow: [43445376478](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43445376478). That run verifies the documentation commit's configured workflow; it does not replace the detailed 121-test/browser result above.
@@ -75,6 +77,10 @@ The initial focus is the Vaal Triangle and Sedibeng, with potential expansion th
 - [33-tier Audit-History Assessment](prototype/verification/33-tier-audit-history-assessment-2026-11-13.md)
 - [Synthetic Audit-History Proposal](prototype/SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md)
 - [Review Engine Contract](prototype/REVIEW-ENGINE-CONTRACT.md)
+- [Affiliation Evidence Model Proposal](prototype/AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md) — non-ratified
+- [Opportunity Evidence Acceptance Matrix](prototype/OPPORTUNITY-EVIDENCE-ACCEPTANCE-MATRIX.md) — non-ratified
+- [Opportunity Requirement Declaration](prototype/OPPORTUNITY-REQUIREMENT-DECLARATION.md) — non-ratified
+- [Opportunity Validation Scenario Pack](prototype/OPPORTUNITY-VALIDATION-SCENARIO-PACK.md) — synthetic and non-ratified
 
 ## Safety and implementation boundary
 
