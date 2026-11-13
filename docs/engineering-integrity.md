@@ -322,6 +322,11 @@ The projection also requires `allBlockingGatesSatisfied === true` plus fully pas
 
 ### UI-008 — Safe rendering of fixture-derived content (OPEN)
 
+- **Mitigation applied:** Ten fixture-driven workspaces now define `h(value)` and wrap identified dynamic HTML-string interpolations with it. Claim Decisions retains its existing `esc(value)` helper and escaped record fields.
+- **Regression coverage added:** The specialist browser smoke suite checks that hostile HTML-looking text remains literal when passed through each workspace's escape helper and that null/undefined values become empty strings. The existing Claim Decisions form test continues to exercise actual user-entered text through its renderer.
+- **Verification boundary:** These tests establish the helper contract, not that every dynamic interpolation has been identified or that every HTML context is safe. Attribute/URL policy, malformed fixture resilience and complete renderer review remain outstanding.
+- **Status:** OPEN. Do not connect untrusted data to these renderers until a complete audit and tests justify closure.
+
 - **Finding:** Several static workspace pages construct HTML strings with `innerHTML` and interpolate fixture-derived fields without universal escaping. The current screens load bundled fictional JavaScript fixtures and do not expose external submissions, so this review does not claim a demonstrated exploit or a complete security assessment.
 - **Verified boundary:** The Claim Decisions form applies an `esc()` function; browser coverage confirms an HTML-looking string remains literal text and does not create an `img` element. That test does not cover the other renderers.
 - **Required preventive action:** Before any external, connected or user-supplied content is introduced, replace unsafe HTML-string interpolation with DOM element/text-node construction or rigorously context-appropriate escaping across all fixture renderers; add hostile-string tests for every affected workspace.
