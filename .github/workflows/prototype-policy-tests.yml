@@ -25,6 +25,7 @@ on:
       - "docs/00-gate-status.md"
       - "docs/engineering-integrity.md"
       - "prototype/README.md"
+      - "prototype/index.html"
       - "prototype/REVIEW-ENGINE-CONTRACT.md"
       - "prototype/review-engine.js"
       - "prototype/tests/**"
