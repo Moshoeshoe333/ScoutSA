@@ -25,7 +25,7 @@ test("mainline README links the integrity policy and workflow directory has no e
   assert.ok(readme.includes("docs/engineering-integrity.md"), "root README must link the integrity policy");
   const workflowDir = path.join(root, ".github/workflows");
   if (fs.existsSync(workflowDir)) {
-    for (const name of fs.readdirSync(workflowDir).filter(name => /\\.ya?ml$/i.test(name))) {
+    for (const name of fs.readdirSync(workflowDir).filter(name => name.endsWith(".yml") || name.endsWith(".yaml"))) {
       const file = path.join(workflowDir, name);
       assert.ok(fs.statSync(file).size > 0, `workflow file is empty: ${name}`);
     }
