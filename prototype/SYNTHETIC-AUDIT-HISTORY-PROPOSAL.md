@@ -36,7 +36,7 @@ Every event carries:
 | REVIEW_COMPLETED | PENDING | COMPLETE |
 | REVIEW_INVALIDATED | COMPLETE | INVALIDATED |
 
-Evidence events must resolve to exactly one evidence-version fixture. Their organization and scope must match that fixture; the actor and authority must match its synthetic reviewer binding. Review events must resolve to exactly one review fixture and match its reviewer, authority, organization and scope. Duplicate IDs, unknown events, missing provenance, unresolved targets, invalid chronology, future timestamps and illegal transitions fail closed.
+Evidence events must resolve to exactly one evidence-version fixture. Their organization and scope must match that fixture; the actor and authority must match its synthetic reviewer binding. Review events must resolve to exactly one review fixture and match its reviewer, authority, organization and scope. A review event must carry the exact evidence-version links declared by that review; completion is rejected unless every linked version has an earlier accepted event. Duplicate IDs, unknown events, missing provenance, unresolved targets, invalid chronology, future timestamps and illegal transitions fail closed.
 
 ## Important limits
 
