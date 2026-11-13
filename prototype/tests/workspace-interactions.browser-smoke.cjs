@@ -270,7 +270,8 @@ async function main() {
       await page.goto(origin + "/" + route, { waitUntil: "load" });
       const result = await page.evaluate(() => {
         const hostile = '<img src=x onerror="window.__xss=1">';
-        const escape = typeof h === "function" ? h : esc;\n        const escaped = escape(hostile);
+        const escape = typeof h === "function" ? h : esc;
+        const escaped = escape(hostile);
         const probe = document.createElement("div");
         probe.innerHTML = escaped;
         return {
