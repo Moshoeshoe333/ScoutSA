@@ -102,3 +102,29 @@ test("opportunity validation scenario pack is linked, synthetic and non-ratified
   assert.ok(prototypeReadme.includes("OPPORTUNITY-VALIDATION-SCENARIO-PACK.md"), "prototype README must link scenario pack");
   assert.ok(gateStatus.includes("OPPORTUNITY-VALIDATION-SCENARIO-PACK.md"), "gate status must link scenario pack");
 });
+
+test("workspace hub links every existing synthetic review journey", () => {
+  const dashboard = read("prototype/index.html");
+  const workspacePaths = [
+    "player-passport.html",
+    "organization-memberships.html",
+    "opportunities.html",
+    "opportunity-evidence.html",
+    "opportunity-decisions.html",
+    "safeguarded-invitations.html",
+    "player-opportunity-matching.html",
+    "player-development-pathways.html",
+    "coach-academy-workspace.html",
+    "guardian-consent.html",
+    "discovery-request.html"
+  ];
+  assert.ok(dashboard.includes('id="workspaceSection"'), "dashboard must expose the workspace hub");
+  assert.ok(dashboard.includes('data-view="workspaces"'), "workspace navigation must be available");
+  assert.ok(dashboard.includes("workspaces:['All workspaces'"), "workspace view must be handled by navigation state");
+  assert.ok(dashboard.includes("fictional records"), "hub must disclose synthetic-only records");
+  for (const file of workspacePaths) {
+    assert.ok(dashboard.includes('href="./' + file + '"'), "workspace hub link missing: " + file);
+    assert.ok(fs.existsSync(path.join(root, "prototype", file)), "linked workspace file does not exist: " + file);
+  }
+  assert.equal((dashboard.match(/class="workspace-card"/g) || []).length, workspacePaths.length, "workspace card inventory must match the linked workspace files");
+});
