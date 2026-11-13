@@ -88,7 +88,7 @@ test("opportunity requirement declaration is linked and explicitly non-ratified"
   assert.ok(gateStatus.includes("OPPORTUNITY-REQUIREMENT-DECLARATION.md"), "gate status must link declaration");
   assert.ok(declaration.includes("mandatory criteria versus preferences") && declaration.includes("Safeguarding, age, guardian and safe-contact declaration") && declaration.includes("Privacy and data minimization"), "declaration must cover core requirement and safety domains");
   assert.ok(declaration.includes("owner cannot approve their own") || declaration.includes("must not be the sole reviewer"), "declaration must preserve independent review of owner authority");
-  const currentCiIds = [rootReadme, prototypeReadme, gateStatus, ciVerification].map(source => source.match(/Current 46-test CI verification: \\[run (\\d+)\\]/)?.[1]);
+  const currentCiIds = [rootReadme, prototypeReadme, gateStatus, ciVerification].map(source => source.match(/Current 46-test CI verification: \[run (\d+)\]/)?.[1]);
   assert.ok(currentCiIds.every(Boolean), "each current summary must identify the hosted 46-test verification");
   assert.ok(new Set(currentCiIds).size === 1 && currentCiIds[0] === "43403316466", "current summaries must cite the same successful 46-test run");
 });
