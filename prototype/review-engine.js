@@ -3,11 +3,14 @@
  * All time-sensitive checks use the caller-supplied context.now (ISO timestamp).
  */
 (function (root, factory) {
-  const api = factory();
+  const api = factory(root);
   if (typeof module === "object" && module.exports) module.exports = api;
   else root.SCOUTSA_REVIEW_ENGINE = api;
-})(typeof globalThis !== "undefined" ? globalThis : this, function () {
+})(typeof globalThis !== "undefined" ? globalThis : this, function (root) {
   "use strict";
+
+  const auditHistory = root && root.SCOUTSA_AUDIT_HISTORY
+    || (typeof require === "function" ? require("./audit-history.js") : null);
 
   const PURPOSE_CODES = Object.freeze({
     "Respond to a specific opportunity request": "RESPOND_TO_SPECIFIC_OPPORTUNITY_REQUEST",
@@ -112,11 +115,13 @@
     if (first.status !== "COMPLETE" || second.status !== "COMPLETE"
       || !first.reviewerId || !second.reviewerId
       || !first.authorityId || !second.authorityId
+      || !first.reviewId || !second.reviewId
       || !first.evidenceRef || !second.evidenceRef
       || !Number.isFinite(timestamp(first.completedAt))
       || !Number.isFinite(timestamp(second.completedAt))) {
       return { ok: false, code: "INVITATION_REVIEW_EVIDENCE_INCOMPLETE" };
     }
+    if (first.reviewId === second.reviewId) return { ok: false, code: "INVITATION_REVIEW_IDS_NOT_UNIQUE" };
     if (first.reviewerId === second.reviewerId || first.authorityId === second.authorityId) {
       return { ok: false, code: "REVIEWER_NOT_INDEPENDENT" };
     }
@@ -162,7 +167,47 @@
         authorityId: second.authorityId, claimType: "REVIEWER_INDEPENDENCE_CHECK" },
       now, second.completedAt);
     if (!independenceEvidence.ok) return independenceEvidence;
-    return { ok: true, code: null };
+
+    if (!auditHistory || typeof auditHistory.validateAuditHistory !== "function") {
+      return { ok: false, code: "INVITATION_AUDIT_HISTORY_UNAVAILABLE" };
+    }
+    if (!Array.isArray(context.auditEvents) || context.auditEvents.length === 0) {
+      return { ok: false, code: "INVITATION_AUDIT_HISTORY_MISSING" };
+    }
+    const auditReviewRecord = (review, includeIndependence) => {
+      const evidenceRefs = [
+        { evidenceRef: review.evidenceRef, versionId: review.evidencePins.completion.versionId,
+          fingerprint: review.evidencePins.completion.fingerprint },
+        { evidenceRef: review.conflictEvidenceRef, versionId: review.evidencePins.conflict.versionId,
+          fingerprint: review.evidencePins.conflict.fingerprint }
+      ];
+      if (includeIndependence) evidenceRefs.push({
+        evidenceRef: review.independenceEvidenceRef,
+        versionId: review.evidencePins.independence.versionId,
+        fingerprint: review.evidencePins.independence.fingerprint
+      });
+      return {
+        reviewId: review.reviewId, organizationId,
+        scope: "INVITATION_SAFEGUARDING_REVIEW",
+        reviewerId: review.reviewerId, authorityId: review.authorityId,
+        completedAt: review.completedAt, evidenceRefs
+      };
+    };
+    const auditResult = auditHistory.validateAuditHistory({
+      events: context.auditEvents,
+      evidenceRecords: context.evidenceRecords,
+      reviews: [auditReviewRecord(first, false), auditReviewRecord(second, true)],
+      eventAuthorities: context.reviewerAuthorities,
+      now: new Date(now).toISOString()
+    });
+    if (!auditResult.valid) {
+      return { ok: false, code: "INVITATION_AUDIT_HISTORY_INVALID",
+        auditReasonCodes: auditResult.errors.map(item => item.code) };
+    }
+    if (auditResult.reviewStatuses.some(item => item.status !== "COMPLETE")) {
+      return { ok: false, code: "INVITATION_REVIEW_HISTORY_INVALIDATED" };
+    }
+    return { ok: true, code: null, auditHistory: auditResult };
   }
 
   function evaluateRequest(request, context = {}, options = {}) {
@@ -443,7 +488,7 @@
     const skippedPrerequisites = gates.filter(g => g.state === "SKIPPED");
     const reasonCodes = Array.from(new Set(gates.flatMap(g => g.reasonCodes)));
     return Object.freeze({
-      engineVersion: "0.2.1",
+      engineVersion: "0.3.0",
       requestId: r.id || null,
       evaluatedAt: new Date(now).toISOString(),
       disposition: blockingFailures.length ? "HOLD" : "READY_FOR_SEPARATE_HUMAN_REVIEW",
@@ -455,5 +500,5 @@
     });
   }
 
-  return Object.freeze({ version: "0.2.1", evaluateRequest });
+  return Object.freeze({ version: "0.3.0", evaluateRequest });
 });
