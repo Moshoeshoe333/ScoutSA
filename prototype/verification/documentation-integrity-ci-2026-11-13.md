@@ -100,3 +100,13 @@ The following successive commits failed because the new consistency guard expect
 These failures are not passes. The assertions have now been aligned to the actual documented wording and current successful verification reference. A new hosted run is required to close DOC-006.
 
 - [43399759324](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399759324) failed because the prototype README had changed to the valid verified form `4/4 checks passed`, while the guard accepted only `4 checks declared`. The guard now accepts either wording and still derives the expected count from test declarations.
+
+
+## Final DOC-006 verification
+
+The corrected 44-declaration suite passed on:
+- [43399835146](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399835146) — commit `4c5c8c5f0c3836e0c047b1a61ba4cf79358cedbe`;
+- [43399841438](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399841438) — commit `f785211bccebb2ca448a71ab6ba3167e9706db76`;
+- [43399847997](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43399847997) — commit `4b57458eba34e0f06c9a6c6b10f07978cdf52a76`.
+
+Each run's `policy-and-documentation-tests` job and test step completed successfully. DOC-006 is closed. The failed attempts remain linked above and are not counted as passes.
