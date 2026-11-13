@@ -225,3 +225,16 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Preventive measure:** Keep all summary counts derived from test declarations and verify exact run-to-commit identity before recording CI evidence.
 - **Verification:** Corrected 47-declaration suite passed hosted CI on [run 43406164367](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43406164367), commit `25108a07320a2e70cd86573a4d950024b8211273`. The `policy-and-documentation-tests` job and headless test step completed successfully. The 14 scenario IDs, synthetic framing, non-ratified status, implementation boundary and README/gate links are covered by the new documentation-integrity check. Browser-integrated v0.2.0 verification remains outstanding.
 - **Status:** Closed — documentation and test inventory reconciled; 47/47 hosted checks passed. The failed runs [43405608125](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43405608125), [43405820994](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43405820994) and [43405962751](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43405962751) remain preserved as evidence and are not counted as passes.
+
+
+### DOC-010 — External validation incorrectly treated as a blocking dependency
+
+- **Recorded:** 2026-11-13
+- **Severity:** Medium — process risk; prolonged non-response could stall product development despite no new evidence arriving.
+- **Affected branch:** `prototype/internal-demo`; no mainline implementation changes.
+- **Finding:** The prior controlled-next-move wording described external validation as the next product-validating activity without explicitly distinguishing it from a blocking dependency. Stakeholder outreach has been attempted and responses have not been received. Waiting indefinitely would create schedule risk without increasing evidence.
+- **Decision:** External validation is now **NON-BLOCKING** for continued internal development. ScoutSA may proceed with clearly labelled synthetic-data prototyping, interface refinement and authorized non-production work within existing boundaries. External feedback, if received, is evidence input for review, not automatic ratification.
+- **Artifact:** Added `prototype/VAAL-STAKEHOLDER-VALIDATION-INTERVIEW-GUIDE.md` as a parked, optional research instrument. It is not evidence that interviews occurred and is not a prerequisite to build.
+- **Safety and authority boundary:** This decision does not lift holds on real player/minor data, public child profiles, real consent capture, database execution, RLS, API, authentication, identity processing, disclosure, deployment or pilot activity. A working demonstration does not establish demand, legal compliance, safeguarding effectiveness or production readiness.
+- **Preventive measure:** Project status must distinguish (1) internal work authorized now, (2) external evidence sought but not received, and (3) decisions requiring formal ratification or separate release authorization. Do not label an unanswered outreach item as a build blocker unless a specific safety or authority gate actually requires it.
+- **Status:** Recorded; documentation and hosted CI reconciliation pending.
