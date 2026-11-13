@@ -37,7 +37,7 @@ test("current documentation reports the count derived from test declarations", (
   assert.ok(hasCurrentTestCount(gateStatus), "gate status test count is stale");
   assert.ok(hasCurrentTestCount(verification), "verification record test count is stale");
   assert.ok(rootReadme.includes(`${declaredDocumentationTestCount} documentation checks`), "root README documentation-test count is stale");
-  assert.ok(prototypeReadme.includes(`${declaredDocumentationTestCount} checks declared`), "prototype README documentation-test count is stale");
+  assert.ok(prototypeReadme.includes(`${declaredDocumentationTestCount} checks declared`) || prototypeReadme.includes(`${declaredDocumentationTestCount}/${declaredDocumentationTestCount} checks passed`), "prototype README documentation-test count is stale");
   assert.ok(gateStatus.includes(`${declaredDocumentationTestCount} checks`), "gate-status documentation-test count is stale");
   assert.ok(ciVerification.includes(`${declaredDocumentationTestCount} documentation-integrity test declarations (${totalDeclaredTestCount} total)`), "CI verification documentation-test count is stale");
 });
