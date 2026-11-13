@@ -7,7 +7,7 @@
 
 ## Purpose
 
-This proposal tests whether a review can be reconstructed from an ordered sequence of evidence and review events. It is a validator for a caller-supplied in-memory event array, not an audit service and not an immutable ledger.
+This proposal tests whether a review can be reconstructed from an ordered sequence of evidence and review events. It is a validator for a caller-supplied in-memory event array, not an audit service and not an immutable ledger. It does not provide immutable storage.
 
 ## Event envelope
 
