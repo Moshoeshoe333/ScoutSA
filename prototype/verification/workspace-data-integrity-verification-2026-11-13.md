@@ -65,3 +65,13 @@ After the hosted run recorded above, two additional tests were added to `prototy
 - An opportunity owned by a different organization must fail `opportunity_source` with `OPPORTUNITY_ORGANIZATION_MISMATCH`; eligibility and safeguarding remain skipped.
 
 These are tests of existing evaluator behavior, not new policy or a change to the engine. They are committed on `prototype/internal-demo`; no hosted result is yet confirmed for them. The current source inventory is 54 declarations: 44 review-engine, 8 documentation-integrity and 2 workspace-data-integrity tests. The historical PASS above applies only to its recorded commit and run.
+
+
+## Follow-on consent identity and malformed-input tests — awaiting hosted verification
+
+Two further tests were added to `prototype/tests/review-engine.test.js`:
+
+- An opaque `playerRef` must not be replaced by the internal Passport ID. The Passport reference can remain valid while consent linkage, guardian authority and player voice fail on the mismatched opaque reference.
+- Object-shaped `guardians` and `purposes` values must not be treated as valid collections. Guardian authority and purpose consent must fail closed without throwing or permitting disclosure.
+
+No evaluator behavior or policy was changed. The current source inventory is 56 declarations: 46 review-engine, 8 documentation-integrity and 2 workspace-data-integrity tests. These latest tests await hosted verification; the historical PASS above does not cover them.
