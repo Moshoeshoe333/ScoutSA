@@ -100,7 +100,9 @@ test("all specialist workspace fixtures have unique IDs and resolvable cross-wor
     assert.ok(opportunityIds.has(row.opportunityId), row.id + " must reference an existing opportunity");
     const guardian = guardians.find(item => item.id === row.consentCaseId);
     assert.equal(guardian.playerRef, row.playerRef, row.id + " player reference must agree with its consent case");
-    assert.equal(row.playerRef, row.playerId, row.id + " request player ID and Passport reference must agree");
+    if (row.passportRef !== null) {
+      assert.equal(row.passportRef, row.playerId, row.id + " Passport reference must agree with player ID when supplied");
+    }
 
     if (row.membershipId !== null) {
       assert.ok(membershipIds.has(row.membershipId), row.id + " must reference an existing membership");
