@@ -261,3 +261,14 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Verification:** Hosted GitHub Actions [run 43409488949](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43409488949), commit `fc3d121becd267287eb37bc19ba4644ed9f39b0c`, completed successfully; 48 passed, 0 failed.
 - **Boundary:** This adds navigation only. It does not merge pages into one runtime or introduce shared state, authentication, authorization, persistence, real submissions or contact functionality. Mainline remains unchanged.
 - **Status:** Closed — return-link inventory and 48-declaration hosted test suite verified.
+
+
+### UI-003 — Read-only synthetic review-state presentation
+
+- **Recorded:** 2026-11-13
+- **Scope:** `prototype/internal-demo` request-review presentation only.
+- **Change:** Added `prototype/review-state.js` to project the existing evaluator result into six clearly bounded display stages. The page now distinguishes fixture-only record display, authority/evidence review, safeguarding review, separate human-review eligibility, unrecorded final outcome, and prohibited disclosure/contact.
+- **Policy boundary:** The review engine, evaluation rules and fixtures were not changed. No transition, decision, approval, decline, invitation, trial, placement, persistence, authorization, disclosure or contact is implemented. `READY_FOR_SEPARATE_HUMAN_REVIEW` is described only as eligibility for a separate human review, not as approval or a completed review.
+- **Tests:** Extended assertions inside the existing workspace-integrity test for all-pass, hold, skipped prerequisite, missing gate, no-record and non-invention boundaries. Test declaration inventory remains 40 engine + 8 documentation checks = 48. Added the new module to the prototype workflow's path filters.
+- **Verification:** Fresh hosted CI and browser-integrated verification pending. No test pass is claimed from the source update alone.
+- **Status:** Implemented on the isolated prototype branch; verification pending. Mainline remains unchanged.
