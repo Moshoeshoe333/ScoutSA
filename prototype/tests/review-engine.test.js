@@ -40,6 +40,7 @@ function buildAuditEvents(context) {
     const eventId = "AUDIT-EVENT-" + String(events.length + 1).padStart(3,"0");
     events.push({
       eventId,eventType,fromState,toState,occurredAt,
+      invitationId:record.invitationId,
       actorId:record.reviewerId,authorityId:record.authorityId,
       organizationId:record.organizationId,scope:record.reviewScope,
       provenanceRef:"SYNTHETIC-PROVENANCE-" + eventId,
@@ -79,7 +80,7 @@ function buildAuditEvents(context) {
         fingerprint:review.evidencePins.independence.fingerprint
       });
       reviews.push({
-        reviewId:review.reviewId,organizationId:invitation.organizationId || "ORG-1",
+        reviewId:review.reviewId,invitationId:invitation.id,organizationId:invitation.organizationId || "ORG-1",
         scope:"INVITATION_SAFEGUARDING_REVIEW",reviewerId:review.reviewerId,
         authorityId:review.authorityId,completedAt:review.completedAt,evidenceRefs
       });
@@ -90,7 +91,7 @@ function buildAuditEvents(context) {
         organizationId:invitation.organizationId || "ORG-1",
         scope:"INVITATION_SAFEGUARDING_REVIEW",
         provenanceRef:"SYNTHETIC-PROVENANCE-" + eventId,
-        reviewId:review.reviewId,evidenceRefs
+        invitationId:invitation.id,reviewId:review.reviewId,evidenceRefs
       });
     }
   }
@@ -822,7 +823,7 @@ test("a validly recorded review invalidation blocks the safeguarding gate", () =
   const context = validContext();
   const first = context.invitationCases[0].firstReview;
   context.auditEvents.push({
-    eventId:"AUDIT-INVALIDATE-FIRST",eventType:"REVIEW_INVALIDATED",
+    eventId:"AUDIT-INVALIDATE-FIRST",eventType:"REVIEW_INVALIDATED",invitationId:"INV-1",
     fromState:"COMPLETE",toState:"INVALIDATED",
     occurredAt:"2026-11-12T09:31:00.000Z",
     actorId:first.reviewerId,authorityId:first.authorityId,
