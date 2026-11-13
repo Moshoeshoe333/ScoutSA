@@ -39,7 +39,7 @@ Relevant correction commits:
 - `333e56fcc823b5c84fe24c1cb95b511525461919`
 - `793868348eb01a7eadec8c3b015015602116d7f4`
 
-A separate manual consistency inspection confirmed the current branch values: engine `0.2.0`, 40 engine-test declarations, contract version match, README/gate version match, all three documented 40-test counts, and the root README integrity-policy link.
+A separate manual consistency inspection confirmed the branch values at that verification point: engine `0.2.0`, 40 engine-test declarations, contract version match, README/gate version match, and the root README integrity-policy link.
 
 ## Verification result
 
@@ -49,8 +49,8 @@ A separate manual consistency inspection confirmed the current branch values: en
 - [x] Successful run after the incident-log and workflow-placeholder correction: [run 43396965878](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43396965878).
 - [x] Successful run on the reconciled README and gate-status commit: [run 43397100761](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43397100761).
 - [x] Later hosted run on `prototype/internal-demo`, commit `fef7aaed3beb87746613d049340a216d82294029`: [run 43398121693](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43398121693), conclusion **SUCCESS**; the `policy-and-documentation-tests` job completed successfully.
-- [x] The workflow command is `node --test prototype/tests/*.test.js`, which includes the 40 engine-test declarations and 3 documentation-integrity test declarations (43 total).
-- [x] The three documentation-integrity checks and the existing engine tests completed successfully in the hosted run.
+- [x] At that verification point, the workflow command `node --test prototype/tests/*.test.js` included 40 engine-test declarations and 3 documentation-integrity test declarations (43 total).
+- [x] The three documentation-integrity checks and the existing engine tests completed successfully in that hosted run.
 - [ ] Browser-integrated discovery smoke verification remains separate and outstanding; this workflow does not execute browser tests.
 
 **Conclusion:** The automated documentation-integrity guard is active on `prototype/internal-demo`. It checks engine version and current engine-test count against the contract, prototype README, gate status and engine verification record, and checks the root README link to this policy. It is a targeted consistency guard, not a universal proof that every sentence in every document is correct.
@@ -67,3 +67,16 @@ The GitHub Actions run endpoint and job record were inspected directly. It ident
 - test step: **Run headless policy and documentation tests**, completed successfully.
 
 This run is the CI evidence cited in the current README and gate-status summaries as of this documentation reconciliation. The new affiliation proposal and its documentation-link test are subsequent changes and still require their own hosted run. No browser-integrated v0.2.0 test is implied.
+
+
+## Subsequent failed run — 43399106967
+
+- Commit: `4304c5a2fccf317053d14edc8194cc34283f4a9b`
+- Result: **FAILURE** — 43 passed, 1 failed.
+- Failing check: `affiliation evidence proposal is linked and explicitly non-ratified`.
+- Confirmed cause from the job log: `root README must link proposal`; the root README link had been missed by a text replacement. This was a documentation failure, not an engine/policy test failure.
+- The failure is retained as evidence and is not counted as a pass.
+
+## Current suite after DOC-006 correction
+
+The documentation-integrity file declares **4 checks**. With 40 engine tests, the expected workflow total is **44 declarations**. The root README, prototype README, gate status and this record now distinguish the earlier 43-test successful run from the current 44-test suite, which must receive a new successful hosted run before being called verified.
