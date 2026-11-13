@@ -18,9 +18,13 @@ The evaluator currently treats `secondReviewStatus === "COMPLETE"` as a syntheti
 - Documentation-integrity declarations: 8.
 - Workspace-data-integrity declarations: 2.
 - Total source declarations: 59.
-- Hosted CI for the latest head: pending/unconfirmed at the time this record was written.
+- Hosted result: 59/59 headless tests, 7/7 request-review browser groups, 8/8 hub/navigation groups and 12/12 specialist interaction groups passed.
+- Hosted CI: PASS on [run 43431181124](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43431181124), commit `f7d6383111c92f72e2b33213b0b05619deb94ebd`.
 - Mainline: untouched.
 - UI-008: OPEN.
 - Real player/minor data, real consent, disclosure/contact, database/RLS/API/authentication, deployment and pilot: not authorized.
 
 These tests exercise a deterministic synthetic evaluator only. They do not validate real safeguarding, identity, consent, legal compliance, access control, security or production readiness.
+
+
+The first hosted attempt exposed two test-harness defects rather than evaluator failures: the cross-workspace ownership assertion was attached to invitation fixtures that do not carry an organization ID, and the hostile-rendering browser test mutated rules/limits after their one-time renderer had already run. Both test defects were corrected. The final hosted run above passed the full headless and browser suites.
