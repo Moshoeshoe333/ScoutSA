@@ -210,3 +210,8 @@ Final headless run: **40 / 40 passed**, 0 failed, 70.59 ms. Both schemas parse a
 ## Current source-count reconciliation — 2026-11-13
 
 The current engine test file contains **42/42 declared test cases** (this is a source declaration count, not a claim that the latest hosted run passed). The current documentation-integrity suite contains 8 declarations; together these are 50 declarations in the count checked by `documentation-integrity.test.js`. Two additional cross-workspace data-integrity tests bring the full Node test inventory to 52. The latest malformed-input cases require fresh hosted verification.
+
+
+## Later source-inventory note — 2026-11-13
+
+This historical browser execution remains tied to the tested commit above and is not evidence for later source changes. The current `prototype/tests/review-engine.test.js` source now declares **44/44 test cases**. Two additional negative-path cases cover a membership reference bound to a different player and an opportunity owned by a different organization. They are committed after the historical browser run and await a new hosted workflow result; do not attribute this later test inventory to the historical execution.
