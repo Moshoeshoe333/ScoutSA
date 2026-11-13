@@ -62,7 +62,7 @@ Open `player-passport-smoke-tests.html` to run local interface smoke checks. The
 
 ## Development boundary
 
-See [DEVELOPMENT-BOUNDARY.md](./DEVELOPMENT-BOUNDARY.md). Internal development without external validation is limited to a clearly labelled synthetic-data demonstration. This decision does not lift database, RLS, access-policy, safeguarding, legal or production holds.
+See [DEVELOPMENT-BOUNDARY.md](./DEVELOPMENT-BOUNDARY.md). Internal development does not have to wait for external validation. We may continue building and testing clearly labelled synthetic-data prototypes and authorized non-production components while outreach remains open. External feedback, if received, is an input to review rather than a prerequisite or automatic ratification. This decision does not lift database, RLS, access-policy, safeguarding, legal, real-data, deployment or production holds.
 
 ### Structured sample data and activity timeline
 
@@ -180,3 +180,4 @@ See [Opportunity Requirement Declaration](OPPORTUNITY-REQUIREMENT-DECLARATION.md
 ## Opportunity validation scenario pack
 
 See [Opportunity Validation Scenario Pack](OPPORTUNITY-VALIDATION-SCENARIO-PACK.md). It contains 14 fictional adversarial cases and a reviewer worksheet for stress-testing evidence, fairness, authority, safeguarding, privacy and lifecycle boundaries. It is a research/validation proposal only: **NOT RATIFIED; no implementation or real-world player processing is authorized.**
+\n\n## Optional Vaal stakeholder validation interview guide\n\nSee [Vaal Stakeholder Validation Interview Guide](VAAL-STAKEHOLDER-VALIDATION-INTERVIEW-GUIDE.md). This is a parked, non-ratified research instrument for use if stakeholders respond. **External validation is non-blocking:** ScoutSA internal development continues without waiting for interviews. No interviews are claimed to have occurred, and this guide does not authorize real player data or pilot activity.\n
