@@ -66,7 +66,7 @@ The GitHub Actions run endpoint and job record were inspected directly. It ident
 - conclusion: **SUCCESS**;
 - test step: **Run headless policy and documentation tests**, completed successfully.
 
-This run is the CI evidence cited in the current README and gate-status summaries as of this documentation reconciliation. The new affiliation proposal and its documentation-link test are subsequent changes and still require their own hosted run. No browser-integrated v0.2.0 test is implied.
+This run is the CI evidence cited in the current README and gate-status summaries as of this documentation reconciliation. The new affiliation proposal and its documentation-link test are subsequent changes and still require their own hosted run. At that historical point no browser-integrated v0.2.0 test had yet been run; later UI-004 and UI-005 entries below record the subsequent browser verification.
 
 
 ## Subsequent failed run — 43399106967
@@ -179,7 +179,7 @@ No implementation or policy behavior changed. The new documentation-integrity ch
 
 Added a workspace hub to `prototype/index.html` with 11 direct links to the existing synthetic review screens. The hub includes Player Passport, organization membership review, opportunity management, evidence review, decision worksheet, safeguarded invitations, matching review, development pathways, coach/academy workspace, guardian/consent and discovery/request review. A new documentation-integrity test checks the hub, navigation state, synthetic-data notice, all 11 links and the existence of each destination file. The workflow now runs when `prototype/index.html` changes for both push and pull-request events.
 
-The source inventory is now **8 documentation-integrity test declarations (48 total)**: 40 engine tests plus 8 documentation checks. The 47-declaration suite passed previously on [run 43406164367](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43406164367), commit `25108a07320a2e70cd86573a4d950024b8211273`; that run is now a historical baseline and does not verify the workspace hub. The current 48-declaration suite passed on [run 43409104888](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43409104888), commit `14bcabb84e58fa8f286887d4125cddb6ee6a282e`. The `policy-and-documentation-tests` job and test step completed successfully; the job log records 48 tests, 48 passed, 0 failed. Browser-integrated v0.2.0 verification remains separate and outstanding.
+The source inventory is now **8 documentation-integrity test declarations (48 total)**: 40 engine tests plus 8 documentation checks. The 47-declaration suite passed previously on [run 43406164367](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43406164367), commit `25108a07320a2e70cd86573a4d950024b8211273`; that run is now a historical baseline and does not verify the workspace hub. The current 48-declaration suite passed on [run 43409104888](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43409104888), commit `14bcabb84e58fa8f286887d4125cddb6ee6a282e`. The `policy-and-documentation-tests` job and test step completed successfully; the job log records 48 tests, 48 passed, 0 failed. At this historical point browser-integrated v0.2.0 verification was still outstanding; the later UI-004 and UI-005 records below supersede that status.
 
 
 ## Return navigation across specialist screens — 2026-11-13
@@ -191,7 +191,7 @@ Hosted verification: [run 43409488949](https://github.com/Moshoeshoe333/ScoutSA/
 
 ## Passport → Opportunity Register → Request Review handoff — verification pending
 
-On 2026-11-13, the existing workspace-hub integrity test was extended to check the synthetic Player Passport → Opportunity Register → Discovery & Request Review URL handoff, exact-fixture filtering, return navigation and fail-closed behavior for unmatched references. The source inventory remains 40 engine tests + 8 documentation-integrity checks = 48 declarations. The previously recorded 48/48 hosted run predates these assertions and is historical for this change. A new hosted run is required before the updated assertions can be reported as passing. No browser-integrated test, persistence, submission, authorization or production behavior is implied.
+On 2026-11-13, the existing workspace-hub integrity test was extended to check the synthetic Player Passport → Opportunity Register → Discovery & Request Review URL handoff, exact-fixture filtering, return navigation and fail-closed behavior for unmatched references. The source inventory remains 40 engine tests + 8 documentation-integrity checks = 48 declarations. The previously recorded 48/48 hosted run predates these assertions and is historical for this change. The updated 48-test suite subsequently passed on [run 43420141388](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43420141388): 48 passed, 0 failed. The separate browser scripts are documented below. No persistence, submission, authorization or production behavior is implied.
 
 
 ## Incomplete request handoff edge-case correction — verification pending
@@ -201,7 +201,7 @@ The review identified that `?opportunity=...` without a `player` parameter previ
 
 ## Read-only review-state presentation — verification pending
 
-Added `prototype/review-state.js` as a pure projection from the current synthetic review-engine result into six display stages: fictional fixture/not submitted; authority and evidence review; safeguarding review; separate human review eligibility; final decision/outcome not recorded; and disclosure/contact prohibited. The request-review page renders the projection using DOM text nodes. The evaluator and policy rules were not changed. Regression assertions inside the existing workspace-integrity test cover all-pass, blocking failure, skipped prerequisite, missing gate, no matching request and the prohibition on invented outcomes. The declaration inventory remains 40 engine + 8 documentation-integrity checks = 48. The workflow path filter now includes `prototype/review-state.js`. The first test attempts exposed a malformed escaped-quote source assertion in the existing workspace-integrity test; the assertion was corrected to search the fixture's literal `playerId:"DEMO-PLAYER-001"` form. Failed attempts remain recorded: [43414624909](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414624909), [43414650734](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414650734), [43414698380](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414698380), [43414704997](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414704997), [43414712123](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414712123), [43414719616](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414719616) and [43414728521](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414728521). A subsequent consistency-guard revision made the test fixture incomplete: it did not set `allBlockingGatesSatisfied: true` for the all-pass synthetic evaluation. [Run 43415035969](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43415035969) therefore failed at the expected-readiness assertion. The fixture was corrected in commit `038b913111b8b17d6a0de36bb07ca16934379884`; [run 43415050256](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43415050256) passed the complete suite: **48 passed, 0 failed**. The subsequent explicit `allBlockingGatesSatisfied` negative-case assertion was added in commit `ad6fb2f488b62b433ef95a5373fa79118a6e5a52` and passed on [run 43415259079](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43415259079): **48 passed, 0 failed**. Earlier escaped-quote failures remain recorded above. No browser-integrated visual or click-through test is claimed.
+Added `prototype/review-state.js` as a pure projection from the current synthetic review-engine result into six display stages: fictional fixture/not submitted; authority and evidence review; safeguarding review; separate human review eligibility; final decision/outcome not recorded; and disclosure/contact prohibited. The request-review page renders the projection using DOM text nodes. The evaluator and policy rules were not changed. Regression assertions inside the existing workspace-integrity test cover all-pass, blocking failure, skipped prerequisite, missing gate, no matching request and the prohibition on invented outcomes. The declaration inventory remains 40 engine + 8 documentation-integrity checks = 48. The workflow path filter now includes `prototype/review-state.js`. The first test attempts exposed a malformed escaped-quote source assertion in the existing workspace-integrity test; the assertion was corrected to search the fixture's literal `playerId:"DEMO-PLAYER-001"` form. Failed attempts remain recorded: [43414624909](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414624909), [43414650734](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414650734), [43414698380](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414698380), [43414704997](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414704997), [43414712123](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414712123), [43414719616](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414719616) and [43414728521](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43414728521). A subsequent consistency-guard revision made the test fixture incomplete: it did not set `allBlockingGatesSatisfied: true` for the all-pass synthetic evaluation. [Run 43415035969](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43415035969) therefore failed at the expected-readiness assertion. The fixture was corrected in commit `038b913111b8b17d6a0de36bb07ca16934379884`; [run 43415050256](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43415050256) passed the complete suite: **48 passed, 0 failed**. The subsequent explicit `allBlockingGatesSatisfied` negative-case assertion was added in commit `ad6fb2f488b62b433ef95a5373fa79118a6e5a52` and passed on [run 43415259079](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43415259079): **48 passed, 0 failed**. Earlier escaped-quote failures remain recorded above. At the time of this UI-003 entry, no browser-integrated visual or click-through test was claimed; subsequent UI-004 and UI-005 entries record the scoped browser evidence.
 
 A final consistency guard also requires `allBlockingGatesSatisfied === true` and both review groups to be fully passing before the UI can display eligibility for separate human review; an inconsistent readiness disposition is forced to HOLD.
 
@@ -237,3 +237,46 @@ The workflow now runs both the 48-declaration Node policy/documentation suite an
 - [ ] Full visual-design review, accessibility audit, security/authorization testing, real identity/consent/safeguarding validation and production-readiness testing remain outside this smoke-test scope.
 
 **Conclusion:** The current v0.2.0 Discovery & Request Review synthetic journey is browser-smoke verified for the scenarios and paths above. This is not a security, legal, safeguarding-effectiveness or production-readiness claim. Mainline implementation holds remain unchanged.
+
+
+## Unified workspace hub browser verification — 2026-11-13
+
+### Test artifact and hosted run
+
+The Playwright/Chromium script `prototype/tests/workspace-hub.browser-smoke.cjs` now runs in the same GitHub Actions job after the request-review browser test. The workflow uses Ubuntu 24.04, Node 22, Playwright 1.56.1 and Chromium. The browser test script is a `.cjs` file and does not increase the Node `*.test.js` declaration inventory.
+
+Hosted run [43420141388](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43420141388), commit `7eb60f651363dfc3b569e2be80da187007a75d2d`, completed successfully:
+- Headless policy/documentation suite: **48 passed, 0 failed**.
+- Discovery & Request Review browser smoke: **7/7 groups passed**.
+- Unified workspace hub/all-workspace browser smoke: **8/8 groups passed**.
+
+### Executed hub and specialist checks
+
+1. The hub loads and exposes exactly 11 specialist workspace cards.
+2. Each of the 11 cards is clicked and navigates to its intended specialist page.
+3. Every specialist page renders a document title and primary heading.
+4. Every specialist page provides a working return-to-hub link; clicking it returns to the hub and restores all 11 cards.
+5. All 11 specialist destinations respond successfully.
+6. Representative interactions work: Passport tab selection, guardian scenario selection and development-pathway player selection.
+7. Hub view navigation switches between workspaces, organizations and safeguarding views; “Open all workspaces” opens the workspace view.
+8. Mobile navigation opens the sidebar and selecting a view closes it.
+9. The hub and all 11 specialist pages fit a 390px viewport without horizontal overflow.
+10. No uncaught browser page or console errors are reported.
+
+### Defects found and repaired
+
+- The hub's workspace cards remained in a three-column grid on mobile. A 390px browser test found the “SAFEGUARDING” category label extended beyond the viewport (document width 396px against a 390px viewport). The mobile media query now collapses `.workspace-grid` to one column.
+- The hub's view-navigation binding called `.forEach` on the single-element `$` helper rather than the collection helper `$$`. Chromium reported `$(...).forEach is not a function`, which interrupted the script before view-navigation listeners and later actions could bind. The code now uses `$$`.
+- The “Open all workspaces” button existed but had no listener. It now switches to the workspaces view and is covered by a browser assertion.
+- The browser test now explicitly exercises these controls and fails if the page emits uncaught browser errors.
+
+### Failed attempts and evidence handling
+
+- [43419267368](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43419267368): first complete hub browser attempt; identified horizontal overflow on the hub.
+- [43419439900](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43419439900): diagnostic geometry isolated the overflowing “SAFEGUARDING” label.
+- [43419600972](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43419600972): verified the mobile grid fix and exposed the hub's uncaught selector-helper errors.
+- [43419728005](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43419728005): no horizontal overflow; hub view navigation still failed because the selector-helper correction was not yet fully applied.
+- [43419881053](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43419881053), [43419902468](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43419902468) and [43419918566](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43419918566): intermediate revisions before the final selector correction was present in the tested source.
+- [43420141388](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43420141388): final successful run after the mobile, selector and primary-action fixes.
+
+**Conclusion:** The unified synthetic workspace hub and all 11 specialist pages are browser-smoke verified within the explicitly tested routes and interactions. This does not constitute a full accessibility audit, security/authorization test, real-world safeguarding validation or production-readiness claim. Mainline implementation holds remain unchanged.
