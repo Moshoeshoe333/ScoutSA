@@ -78,3 +78,14 @@ test("opportunity evidence acceptance matrix is linked and explicitly non-ratifi
     assert.ok(matrix.includes(term), "matrix missing opportunity category: " + term);
   }
 });
+
+test("opportunity requirement declaration is linked and explicitly non-ratified", () => {
+  const declaration = read("prototype/OPPORTUNITY-REQUIREMENT-DECLARATION.md");
+  assert.ok(declaration.includes("NOT RATIFIED"), "declaration must remain explicitly non-ratified");
+  assert.ok(declaration.includes("No implementation is authorized"), "declaration must preserve implementation hold");
+  assert.ok(rootReadme.includes("prototype/OPPORTUNITY-REQUIREMENT-DECLARATION.md"), "root README must link declaration");
+  assert.ok(prototypeReadme.includes("OPPORTUNITY-REQUIREMENT-DECLARATION.md"), "prototype README must link declaration");
+  assert.ok(gateStatus.includes("OPPORTUNITY-REQUIREMENT-DECLARATION.md"), "gate status must link declaration");
+  assert.ok(declaration.includes("mandatory criteria versus preferences") && declaration.includes("Safeguarding, age, guardian and safe-contact declaration") && declaration.includes("Privacy and data minimization"), "declaration must cover core requirement and safety domains");
+  assert.ok(declaration.includes("owner cannot approve their own") || declaration.includes("must not be the sole reviewer"), "declaration must preserve independent review of owner authority");
+});

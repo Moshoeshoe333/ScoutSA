@@ -194,3 +194,16 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Preventive measure:** When adding a design artifact, update all branch summaries and verification records from their actual text; validate the exact generated source before relying on hosted CI; keep wording-flexible count checks tied to declared test counts rather than a single phrase.
 - **Verification:** All 45 test declarations passed in [hosted run 43401455192](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401455192), commit `b5fca7ca7551e96027910790eddb83fdd7e26394`.
 - **Status:** Closed — documentation links, counts and CI references reconciled; preventive checks passed in hosted CI. Failed attempts remain preserved as evidence.
+
+
+### DOC-008 — Opportunity requirement declaration proposal and documentation reconciliation
+
+- **Detected:** 2026-11-13
+- **Severity:** Low — new non-ratified design artifact; documentation and test inventory required synchronized updates.
+- **Affected branch:** `prototype/internal-demo` only. Mainline remains untouched.
+- **Finding:** The new opportunity requirement declaration introduces a sixth documentation-integrity test. Summary files and verification records previously described five documentation checks and a 45-test suite.
+- **Impact:** If left unreconciled, readers could mistake the previous hosted 45-test baseline for verification of the new declaration and its link/content guard.
+- **Correction:** Added the declaration as a non-ratified proposal; linked it from root README, prototype README and gate status; updated the source inventory to 40 engine + 6 documentation checks (46 total); recorded that the current suite awaits hosted verification. Added a test for its links, non-ratified status, implementation hold and core requirement/safeguarding/privacy coverage.
+- **Preventive measure:** Keep the declaration's authority boundary explicit; derive test counts from source declarations; preserve the exact prior CI run as historical evidence; do not claim the new suite passed until a hosted run for the new commit completes. Use one atomic tree/commit update for the synchronized documentation set to avoid temporary mixed run/count references.
+- **Verification:** Pending hosted CI for the new 46-declaration suite. Repository read-back and diff inspection are required before closure. Browser-integrated v0.2.0 verification remains outstanding.
+- **Status:** Open — documentation source updated; hosted verification not yet obtained.

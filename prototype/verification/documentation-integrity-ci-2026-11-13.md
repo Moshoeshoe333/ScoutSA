@@ -137,3 +137,12 @@ Recorded 45-test CI baseline: [run 43401941704](https://github.com/Moshoeshoe333
 ### Final summary-reconciliation attempts
 
 The following intermediate documentation commits failed the shared-CI-reference assertion while summary files were being updated one at a time: [43401588751](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401588751), [43401594717](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401594717), and [43401600241](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401600241). The final reconciled documentation commit passed all 45 declarations on [run 43401612251](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401612251). This later successful run is additional evidence; the 45-test baseline record above remains the earlier independently verified baseline.
+
+
+## Opportunity requirement declaration proposal — 2026-11-13
+
+Added `prototype/OPPORTUNITY-REQUIREMENT-DECLARATION.md` as a non-ratified requirements-disclosure template. It covers accountable owner and representative authority, the actual offer, cohort/location/time/capacity, mandatory criteria versus preferences, claim-specific evidence, independent review, safeguarding and safe-contact, application/invitation/selection/registration distinctions, privacy minimization, disputes, expiry and change control. It includes adversarial validation cases and open decisions.
+
+No engine, fixture, schema, contract, UI, database, RLS, API, authentication or mainline behavior changed. The declaration is linked from the root README, prototype README and gate status. A sixth documentation-integrity test checks the links, non-ratified status, implementation hold and core content.
+
+The current source inventory is **6 documentation-integrity test declarations + 40 engine tests = 46 total declarations**. The last hosted pass cited above remains the 45-declaration baseline; the 46-declaration suite is pending its own hosted run. No pass is claimed for the new test yet. The workflow does not execute browser tests.

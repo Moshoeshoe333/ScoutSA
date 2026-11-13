@@ -11,9 +11,9 @@ This directory contains the original responsive browser demonstration plus focus
 - Engine: `review-engine.js` **v0.2.0**.
 - Headless suite: `node --test prototype/tests/*.test.js`.
 - Current recorded engine-suite result: **40/40 passed** on 2026-11-12 in an isolated Node v26.12.1 execution environment (70.59 ms).
-- Documentation-integrity suite: **5/5 checks passed** alongside the 40 engine tests; all 45 declarations passed on [run 43401455192](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401455192). See [CI verification record](verification/documentation-integrity-ci-2026-11-13.md).
+- Documentation-integrity suite: **6 checks declared** alongside 40 engine tests (46 total source declarations). The last hosted pass was the earlier 45-declaration suite on [run 43401455192](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401455192); the current 46-declaration suite awaits hosted verification. See [CI verification record](verification/documentation-integrity-ci-2026-11-13.md).
 - The current browser-integrated discovery smoke page has **not** been rerun against v0.2.0. The previous 32/32 browser result belongs to the v0.1.0 baseline.
-- Recorded 45-test CI baseline: [run 43401941704](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401941704), 45 declarations (40 engine + 5 documentation checks), commit `b5fca7ca7551e96027910790eddb83fdd7e26394`. The workflow does not execute browser tests.
+- Recorded 45-test CI baseline: [run 43401941704](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401941704) is historical (40 engine + 5 documentation checks). Current source declares 46 tests (40 + 6); hosted verification is pending. The workflow does not execute browser tests.
 
 The engine can only produce a separate-human-review disposition. It always returns `disclosurePermitted: false`. Its fixtures and projections are synthetic; it is not authentication, authorization, a security boundary or a production policy service.
 
@@ -170,3 +170,8 @@ See [Affiliation Evidence Model — Proposal](AFFILIATION-EVIDENCE-MODEL-PROPOSA
 ## Opportunity-specific evidence acceptance matrix
 
 See [Opportunity Evidence Acceptance Matrix](OPPORTUNITY-EVIDENCE-ACCEPTANCE-MATRIX.md). It proposes candidate evidence handling for community sessions, recurring community programmes, academy assessments, formal club/league registration, scouting observation and funded development opportunities. It is a decision aid only: **not ratified, not an eligibility policy, and not authorization to change the review engine or mainline.**
+
+
+## Opportunity requirement declaration proposal
+
+See [Opportunity Requirement Declaration](OPPORTUNITY-REQUIREMENT-DECLARATION.md). It proposes the information an opportunity owner should disclose before independent review: owner and representative authority, the actual offer, mandatory criteria versus preferences, claim-specific evidence, safeguarding, privacy, stage transitions, disputes, expiry and change control. It is a requirements template only: **NOT RATIFIED; no implementation, publication, invitation or player-data processing is authorized.**
