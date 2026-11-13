@@ -58,6 +58,24 @@ async function main() {
     assert.equal(hubResponse.status(), 200, "workspace hub must load");
     const cards = page.locator(".workspace-card");
     assert.equal(await cards.count(), 11, "hub must expose exactly eleven specialist workspace cards");
+
+    // The hub's own navigation and primary call-to-action must be live.
+    await page.locator('button[data-view="workspaces"]').click();
+    assert.equal(await page.locator("#pageTitle").innerText(), "One connected product demonstration.");
+    assert.equal(await page.locator(".workspace-card").count(), 11);
+    await page.locator('button[data-view="organizations"]').click();
+    assert.equal(await page.locator("#pageTitle").innerText(), "Build a trusted football network.");
+    await page.locator('button[data-view="safeguarding"]').click();
+    assert.equal(await page.locator("#pageTitle").innerText(), "Protection is part of the product.");
+    await page.locator("#openWorkspaces").click();
+    assert.equal(await page.locator("#pageTitle").innerText(), "One connected product demonstration.");
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.locator("#menuBtn").click();
+    assert.ok(await page.locator("#sidebar").evaluate(node => node.classList.contains("open")), "mobile menu must open the sidebar");
+    await page.locator('button[data-view="workspaces"]').click();
+    assert.ok(!(await page.locator("#sidebar").evaluate(node => node.classList.contains("open"))), "choosing a mobile nav item must close the sidebar");
+    await page.setViewportSize({ width: 1280, height: 900 });
+
     const discovered = await cards.evaluateAll(nodes => nodes.map(node => new URL(node.getAttribute("href"), location.href).pathname.split("/").pop()));
     assert.deepEqual(discovered, expected, "hub cards must map to the complete expected workspace inventory");
 
