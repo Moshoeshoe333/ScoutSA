@@ -861,3 +861,16 @@ test("freshly version-pinned evidence requires a rebuilt audit sequence", () => 
   assert.equal(gate(fresh,"safeguarding_review").state,"PASS");
   assert.equal(fresh.disclosurePermitted,false);
 });
+
+test("audit events for another invitation cannot contaminate this invitation review",()=>{
+  const context=validContext();
+  const unrelated=context.auditEvents.map((event,index)=>({
+    ...structuredClone(event),
+    eventId:"UNRELATED-"+String(index+1),
+    invitationId:"INV-OTHER"
+  }));
+  context.auditEvents.push(...unrelated);
+  const result=evaluate(validRequest(),context);
+  assert.equal(gate(result,"safeguarding_review").state,"PASS");
+  assert.equal(result.disclosurePermitted,false);
+});
