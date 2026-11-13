@@ -14,10 +14,11 @@ The evaluator currently treats `secondReviewStatus === "COMPLETE"` as a syntheti
 
 ## Verification state
 
-- Engine test declarations: 49.
+- Engine test declarations: 57.
+- Engine verification: 57/57 source tests pass in the latest completed headless attempt; the full workflow is being rerun after documentation reconciliation.
 - Documentation-integrity declarations: 8.
 - Workspace-data-integrity declarations: 2.
-- Total source declarations: 59.
+- Total source declarations: 67.
 - Hosted result: 59/59 headless tests, 7/7 request-review browser groups, 8/8 hub/navigation groups and 12/12 specialist interaction groups passed.
 - Hosted CI: PASS on [run 43431181124](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43431181124), commit `f7d6383111c92f72e2b33213b0b05619deb94ebd`.
 - Mainline: untouched.
