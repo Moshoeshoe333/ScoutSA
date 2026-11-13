@@ -320,6 +320,16 @@ The projection also requires `allBlockingGatesSatisfied === true` plus fully pas
 - **Verification:** Hosted GitHub Actions [run 43422932825](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43422932825), commit `ea3b8919b1240be43391ffbb679b3c1d17a5942e`, passed 50/50 headless tests, 7/7 request-review browser groups, 8/8 hub/navigation groups and 11/11 specialist interaction groups.
 - **Result:** Closed for the scoped fixture-reference and handoff failure-state checkpoint. All data remains fictional; no backend or real-data capability was added.
 
+### Core-loop hardening — 2026-11-13
+
+- Corrected the Discovery & Request Review rules renderer to escape fixture-derived rule text.
+- Removed HTML escaping from two search-only concatenation expressions in Organization Memberships and Opportunity Register; those expressions are used for matching, not HTML output, so escaping them altered search semantics unnecessarily.
+- Added two review-engine tests: malformed/missing context collections normalize to empty collections and fail closed; missing request input remains HOLD.
+- Both new tests assert no human-review eligibility and no disclosure permission.
+- No policy rules or fixture records changed. No new workspace was introduced.
+- **Headless declaration inventory:** 52 (42 engine + 8 documentation-integrity + 2 cross-workspace data-integrity). Hosted verification pending.
+- **Priority:** depth before breadth; focus remains the review engine and Discovery & Request Review loop.
+
 ### UI-008 — Safe rendering of fixture-derived content (OPEN)
 
 - **Original finding:** Static fixture renderers used `innerHTML` with fixture-derived values and did not have universal escaping. The bundled synthetic-only screens had no demonstrated external-input exploit; this was a preventive finding, not a claim of an observed attack.
