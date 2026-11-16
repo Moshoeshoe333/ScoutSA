@@ -229,6 +229,27 @@ async function main() {
     assert.match(await page.locator("#cases").innerText(), /HOLD — NOT INVITABLE/,
       "synthetic invitation cases must retain their hold boundary");
     passed.push("Invitation workflow filter, search and non-invitable hold presentation");
+    await page.addInitScript(() => {
+      let workflow;
+      Object.defineProperty(window, "SCOUTSA_INVITATION_WORKFLOW", {
+        configurable: true, get: () => workflow,
+        set: value => {
+          value.cases = [null, [], { id: "MALFORMED-INVITE", opportunity: "Malformed fixture", organization: "Synthetic", participantBand: "Unknown", workflowState: "HOLD", gates: null, hardStops: null }];
+          workflow = value;
+        }
+      });
+    });
+    await page.goto(origin + "/safeguarded-invitations.html", { waitUntil: "load" });
+    assert.equal(await page.locator("#count").textContent(), "1 scenarios",
+      "malformed invitation rows must be excluded while valid object records remain");
+    assert.equal(await page.locator("#ready").textContent(), "0",
+      "missing gate and hard-stop evidence must never make an invitation ready");
+    assert.equal(await page.locator("#cases .gate").count(), 0,
+      "missing gate collection must render no satisfied gates");
+    assert.match(await page.locator("#cases").innerText(), /HOLD — NOT INVITABLE/,
+      "malformed gate data must preserve the non-invitable hold");
+
+
 
     // 7. Player–Opportunity Matching: disposition filter and evidence-gap search.
     await page.goto(origin + "/player-opportunity-matching.html", { waitUntil: "load" });
