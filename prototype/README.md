@@ -33,7 +33,7 @@ Open `index.html` in a modern browser. No build step or package installation is 
 10. Guardian & Consent Workspace
 11. Discovery & Request Review
 
-The workspaces are separate static pages. Navigation and URL handoffs do not create shared application state, persistence, authentication or authorization.
+The workspaces are separate static pages. A versioned, synthetic-only JSON handoff now lets the Organizer Portal export organizer/submission/evidence/feature-permission records and lets Tournament Manager import them by stable primary IDs. This is a manual file exchange—not shared application state, persistence, authentication, authorization, API synchronization or production integration.
 
 ## Run tests
 
@@ -43,7 +43,7 @@ From the repository root:
 node --test prototype/tests/*.test.js
 ```
 
-Hosted CI runs ten Playwright/Chromium browser smoke scripts configured in `.github/workflows/prototype-policy-tests.yml`: Discovery & Request Review, workspace hub/navigation, player journey preview, Vaal ecosystem coverage, tournament relationship hub, tournament manager, tournament day operations and specialist workspace interactions. Check the latest run on the `prototype/internal-demo` branch before relying on the Tournament Day Operations browser test. A passing run is regression evidence only—not safeguarding, privacy, accessibility or production-readiness approval.
+Hosted CI runs ten Playwright/Chromium browser smoke scripts configured in `.github/workflows/prototype-policy-tests.yml`: Discovery & Request Review, workspace hub/navigation, player journey preview, Vaal ecosystem coverage, tournament relationship hub, tournament manager, tournament day operations, tournament statistic reconciliation, tournament organizer portal and specialist workspace interactions. Check the latest run on the `prototype/internal-demo` branch before relying on the Tournament Day Operations browser test. A passing run is regression evidence only—not safeguarding, privacy, accessibility or production-readiness approval.
 
 ## Review engine and invitation gate
 
