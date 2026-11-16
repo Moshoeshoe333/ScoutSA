@@ -36,7 +36,7 @@ test('tournament organizer portal keeps organizer, authority and feature permiss
   assert.match(await page.locator('#evidenceMessage').textContent(), /not independently verified/i);
 
   await page.locator('[data-section="features"]').click();
-  await page.locator('#featureSubmission').selectOption({ label: /DEMO-Founders-Cup/ });
+  await page.locator('#featureSubmission').selectOption('SUB-DEMO-004');
   await page.locator('#featureState').selectOption('granted-demo');
   await page.locator('#featureForm button[type="submit"]').click();
   assert.match(await page.locator('#featureRows').innerText(), /not-published/);
