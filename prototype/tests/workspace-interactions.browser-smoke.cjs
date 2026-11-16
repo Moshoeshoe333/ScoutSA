@@ -461,12 +461,18 @@ async function main() {
     await page.locator("#playerSelect").selectOption("p1");
     await assertFixtureTextSafe("#profileFields strong", hostileFixtureText, "Passport profile field");
 
-    await page.goto(origin + "/player-opportunity-matching.html", { waitUntil: "load" });
-    await page.evaluate(hostile => {
-      window.SCOUTSA_MATCHING_DEMO.dimensions[0].meaning = hostile;
+    await page.addInitScript(hostile => {
+      let matching;
+      Object.defineProperty(window, "SCOUTSA_MATCHING_DEMO", {
+        configurable: true,
+        get: () => matching,
+        set: value => {
+          value.dimensions[0].meaning = hostile;
+          matching = value;
+        }
+      });
     }, hostileFixtureText);
-    await page.locator("#search").fill("rerender-dimensions");
-    await page.locator("#search").fill("");
+    await page.goto(origin + "/player-opportunity-matching.html", { waitUntil: "load" });
     await assertFixtureTextSafe("#dimensions .rule span", hostileFixtureText, "Matching dimension meaning");
 
     await page.addInitScript(hostile => {
