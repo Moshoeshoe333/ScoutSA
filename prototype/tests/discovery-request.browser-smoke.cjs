@@ -95,6 +95,39 @@ async function main() {
     assert.match(await page.locator("#summary").innerText(), /Adult status not verified/);
     assert.match(await page.locator("#gates").innerText(), /AGE_STATUS_UNVERIFIED|Adult status is not established/i);
 
+    // The real page renderer must exercise the audit-history validator with synthetic-only fixtures.
+    await open("");
+    await page.locator('.request[data-id="REQ-DEMO-001"]').click();
+    const safeguardingGate = page.locator("#gates .gate").filter({ hasText: "Safeguarding review" });
+    const disclosureGate = page.locator("#gates .gate").filter({ hasText: "Disclosure scope" });
+
+    await page.selectOption("#auditScenario", "valid-history");
+    assert.equal(await safeguardingGate.locator("span").innerText(), "Reviewed",
+      "complete synthetic two-reviewer history should pass only the safeguarding-review gate");
+    assert.match(await safeguardingGate.innerText(), /structurally complete/);
+    assert.match(await page.locator("#requestState").innerText(), /HOLD/,
+      "independent organization, consent and player gates must continue to hold");
+    assert.match(await disclosureGate.innerText(), /No disclosure permitted/,
+      "valid synthetic history must never enable disclosure");
+
+    await page.selectOption("#auditScenario", "missing-history");
+    assert.equal(await safeguardingGate.locator("span").innerText(), "Blocked");
+    assert.match(await safeguardingGate.innerText(), /INVITATION_AUDIT_HISTORY_MISSING/,
+      "missing audit events must fail closed in the rendered gate");
+
+    await page.selectOption("#auditScenario", "invalidated-evidence");
+    assert.equal(await safeguardingGate.locator("span").innerText(), "Blocked");
+    assert.match(await safeguardingGate.innerText(), /REVIEW_EVIDENCE_INVALIDATED/,
+      "revoked evidence must invalidate the rendered safeguarding review");
+    assert.match(await disclosureGate.innerText(), /No disclosure permitted/);
+
+    // Reset and replay the valid fixture to detect stale UI state between evaluations.
+    await page.selectOption("#auditScenario", "baseline");
+    assert.equal(await safeguardingGate.locator("span").innerText(), "Blocked");
+    await page.selectOption("#auditScenario", "valid-history");
+    assert.equal(await safeguardingGate.locator("span").innerText(), "Reviewed");
+    assert.match(await disclosureGate.innerText(), /No disclosure permitted/);
+
     // URL handoff edge cases must never fall back to the full queue.
     const emptyStates = [
       ["?opportunity=OPP-DEMO-001", /player reference is required/i],
@@ -178,9 +211,10 @@ async function main() {
       "PASS — guardian-mediated under-18, unknown-age and adult-status-unverified cases",
       "PASS — opportunity-only, unknown-player, unmatched-pair and empty-opportunity handoffs fail closed",
       "PASS — exact pair and player-only handoffs",
+      "PASS — valid, missing and invalidated synthetic audit-history scenarios; reset/replay; disclosure remains prohibited",
       "PASS — mobile layout and no horizontal overflow",
       "PASS — no uncaught browser page or console errors",
-      "BROWSER SMOKE RESULT: 7/7 groups passed"
+      "BROWSER SMOKE RESULT: 8/8 groups passed"
     ].join("\n") + "\n");
   } finally {
     if (browser) await browser.close();
