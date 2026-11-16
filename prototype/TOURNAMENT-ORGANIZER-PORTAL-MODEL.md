@@ -72,3 +72,10 @@ Do not charge players for visibility. Do not imply that a tournament listing is 
 7. What minimum viable organizer workflow can be operated safely in the Vaal pilot?
 
 **Decision boundary:** this prototype informs design and investor narrative only. It does not ratify a production schema, authorize public listings, establish any organizer as verified, authorize contact, or close a mainline gate.
+
+
+## Cross-workspace handoff contract
+
+The Organizer Portal exports a versioned `scoutsa-organizer-portal` JSON package (`contractVersion: 1.0`) containing organizers, submissions, evidence references and feature-permission requests. Each submission carries stable `tournamentId` and `editionId` primary IDs. Tournament Manager accepts only this contract, validates synthetic IDs and foreign-key relationships before changing state, imports editions idempotently by `editionId`, and retains organizer, authority, submission and feature states as separate attributes. Venue is explicitly marked unspecified where the organizer submission has no venue. No divisions, teams, coaches, players, fixtures or statistics are fabricated during import.
+
+This is a manual file handoff between isolated browser sessions, not shared state, synchronization, persistence, authentication or an API. The package is synthetic only. Production integration requires a ratified contract, authenticated authorization, provenance, privacy/security review, migration strategy and server-side validation.
