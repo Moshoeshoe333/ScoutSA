@@ -43,7 +43,7 @@ From the repository root:
 node --test prototype/tests/*.test.js
 ```
 
-Hosted CI runs eight Playwright/Chromium browser smoke scripts configured in `.github/workflows/prototype-policy-tests.yml`: Discovery & Request Review, workspace hub/navigation, player journey preview, Vaal ecosystem coverage, tournament relationship hub, tournament manager, tournament day operations and specialist workspace interactions. Check the latest run on the `prototype/internal-demo` branch before relying on the new preview's browser test. A passing run is regression evidence only—not safeguarding, privacy, accessibility or production-readiness approval.
+Hosted CI runs eight Playwright/Chromium browser smoke scripts configured in `.github/workflows/prototype-policy-tests.yml`: Discovery & Request Review, workspace hub/navigation, player journey preview, Vaal ecosystem coverage, tournament relationship hub, tournament manager, tournament day operations and specialist workspace interactions. Check the latest run on the `prototype/internal-demo` branch before relying on the Tournament Day Operations browser test. A passing run is regression evidence only—not safeguarding, privacy, accessibility or production-readiness approval.
 
 ## Review engine and invitation gate
 
