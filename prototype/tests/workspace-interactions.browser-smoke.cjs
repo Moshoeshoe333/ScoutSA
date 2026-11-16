@@ -129,14 +129,14 @@ async function main() {
       "membership markup event handlers must not execute");
     passed.push("Membership hostile text, status-class allowlist and unresolved-organization fallback");
     await page.addInitScript(() => {
-      if (location.pathname !== "/organization-memberships.html") return;
+      if (location.pathname !== "/organization-memberships.html" || location.search !== "?malformed-fixture=1") return;
       let fixture;
       Object.defineProperty(window, "SCOUTSA_DEMO_MEMBERSHIPS", {
         configurable: true, get: () => fixture,
         set: value => { value.organizations = null; value.memberships = [null, [], "bad"]; fixture = value; }
       });
     });
-    await page.goto(origin + "/organization-memberships.html", { waitUntil: "load" });
+    await page.goto(origin + "/organization-memberships.html?malformed-fixture=1", { waitUntil: "load" });
     assert.equal(await page.locator("#orgList article").count(), 0,
       "null organization collection must render no organization cards");
     assert.equal(await page.locator("#visibleCount").textContent(), "0 records",
@@ -157,14 +157,14 @@ async function main() {
       "only the exact matching request fixture may expose its review handoff");
     passed.push("Opportunity stage filter, search and exact player/opportunity request handoff");
     await page.addInitScript(() => {
-      if (location.pathname !== "/opportunities.html") return;
+      if (location.pathname !== "/opportunities.html" || location.search !== "?malformed-fixture=1") return;
       let fixture;
       Object.defineProperty(window, "SCOUTSA_DEMO_OPPORTUNITIES", {
         configurable: true, get: () => fixture,
         set: value => { value.records = [null, [], "bad"]; fixture = value; }
       });
     });
-    await page.goto(origin + "/opportunities.html", { waitUntil: "load" });
+    await page.goto(origin + "/opportunities.html?malformed-fixture=1", { waitUntil: "load" });
     assert.equal(await page.locator("#count").textContent(), "0 records",
       "non-record opportunity rows must be excluded");
     assert.equal(await page.locator("#records .empty").count(), 1,
@@ -232,7 +232,7 @@ async function main() {
       "synthetic invitation cases must retain their hold boundary");
     passed.push("Invitation workflow filter, search and non-invitable hold presentation");
     await page.addInitScript(() => {
-      if (location.pathname !== "/safeguarded-invitations.html") return;
+      if (location.pathname !== "/safeguarded-invitations.html" || location.search !== "?malformed-fixture=1") return;
       let workflow;
       Object.defineProperty(window, "SCOUTSA_INVITATION_WORKFLOW", {
         configurable: true, get: () => workflow,
@@ -242,7 +242,7 @@ async function main() {
         }
       });
     });
-    await page.goto(origin + "/safeguarded-invitations.html", { waitUntil: "load" });
+    await page.goto(origin + "/safeguarded-invitations.html?malformed-fixture=1", { waitUntil: "load" });
     assert.equal(await page.locator("#count").textContent(), "1 scenarios",
       "malformed invitation rows must be excluded while valid object records remain");
     assert.equal(await page.locator("#ready").textContent(), "0",
