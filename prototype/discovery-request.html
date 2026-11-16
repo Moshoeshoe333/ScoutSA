@@ -14,6 +14,7 @@
 <p class="intro">A narrow review path connecting a Player Passport, purpose-specific consent, organization authority and a specific opportunity. The outcome is a controlled request status—not a talent ranking or invitation.</p>
 <div class="notice"><strong>Read-only demonstration.</strong> Every case is fictional. Nothing is submitted, shared, approved or persisted. All examples remain on hold because required evidence and permissions are absent.</div>
 <div class="notice" id="passportHandoff" hidden></div>
+<section class="panel" id="auditTestPanel" style="margin-top:18px"><h2>Internal audit-history test harness</h2><p class="muted">Synthetic-only scenarios for REQ-DEMO-001. These fixtures test the review engine structure; they do not verify a real person, organization, opportunity or safeguarding process.</p><label for="auditScenario" class="muted">Select a synthetic audit scenario</label><br><select id="auditScenario" aria-describedby="auditScenarioNote"><option value="baseline">Baseline — unverified sample</option><option value="valid-history">Valid synthetic review history</option><option value="missing-history">Missing audit history</option><option value="invalidated-evidence">Invalidated evidence</option></select><p class="muted" id="auditScenarioNote">Baseline uses the original unverified sample records. All requests remain read-only.</p></section>
 <div class="layout">
 <aside class="panel"><h2>Sample request queue</h2><div class="request-list" id="requestList" aria-label="Sample request scenarios"></div><p class="muted">Opaque request IDs are used in the queue. Selecting a case only changes this local view.</p></aside>
 <section class="detail" aria-live="polite">
@@ -28,7 +29,7 @@
 <section class="panel" style="margin-top:18px"><h2>Non-negotiable boundaries</h2><ul class="rules" id="rules"></ul><p class="muted" id="limits"></p></section>
 <footer class="footer">ScoutSA · Internal prototype · Fictional records only · Not production-ready</footer>
 </main>
-<script src="./data/player-passports.demo.js"></script><script src="./data/guardian-consent.demo.js"></script><script src="./data/organization-memberships.demo.js"></script><script src="./data/coach-academy-workspace.demo.js"></script><script src="./data/opportunities.demo.js"></script><script src="./data/opportunity-evidence.demo.js"></script><script src="./data/opportunity-decisions.demo.js"></script><script src="./data/safeguarded-invitations.demo.js"></script><script src="./data/discovery-requests.demo.js"></script><script src="./audit-history.js"></script><script src="./review-engine.js"></script><script src="./review-state.js"></script><script src="./handoff-filter.js"></script>
+<script src="./data/player-passports.demo.js"></script><script src="./data/guardian-consent.demo.js"></script><script src="./data/organization-memberships.demo.js"></script><script src="./data/coach-academy-workspace.demo.js"></script><script src="./data/opportunities.demo.js"></script><script src="./data/opportunity-evidence.demo.js"></script><script src="./data/opportunity-decisions.demo.js"></script><script src="./data/safeguarded-invitations.demo.js"></script><script src="./data/discovery-requests.demo.js"></script><script src="./audit-history.js"></script><script src="./data/discovery-audit.demo.js"></script><script src="./review-engine.js"></script><script src="./review-state.js"></script><script src="./handoff-filter.js"></script>
 <script>
 function h(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));}
 
@@ -60,7 +61,7 @@ function h(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;",
  const gate=(name,status,detail)=>({name,status,detail});
  function evaluate(r){
    const workspace=window.SCOUTSA_ACADEMY_WORKSPACE_DEMO.organization;
-   return window.SCOUTSA_REVIEW_ENGINE.evaluateRequest(r,{
+   const context={
      players:Object.values(window.SCOUTSA_DEMO_PLAYERS).map(x=>({id:x.id,recordStatus:x.recordStatus,lifecycleStatus:x.lifecycleStatus,expiresAt:x.expiresAt})),
      consentCases:window.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases.map(x=>({id:x.id,playerRef:x.playerRef,consentState:x.consentState,guardianState:x.guardianState,playerVoice:x.playerVoice,lifecycleStatus:x.lifecycleStatus,expiresAt:x.expiresAt,guardians:x.guardians,purposes:x.purposes})),
      organizations:window.SCOUTSA_DEMO_MEMBERSHIPS.organizations.map(x=>({id:x.id,identityStatus:x.identityStatus,lifecycleStatus:x.lifecycleStatus,expiresAt:x.expiresAt})),
@@ -69,7 +70,16 @@ function h(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;",
      opportunities:window.SCOUTSA_DEMO_OPPORTUNITIES.records.map(x=>({id:x.id,organizationId:x.organizationId,verification:x.verification,eligibility:x.eligibility,safeguarding:x.safeguarding,lifecycleStatus:x.lifecycleStatus,expiresAt:x.expiresAt})),
      invitationCases:window.SCOUTSA_INVITATION_WORKFLOW.cases.map(x=>({id:x.id,opportunityId:x.opportunityId,workflowState:x.workflowState,secondReviewStatus:x.secondReviewStatus})),
      now:new Date().toISOString()
-   });
+   };
+   const scenario=$("auditScenario").value;
+   if(r.id==="REQ-DEMO-001" && scenario!=="baseline"){
+     const audit=window.SCOUTSA_DISCOVERY_AUDIT_DEMO.create(scenario);
+     Object.assign(context,audit);
+     context.opportunities=context.opportunities.map(x=>x.id===r.opportunityId
+       ? {...x,verification:"Verified",lifecycleStatus:"ACTIVE",expiresAt:"2027-01-01T00:00:00.000Z",safeguarding:"Reviewed"}
+       : x);
+   }
+   return window.SCOUTSA_REVIEW_ENGINE.evaluateRequest(r,context);
  }
  function renderReviewStages(evaluation){
    const host=$("reviewStages");
@@ -110,6 +120,19 @@ function h(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;",
  }
  $("requestList").innerHTML=playerRecords.map(r=>'<button class="request" type="button" data-id="'+h(r.id)+'"><strong>'+h(r.id)+'</strong><small>'+h(r.purpose)+'</small><span class="pill">HOLD</span></button>').join("");
  $("requestList").addEventListener("click",e=>{const b=e.target.closest("button[data-id]");if(b){const r=playerRecords.find(x=>x.id===b.dataset.id);if(r)render(r);}});
+ $("auditScenario").addEventListener("change",()=>{
+   const active=document.querySelector(".request.active");
+   const selected=playerRecords.find(r=>r.id===(active&&active.dataset.id))||playerRecords[0];
+   if(selected)render(selected);
+   const mode=$("auditScenario").value;
+   $("auditScenarioNote").textContent=mode==="baseline"
+     ?"Baseline uses the original unverified sample records. All requests remain read-only."
+     :mode==="valid-history"
+       ?"A structurally complete fictional two-reviewer history is evaluated. Other request gates remain independent and may still hold."
+       :mode==="missing-history"
+         ?"The same fictional review is evaluated with its required audit event sequence removed. The safeguarding review must fail closed."
+         :"A required synthetic evidence version is revoked. The safeguarding review must fail closed on reevaluation.";
+ });
  $("rules").innerHTML=data.rules.map(x=>"<li>"+h(x)+"</li>").join("");
  $("limits").textContent=data.limits.join(" ");
  if(playerRecords[0])render(playerRecords[0]);
