@@ -107,10 +107,14 @@ async function main() {
       const membership = window.SCOUTSA_DEMO_MEMBERSHIPS.memberships[0];
       membership.player = hostile;
       membership.status = hostile;
+      window.SCOUTSA_DEMO_MEMBERSHIPS.organizations[0].name = hostile;
       membership.organizationId = "ORG-UNKNOWN-DEMO";
     }, hostileMembershipText);
     await page.locator("#search").fill("force-membership-rerender");
     await page.locator("#search").fill("");
+    await page.evaluate(() => renderOrgs());
+    assert.equal(await page.locator("#orgList strong").first().textContent(), hostileMembershipText,
+      "organization-list name must remain literal at its actual rendering sink");
     assert.equal(await page.locator("#ui008-membership-injection").count(), 0,
       "membership text must not create an HTML element");
     assert.equal(await page.locator("#records .record h3").first().evaluate(node => node.textContent), hostileMembershipText,
@@ -354,6 +358,7 @@ async function main() {
     await assertFixtureTextSafe("#playerName", hostileFixtureText, "Passport name");
     await assertFixtureTextSafe("#claimsList strong", hostileFixtureText, "Passport claim");
     await assertFixtureTextSafe("#membershipList strong", hostileFixtureText, "Passport membership");
+    await assertFixtureTextSafe("#timelineList p:last-of-type", hostileFixtureText, "Passport timeline detail", "includes");
 
     await page.goto(origin + "/opportunity-evidence.html", { waitUntil: "load" });
     await page.evaluate(hostile => {
@@ -397,6 +402,7 @@ async function main() {
     await page.locator("#playerSelect").selectOption({ index: 0 });
     await assertFixtureTextSafe("#playerName", hostileFixtureText, "Pathway player name", "includes");
     await assertFixtureTextSafe("#stages h3", hostileFixtureText, "Pathway stage name");
+    await assertFixtureTextSafe("#playerList button strong", hostileFixtureText, "Pathway player-list name");
 
     await page.goto(origin + "/guardian-consent.html", { waitUntil: "load" });
     await page.evaluate(hostile => {
@@ -406,6 +412,7 @@ async function main() {
     await page.locator("#caseGrid button[data-case]").nth(1).click();
     await page.locator("#caseGrid button[data-case]").nth(0).click();
     await assertFixtureTextSafe("#caseGrid h2", "GCS-DEMO-001", "Guardian case reference");
+    await assertFixtureTextSafe("#caseGrid .case p", hostileFixtureText, "Guardian case-card player reference", "includes");
     await assertFixtureTextSafe("#caseDetails .row:last-child span", hostileFixtureText, "Guardian case detail");
     await assertFixtureTextSafe("#purposeList b", hostileFixtureText, "Guardian purpose");
 
@@ -510,6 +517,26 @@ async function main() {
     await assertFixtureTextSafe("#records .datum strong", hostileFixtureText, "Opportunity organization identity");
     await assertFixtureTextSafe("#records article > p", hostileFixtureText, "Opportunity source", "includes");
     await assertFixtureTextSafe("#records article > p:last-of-type", hostileFixtureText, "Opportunity detail");
+
+    await page.addInitScript(hostile => {
+      let requests;
+      Object.defineProperty(window, "SCOUTSA_DISCOVERY_REQUESTS", {
+        configurable: true,
+        get: () => requests,
+        set: value => {
+          value.records[0].playerRef = hostile;
+          value.records[0].purpose = hostile;
+          value.rules[0] = hostile;
+          requests = value;
+        }
+      });
+    }, hostileFixtureText);
+    await page.goto(origin + "/discovery-request.html", { waitUntil: "load" });
+    await page.locator("#requestList .request").first().click();
+    await assertFixtureTextSafe("#requestList .request small", hostileFixtureText, "Discovery request-list purpose");
+    await assertFixtureTextSafe("#summary .field strong", hostileFixtureText, "Discovery summary player reference");
+    await assertFixtureTextSafe("#summary .field strong:nth-of-type(4)", hostileFixtureText, "Discovery summary purpose");
+    await assertFixtureTextSafe("#rules li", hostileFixtureText, "Discovery workflow rule");
 
     passed.push("Additional hostile fixture checks cover Passport profile, matching dimensions, guardian rules/limits and opportunity register sinks");
     passed.push("Hostile fixture strings remain literal at Passport, evidence, invitation, matching, pathway, consent, academy and decision render sinks");
