@@ -24,7 +24,7 @@ The demo references these existing IDs from the Tournament Manager relationship 
 | Participation | `PAR-DEMO-001` etc. | Player's event/team-entry participation |
 | Fixture | `FIX-DEMO-001` | Scheduled match between two team entries |
 
-A player-facing match record references **participation ID**, not a display name and not a bare player ID. This preserves the event-specific relationship.
+A player-facing match record references **participation ID**, not a display name and not a bare player ID. This preserves the event-specific relationship. The day-operations page includes a third local synthetic participation, `PAR-DEMO-003` / `PLY-DEMO-003`, solely to demonstrate a same-team substitution. It is not a shared or persisted record in Tournament Manager.
 
 ## Match-day entities introduced
 
