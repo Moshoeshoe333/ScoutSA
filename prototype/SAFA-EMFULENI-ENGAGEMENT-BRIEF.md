@@ -27,7 +27,22 @@ We would value guidance on:
 9. Safeguarding, child participation, parent/guardian communication and escalation expectations.
 10. Whether there is a low-risk way to demonstrate the concept using only synthetic or aggregate information.
 
-## 3. Proposed value to explore
+## 3. Publicly reported role leads to verify
+
+The following names appear in dated local reporting. Treat these as role leads only; titles and responsibilities may have changed, and current contact details must be confirmed through the association before outreach.
+
+- **Mfanafuthi Masondo** — reported as ELFA Chairman in the 10 November 2026 Super League report.
+- **Master Zondo** — reported as ELFA Head of Development in the 15 March 2026 development-league report.
+- **Paul Motsepe** — reported as ELFA Head of Technical in the 26 May 2025 pre-season report.
+- **Tsimo Motsepe** — reported as ELFA Technical Development Officer in the 24 July 2024 SAFA Academies selection report.
+
+Sources:
+- [ELFA Super League report, 10 Nov 2026](https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/11/10/local-amateur-soccer-league-season-in-full-swing/)
+- [ELFA development report, 15 Mar 2026](https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/03/15/elfa-development-teams-ready-for-the-2025-2026-season/)
+- [Boitshepiville pre-season report, 26 May 2025](https://www.citizen.co.za/sedibeng-ster/news/2025/05/26/boitshepiville-junior-teams-take-part-in-pre-season-tournament/)
+- [SAFA Academies selection report, 24 Jul 2024](https://www.citizen.co.za/sedibeng-ster/news/news-news/2024/07/24/emfuleni-selects-players-for-safa-academies-programme/)
+
+## 4. Proposed value to explore
 
 Subject to ELFA's guidance and approval, ScoutSA would like to explore whether it can help:
 
@@ -40,7 +55,7 @@ Subject to ELFA's guidance and approval, ScoutSA would like to explore whether i
 
 These are proposed capabilities, not services already operating.
 
-## 4. A low-risk first collaboration to discuss
+## 5. A low-risk first collaboration to discuss
 
 We suggest beginning with a mapping and learning exercise, not a live player-data integration.
 
@@ -53,7 +68,7 @@ Possible first activity:
 
 No player records, MySAFA access, identity documents, guardian records, private contact details or footage are requested as part of this initial conversation.
 
-## 5. Safeguarding and data boundaries
+## 6. Safeguarding and data boundaries
 
 ScoutSA intends to work within the authority of the relevant football and child-safeguarding structures. Before any live youth-facing activity, the model must have appropriate legal and specialist review and clear operational controls.
 
@@ -66,7 +81,7 @@ Non-negotiable design intentions:
 - no claim that a statistic, profile or scouting recommendation guarantees selection, trial, contract or placement;
 - no claim of POPIA, Children's Act, FIFA, SAFA or MySAFA compliance or integration without the necessary evidence and authorization.
 
-## 6. Questions for the first meeting
+## 7. Questions for the first meeting
 
 1. What is the most reliable current source of ELFA team and competition membership?
 2. Which localities and streams must be included to avoid overlooking teams?
@@ -77,13 +92,13 @@ Non-negotiable design intentions:
 7. What must ScoutSA never do?
 8. What would be a safe, measurable first demonstration?
 
-## 7. What we are asking for
+## 8. What we are asking for
 
 We are asking for an exploratory discussion and guidance on the appropriate process—not endorsement, data access, an MoU or a commitment to pilot.
 
 If the concept is not useful to ELFA, we would rather learn that early and adapt it.
 
-## 8. Proposed meeting outcome
+## 9. Proposed meeting outcome
 
 A successful first conversation would produce:
 - the correct structure and contact pathway;
