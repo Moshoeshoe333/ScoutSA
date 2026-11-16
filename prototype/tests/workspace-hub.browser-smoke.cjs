@@ -76,6 +76,21 @@ async function main() {
     assert.ok(!(await page.locator("#sidebar").evaluate(node => node.classList.contains("open"))), "choosing a mobile nav item must close the sidebar");
     await page.setViewportSize({ width: 1280, height: 900 });
 
+    // UI-008: dynamic player metadata must enter the modal as text, never parsed HTML.
+    const hostileMetadata = '"><img id="ui008-modal-injection" src="x" onerror="window.__ui008Executed=true">';
+    await page.locator(".player").first().evaluate(node => {
+      node.dataset.position = '"><img id="ui008-modal-injection" src="x" onerror="window.__ui008Executed=true">';
+      node.dataset.area = "<svg id=ui008-svg-injection onload=window.__ui008Svg=true>";
+    });
+    await page.locator('button[data-player]').first().click();
+    assert.equal(await page.locator("#ui008-modal-injection, #ui008-svg-injection").count(), 0,
+      "hostile player metadata must not create executable or parsed markup in the modal");
+    assert.ok((await page.locator("#modalBody").innerText()).includes(hostileMetadata),
+      "hostile player metadata must remain visible as literal text");
+    assert.equal(await page.evaluate(() => window.__ui008Executed || window.__ui008Svg || false), false,
+      "hostile modal metadata must not execute event handlers");
+    await page.locator("#closeModal").click();
+
     const discovered = await cards.evaluateAll(nodes => nodes.map(node => new URL(node.getAttribute("href"), location.href).pathname.split("/").pop()));
     assert.deepEqual(discovered, expected, "hub cards must map to the complete expected workspace inventory");
 
