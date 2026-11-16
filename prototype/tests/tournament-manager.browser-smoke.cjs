@@ -88,6 +88,7 @@ async function main() {
     await page.locator("#teamForm button[type=submit]").click();
     assert.match(await page.locator("#teamMessage").innerText(), /Created TEAM-DEMO-004, entry TEN-DEMO-004/);
     assert.equal(await page.locator("#countE").innerText(), "4");
+    assert.equal(await page.locator("#countC").innerText(), "4", "coach assignments are separate junction records");
 
     // Create synthetic player participation.
     await page.locator('[data-section="player"]').click();
@@ -110,6 +111,12 @@ async function main() {
     await page.locator("#fixtureRound").fill("Group A · Round 1");
     await page.locator("#fixtureForm button[type=submit]").click();
     assert.match(await page.locator("#fixtureMessage").innerText(), /Created fixture FIX-DEMO-002/);
+    assert.equal(await page.locator("#countF").innerText(), "2");
+    await page.locator("#fixtureDivision").selectOption("DIV-DEMO-002");
+    await page.locator("#fixtureHome").selectOption("TEN-DEMO-003");
+    await page.locator("#fixtureAway").selectOption("TEN-DEMO-003");
+    await page.locator("#fixtureForm button[type=submit]").click();
+    assert.match(await page.locator("#fixtureMessage").innerText(), /A team cannot play itself/);
     assert.equal(await page.locator("#countF").innerText(), "2");
 
     // Record result, then a stat scoped to the correct player participation and fixture.
@@ -137,6 +144,7 @@ async function main() {
     await page.locator('[data-section="records"]').click();
     const ledger = await page.locator("#ledger").innerText();
     assert.match(ledger, /TRN-DEMO-002/);
+    assert.match(ledger, /CAS-DEMO-003/);
     assert.match(ledger, /FIX-DEMO-002/);
     assert.match(ledger, /STA-DEMO-001/);
     const downloadPromise = page.waitForEvent("download");
