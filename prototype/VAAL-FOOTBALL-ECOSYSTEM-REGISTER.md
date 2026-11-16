@@ -135,7 +135,6 @@ These are names surfaced in dated public reporting. The status column deliberate
 | Happy Stars FC | Sedibeng | 2021 Master Zondo Foundation tournament | Historical lead | [11 May 2021 report](https://www.citizen.co.za/sedibeng-ster/news/2021/05/11/master-zondo-sports-foundation-tournaments-great-success/) |
 | TK Rangers FC | Vanderbijlpark area | 2024 Sports Against Crime Games local-team participant | Historical lead | [18 Jun 2024 report](https://www.citizen.co.za/sedibeng-ster/news/news-news/2024/06/18/vaal-high-school-soccer-team-are-sports-against-crime-champions/) |
 | River Galaxy FC | Vanderbijlpark area | 2024 Sports Against Crime Games local-team participant | Historical lead | [18 Jun 2024 report](https://www.citizen.co.za/sedibeng-ster/news/news-news/2024/06/18/vaal-high-school-soccer-team-are-sports-against-crime-champions/) |
-| Flair Feet Stars FC | Vanderbijlpark | 2024 Nando's Tournament organiser/host | Historical lead | [11 Apr 2024 report](https://www.citizen.co.za/vaalweekblad/news/news-news/2024/04/11/local-football-clubs-complete-un-the-inaugural-nandos-tournament/) |
 
 **This is a starting evidence register, not a declaration that every listed entity is currently operating or that every Vaal team has been found.** Names with spelling, alias, ownership or locality uncertainty must remain separate until reconciled.
 
@@ -186,7 +185,6 @@ The following schools are named in public reporting connected to Vaal school foo
 | Hoërskool Vanderbijlpark | Vanderbijlpark | Sports Against Crime Games, 2024 and 2025 | Identify principal / sports coordinator and current football programme |
 | Beverly Hills Secondary School | Sebokeng | Venue reference adjacent to 2025 TINYA tournament; not evidence of a school team | Ask whether school has a team / sports programme; do not count as a participant |
 | Phoenix High School | Emfuleni venue reference in 2026 league report | Match venue named, not evidence of a school team | Verify venue role and whether a school team exists |
-| TK Rangers FC and River Galaxy FC | Vanderbijlpark area | Named as local club teams invited to the 2024 school tournament | [18 Jun 2024 report](https://www.citizen.co.za/sedibeng-ster/news/news-news/2024/06/18/vaal-high-school-soccer-team-are-sports-against-crime-champions/) |
 
 School leads are not limited to the schools above. A complete school map must be reconciled against current district education and school-sport structures and direct school confirmation.
 
