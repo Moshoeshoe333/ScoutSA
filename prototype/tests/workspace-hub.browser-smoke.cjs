@@ -76,7 +76,11 @@ async function main() {
     assert.ok(!(await page.locator("#sidebar").evaluate(node => node.classList.contains("open"))), "choosing a mobile nav item must close the sidebar");
     await page.setViewportSize({ width: 1280, height: 900 });
 
-    // UI-008: dynamic player metadata must enter the modal as text, never parsed HTML.
+    // UI-008: switch to the player view before exercising player-card modal controls.
+    // The hub correctly hides player cards in the all-workspaces view.
+    await page.locator('button[data-view="players"]').click();
+    assert.equal(await page.locator("#pageTitle").innerText(), "Discover talent with context.");
+    // Dynamic player metadata must enter the modal as text, never parsed HTML.
     assert.ok(await page.locator("button[data-player]").count() >= 3, "all sample player cards must retain their modal controls");
     const hostileMetadata = '"><img id="ui008-modal-injection" src="x" onerror="window.__ui008Executed=true">';
     await page.locator(".player").first().evaluate(node => {
