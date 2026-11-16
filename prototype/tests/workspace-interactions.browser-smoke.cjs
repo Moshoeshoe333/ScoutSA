@@ -581,6 +581,33 @@ async function main() {
     await assertFixtureTextSafe("#gates .gate strong", hostileFixtureText, "Discovery gate label");
     await assertFixtureTextSafe("#gates .gate p", hostileFixtureText, "Discovery gate detail");
 
+    // Malformed scalar values at an actual renderer: null, undefined, object, array and unknown enum.
+    await page.goto(origin + "/opportunity-evidence.html", { waitUntil: "load" });
+    await page.evaluate(() => {
+      const x = window.SCOUTSA_DEMO_EVIDENCE.entries[0];
+      x.opportunity = "rerender-malformed-evidence";
+      x.evidenceLabel = null;
+      x.source = { unexpected: "<img src=x onerror=alert(1)>" };
+      x.sourceAuthority = undefined;
+      x.state = "UNRECOGNIZED-STATE";
+      x.nextAction = ["unexpected", "<script>not markup</script>"];
+      x.limitation = null;
+    });
+    await page.locator("#search").fill("rerender-malformed-evidence");
+    await page.locator("#search").fill("");
+    assert.equal(await page.locator("#items h3").first().textContent(), "",
+      "null evidence label must render as empty text");
+    assert.equal(await page.locator("#items .datum:nth-child(2) strong").first().textContent(), "[object Object]",
+      "unexpected object source must be coerced to inert text");
+    assert.equal(await page.locator("#items .datum:nth-child(3) strong").first().textContent(), "",
+      "undefined source authority must render as empty text");
+    assert.equal(await page.locator("#items .badge").first().textContent(), "UNRECOGNIZED-STATE",
+      "unknown enum must remain inert text rather than becoming a class");
+    assert.equal(await page.locator("#items article p:nth-of-type(1)").first().textContent(), "Limitation: ",
+      "null limitation must render without throwing");
+    assert.equal(await page.locator("#ui008-fixture-injection").count(), 0,
+      "malformed scalar values must not create executable elements");
+
     passed.push("Additional hostile fixture checks cover Passport profile, matching dimensions, guardian rules/limits and opportunity register sinks");
     passed.push("Hostile fixture strings remain literal at Passport, evidence, invitation, matching, pathway, consent, academy and decision render sinks");
 
