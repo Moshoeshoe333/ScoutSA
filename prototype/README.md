@@ -11,11 +11,11 @@ This branch contains a static browser prototype and a synthetic review engine. I
 - Review engine: `review-engine.js` **v0.3.0**.
 - Synthetic audit-history validator: `audit-history.js` **v0.2.0**, integrated as a mandatory structural gate in the synthetic invitation-review evaluation.
 - Node test declarations: **121 total** — **79/79 review-engine tests**, 9 documentation-integrity checks (9 checks declared), 31 audit-history tests and 2 workspace-data-integrity checks.
-- Latest full engine/browser verification: [GitHub Actions run 43848921959](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43848921959), commit `4b4f556a87a600553dcc1d49f883002a73057dbd`: **121/121 Node tests**, **8/8 Discovery & Request Review browser groups**, **8/8 workspace hub/navigation groups**, and **12/12 specialist interaction groups**.
+- Latest full engine/browser verification: [GitHub Actions run 43856069550](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43856069550), commit `00c15d455cf1fe5a03cc417a4af908925a2d298c`: **121/121 Node tests**, Discovery & Request Review browser suite passed, **8/8 workspace hub/navigation groups**, and **14/14 specialist interaction groups**.
 - The latest run includes browser coverage for valid synthetic review history, missing history, invalidated evidence, baseline reset/replay and the permanently prohibited disclosure boundary.
 - The prior 13 November verification, [run 43444088668](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43444088668), remains a historical checkpoint. The 16 November run above is the current full verification.
 
-The test counts above are source declarations and the cited workflow is the recorded execution evidence. Historical counts and earlier runs are intentionally omitted here to avoid presenting obsolete baselines as current.
+The test counts above are source declarations and the cited workflow is the recorded execution evidence. The 14 specialist groups include hostile URL/identifier checks and hostile fixture-string checks at actual render sinks across Passport, evidence, invitations, matching, pathways, consent, academy and decision workspaces. Helper-level hostile/nullish checks run across all 11 workspaces. This is targeted regression evidence, not a complete security sign-off.
 
 ## Open the prototype
 
@@ -90,9 +90,9 @@ External stakeholder responses are not a prerequisite for continued internal dev
 
 ## Next engineering sequence
 
-1. Continue UI-008: inventory every dynamic HTML interpolation and output context across all 11 specialist workspaces.
-2. Verify escaping at actual rendering sinks, not only helper-function tests; add hostile-string coverage to each relevant renderer.
-3. Review URL construction and accepted schemes for dynamic navigation and handoff destinations.
+1. Continue UI-008: complete the interpolation and output-context inventory across all 11 specialist workspaces, including the remaining individual sinks not yet covered by hostile-fixture tests.
+2. Extend actual-renderer tests to remaining profile, option, dimension, rules/limits, opportunity and discovery-gate sinks.
+3. Review URL construction and accepted schemes for every dynamic navigation and handoff destination.
 4. Test malformed and unexpected fixture shapes for resilient, fail-closed rendering without console errors.
 5. Record each UI-008 finding with file, line, sink, risk, mitigation and test evidence; keep UI-008 open until all required items are verified.
 6. Prepare a synthetic partner-demo walkthrough and limitations sheet after the UI safety review is complete.
