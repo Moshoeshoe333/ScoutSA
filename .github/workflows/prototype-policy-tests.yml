@@ -75,5 +75,7 @@ jobs:
         run: node prototype/tests/tournament-intelligence.browser-smoke.cjs
       - name: Run tournament manager browser smoke test
         run: node prototype/tests/tournament-manager.browser-smoke.cjs
+      - name: Run tournament day operations browser smoke test
+        run: node prototype/tests/tournament-day-operations.browser-smoke.cjs
       - name: Run specialist workspace interaction browser smoke test
         run: node prototype/tests/workspace-interactions.browser-smoke.cjs
