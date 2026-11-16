@@ -1,7 +1,7 @@
 # ScoutSA Internal Web Prototype
 
 **Branch:** `prototype/internal-demo`  
-**State as at:** 13 November 2026  
+**State as at:** 16 November 2026  
 **Purpose:** isolated synthetic-data design, workflow and policy-evaluation demonstration.
 
 This branch contains a static browser prototype and a synthetic review engine. It is deliberately separate from mainline. It does not lift any mainline implementation hold.
@@ -11,8 +11,9 @@ This branch contains a static browser prototype and a synthetic review engine. I
 - Review engine: `review-engine.js` **v0.3.0**.
 - Synthetic audit-history validator: `audit-history.js` **v0.2.0**, integrated as a mandatory structural gate in the synthetic invitation-review evaluation.
 - Node test declarations: **121 total** — **79/79 review-engine tests**, 9 documentation-integrity checks (9 checks declared), 31 audit-history tests and 2 workspace-data-integrity checks.
-- Latest full engine/browser verification: [GitHub Actions run 43444088668](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43444088668), commit `0e95f7d47112b5276552f84e1d362106270ec91b`: **121/121 Node tests**, **7/7 Discovery & Request Review browser groups**, **8/8 workspace hub/navigation groups**, and **12/12 specialist interaction groups**.
-- The later session-ledger documentation commit `073655260ac86423182e613329842789a74d84ae` passed its configured hosted workflow: [run 43445376478](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43445376478). This is a later documentation-workflow result, not a new claim that the 121-test/browser suite was rerun on that commit.
+- Latest full engine/browser verification: [GitHub Actions run 43848921959](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43848921959), commit `4b4f556a87a600553dcc1d49f883002a73057dbd`: **121/121 Node tests**, **8/8 Discovery & Request Review browser groups**, **8/8 workspace hub/navigation groups**, and **12/12 specialist interaction groups**.
+- The latest run includes browser coverage for valid synthetic review history, missing history, invalidated evidence, baseline reset/replay and the permanently prohibited disclosure boundary.
+- The prior 13 November verification, [run 43444088668](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43444088668), remains a historical checkpoint. The 16 November run above is the current full verification.
 
 The test counts above are source declarations and the cited workflow is the recorded execution evidence. Historical counts and earlier runs are intentionally omitted here to avoid presenting obsolete baselines as current.
 
@@ -42,7 +43,7 @@ From the repository root:
 node --test prototype/tests/*.test.js
 ```
 
-Hosted CI also runs the Playwright/Chromium browser smoke scripts configured in `.github/workflows/prototype-policy-tests.yml`. The cited 43444088668 run is the current recorded full verification for the 121-test inventory and three browser suites.
+Hosted CI also runs the Playwright/Chromium browser smoke scripts configured in `.github/workflows/prototype-policy-tests.yml`. The cited 43848921959 run is the current recorded full verification for the 121-test inventory and three browser suites.
 
 ## Review engine and invitation gate
 
@@ -63,6 +64,7 @@ See:
 - [Opportunity Validation Scenario Pack](OPPORTUNITY-VALIDATION-SCENARIO-PACK.md) — synthetic and non-ratified.
 - [33-tier Audit-History Assessment](verification/33-tier-audit-history-assessment-2026-11-13.md).
 - [Session Ledger — 13 November 2026](verification/SESSION-LEDGER-2026-11-13.md).
+- [Session Ledger — 16 November 2026](verification/SESSION-LEDGER-2026-11-16.md).
 
 ## Open engineering issue: UI-008
 
@@ -88,11 +90,13 @@ External stakeholder responses are not a prerequisite for continued internal dev
 
 ## Next engineering sequence
 
-1. Wire the pure review evaluator into Discovery & Request Review using bounded synthetic-only inputs.
-2. Add browser coverage for missing history, invalidated evidence, valid synthetic history, reset/replay and the permanently unavailable disclosure boundary.
-3. Complete the UI-008 interpolation, output-context, URL-policy and malformed-fixture audit before considering any external/user-supplied content.
-4. Prepare a partner-demo walkthrough and limitations sheet.
-5. Keep mainline, real-data, deployment and pilot gates closed until their own evidence and authorization requirements are met.
+1. Continue UI-008: inventory every dynamic HTML interpolation and output context across all 11 specialist workspaces.
+2. Verify escaping at actual rendering sinks, not only helper-function tests; add hostile-string coverage to each relevant renderer.
+3. Review URL construction and accepted schemes for dynamic navigation and handoff destinations.
+4. Test malformed and unexpected fixture shapes for resilient, fail-closed rendering without console errors.
+5. Record each UI-008 finding with file, line, sink, risk, mitigation and test evidence; keep UI-008 open until all required items are verified.
+6. Prepare a synthetic partner-demo walkthrough and limitations sheet after the UI safety review is complete.
+7. Keep mainline, real-data, deployment and pilot gates closed until their own evidence and authorization requirements are met.
 
 ## Governing references
 
