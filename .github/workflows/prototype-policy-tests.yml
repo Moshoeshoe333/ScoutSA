@@ -67,5 +67,7 @@ jobs:
         run: node prototype/tests/discovery-request.browser-smoke.cjs
       - name: Run unified workspace hub browser smoke test
         run: node prototype/tests/workspace-hub.browser-smoke.cjs
+      - name: Run player journey preview browser smoke test
+        run: node prototype/tests/player-preview.browser-smoke.cjs
       - name: Run specialist workspace interaction browser smoke test
         run: node prototype/tests/workspace-interactions.browser-smoke.cjs
