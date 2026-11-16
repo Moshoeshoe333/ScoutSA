@@ -84,3 +84,47 @@ Non-negotiable safeguards remain:
 **The synthetic audit-history workflow is now wired into the Discovery & Request Review screen and its configured hosted tests pass.** This is a meaningful internal prototype milestone, not external validation or production readiness.
 
 Governing principle: **A decision must never outlive the evidence that justified it.**
+
+
+## 8. UI-008 safe-rendering follow-up — 16 November 2026
+
+The rendering review continued on the isolated prototype branch after the audit-history verification.
+
+### Changes and evidence
+
+| Commit | Change |
+|---|---|
+| `9ed329efb74677e2e08abe77b90819cca74024c4` | Replaced the hub modal's dynamic HTML interpolation with DOM construction and `textContent`; added hostile metadata checks. |
+| `c6ded049b16b07c74774495d7dadb68e2fc21147` | Added organization-membership status allowlisting and related hostile fixture assertions. |
+| `9d09abd64d17793cc8e6101accf2bbb3aa9315c1` | Corrected the hub smoke test to exercise the visible player view; prior run exposed a test-selector issue. |
+| `8a5ed7dcb81991e9361104c45013277ee1895bbb` | Added hostile URL-scheme and identifier regression checks for discovery and opportunity handoffs. |
+| `beeba5f814ba327098db7ad29bfa603f8e2f0e26` | Added hostile fixture-string checks at actual rendering sinks across six specialist workspaces. |
+| `bd263c1a4d8b6603363dd6ca7081b40b7b59ecc1` | Corrected assertions to account for prefixed rendered text. |
+| `1151c957e6a6a5d6ffdcde070f25580ad8748e7c` | Extended actual-renderer hostile fixture checks to Coach & Academy and Opportunity Decisions. |
+| `00c15d455cf1fe5a03cc417a4af908925a2d298c` | Corrected the academy action selector to target the direct action-text node. |
+
+The failed intermediate runs were not counted as passes. They exposed test-harness assumptions about visible selectors and prefixed text; the assertions were corrected, and the subsequent hosted run passed.
+
+**Latest hosted verification:** [GitHub Actions run 43856069550](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43856069550), head commit `00c15d455cf1fe5a03cc417a4af908925a2d298c`.
+
+| Verification group | Result |
+|---|---:|
+| Headless policy/documentation suite | 121/121 passed |
+| Discovery & Request Review browser smoke | Passed |
+| Workspace hub/navigation browser smoke | 8/8 groups passed |
+| Specialist workspace interaction browser smoke | 14/14 groups passed |
+
+The 14 specialist browser groups include hostile URL/identifier checks and hostile fixture-string rendering checks across Player Passport, Opportunity Evidence, Safeguarded Invitations, Player–Opportunity Matching, Development Pathways, Guardian & Consent, Coach & Academy, and Opportunity Decisions. The helper-level hostile-string/nullish-value check executes across all 11 workspaces. Organization Membership and Opportunity Management have separate existing hostile metadata/handoff coverage.
+
+### Remaining scope — UI-008 stays OPEN
+
+The successful run is evidence for the tested cases only. It does not establish that every one of the 29 identified dynamic HTML assignment sinks has been exercised with hostile fixture data, nor does it close every output-context question.
+
+Still required:
+- map each dynamic interpolation to its precise HTML, text, attribute, URL, CSS-class or other output context;
+- extend actual-renderer hostile tests to the remaining profile-field, option, dimension, rules/limits, opportunity-record and discovery-gate sinks;
+- test malformed and unexpected fixture shapes (including null, missing, object/array and invalid enum values) for fail-closed behavior and absence of uncaught errors;
+- complete the URL-construction and accepted-scheme review;
+- reconcile every finding to a file/line/sink/risk/mitigation/test-evidence ledger.
+
+No real or user-supplied content may be connected to these renderers while UI-008 remains open. No mainline files, gate decisions or implementation authorizations were changed.
