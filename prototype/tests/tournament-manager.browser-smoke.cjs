@@ -71,7 +71,7 @@ async function main() {
     await page.locator("#divisionEvent").selectOption("EDT-DEMO-002");
     await page.locator("#divisionName").fill("U19 Test Division");
     await page.locator("#divisionForm button[type=submit]").click();
-    assert.match(await page.locator("#divisionMessage").innerText(), /Created DIV-DEMO-002/);
+    assert.match(await page.locator("#divisionMessage").innerText(), /Created division DIV-DEMO-002/);
 
     // Register two teams and event-specific coach assignments.
     await page.locator('[data-section="team"]').click();
