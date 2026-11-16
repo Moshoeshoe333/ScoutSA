@@ -452,6 +452,60 @@ async function main() {
     await assertFixtureTextSafe("#items .datum strong", hostileFixtureText, "Decision reviewer");
     await assertFixtureTextSafe("#items p", hostileFixtureText, "Decision rationale", "includes");
 
+    // Cover additional sinks within workspaces already under test.
+    await page.goto(origin + "/player-passport.html", { waitUntil: "load" });
+    await page.evaluate(hostile => {
+      window.SCOUTSA_DEMO_PLAYERS.p1.profile[0][1] = hostile;
+    }, hostileFixtureText);
+    await page.locator("#playerSelect").selectOption("p2");
+    await page.locator("#playerSelect").selectOption("p1");
+    await assertFixtureTextSafe("#profileFields strong", hostileFixtureText, "Passport profile field");
+
+    await page.goto(origin + "/player-opportunity-matching.html", { waitUntil: "load" });
+    await page.evaluate(hostile => {
+      window.SCOUTSA_MATCHING_DEMO.dimensions[0].meaning = hostile;
+    }, hostileFixtureText);
+    await page.locator("#search").fill("rerender-dimensions");
+    await page.locator("#search").fill("");
+    await assertFixtureTextSafe("#dimensions .rule span", hostileFixtureText, "Matching dimension meaning");
+
+    await page.addInitScript(hostile => {
+      let consent;
+      Object.defineProperty(window, "SCOUTSA_GUARDIAN_CONSENT_DEMO", {
+        configurable: true,
+        get: () => consent,
+        set: value => {
+          value.rules[0] = hostile;
+          value.limits[0] = hostile;
+          consent = value;
+        }
+      });
+    }, hostileFixtureText);
+    await page.goto(origin + "/guardian-consent.html", { waitUntil: "load" });
+    await assertFixtureTextSafe("#ruleList .rule", hostileFixtureText, "Guardian rule");
+    await assertFixtureTextSafe("#limitList .rule", hostileFixtureText, "Guardian limit");
+
+    await page.addInitScript(hostile => {
+      let opportunities;
+      Object.defineProperty(window, "SCOUTSA_DEMO_OPPORTUNITIES", {
+        configurable: true,
+        get: () => opportunities,
+        set: value => {
+          value.records[0].title = hostile;
+          value.records[0].orgIdentity = hostile;
+          value.records[0].source = hostile;
+          value.records[0].detail = hostile;
+          opportunities = value;
+        }
+      });
+    }, hostileFixtureText);
+    await page.goto(origin + "/opportunities.html", { waitUntil: "load" });
+    await assertFixtureTextSafe("#records h3", hostileFixtureText, "Opportunity title");
+    await assertFixtureTextSafe("#records .datum strong", hostileFixtureText, "Opportunity organization identity");
+    await assertFixtureTextSafe("#records article > p", hostileFixtureText, "Opportunity source");
+    await assertFixtureTextSafe("#records article > p:last-of-type", hostileFixtureText, "Opportunity detail");
+
+    passed.push("Additional hostile fixture checks cover Passport profile, matching dimensions, guardian rules/limits and opportunity register sinks");
     passed.push("Hostile fixture strings remain literal at Passport, evidence, invitation, matching, pathway, consent, academy and decision render sinks");
 
     passed.push("HTML-escape helper hostile-string and nullish-value checks across all 11 workspaces");
