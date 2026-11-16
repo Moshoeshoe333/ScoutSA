@@ -10,7 +10,7 @@ ScoutSA is being designed to help grassroots football talent become discoverable
 
 The product thesis is an opportunity network, not simply a scouting database. A Player Passport is intended to bring together football identity, attributable claims and evidence, membership history, football readiness, opportunity readiness, guardian/consent context and safe opportunity pathways.
 
-## Current repository status — 13 November 2026
+## Current repository status — 16 November 2026
 
 ### Mainline: governing model and implementation boundary
 
@@ -34,11 +34,11 @@ Latest recorded source inventory:
 
 Source inventory includes **79/79 review-engine tests** and **9 documentation checks** (alongside 31 audit-history and 2 workspace-data-integrity declarations). Historical reference points: Recorded 45-test CI baseline: [run 43401941704](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401941704). Historical 46-test CI verification: [run 43403854544](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403854544).
 
-Hosted workflow [43444088668](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43444088668), commit `0e95f7d47112b5276552f84e1d362106270ec91b`, passed **121/121 Node tests**, **7/7 Discovery & Request Review browser groups**, **8/8 workspace hub/navigation groups**, and **12/12 specialist interaction groups**.
+Latest hosted workflow [43848921959](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43848921959), commit `4b4f556a87a600553dcc1d49f883002a73057dbd`, passed **121/121 Node tests**, **8/8 Discovery & Request Review browser groups**, **8/8 workspace hub/navigation groups**, and **12/12 specialist interaction groups**. The Discovery & Request Review browser suite now covers valid synthetic history, missing history, invalidated evidence, reset/replay and the prohibited disclosure boundary.
 
-The subsequent session-ledger documentation commit `073655260ac86423182e613329842789a74d84ae` also passed its hosted workflow: [43445376478](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43445376478). That run verifies the documentation commit's configured workflow; it does not replace the detailed 121-test/browser result above.
+The 13 November verification [43444088668](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43444088668) and later documentation workflow [43445376478](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43445376478) remain historical checkpoints.
 
-See the [Prototype README](prototype/README.md) for scope, how to open the demo, test commands, current engine behavior and limitations. See the [13 November session ledger](prototype/verification/SESSION-LEDGER-2026-11-13.md) for the session record, feasibility assessment and next work sequence.
+See the [Prototype README](prototype/README.md) for scope, how to open the demo, test commands, current engine behavior and limitations. See the [16 November session ledger](prototype/verification/SESSION-LEDGER-2026-11-16.md) for the latest implementation, verification evidence and next engineering sequence; the [13 November session ledger](prototype/verification/SESSION-LEDGER-2026-11-13.md) remains available as historical context.
 
 ## Product principles
 
