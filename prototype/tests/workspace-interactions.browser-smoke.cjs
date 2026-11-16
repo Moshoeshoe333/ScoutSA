@@ -436,7 +436,7 @@ async function main() {
 
     await page.goto(origin + "/safeguarded-invitations.html", { waitUntil: "load" });
     await page.evaluate(hostile => {
-      const c = window.SCOUTSA_INVITATION_WORKFLOW.cases[0];
+      const c = cases[0];
       c.opportunity = hostile; c.gates[0].note = hostile; c.hardStops[0] = hostile;
     }, hostileFixtureText);
     await page.locator("#search").fill("rerender-invitation");
