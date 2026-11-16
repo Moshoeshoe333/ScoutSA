@@ -43,11 +43,11 @@ async function main() {
     assert.equal(await page.locator("#countE").innerText(), "2");
 
     // Create tournament + edition + distinct organizer and venue IDs.
-    await page.locator("#eventName").fill("Synthetic Test Cup");
+    await page.locator("#eventName").fill("DEMO-Synthetic Test Cup");
     await page.locator("#eventSeason").fill("2026");
-    await page.locator("#eventOrganizer").fill("Demo Organizer");
-    await page.locator("#eventVenue").fill("Demo Field");
-    await page.locator("#eventLocality").fill("Sebokeng");
+    await page.locator("#eventOrganizer").fill("DEMO-Organizer-Test");
+    await page.locator("#eventVenue").fill("DEMO-Field-Test");
+    await page.locator("#eventLocality").fill("DEMO-Locality-Test");
     await page.locator("#eventStart").fill("2026-12-01");
     await page.locator("#eventEnd").fill("2026-12-02");
     await page.locator("#eventForm button[type=submit]").click();
@@ -57,9 +57,9 @@ async function main() {
     // Reject an invalid date range.
     await page.locator("#eventName").fill("Invalid Date Cup");
     await page.locator("#eventSeason").fill("2026");
-    await page.locator("#eventOrganizer").fill("Demo Organizer");
-    await page.locator("#eventVenue").fill("Demo Field");
-    await page.locator("#eventLocality").fill("Sebokeng");
+    await page.locator("#eventOrganizer").fill("DEMO-Organizer-Test");
+    await page.locator("#eventVenue").fill("DEMO-Field-Test");
+    await page.locator("#eventLocality").fill("DEMO-Locality-Test");
     await page.locator("#eventStart").fill("2026-12-03");
     await page.locator("#eventEnd").fill("2026-12-02");
     await page.locator("#eventForm button[type=submit]").click();
@@ -68,23 +68,23 @@ async function main() {
 
     // Create a division under the new edition.
     await page.locator('[data-section="division"]').click();
-    await page.locator("#divisionEvent").selectOption({ label: "Synthetic Test Cup" });
+    await page.locator("#divisionEvent").selectOption({ label: "DEMO-Synthetic Test Cup" });
     await page.locator("#divisionName").fill("U19 Test Division");
     await page.locator("#divisionForm button[type=submit]").click();
     assert.match(await page.locator("#divisionMessage").innerText(), /Created DIV-DEMO-002/);
 
     // Register two teams and event-specific coach assignments.
     await page.locator('[data-section="team"]').click();
-    await page.locator("#teamEvent").selectOption({ label: "Synthetic Test Cup" });
+    await page.locator("#teamEvent").selectOption({ label: "DEMO-Synthetic Test Cup" });
     await page.locator("#teamDivision").selectOption({ label: "U19 Test Division · DIV-DEMO-002" });
-    await page.locator("#teamName").fill("Demo Lions");
-    await page.locator("#teamCoach").fill("Demo Coach One");
+    await page.locator("#teamName").fill("DEMO-Lions");
+    await page.locator("#teamCoach").fill("DEMO-Coach-One");
     await page.locator("#teamForm button[type=submit]").click();
     assert.match(await page.locator("#teamMessage").innerText(), /Created TEAM-DEMO-003, entry TEN-DEMO-003/);
-    await page.locator("#teamEvent").selectOption({ label: "Synthetic Test Cup" });
+    await page.locator("#teamEvent").selectOption({ label: "DEMO-Synthetic Test Cup" });
     await page.locator("#teamDivision").selectOption("DIV-DEMO-002");
-    await page.locator("#teamName").fill("Demo Eagles");
-    await page.locator("#teamCoach").fill("Demo Coach Two");
+    await page.locator("#teamName").fill("DEMO-Eagles");
+    await page.locator("#teamCoach").fill("DEMO-Coach-Two");
     await page.locator("#teamForm button[type=submit]").click();
     assert.match(await page.locator("#teamMessage").innerText(), /Created TEAM-DEMO-004, entry TEN-DEMO-004/);
     assert.equal(await page.locator("#countE").innerText(), "4");
