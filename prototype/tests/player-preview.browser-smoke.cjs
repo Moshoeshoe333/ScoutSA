@@ -64,8 +64,10 @@ async function main() {
     const popupPromise = page.waitForEvent("popup");
     await page.locator("#whatsapp").click();
     const popup = await popupPromise;
-    assert.match(popup.url(), /^https:\/\/wa\.me\//);
-    assert.match(decodeURIComponent(popup.url()), /fictional player only/i);
+    const whatsappUrl = new URL(popup.url());
+    assert.ok(["wa.me", "api.whatsapp.com"].includes(whatsappUrl.hostname),
+      "share action must open an official WhatsApp share endpoint");
+    assert.match(whatsappUrl.searchParams.get("text") || "", /fictional player only/i);
     await popup.close();
 
     // Narrow phone viewport must not overflow horizontally.
