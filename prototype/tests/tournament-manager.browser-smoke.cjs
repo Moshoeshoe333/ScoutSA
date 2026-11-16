@@ -25,6 +25,18 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await page.locator('#importOrganizerHandoff').click();
   assert.match(await page.locator('#organizerImportMessage').textContent(), /Imported 0 tournament edition\(s\); skipped 1 duplicate/);
   await page.locator('#ledger').getByText('TRN-ORG-DEMO-501').waitFor();
+  await page.locator('[data-section="eligibility"]').click();
+  await page.locator('#eligibilityPlayer').selectOption('PAR-DEMO-001');
+  assert.match(await page.locator('#eligibilityDivision').inputValue(), /Adult Open/);
+  await page.locator('#eligibilityEvidence').selectOption('Demo evidence checked by reviewer');
+  await page.locator('#eligibilityDecision').selectOption('Eligible for human review');
+  await page.locator('#eligibilityRule').fill('DEMO-RULE-ADULT-01');
+  await page.locator('#eligibilityReviewer').fill('DEMO-REVIEWER-01');
+  await page.locator('#eligibilityNote').fill('Synthetic review only; no real age evidence.');
+  await page.locator('#eligibilityForm button[type="submit"]').click();
+  assert.match(await page.locator('#eligibilityMessage').textContent(), /not an eligibility certification/);
+  await page.locator('#eligibilityTable').getByText('Eligible for human review').waitFor();
+  await page.locator('#ledger').getByText('ELR-DEMO-001').waitFor();
   assert.deepEqual(errors, []);
   await browser.close();
 });
