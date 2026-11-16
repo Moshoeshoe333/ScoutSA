@@ -50,7 +50,7 @@ async function main() {
   try {
     browser = await chromium.launch({ headless: true, args: ["--no-sandbox"] });
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
-    page.on("pageerror", error => errors.push("pageerror: " + error.message));
+    page.on("pageerror", error => errors.push("pageerror at " + page.url() + ": " + error.message + " | " + (error.stack || "")));
     page.on("console", message => { if (message.type() === "error") errors.push("console: " + message.text()); });
     const hub = origin + "/index.html";
 
