@@ -535,7 +535,7 @@ async function main() {
     await page.locator("#requestList .request").first().click();
     await assertFixtureTextSafe("#requestList .request small", hostileFixtureText, "Discovery request-list purpose");
     await assertFixtureTextSafe("#summary .field strong", hostileFixtureText, "Discovery summary player reference");
-    await assertFixtureTextSafe("#summary .field strong:nth-of-type(4)", hostileFixtureText, "Discovery summary purpose");
+    await assertFixtureTextSafe("#summary .field:nth-child(4) strong", hostileFixtureText, "Discovery summary purpose");
     await assertFixtureTextSafe("#rules li", hostileFixtureText, "Discovery workflow rule");
 
     passed.push("Additional hostile fixture checks cover Passport profile, matching dimensions, guardian rules/limits and opportunity register sinks");
