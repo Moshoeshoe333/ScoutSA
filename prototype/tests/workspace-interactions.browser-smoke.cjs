@@ -102,7 +102,25 @@ async function main() {
       name: "Membership review", filter: "#statusFilter", search: "#search",
       items: "#records article", count: "#visibleCount", empty: "#records .empty"
     });
-    passed.push("Membership status filter, search, count and empty state");
+    const hostileMembershipText = '<img id="ui008-membership-injection" src=x onerror="window.__ui008Membership=true">';
+    await page.evaluate(hostile => {
+      const membership = window.SCOUTSA_DEMO_MEMBERSHIPS.memberships[0];
+      membership.player = hostile;
+      membership.status = hostile;
+      membership.organizationId = "ORG-UNKNOWN-DEMO";
+    }, hostileMembershipText);
+    await page.locator("#search").fill("");
+    assert.equal(await page.locator("#ui008-membership-injection").count(), 0,
+      "membership text must not create an HTML element");
+    assert.ok((await page.locator("#records").innerText()).includes(hostileMembershipText),
+      "membership text must remain literal in the rendered record");
+    assert.equal(await page.locator("#records .chip").first().evaluate(node => node.classList.length), 1,
+      "unrecognized membership status must not become an arbitrary CSS class");
+    assert.match(await page.locator("#records").innerText(), /Unresolved organization reference/,
+      "unknown organization references must render a safe fallback rather than throw");
+    assert.equal(await page.evaluate(() => window.__ui008Membership || false), false,
+      "membership markup event handlers must not execute");
+    passed.push("Membership hostile text, status-class allowlist and unresolved-organization fallback");
 
     // 3. Opportunity register: stage filter, search and exact request handoff.
     await page.goto(origin + "/opportunities.html", { waitUntil: "load" });
