@@ -335,6 +335,80 @@ async function main() {
       assert.equal(result.undefinedValue, "", route + " undefined values must render as empty text");
       assert.match(result.escaped, /&lt;img/);
     }
+    // Exercise dynamic fixture values at real renderer sinks, not only h().
+    const hostileFixtureText = '<img id="ui008-fixture-injection" src=x onerror="window.__ui008Fixture=true">';
+    const assertFixtureTextSafe = async (selector, expected, label) => {
+      assert.equal(await page.locator("#ui008-fixture-injection").count(), 0, label + ": no injected element");
+      assert.equal(await page.locator(selector).first().evaluate(node => node.textContent), expected, label + ": literal text preserved");
+      assert.equal(await page.evaluate(() => window.__ui008Fixture || false), false, label + ": no injected handler execution");
+    };
+
+    await page.goto(origin + "/player-passport.html", { waitUntil: "load" });
+    await page.evaluate(hostile => {
+      const p = window.SCOUTSA_DEMO_PLAYERS.p1;
+      p.name = hostile; p.claims[0].claim = hostile; p.memberships[0].org = hostile;
+    }, hostileFixtureText);
+    await page.locator("#playerSelect").selectOption("p2");
+    await page.locator("#playerSelect").selectOption("p1");
+    await assertFixtureTextSafe("#playerName", hostileFixtureText, "Passport name");
+    await assertFixtureTextSafe("#claimsList strong", hostileFixtureText, "Passport claim");
+    await assertFixtureTextSafe("#membershipList strong", hostileFixtureText, "Passport membership");
+
+    await page.goto(origin + "/opportunity-evidence.html", { waitUntil: "load" });
+    await page.evaluate(hostile => {
+      const x = window.SCOUTSA_DEMO_EVIDENCE.entries[0];
+      x.evidenceLabel = hostile; x.submittedBy = hostile; x.limitation = hostile;
+    }, hostileFixtureText);
+    await page.locator("#search").fill("rerender-evidence");
+    await page.locator("#search").fill("");
+    await assertFixtureTextSafe("#items h3", hostileFixtureText, "Evidence label");
+    await assertFixtureTextSafe("#items .datum strong", hostileFixtureText, "Evidence submitter");
+    await assertFixtureTextSafe("#items p", hostileFixtureText, "Evidence limitation");
+
+    await page.goto(origin + "/safeguarded-invitations.html", { waitUntil: "load" });
+    await page.evaluate(hostile => {
+      const c = window.SCOUTSA_INVITATION_WORKFLOW.cases[0];
+      c.opportunity = hostile; c.gates[0].note = hostile; c.hardStops[0] = hostile;
+    }, hostileFixtureText);
+    await page.locator("#search").fill("rerender-invitation");
+    await page.locator("#search").fill("");
+    await assertFixtureTextSafe("#cases h3", hostileFixtureText, "Invitation opportunity");
+    await assertFixtureTextSafe("#cases .gate p", hostileFixtureText, "Invitation gate note");
+    await assertFixtureTextSafe("#cases .stops li", hostileFixtureText, "Invitation hard stop");
+
+    await page.goto(origin + "/player-opportunity-matching.html", { waitUntil: "load" });
+    await page.evaluate(hostile => {
+      const x = window.SCOUTSA_MATCHING_DEMO.pairs[0];
+      x.player = hostile; x.findings[0][1] = hostile; x.reason = hostile;
+    }, hostileFixtureText);
+    await page.locator("#search").fill("rerender-match");
+    await page.locator("#search").fill("");
+    await assertFixtureTextSafe("#pairs h3", hostileFixtureText, "Matching player");
+    await assertFixtureTextSafe("#pairs .finding span", hostileFixtureText, "Matching finding");
+    await assertFixtureTextSafe("#pairs .reason", hostileFixtureText, "Matching reason");
+
+    await page.goto(origin + "/player-development-pathways.html", { waitUntil: "load" });
+    await page.evaluate(hostile => {
+      window.SCOUTSA_PATHWAYS_DEMO.players[0].name = hostile;
+      window.SCOUTSA_PATHWAYS_DEMO.stages[0].name = hostile;
+    }, hostileFixtureText);
+    await page.locator("#playerSelect").selectOption({ index: 1 });
+    await page.locator("#playerSelect").selectOption({ index: 0 });
+    await assertFixtureTextSafe("#playerName", hostileFixtureText, "Pathway player name");
+    await assertFixtureTextSafe("#stages h3", hostileFixtureText, "Pathway stage name");
+
+    await page.goto(origin + "/guardian-consent.html", { waitUntil: "load" });
+    await page.evaluate(hostile => {
+      const c = window.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases[0];
+      c.playerRef = hostile; c.next = hostile; c.purposes[0].name = hostile;
+    }, hostileFixtureText);
+    await page.locator("#caseGrid button[data-case]").nth(1).click();
+    await page.locator("#caseGrid button[data-case]").nth(0).click();
+    await assertFixtureTextSafe("#caseGrid h2", "GCS-DEMO-001", "Guardian case reference");
+    await assertFixtureTextSafe("#caseDetails .row span", hostileFixtureText, "Guardian case detail");
+    await assertFixtureTextSafe("#purposeList b", hostileFixtureText, "Guardian purpose");
+
+    passed.push("Hostile fixture strings remain literal at Passport, evidence, invitation, matching, pathway and consent render sinks");
     passed.push("HTML-escape helper hostile-string and nullish-value checks across all 11 workspaces");
 
     assert.deepEqual(errors, [], "browser must not emit uncaught page or console errors");
