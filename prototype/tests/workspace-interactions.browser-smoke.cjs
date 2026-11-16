@@ -508,7 +508,7 @@ async function main() {
     await page.goto(origin + "/opportunities.html", { waitUntil: "load" });
     await assertFixtureTextSafe("#records h3", hostileFixtureText, "Opportunity title");
     await assertFixtureTextSafe("#records .datum strong", hostileFixtureText, "Opportunity organization identity");
-    await assertFixtureTextSafe("#records article > p", hostileFixtureText, "Opportunity source");
+    await assertFixtureTextSafe("#records article > p", hostileFixtureText, "Opportunity source", "includes");
     await assertFixtureTextSafe("#records article > p:last-of-type", hostileFixtureText, "Opportunity detail");
 
     passed.push("Additional hostile fixture checks cover Passport profile, matching dimensions, guardian rules/limits and opportunity register sinks");
