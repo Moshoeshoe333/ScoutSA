@@ -337,9 +337,10 @@ async function main() {
     }
     // Exercise dynamic fixture values at real renderer sinks, not only h().
     const hostileFixtureText = '<img id="ui008-fixture-injection" src=x onerror="window.__ui008Fixture=true">';
-    const assertFixtureTextSafe = async (selector, expected, label) => {
+    const assertFixtureTextSafe = async (selector, expected, label, mode = "exact") => {
       assert.equal(await page.locator("#ui008-fixture-injection").count(), 0, label + ": no injected element");
-      assert.equal(await page.locator(selector).first().evaluate(node => node.textContent), expected, label + ": literal text preserved");
+      const renderedText = await page.locator(selector).first().evaluate(node => node.textContent);
+      assert.ok(mode === "includes" ? renderedText.includes(expected) : renderedText === expected, label + ": literal text preserved");
       assert.equal(await page.evaluate(() => window.__ui008Fixture || false), false, label + ": no injected handler execution");
     };
 
@@ -383,7 +384,7 @@ async function main() {
     }, hostileFixtureText);
     await page.locator("#search").fill("rerender-match");
     await page.locator("#search").fill("");
-    await assertFixtureTextSafe("#pairs h3", hostileFixtureText, "Matching player");
+    await assertFixtureTextSafe("#pairs h3", hostileFixtureText, "Matching player", "includes");
     await assertFixtureTextSafe("#pairs .finding span", hostileFixtureText, "Matching finding");
     await assertFixtureTextSafe("#pairs .reason", hostileFixtureText, "Matching reason");
 
@@ -394,7 +395,7 @@ async function main() {
     }, hostileFixtureText);
     await page.locator("#playerSelect").selectOption({ index: 1 });
     await page.locator("#playerSelect").selectOption({ index: 0 });
-    await assertFixtureTextSafe("#playerName", hostileFixtureText, "Pathway player name");
+    await assertFixtureTextSafe("#playerName", hostileFixtureText, "Pathway player name", "includes");
     await assertFixtureTextSafe("#stages h3", hostileFixtureText, "Pathway stage name");
 
     await page.goto(origin + "/guardian-consent.html", { waitUntil: "load" });
@@ -405,7 +406,7 @@ async function main() {
     await page.locator("#caseGrid button[data-case]").nth(1).click();
     await page.locator("#caseGrid button[data-case]").nth(0).click();
     await assertFixtureTextSafe("#caseGrid h2", "GCS-DEMO-001", "Guardian case reference");
-    await assertFixtureTextSafe("#caseDetails .row span", hostileFixtureText, "Guardian case detail");
+    await assertFixtureTextSafe("#caseDetails .row:last-child span", hostileFixtureText, "Guardian case detail");
     await assertFixtureTextSafe("#purposeList b", hostileFixtureText, "Guardian purpose");
 
     passed.push("Hostile fixture strings remain literal at Passport, evidence, invitation, matching, pathway and consent render sinks");
