@@ -57,9 +57,13 @@ const state=document.getElementById("visibilityState"),gate=document.getElementB
 function updateVisibility(){const v=document.querySelector('input[name="visibility"]:checked').value;guardianApproved=false;approve.disabled=false;approve.textContent="Simulate guardian approval";gate.hidden=v==="private";const messages={private:["Private sample","Only the fictional player and guardian are included in this preview."],named:["Named-recipient sample","Disclosure stays blocked until a guardian review is simulated. A real service would also verify each recipient and the purpose."],opportunity:["Opportunity-specific sample","Disclosure stays blocked until a guardian review is simulated and the specific opportunity has been checked."]};state.innerHTML="<strong>"+messages[v][0]+"</strong>"+messages[v][1];}
 document.querySelectorAll('input[name="visibility"]').forEach(r=>r.addEventListener("change",updateVisibility));
 approve.addEventListener("click",()=>{guardianApproved=true;approve.disabled=true;approve.textContent="Sample review simulated";state.innerHTML="<strong>Sample review noted — not real consent</strong>The demonstration now shows a guardian review step. No permission is stored and no disclosure is enabled.";});
-const url=window.location.href;document.getElementById("shareUrl").textContent=url.startsWith("http")?url:"Host this page on HTTPS to create a shareable preview URL.";
-document.getElementById("copyLink").addEventListener("click",async()=>{const b=document.getElementById("copyLink");try{await navigator.clipboard.writeText(url);b.textContent="Link copied";}catch(e){b.textContent="Copy unavailable in this preview";}});
-document.getElementById("whatsapp").addEventListener("click",()=>{const message="ScoutSA sample player preview — fictional player only: "+url+" (No real player information.)";window.open("https://wa.me/?text="+encodeURIComponent(message),"_blank","noopener,noreferrer");});
+const url=window.location.href;
+const publicHttps=window.location.protocol==="https:"&&!["localhost","127.0.0.1"].includes(window.location.hostname);
+const copyButton=document.getElementById("copyLink"),whatsappButton=document.getElementById("whatsapp");
+document.getElementById("shareUrl").textContent=publicHttps?url:"Public HTTPS URL will appear after hosting.";
+if(!publicHttps){copyButton.disabled=true;whatsappButton.disabled=true;copyButton.textContent="Hosting required";whatsappButton.textContent="Hosting required before sharing";}
+copyButton.addEventListener("click",async()=>{if(!publicHttps)return;try{await navigator.clipboard.writeText(url);copyButton.textContent="Link copied";}catch(e){copyButton.textContent="Copy unavailable";}});
+whatsappButton.addEventListener("click",()=>{if(!publicHttps)return;const message="ScoutSA sample player preview — fictional player only: "+url+" (No real player information.)";window.open("https://wa.me/?text="+encodeURIComponent(message),"_blank","noopener,noreferrer");});
 show(0);
 })();
 </script>
