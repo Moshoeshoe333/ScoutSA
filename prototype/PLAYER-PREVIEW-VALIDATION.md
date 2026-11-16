@@ -105,6 +105,6 @@ No real child details, images, clips, identity documents, school information, me
 
 ## Current limitations
 
-This preview is a conversation prop. Its “guardian approval” interaction is a simulation only. It does not verify guardian authority, capture legal consent, check an opportunity, authorize disclosure, authenticate a recipient or send a player profile. The WhatsApp action opens a generic sample message; a person must still review and press Send in WhatsApp.
+This preview is a conversation prop. Its “guardian approval” interaction is a simulation only. It does not verify guardian authority, capture legal consent, check an opportunity, authorize disclosure, authenticate a recipient or send a player profile. The WhatsApp action remains disabled until the page is hosted at a public HTTPS URL. Once enabled, it opens a generic sample message; a person must still review and press Send in WhatsApp.
 
 **No pilot, youth onboarding, public player listing or production-readiness claim follows from this page or its tests.**
