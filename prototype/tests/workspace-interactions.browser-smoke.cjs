@@ -581,6 +581,24 @@ async function main() {
     await assertFixtureTextSafe("#gates .gate strong", hostileFixtureText, "Discovery gate label");
     await assertFixtureTextSafe("#gates .gate p", hostileFixtureText, "Discovery gate detail");
 
+    // Malformed collection shape must degrade to the declared empty state.
+    await page.addInitScript(() => {
+      let evidence;
+      Object.defineProperty(window, "SCOUTSA_DEMO_EVIDENCE", {
+        configurable: true,
+        get: () => evidence,
+        set: value => {
+          value.entries = null;
+          evidence = value;
+        }
+      });
+    });
+    await page.goto(origin + "/opportunity-evidence.html", { waitUntil: "load" });
+    assert.equal(await page.locator("#count").textContent(), "0 entries",
+      "null evidence collection must produce a zero-entry count");
+    assert.equal(await page.locator("#items .empty").count(), 1,
+      "null evidence collection must render the safe empty state");
+
     // Malformed scalar values at an actual renderer: null, undefined, object, array and unknown enum.
     await page.goto(origin + "/opportunity-evidence.html", { waitUntil: "load" });
     await page.evaluate(() => {
