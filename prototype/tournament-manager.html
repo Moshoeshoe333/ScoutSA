@@ -69,6 +69,8 @@ function table(headers,rows){if(!rows.length)return '<div class="empty">No recor
 function validDemoId(value){return typeof value==="string"&&/^[A-Z]+(?:-[A-Z0-9]+)*-DEMO-[A-Z0-9-]+$/.test(value)}
 function importOrganizerPackage(pkg){
  if(!pkg||pkg.contractVersion!=="1.0"||pkg.sourceSystem!=="scoutsa-organizer-portal"||!Array.isArray(pkg.organizers)||!Array.isArray(pkg.submissions)||!Array.isArray(pkg.evidence)||!Array.isArray(pkg.features))throw new Error("Unsupported package or missing required collections.");
+ const unique=(items,key)=>new Set(items.map(x=>x[key])).size===items.length;
+ if(!unique(pkg.organizers,"id")||!unique(pkg.submissions,"id")||!unique(pkg.submissions,"tournamentId")||!unique(pkg.submissions,"editionId")||!unique(pkg.evidence,"id")||!unique(pkg.features,"id")||!unique(pkg.features,"submissionId"))throw new Error("Package contains duplicate primary IDs or repeated feature requests.");
  const orgs=new Map(pkg.organizers.map(o=>[o.id,o]));
  
  const featuresBySubmission=new Map(pkg.features.map(x=>[x.submissionId,x]));
