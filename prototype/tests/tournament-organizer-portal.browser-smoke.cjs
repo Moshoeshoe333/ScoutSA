@@ -43,6 +43,8 @@ test('tournament organizer portal keeps organizer, authority and feature permiss
   assert.equal(await page.locator('#countFeatures').textContent(), '2');
 
   await page.locator('[data-section="ledger"]').click();
+  await page.locator('#exportOrganizerPackage').click();
+  assert.match(await page.locator('#exportMessage').textContent(), /Exported the synthetic organizer handoff package/);
   assert.match(await page.locator('#ledgerCards').innerText(), /ORG-DEMO-/);
   await page.setViewportSize({ width: 390, height: 844 });
   assert.equal(await page.locator('body').evaluate(el => el.scrollWidth <= window.innerWidth), true);
