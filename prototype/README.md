@@ -57,6 +57,7 @@ Historical source-count references: Recorded 45-test CI baseline: [run 434019417
 
 See:
 - [Player Preview Validation Plan](PLAYER-PREVIEW-VALIDATION.md) — 14-day coach/parent discovery plan, open-ended price questions, stop rule and adult-pilot limitations.\n- [Vaal Football Ecosystem Register](VAAL-FOOTBALL-ECOSYSTEM-REGISTER.md) — research-seeded team, tournament, school and creator leads with provenance and verification states. It is not a complete census.\n- [Vaal-to-National Operating Model](VAAL-FOOTBALL-OPERATING-MODEL.md) — ELFA-first ecosystem, tournament statistics, internal scouting-support agent, schools, creators and national expansion.\n- [Vaal Ecosystem Coverage Workbench](vaal-ecosystem-coverage.html) — static, searchable research seed; no backend or verified team claims.
+- [SAFA Emfuleni Exploratory Engagement Brief](SAFA-EMFULENI-ENGAGEMENT-BRIEF.md) — discussion brief requesting guidance and a low-risk first mapping exercise; no partnership is claimed.
 - [Review Engine Contract](REVIEW-ENGINE-CONTRACT.md) — draft, not ratified.
 - [Synthetic Audit-History Proposal](SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md).
 - [Affiliation Evidence Model Proposal](AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md) — non-ratified.
