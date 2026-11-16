@@ -11,7 +11,7 @@ This branch contains a static browser prototype and a synthetic review engine. I
 - Review engine: `review-engine.js` **v0.3.0**.
 - Synthetic audit-history validator: `audit-history.js` **v0.2.0**, integrated as a mandatory structural gate in the synthetic invitation-review evaluation.
 - Node test declarations: **121 total** — **79/79 review-engine tests**, 9 documentation-integrity checks (9 checks declared), 31 audit-history tests and 2 workspace-data-integrity checks.
-- Latest full engine/browser verification: [GitHub Actions run 43857931298](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43857931298), commit `7e2da1cf0dfaf7de1bd78c31658fb4f9ff8a4d9f`: **121/121 Node tests**, Discovery & Request Review browser suite passed, **8/8 workspace hub/navigation groups**, and **15/15 specialist interaction groups**.
+- Latest full engine/browser verification: [GitHub Actions run 43858250236](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43858250236), commit `e95a79024ec3433ad408d69444ab08dd58fbbfa2`: **121/121 Node tests**, Discovery & Request Review browser suite passed, **8/8 workspace hub/navigation groups**, and **15/15 specialist interaction groups**.
 - The latest run includes browser coverage for valid synthetic review history, missing history, invalidated evidence, baseline reset/replay and the permanently prohibited disclosure boundary.
 - The prior 13 November verification, [run 43444088668](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43444088668), remains a historical checkpoint. The 16 November run above is the current full verification.
 
