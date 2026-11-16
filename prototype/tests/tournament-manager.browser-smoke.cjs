@@ -55,7 +55,7 @@ async function main() {
     assert.equal(await page.locator("#countT").innerText(), "2");
 
     // Reject an invalid date range.
-    await page.locator("#eventName").fill("Invalid Date Cup");
+    await page.locator("#eventName").fill("DEMO-Invalid Date Cup");
     await page.locator("#eventSeason").fill("2026");
     await page.locator("#eventOrganizer").fill("DEMO-Organizer-Test");
     await page.locator("#eventVenue").fill("DEMO-Field-Test");
@@ -97,8 +97,10 @@ async function main() {
     assert.match(await page.locator("#playerMessage").innerText(), /Created synthetic player PLY-DEMO-003/);
     await page.locator("#playerEntry").selectOption("TEN-DEMO-003");
     await page.locator("#playerAlias").fill("REAL PERSON");
+    assert.equal(await page.locator("#playerAlias").evaluate(el => el.checkValidity()), false, "real-person labels must fail native validation");
+    await page.locator("#playerAlias").fill("DEMO-PLAYER-001");
     await page.locator("#playerForm button[type=submit]").click();
-    assert.match(await page.locator("#playerMessage").innerText(), /Use a synthetic label/);
+    assert.match(await page.locator("#playerMessage").innerText(), /That demo label already exists/);
 
     // Fixture only accepts two distinct entries in the same division.
     await page.locator('[data-section="fixture"]').click();
