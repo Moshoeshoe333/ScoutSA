@@ -206,3 +206,69 @@ This is a coverage milestone, not closure of UI-008. Remaining work is now conce
 A real Opportunity Evidence renderer test now supplies a null label, undefined authority, object-valued source, array-valued next action and unknown state enum. The renderer preserves the invariant that these values remain inert text or empty text; no injected element is created and the browser smoke suite reports no uncaught page/console errors.
 
 This is scalar-value resilience evidence only. Missing records, malformed collections, null nested arrays, missing nested objects and cross-field inconsistency still need explicit fail-closed tests. UI-008 remains OPEN.
+
+
+## 14. Tournament operations prototype — 16 November 2026
+
+The isolated prototype session expanded the Tournament Manager beyond tournament/edition relationships and organizer handoff. The work remains synthetic, browser-local and non-production.
+
+### Changes completed
+
+**Organizer handoff**
+- Added a manual JSON export from the Organizer Portal and import into the Tournament Manager.
+- The handoff validates its contract version/source, required arrays, synthetic identifiers, linked organizer/evidence/feature records, duplicate IDs and tournament collisions.
+- Edition import is designed to be idempotent.
+- Missing venue information is represented explicitly as `DEMO-VENUE-UNSPECIFIED`; the import does not invent divisions, teams, coaches, players, fixtures or statistics.
+- This is a file-based manual handoff, not shared persistence, synchronization, authentication or an API.
+
+**Competition eligibility review**
+- Added a review record linked to a specific PlayerParticipation, player, team entry, division and tournament edition.
+- Captures synthetic evidence state, decision, rule reference, reviewer label and note.
+- The status “Eligible for human review” is not an eligibility certification. Reviews are participation/competition scoped, not permanent player attributes.
+- No date of birth, identity document or real player data is used.
+
+**Roster controls**
+- Added optional squad numbers (1–99) and roster states to synthetic player-participation entries.
+- Duplicate squad numbers are blocked within the same team entry.
+- Statistical observations are blocked for entries whose roster status is not “Registered (demo only)”.
+- These controls do not prove official registration, disciplinary standing, eligibility or permission to participate.
+
+### Files and commits
+
+Relevant implementation and supporting commits on `prototype/internal-demo`:
+
+| Commit | Change |
+|---|---|
+| `3fada5d5c634a265de0a283ee7bb5a65c888ec98` | Link Tournament Manager to Organizer Portal. |
+| `ed847034e1dc0c71018c7dbd4231acb11c517007` | Add evidence-aware tournament eligibility review prototype. |
+| `4bbb6174861aad96c0816f100eabd1f84d6acccf` | Test tournament eligibility review workflow. |
+| `50160dbe8ca3b12ad45f78bd7ea5e293608633c3` | Document tournament eligibility review prototype boundary. |
+| `fa2e291f0aa765acf61665bb01398079ed69209b` | Add roster status and squad number controls to Tournament Manager. |
+| `2575a0493a0d9585e7e988d042a2784e238b21f6` | Test squad-number uniqueness and roster-status statistics gate. |
+| `ec94bb4cbd9839e7f30bd3f552cbb515739ecac0` | Document roster status and squad-number constraints. |
+| `1375c43efda79e89deea8fc75f5d8c69dc25100c` | Update prototype README for roster controls. |
+
+Supporting documents include:
+- `prototype/TOURNAMENT-ELIGIBILITY-REVIEW-MODEL.md`
+- `prototype/TOURNAMENT-ORGANIZER-PORTAL-MODEL.md`
+- `prototype/README.md`
+- `prototype/tests/tournament-manager.browser-smoke.cjs`
+- `prototype/tests/tournament-organizer-portal.browser-smoke.cjs`
+
+### Verification status at session close
+
+The hosted workflow state is **not green for the latest tournament-manager changes**.
+
+- Run [43884577504](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43884577504), on earlier commit `d7ba32544f829e8d5edfc7e7bfea4c3bdb84d308`, failed at the Tournament Manager browser smoke step. The headless policy/documentation suite and earlier browser steps passed; subsequent steps were skipped. The failure's exact cause was not established in the available run summary.
+- Run [43885533847](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43885533847), for commit `2575a0493a0d9585e7e988d042a2784e238b21f6`, completed as **cancelled**. Its headless policy/documentation suite, Discovery browser smoke, hub/navigation smoke, player journey preview, Vaal ecosystem coverage and tournament relationship hub smoke steps passed; the Tournament Manager browser step was cancelled, so the new manager changes were not fully verified.
+- Run [43885571827](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43885571827), for latest recorded commit `1375c43efda79e89deea8fc75f5d8c69dc25100c`, also completed as **cancelled**. The same earlier steps passed, but the Tournament Manager browser step was cancelled.
+
+Therefore, do not describe the eligibility and roster workflows as fully browser-verified. The Node/headless checks passing in cancelled runs do not substitute for completion of the full browser workflow. A fresh, non-cancelled run is required; inspect and resolve the earlier Tournament Manager failure before claiming the suite passes.
+
+### Boundaries unchanged
+
+All work above is limited to synthetic prototype fixtures on `prototype/internal-demo`. Mainline remains untouched. No database schema, persistence, authentication, authorization, RLS, API, real-world eligibility decision, official registration verification, safeguarding approval, external organizer partnership or production/pilot authorization is created by these changes.
+
+### Next engineering step
+
+First obtain a complete, non-cancelled browser run for the current Tournament Manager and Organizer Portal flows. If it fails, inspect the precise failing assertion and correct the test or prototype behavior before expanding scope. Once verified, the next proposed feature is Squad & Match-Day Integration: link registered roster participation IDs to lineups, starters, substitutes, captain assignments, appearances and minutes, with provenance retained through statistic reconciliation. This remains proposed work, not completed functionality.
