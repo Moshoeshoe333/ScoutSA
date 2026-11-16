@@ -11,15 +11,15 @@ This branch contains a static browser prototype and a synthetic review engine. I
 - Review engine: `review-engine.js` **v0.3.0**.
 - Synthetic audit-history validator: `audit-history.js` **v0.2.0**, integrated as a mandatory structural gate in the synthetic invitation-review evaluation.
 - Node test declarations: **121 total** — **79/79 review-engine tests**, 9 documentation-integrity checks (9 checks declared), 31 audit-history tests and 2 workspace-data-integrity checks.
-- Latest full engine/browser verification: [GitHub Actions run 43858250236](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43858250236), commit `e95a79024ec3433ad408d69444ab08dd58fbbfa2`: **121/121 Node tests**, Discovery & Request Review browser suite passed, **8/8 workspace hub/navigation groups**, and **15/15 specialist interaction groups**.
-- The latest run includes browser coverage for valid synthetic review history, missing history, invalidated evidence, baseline reset/replay and the permanently prohibited disclosure boundary.
-- The prior 13 November verification, [run 43444088668](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43444088668), remains a historical checkpoint. The 16 November run above is the current full verification.
+- Pre-preview verification checkpoint: [GitHub Actions run 43868685945](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43868685945), commit `a22a52de4a4a18166f0e2478a14c73f786b776e7`, completed successfully before the player-facing preview was added.
+- A dedicated browser smoke test has now been added for the player preview. Its first run exposed an incorrect test assumption about WhatsApp's canonical redirect; the assertion has been corrected to accept the official `wa.me` or `api.whatsapp.com` share endpoint. The corrected test still requires a fresh CI run before it can be called passing.
+- Treat older run links below as historical checkpoints, not as evidence for the current branch head.
 
 The test counts above are source declarations and the cited workflow is the recorded execution evidence. The 14 specialist groups include hostile URL/identifier checks and hostile fixture-string checks at actual render sinks across Passport, organization membership, opportunity, evidence, invitation, matching, pathway, consent, academy, decision and discovery-request workspaces. Targeted browser regression checks now exercise all 29 identified HTML assignment sinks, including the Discovery gate renderer; URL/handoff sinks are checked for hostile identifiers and unsafe schemes. This is not a complete security sign-off: output-context review and malformed-fixture resilience remain open. Helper-level hostile/nullish checks run across all 11 workspaces. This is targeted regression evidence, not a complete security sign-off.
 
 ## Open the prototype
 
-Open `index.html` in a modern browser. No build step or package installation is required. The hub links to 11 specialist workspaces:
+Open `index.html` in a modern browser. No build step or package installation is required. The hub provides a separate three-screen Player Experience Preview for coach/guardian conversations, plus 11 specialist workspaces. The player preview is not counted as a specialist workspace:
 
 1. Player Passport
 2. Organization Membership Review
@@ -43,7 +43,7 @@ From the repository root:
 node --test prototype/tests/*.test.js
 ```
 
-Hosted CI also runs the Playwright/Chromium browser smoke scripts configured in `.github/workflows/prototype-policy-tests.yml`. The cited 43848921959 run is the current recorded full verification for the 121-test inventory and three browser suites.
+Hosted CI runs four Playwright/Chromium browser smoke scripts configured in `.github/workflows/prototype-policy-tests.yml`: Discovery & Request Review, workspace hub/navigation, player journey preview, and specialist workspace interactions. Check the latest run on the `prototype/internal-demo` branch before relying on the new preview's browser test. A passing run is regression evidence only—not safeguarding, privacy, accessibility or production-readiness approval.
 
 ## Review engine and invitation gate
 
@@ -56,6 +56,7 @@ The audit-history model is experimental and not ratified. It is not an immutable
 Historical source-count references: Recorded 45-test CI baseline: [run 43401941704](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401941704). Historical 46-test CI verification: [run 43403854544](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403854544).
 
 See:
+- [Player Preview Validation Plan](PLAYER-PREVIEW-VALIDATION.md) — 14-day coach/parent discovery plan, open-ended price questions, stop rule and adult-pilot limitations.
 - [Review Engine Contract](REVIEW-ENGINE-CONTRACT.md) — draft, not ratified.
 - [Synthetic Audit-History Proposal](SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md).
 - [Affiliation Evidence Model Proposal](AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md) — non-ratified.
