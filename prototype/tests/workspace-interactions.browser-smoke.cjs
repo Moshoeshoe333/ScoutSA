@@ -544,31 +544,6 @@ async function main() {
     await assertFixtureTextSafe("#records article > p:last-of-type", hostileFixtureText, "Opportunity detail");
 
     await page.addInitScript(hostile => {
-      let engine;
-      Object.defineProperty(window, "SCOUTSA_REVIEW_ENGINE", {
-        configurable: true,
-        get: () => engine,
-        set: value => {
-          engine = new Proxy(value, {
-            get(target, property, receiver) {
-              if (property === "evaluateRequest") {
-                return (request, context) => {
-                  const result = target.evaluateRequest(request, context);
-                  return {
-                    ...result,
-                    gates: result.gates.map((gate, index) => index === 0
-                      ? { ...gate, label: hostile, detail: hostile }
-                      : gate)
-                  };
-                };
-              }
-              return Reflect.get(target, property, receiver);
-            }
-          });
-        }
-      });
-    }, hostileFixtureText);
-    await page.addInitScript(hostile => {
       let requests;
       Object.defineProperty(window, "SCOUTSA_DISCOVERY_REQUESTS", {
         configurable: true,
@@ -587,6 +562,22 @@ async function main() {
     await assertFixtureTextSafe("#summary .field strong", hostileFixtureText, "Discovery summary player reference");
     await assertFixtureTextSafe("#summary .field:nth-child(4) strong", hostileFixtureText, "Discovery summary purpose");
     await assertFixtureTextSafe("#rules li", hostileFixtureText, "Discovery workflow rule");
+    await page.evaluate(hostile => {
+      const original = window.SCOUTSA_REVIEW_ENGINE;
+      window.SCOUTSA_REVIEW_ENGINE = {
+        ...original,
+        evaluateRequest(request, context) {
+          const result = original.evaluateRequest(request, context);
+          return {
+            ...result,
+            gates: result.gates.map((gate, index) => index === 0
+              ? { ...gate, label: hostile, detail: hostile }
+              : gate)
+          };
+        }
+      };
+    }, hostileFixtureText);
+    await page.locator("#auditScenario").selectOption("valid-history");
     await assertFixtureTextSafe("#gates .gate strong", hostileFixtureText, "Discovery gate label");
     await assertFixtureTextSafe("#gates .gate p", hostileFixtureText, "Discovery gate detail");
 
