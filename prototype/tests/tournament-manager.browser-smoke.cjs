@@ -81,6 +81,8 @@ async function main() {
     await page.locator("#teamCoach").fill("Demo Coach One");
     await page.locator("#teamForm button[type=submit]").click();
     assert.match(await page.locator("#teamMessage").innerText(), /Created TEAM-DEMO-003, entry TEN-DEMO-003/);
+    await page.locator("#teamEvent").selectOption({ label: "Synthetic Test Cup" });
+    await page.locator("#teamDivision").selectOption("DIV-DEMO-002");
     await page.locator("#teamName").fill("Demo Eagles");
     await page.locator("#teamCoach").fill("Demo Coach Two");
     await page.locator("#teamForm button[type=submit]").click();
@@ -93,6 +95,7 @@ async function main() {
     await page.locator("#playerAlias").fill("DEMO-PLAYER-003");
     await page.locator("#playerForm button[type=submit]").click();
     assert.match(await page.locator("#playerMessage").innerText(), /Created synthetic player PLY-DEMO-003/);
+    await page.locator("#playerEntry").selectOption("TEN-DEMO-003");
     await page.locator("#playerAlias").fill("REAL PERSON");
     await page.locator("#playerForm button[type=submit]").click();
     assert.match(await page.locator("#playerMessage").innerText(), /Use a synthetic label/);
@@ -122,6 +125,8 @@ async function main() {
     await page.locator("#statValue").fill("2");
     await page.locator("#statsForm button[type=submit]").click();
     assert.match(await page.locator("#statsMessage").innerText(), /Recorded STA-DEMO-001/);
+    await page.locator("#statFixture").selectOption("FIX-DEMO-002");
+    await page.locator("#statPlayer").selectOption("PAR-DEMO-003");
     await page.locator("#statValue").fill("2.5");
     await page.locator("#statsForm button[type=submit]").click();
     assert.match(await page.locator("#statsMessage").innerText(), /whole-number value/);
