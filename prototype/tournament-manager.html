@@ -70,7 +70,7 @@ function validDemoId(value){return typeof value==="string"&&/^[A-Z]+(?:-[A-Z0-9]
 function importOrganizerPackage(pkg){
  if(!pkg||pkg.contractVersion!=="1.0"||pkg.sourceSystem!=="scoutsa-organizer-portal"||!Array.isArray(pkg.organizers)||!Array.isArray(pkg.submissions)||!Array.isArray(pkg.evidence)||!Array.isArray(pkg.features))throw new Error("Unsupported package or missing required collections.");
  const orgs=new Map(pkg.organizers.map(o=>[o.id,o]));
- const evidenceIds=new Set(pkg.evidence.map(x=>x.id));
+ 
  const featuresBySubmission=new Map(pkg.features.map(x=>[x.submissionId,x]));
  if(pkg.organizers.some(o=>!validDemoId(o.id)||!/^DEMO-/.test(o.name||"")))throw new Error("Organizer records must use synthetic DEMO identifiers and labels.");
  if(pkg.submissions.some(s=>!validDemoId(s.id)||!validDemoId(s.tournamentId)||!validDemoId(s.editionId)||!orgs.has(s.organizerId)||!/^DEMO-/.test(s.name||"")||!/^DEMO-/.test(s.edition||"")||!/^DEMO-/.test(s.locality||"")))throw new Error("Submission contains invalid IDs, organizer links or non-demo labels.");
@@ -80,7 +80,7 @@ function importOrganizerPackage(pkg){
  const incoming=pkg.submissions.filter(s=>!existing.has(s.editionId));
  if(incoming.some(s=>state.events.some(e=>e.tournamentId===s.tournamentId)))throw new Error("A tournament primary ID already exists with a different edition. Resolve the collision before import.");
  let added=0,skipped=pkg.submissions.length-incoming.length;
- incoming.forEach(s=>{const o=orgs.get(s.organizerId),f=featuresBySubmission.get(s.id);const suffix=(s.edition.match(/(\\d{4})/)||[])[1]||"Unspecified";state.events.push({tournamentId:s.tournamentId,editionId:s.editionId,organizerId:s.organizerId,venueId:"VEN-ORGPORTAL-"+s.id,name:s.name,season:suffix,organizer:o.name,organizerIdentityState:o.identity,authority:o.authority,venue:"DEMO-VENUE-UNSPECIFIED",locality:s.locality,start:s.start||"",end:s.end||"",feature:f?f.status:"not-requested",submissionId:s.id,organizerSubmissionStatus:s.status,importSource:"scoutsa-organizer-portal"});added++;});
+ incoming.forEach(s=>{const o=orgs.get(s.organizerId),f=featuresBySubmission.get(s.id);const suffix=(s.edition.match(/([0-9]{4})/)||[])[1]||"Unspecified";state.events.push({tournamentId:s.tournamentId,editionId:s.editionId,organizerId:s.organizerId,venueId:"VEN-ORGPORTAL-"+s.id,name:s.name,season:suffix,organizer:o.name,organizerIdentityState:o.identity,authority:o.authority,venue:"DEMO-VENUE-UNSPECIFIED",locality:s.locality,start:s.start||"",end:s.end||"",feature:f?f.status:"not-requested",submissionId:s.id,organizerSubmissionStatus:s.status,importSource:"scoutsa-organizer-portal"});added++;});
  return {added,skipped};
 }
 function refresh(){ $("countT").textContent=state.events.length;$("countD").textContent=state.divisions.length;$("countE").textContent=state.teams.length;$("countC").textContent=state.coachAssignments.length;$("countP").textContent=state.players.length;$("countF").textContent=state.fixtures.length;
