@@ -409,7 +409,51 @@ async function main() {
     await assertFixtureTextSafe("#caseDetails .row:last-child span", hostileFixtureText, "Guardian case detail");
     await assertFixtureTextSafe("#purposeList b", hostileFixtureText, "Guardian purpose");
 
-    passed.push("Hostile fixture strings remain literal at Passport, evidence, invitation, matching, pathway and consent render sinks");
+    // Fixtures assigned by their data scripts are altered before workspace scripts read them.
+    await page.addInitScript(hostile => {
+      let academy;
+      Object.defineProperty(window, "SCOUTSA_ACADEMY_WORKSPACE_DEMO", {
+        configurable: true,
+        get: () => academy,
+        set: value => {
+          value.organization.name = hostile;
+          value.memberships[0].note = hostile;
+          value.opportunities[0].name = hostile;
+          value.evidenceActions[0].action = hostile;
+          value.boundaries[0] = hostile;
+          academy = value;
+        }
+      });
+    }, hostileFixtureText);
+    await page.goto(origin + "/coach-academy-workspace.html", { waitUntil: "load" });
+    await assertFixtureTextSafe("#orgName", hostileFixtureText, "Academy organization name");
+    await assertFixtureTextSafe("#membershipList small", hostileFixtureText, "Academy membership note");
+    await assertFixtureTextSafe("#opportunityList strong", hostileFixtureText, "Academy opportunity name");
+    await assertFixtureTextSafe("#actionList span", hostileFixtureText, "Academy evidence action");
+    await assertFixtureTextSafe("#boundaries .principle span", hostileFixtureText, "Academy boundary");
+
+    await page.addInitScript(hostile => {
+      let decisions;
+      Object.defineProperty(window, "SCOUTSA_DEMO_DECISIONS", {
+        configurable: true,
+        get: () => decisions,
+        set: value => {
+          value.decisions[0].claimScope = hostile;
+          value.decisions[0].opportunity = hostile;
+          value.decisions[0].reviewer = hostile;
+          value.decisions[0].reason = hostile;
+          decisions = value;
+        }
+      });
+    }, hostileFixtureText);
+    await page.goto(origin + "/opportunity-decisions.html", { waitUntil: "load" });
+    await assertFixtureTextSafe("#items h3", hostileFixtureText, "Decision claim scope");
+    await assertFixtureTextSafe("#items .sub", hostileFixtureText, "Decision opportunity context", "includes");
+    await assertFixtureTextSafe("#items .datum strong", hostileFixtureText, "Decision reviewer");
+    await assertFixtureTextSafe("#items p", hostileFixtureText, "Decision rationale", "includes");
+
+    passed.push("Hostile fixture strings remain literal at Passport, evidence, invitation, matching, pathway, consent, academy and decision render sinks");
+
     passed.push("HTML-escape helper hostile-string and nullish-value checks across all 11 workspaces");
 
     assert.deepEqual(errors, [], "browser must not emit uncaught page or console errors");
