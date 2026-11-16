@@ -364,12 +364,23 @@ async function main() {
     await page.evaluate(hostile => {
       const x = window.SCOUTSA_DEMO_EVIDENCE.entries[0];
       x.evidenceLabel = hostile; x.submittedBy = hostile; x.limitation = hostile;
+      x.opportunity = hostile; x.evidenceType = hostile; x.state = hostile;
+      x.source = hostile; x.sourceAuthority = hostile; x.checkedAt = hostile;
+      x.corroboration = hostile; x.nextReview = hostile; x.nextAction = hostile;
     }, hostileFixtureText);
     await page.locator("#search").fill("rerender-evidence");
     await page.locator("#search").fill("");
     await assertFixtureTextSafe("#items h3", hostileFixtureText, "Evidence label");
+    await assertFixtureTextSafe("#items .sub", hostileFixtureText, "Evidence opportunity/type context", "includes");
+    await assertFixtureTextSafe("#items .badge", hostileFixtureText, "Evidence state");
     await assertFixtureTextSafe("#items .datum strong", hostileFixtureText, "Evidence submitter");
-    await assertFixtureTextSafe("#items p", hostileFixtureText, "Evidence limitation", "includes");
+    await assertFixtureTextSafe("#items .datum:nth-child(2) strong", hostileFixtureText, "Evidence source");
+    await assertFixtureTextSafe("#items .datum:nth-child(3) strong", hostileFixtureText, "Evidence source authority");
+    await assertFixtureTextSafe("#items .datum:nth-child(4) strong", hostileFixtureText, "Evidence checked date");
+    await assertFixtureTextSafe("#items .datum:nth-child(5) strong", hostileFixtureText, "Evidence corroboration");
+    await assertFixtureTextSafe("#items .datum:nth-child(6) strong", hostileFixtureText, "Evidence next review");
+    await assertFixtureTextSafe("#items article p:nth-of-type(1)", hostileFixtureText, "Evidence limitation", "includes");
+    await assertFixtureTextSafe("#items article p:nth-of-type(2)", hostileFixtureText, "Evidence next action", "includes");
 
     await page.goto(origin + "/safeguarded-invitations.html", { waitUntil: "load" });
     await page.evaluate(hostile => {
@@ -403,6 +414,20 @@ async function main() {
     await assertFixtureTextSafe("#playerName", hostileFixtureText, "Pathway player name", "includes");
     await assertFixtureTextSafe("#stages h3", hostileFixtureText, "Pathway stage name");
     await assertFixtureTextSafe("#playerList button strong", hostileFixtureText, "Pathway player-list name");
+    await page.addInitScript(hostile => {
+      let pathways;
+      Object.defineProperty(window, "SCOUTSA_PATHWAYS_DEMO", {
+        configurable: true,
+        get: () => pathways,
+        set: value => {
+          value.players[0].name = hostile;
+          pathways = value;
+        }
+      });
+    }, hostileFixtureText);
+    await page.goto(origin + "/player-development-pathways.html", { waitUntil: "load" });
+    await assertFixtureTextSafe("#playerSelect option", hostileFixtureText, "Pathway select option text", "includes");
+
 
     await page.goto(origin + "/guardian-consent.html", { waitUntil: "load" });
     await page.evaluate(hostile => {
