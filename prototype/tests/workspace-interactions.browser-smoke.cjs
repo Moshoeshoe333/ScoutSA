@@ -109,6 +109,7 @@ async function main() {
       membership.status = hostile;
       membership.organizationId = "ORG-UNKNOWN-DEMO";
     }, hostileMembershipText);
+    await page.locator("#search").fill("force-membership-rerender");
     await page.locator("#search").fill("");
     assert.equal(await page.locator("#ui008-membership-injection").count(), 0,
       "membership text must not create an HTML element");
