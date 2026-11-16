@@ -77,6 +77,7 @@ async function main() {
     await page.setViewportSize({ width: 1280, height: 900 });
 
     // UI-008: dynamic player metadata must enter the modal as text, never parsed HTML.
+    assert.ok(await page.locator("button[data-player]").count() >= 3, "all sample player cards must retain their modal controls");
     const hostileMetadata = '"><img id="ui008-modal-injection" src="x" onerror="window.__ui008Executed=true">';
     await page.locator(".player").first().evaluate(node => {
       node.dataset.position = '"><img id="ui008-modal-injection" src="x" onerror="window.__ui008Executed=true">';
