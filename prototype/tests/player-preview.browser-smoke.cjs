@@ -60,15 +60,12 @@ async function main() {
     assert.equal(await page.locator('[data-screen="2"]').isVisible(), true);
     assert.match(await page.locator(".share-preview").innerText(), /SAMPLE — FICTIONAL PLAYER/);
     assert.match(await page.locator(".share-preview").innerText(), /Thabo Sample/);
-    assert.match(await page.locator("#shareUrl").innerText(), /127\.0\.0\.1/);
-    const popupPromise = page.waitForEvent("popup");
-    await page.locator("#whatsapp").click();
-    const popup = await popupPromise;
-    const whatsappUrl = new URL(popup.url());
-    assert.ok(["wa.me", "api.whatsapp.com"].includes(whatsappUrl.hostname),
-      "share action must open an official WhatsApp share endpoint");
-    assert.match(whatsappUrl.searchParams.get("text") || "", /fictional player only/i);
-    await popup.close();
+    assert.match(await page.locator("#shareUrl").innerText(), /Public HTTPS URL will appear after hosting/);
+    assert.equal(await page.locator("#whatsapp").isDisabled(), true,
+      "WhatsApp sharing must remain disabled until the page has a public HTTPS URL");
+    assert.equal(await page.locator("#copyLink").isDisabled(), true,
+      "copying an unusable localhost URL must remain disabled");
+    assert.match(await page.locator("#whatsapp").innerText(), /Hosting required/);
 
     // Narrow phone viewport must not overflow horizontally.
     const dimensions = await page.evaluate(() => ({
