@@ -37,7 +37,7 @@ Do not collapse all Vaal football into one undifferentiated list.
 - Boitshepiville
 - Other Emfuleni localities identified by ELFA and community mapping
 
-The 2024 report describes four ELFA development streams: Evaton, Sebokeng, Vereeniging and Vanderbijlpark. A November 2026 report describes two Super League streams: Purple (Sharpeville, Boipatong, Bophelong and Vanderbijlpark) and Green (Sebokeng and Evaton). Treat these as different competition structures and dated observations, not contradictory geography.
+The 2024 report describes four ELFA development streams: Evaton, Sebokeng, Vereeniging and Vanderbijlpark. A July 2025 report for the 2025/26 Development League describes four streams: Evaton, Sebokeng, Boitshepiville and Vereeniging. A November 2026 report describes two Super League streams: Purple (Sharpeville, Boipatong, Bophelong and Vanderbijlpark) and Green (Sebokeng and Evaton). Treat these as dated, competition-specific structures; do not assume the names or boundaries are interchangeable. Obtain the current season's authoritative stream map from ELFA.
 
 ### Expansion boundary
 
@@ -256,7 +256,7 @@ Never publish “100% of Vaal teams covered” unless the denominator and source
 - [ELFA Super League 2026/27 report, 10 Nov 2026](https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/11/10/local-amateur-soccer-league-season-in-full-swing/)
 - [SAFA Sedibeng Regional League report, 11 Oct 2026](https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/10/11/local-soccer-teams-start-their-regional-league-season-this-weekend/)
 - [Aaron Mokoena Academy / Moponise report, 13 Oct 2026](https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/10/13/ex-bafana-captain-takes-charge-of-local-football-club/)
-- [ELFA development teams report, 15 Mar 2026](https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/03/15/elfa-development-teams-ready-for-the-2025-2026-season/)
+- [ELFA development teams report, 15 Mar 2026](https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/03/15/elfa-development-teams-ready-for-the-2025-2026-season/)\n- [ELFA Development League 2025/26 streams, 2 Jul 2025](https://www.citizen.co.za/sedibeng-ster/news/news-news/2025/07/02/elfa-development-league-2025-2026-season-kicks-off/)
 - [ELFA streams and SAFA Academies selection report, 24 Jul 2024](https://www.citizen.co.za/sedibeng-ster/news/news-news/2024/07/24/emfuleni-selects-players-for-safa-academies-programme/)
 - [FAR Post Cup report, 17 Sep 2025](https://www.citizen.co.za/sedibeng-ster/news/news-news/2025/09/17/hive-of-football-activities-take-place-in-sharpeville-over-the-weekend/)
 - [TINYA Foundation U17 report, 6 Oct 2025](https://www.citizen.co.za/sedibeng-ster/news/news-news/2025/10/06/tinya-foundation-soccer-tournament-champions-held/)
