@@ -71,5 +71,7 @@ jobs:
         run: node prototype/tests/player-preview.browser-smoke.cjs
       - name: Run Vaal ecosystem coverage browser smoke test
         run: node prototype/tests/vaal-ecosystem-coverage.browser-smoke.cjs
+      - name: Run tournament relationship hub browser smoke test
+        run: node prototype/tests/tournament-intelligence.browser-smoke.cjs
       - name: Run specialist workspace interaction browser smoke test
         run: node prototype/tests/workspace-interactions.browser-smoke.cjs
