@@ -1,7 +1,7 @@
-# ScoutSA — Exploratory Engagement Brief: SAFA Emfuleni / ELFA
+# ScoutSA — Exploratory Engagement Brief: Emfuleni Local Football Association (ELFA)
 
 **Document status:** draft for discussion; not an agreement, endorsement or partnership claim  
-**Proposed starting region:** Emfuleni / Vaal  
+**Proposed starting region:** Emfuleni / Vaal\n**Regional context:** SAFA Sedibeng  
 **Prepared:** 16 November 2026
 
 ## 1. Why we are reaching out
@@ -10,7 +10,7 @@ ScoutSA is being designed as a grassroots football discovery and development net
 
 Our intended first focus is to improve the visibility and organisation of the local football ecosystem: teams, age groups, competitions, tournaments, coaches, schools and development pathways. Over time, we want to help permissioned and properly reviewed player evidence reach appropriate football opportunities beyond the Vaal.
 
-We recognise SAFA and its Local Football Association structures as the relevant football governance environment. ScoutSA does not claim to represent SAFA, ELFA, MySAFA or any club.
+We recognise the SAFA structure and the relevant Local Football Association as the football governance environment. Public reporting identifies ELFA as the local association and SAFA Sedibeng as the regional custodian for the Emfuleni Super League; we will confirm the formal current structure directly rather than assume titles or boundaries. ScoutSA does not claim to represent SAFA, ELFA, MySAFA or any club.
 
 ## 2. What ScoutSA would like to understand first
 
