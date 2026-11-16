@@ -105,7 +105,7 @@ The rendering review continued on the isolated prototype branch after the audit-
 
 The failed intermediate runs were not counted as passes. They exposed test-harness assumptions about visible selectors and prefixed text; the assertions were corrected, and the subsequent hosted run passed.
 
-**Latest hosted verification at this checkpoint:** [GitHub Actions run 43857430464](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43857430464), head commit `1f37eea8c455f05ff0de01c7e93fb91e90d090fd`.
+**Latest hosted verification at this checkpoint:** [GitHub Actions run 43857931298](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43857931298), head commit `7e2da1cf0dfaf7de1bd78c31658fb4f9ff8a4d9f`.
 
 | Verification group | Result |
 |---|---:|
@@ -152,7 +152,7 @@ The current static inventory counts **29 `innerHTML` assignment sinks** across t
 | Player Development Pathway Tracker | 3 | Stage, player-list and player-select option sinks tested. |
 | Coach & Academy Workspace | 4 | Membership, opportunity, evidence-action and boundary sinks tested. |
 | Guardian & Consent Workspace | 5 | Case cards, case details, purposes, rules and limits tested. |
-| Discovery & Request Review | 5 | Summary, request-list and rules tested with hostile values; URL/handoff scheme checks passed. Gate-content hostile-value coverage remains open. |
+| Discovery & Request Review | 5 | Summary, gate label/detail, request-list and rules tested with hostile values; URL/handoff sink checked against hostile identifiers and unsafe schemes. |
 | **Total** | **29** | **Partial coverage; not a closure claim.** |
 
 This table is a working test-coverage inventory, not a finding that every sink is vulnerable or safe. All identified sinks currently use escaping helpers or fixed/allowlisted presentation values on the inspected paths, but output-context correctness and malformed-fixture behavior remain open.
@@ -183,3 +183,17 @@ No product code or mainline authorization changed in this follow-up; changes wer
 New actual-renderer hostile-fixture checks cover the full set of interpolated fields in the Opportunity Evidence renderer (label, opportunity/type, state, submitter, source, authority, checked date, corroboration, next review, limitation and next action) and the Player Development player-select option text. The sink inventory above now records those checks.
 
 The remaining explicitly identified hostile-value gap in that inventory is the Discovery & Request Review gate-content sink. URL/link scheme and handoff identifier checks remain a separate test concern. UI-008 remains OPEN pending the remaining gate-context test, final output-context review, malformed fixture-shape testing and any further issues those checks reveal.
+
+
+## 12. Discovery gate sink and 29-sink regression checkpoint — 16 November 2026
+
+[GitHub Actions run 43857931298](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43857931298), commit `7e2da1cf0dfaf7de1bd78c31658fb4f9ff8a4d9f`, passed **121/121** headless tests, Discovery & Request Review browser smoke, hub/navigation **8/8**, and specialist workspace interactions **15/15**.
+
+The Discovery & Request Review gate sink now has a hostile-value regression check for both gate label and detail. The test injects a wrapper only after the ordinary page has rendered, then triggers the normal scenario-change event so the real renderer rebuilds the gate list. The earlier pre-initialization interception attempt failed to render the summary and was discarded; it is not counted as evidence.
+
+At this checkpoint, all **29 inventoried HTML assignment sinks** have targeted rendering or URL-policy regression evidence:
+- text/data sinks have hostile fixture values exercised at the actual renderer;
+- the fixed-local-link sink has hostile identifier and unsafe-scheme regression checks; and
+- the hub modal's prior dynamic HTML construction has been replaced with DOM construction and `textContent`.
+
+This is a coverage milestone, not closure of UI-008. Remaining work is now concentrated on output-context correctness across HTML/text/attribute/URL/CSS contexts, malformed and unexpected fixture-shape resilience, and a complete accepted-scheme/navigation review. No external or user-supplied content may be connected while UI-008 remains open. Mainline remains untouched and its gates remain unchanged.
