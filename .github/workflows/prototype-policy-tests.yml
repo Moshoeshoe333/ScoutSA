@@ -79,5 +79,7 @@ jobs:
         run: node prototype/tests/tournament-day-operations.browser-smoke.cjs
       - name: Run tournament statistic reconciliation browser smoke test
         run: node prototype/tests/tournament-stat-reconciliation.browser-smoke.cjs
+      - name: Run tournament organizer portal browser smoke test
+        run: node prototype/tests/tournament-organizer-portal.browser-smoke.cjs
       - name: Run specialist workspace interaction browser smoke test
         run: node prototype/tests/workspace-interactions.browser-smoke.cjs
