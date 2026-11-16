@@ -68,7 +68,7 @@ async function main() {
 
     // Create a division under the new edition.
     await page.locator('[data-section="division"]').click();
-    await page.locator("#divisionEvent").selectOption({ label: "DEMO-Synthetic Test Cup" });
+    await page.locator("#divisionEvent").selectOption("EDT-DEMO-002");
     await page.locator("#divisionName").fill("U19 Test Division");
     await page.locator("#divisionForm button[type=submit]").click();
     assert.match(await page.locator("#divisionMessage").innerText(), /Created DIV-DEMO-002/);
