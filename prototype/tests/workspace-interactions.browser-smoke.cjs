@@ -112,8 +112,10 @@ async function main() {
     await page.locator("#search").fill("");
     assert.equal(await page.locator("#ui008-membership-injection").count(), 0,
       "membership text must not create an HTML element");
-    assert.ok((await page.locator("#records").innerText()).includes(hostileMembershipText),
-      "membership text must remain literal in the rendered record");
+    assert.equal(await page.locator("#records .record h3").first().evaluate(node => node.textContent), hostileMembershipText,
+      "hostile player metadata must remain literal in the player heading");
+    assert.equal(await page.locator("#records .record .chip").first().textContent(), hostileMembershipText,
+      "hostile membership status must remain literal in the status label");
     assert.equal(await page.locator("#records .chip").first().evaluate(node => node.classList.length), 1,
       "unrecognized membership status must not become an arbitrary CSS class");
     assert.match(await page.locator("#records").innerText(), /Unresolved organization reference/,
