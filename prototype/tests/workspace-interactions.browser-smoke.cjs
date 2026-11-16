@@ -128,6 +128,20 @@ async function main() {
     assert.equal(await page.evaluate(() => window.__ui008Membership || false), false,
       "membership markup event handlers must not execute");
     passed.push("Membership hostile text, status-class allowlist and unresolved-organization fallback");
+    await page.addInitScript(() => {
+      let fixture;
+      Object.defineProperty(window, "SCOUTSA_DEMO_MEMBERSHIPS", {
+        configurable: true, get: () => fixture,
+        set: value => { value.organizations = null; value.memberships = [null, [], "bad"]; fixture = value; }
+      });
+    });
+    await page.goto(origin + "/organization-memberships.html", { waitUntil: "load" });
+    assert.equal(await page.locator("#orgList article").count(), 0,
+      "null organization collection must render no organization cards");
+    assert.equal(await page.locator("#visibleCount").textContent(), "0 records",
+      "invalid membership rows must be excluded");
+
+
 
     // 3. Opportunity register: stage filter, search and exact request handoff.
     await page.goto(origin + "/opportunities.html", { waitUntil: "load" });
@@ -141,6 +155,20 @@ async function main() {
     assert.equal(await page.locator("#records a[href*='discovery-request.html']").count(), 1,
       "only the exact matching request fixture may expose its review handoff");
     passed.push("Opportunity stage filter, search and exact player/opportunity request handoff");
+    await page.addInitScript(() => {
+      let fixture;
+      Object.defineProperty(window, "SCOUTSA_DEMO_OPPORTUNITIES", {
+        configurable: true, get: () => fixture,
+        set: value => { value.records = [null, [], "bad"]; fixture = value; }
+      });
+    });
+    await page.goto(origin + "/opportunities.html", { waitUntil: "load" });
+    assert.equal(await page.locator("#count").textContent(), "0 records",
+      "non-record opportunity rows must be excluded");
+    assert.equal(await page.locator("#records .empty").count(), 1,
+      "invalid opportunity rows must produce the safe empty state");
+
+
 
     // 4. Opportunity Evidence: evidence-state filter and source search.
     await page.goto(origin + "/opportunity-evidence.html", { waitUntil: "load" });
