@@ -429,7 +429,7 @@ async function main() {
     await assertFixtureTextSafe("#orgName", hostileFixtureText, "Academy organization name");
     await assertFixtureTextSafe("#membershipList small", hostileFixtureText, "Academy membership note");
     await assertFixtureTextSafe("#opportunityList strong", hostileFixtureText, "Academy opportunity name");
-    await assertFixtureTextSafe("#actionList span", hostileFixtureText, "Academy evidence action");
+    await assertFixtureTextSafe("#actionList .action > span", hostileFixtureText, "Academy evidence action");
     await assertFixtureTextSafe("#boundaries .principle span", hostileFixtureText, "Academy boundary");
 
     await page.addInitScript(hostile => {
