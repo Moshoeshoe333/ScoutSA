@@ -129,6 +129,7 @@ async function main() {
       "membership markup event handlers must not execute");
     passed.push("Membership hostile text, status-class allowlist and unresolved-organization fallback");
     await page.addInitScript(() => {
+      if (location.pathname !== "/organization-memberships.html") return;
       let fixture;
       Object.defineProperty(window, "SCOUTSA_DEMO_MEMBERSHIPS", {
         configurable: true, get: () => fixture,
@@ -156,6 +157,7 @@ async function main() {
       "only the exact matching request fixture may expose its review handoff");
     passed.push("Opportunity stage filter, search and exact player/opportunity request handoff");
     await page.addInitScript(() => {
+      if (location.pathname !== "/opportunities.html") return;
       let fixture;
       Object.defineProperty(window, "SCOUTSA_DEMO_OPPORTUNITIES", {
         configurable: true, get: () => fixture,
@@ -230,6 +232,7 @@ async function main() {
       "synthetic invitation cases must retain their hold boundary");
     passed.push("Invitation workflow filter, search and non-invitable hold presentation");
     await page.addInitScript(() => {
+      if (location.pathname !== "/safeguarded-invitations.html") return;
       let workflow;
       Object.defineProperty(window, "SCOUTSA_INVITATION_WORKFLOW", {
         configurable: true, get: () => workflow,
