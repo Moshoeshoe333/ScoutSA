@@ -105,7 +105,7 @@ The rendering review continued on the isolated prototype branch after the audit-
 
 The failed intermediate runs were not counted as passes. They exposed test-harness assumptions about visible selectors and prefixed text; the assertions were corrected, and the subsequent hosted run passed.
 
-**Latest hosted verification at this checkpoint:** [GitHub Actions run 43857931298](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43857931298), head commit `7e2da1cf0dfaf7de1bd78c31658fb4f9ff8a4d9f`.
+**Latest hosted verification at this checkpoint:** [GitHub Actions run 43858250236](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43858250236), head commit `e95a79024ec3433ad408d69444ab08dd58fbbfa2`.
 
 | Verification group | Result |
 |---|---:|
@@ -197,3 +197,12 @@ At this checkpoint, all **29 inventoried HTML assignment sinks** have targeted r
 - the hub modal's prior dynamic HTML construction has been replaced with DOM construction and `textContent`.
 
 This is a coverage milestone, not closure of UI-008. Remaining work is now concentrated on output-context correctness across HTML/text/attribute/URL/CSS contexts, malformed and unexpected fixture-shape resilience, and a complete accepted-scheme/navigation review. No external or user-supplied content may be connected while UI-008 remains open. Mainline remains untouched and its gates remain unchanged.
+
+
+## 13. Malformed scalar fixture regression — 16 November 2026
+
+[GitHub Actions run 43858250236](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43858250236), commit `e95a79024ec3433ad408d69444ab08dd58fbbfa2`, passed **121/121** headless tests, Discovery & Request Review, hub/navigation **8/8**, and specialist interactions **15/15**.
+
+A real Opportunity Evidence renderer test now supplies a null label, undefined authority, object-valued source, array-valued next action and unknown state enum. The renderer preserves the invariant that these values remain inert text or empty text; no injected element is created and the browser smoke suite reports no uncaught page/console errors.
+
+This is scalar-value resilience evidence only. Missing records, malformed collections, null nested arrays, missing nested objects and cross-field inconsistency still need explicit fail-closed tests. UI-008 remains OPEN.
