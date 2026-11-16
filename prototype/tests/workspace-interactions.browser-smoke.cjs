@@ -635,6 +635,7 @@ async function main() {
 
     // Malformed collection shape must degrade to the declared empty state.
     await page.addInitScript(() => {
+      if (location.pathname !== "/opportunity-evidence.html" || location.search !== "?malformed-null=1") return;
       let evidence;
       Object.defineProperty(window, "SCOUTSA_DEMO_EVIDENCE", {
         configurable: true,
@@ -645,13 +646,14 @@ async function main() {
         }
       });
     });
-    await page.goto(origin + "/opportunity-evidence.html", { waitUntil: "load" });
+    await page.goto(origin + "/opportunity-evidence.html?malformed-null=1", { waitUntil: "load" });
     assert.equal(await page.locator("#count").textContent(), "0 entries",
       "null evidence collection must produce a zero-entry count");
     assert.equal(await page.locator("#items .empty").count(), 1,
       "null evidence collection must render the safe empty state");
 
     await page.addInitScript(() => {
+      if (location.pathname !== "/opportunity-evidence.html" || location.search !== "?malformed-rows=1") return;
       let evidence;
       Object.defineProperty(window, "SCOUTSA_DEMO_EVIDENCE", {
         configurable: true,
@@ -662,7 +664,7 @@ async function main() {
         }
       });
     });
-    await page.goto(origin + "/opportunity-evidence.html", { waitUntil: "load" });
+    await page.goto(origin + "/opportunity-evidence.html?malformed-rows=1", { waitUntil: "load" });
     assert.equal(await page.locator("#count").textContent(), "0 entries",
       "null and non-record evidence rows must be excluded");
     assert.equal(await page.locator("#items .empty").count(), 1,
