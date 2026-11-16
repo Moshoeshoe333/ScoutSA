@@ -273,6 +273,31 @@ async function main() {
     assert.match(await page.locator("#requestTitle").innerText(), /No matching synthetic request/);
     assert.equal(await page.locator(".request").count(), 0,
       "an unknown player reference must return no request");
+    // Hostile URL identifiers must remain inert data and must never become
+    // executable schemes or external navigation targets.
+    const hostileId = 'javascript:alert(1)" onmouseover="window.__xss=1';
+    await page.goto(origin + "/discovery-request.html?player=" + encodeURIComponent(hostileId) +
+      "&opportunity=" + encodeURIComponent("data:text/html,<script>alert(1)</script>"), { waitUntil: "load" });
+    assert.match(await page.locator("#requestTitle").innerText(), /No matching synthetic request/,
+      "hostile handoff identifiers must fail closed");
+    assert.equal(await page.locator(".request").count(), 0,
+      "hostile handoff identifiers must not expose a request queue");
+    assert.equal(await page.locator("#links a[href^='javascript:'], #links a[href^='data:']").count(), 0,
+      "discovery navigation must not create executable URL schemes");
+    assert.equal(await page.evaluate(() => window.__xss || 0), 0,
+      "hostile URL identifiers must not execute script");
+
+    await page.goto(origin + "/opportunities.html?player=" + encodeURIComponent(hostileId) +
+      "&opportunity=" + encodeURIComponent("javascript:alert(1)"), { waitUntil: "load" });
+    assert.match(await page.locator("#passportHandoff").innerText(), /Unrecognized synthetic Passport reference/,
+      "unknown hostile player identifier must remain an unrecognized handoff");
+    assert.equal(await page.locator("#records article").count(), 0,
+      "hostile opportunity identifier must not match or reveal an opportunity");
+    assert.equal(await page.locator("#records a[href^='javascript:'], #records a[href^='data:']").count(), 0,
+      "opportunity navigation must not create executable URL schemes");
+    assert.equal(await page.evaluate(() => window.__xss || 0), 0,
+      "opportunity query parameters must not execute script");
+    passed.push("Hostile URL schemes and identifiers remain inert across discovery and opportunity handoffs");
     passed.push("Discovery request selection, six-stage hold, no-decision boundary and invalid-handoff failures");
 
 
