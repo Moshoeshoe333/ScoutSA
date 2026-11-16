@@ -105,7 +105,7 @@ The rendering review continued on the isolated prototype branch after the audit-
 
 The failed intermediate runs were not counted as passes. They exposed test-harness assumptions about visible selectors and prefixed text; the assertions were corrected, and the subsequent hosted run passed.
 
-**Latest hosted verification at this checkpoint:** [GitHub Actions run 43856700124](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43856700124), head commit `049dccf88be6e1c5cfbdaef7aec90640fb4654c2`.
+**Latest hosted verification at this checkpoint:** [GitHub Actions run 43857127472](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43857127472), head commit `8c61e140c531ba32594d7b29151d7c7e584e95a5`.
 
 | Verification group | Result |
 |---|---:|
@@ -142,19 +142,35 @@ The current static inventory counts **29 `innerHTML` assignment sinks** across t
 
 | Workspace | Sinks | Current hostile-renderer evidence |
 |---|---:|---|
-| Player Passport | 4 | Profile fields, claims and membership content tested; timeline sink remains individually untested. |
-| Organization Membership Review | 2 | Membership records tested; organization-list sink remains individually untested. |
+| Player Passport | 4 | Profile fields, claims, membership content and timeline detail tested. |
+| Organization Membership Review | 2 | Organization list and membership records tested. |
 | Opportunity Management/Register | 1 | Title, organization identity, source and detail tested. |
 | Opportunity Evidence Review | 1 | Evidence label, submitter and limitation tested; remaining interpolated fields need separate review. |
 | Opportunity Decision Worksheet | 1 | Claim scope, opportunity context, reviewer and rationale tested. |
 | Safeguarded Invitation Workflow | 1 | Opportunity, gate note and hard-stop text tested. |
 | Player–Opportunity Matching Review | 2 | Pair renderer and dimension renderer tested. |
-| Player Development Pathway Tracker | 3 | Stage renderer and selected-player presentation tested; player-list and option sinks need individual hostile checks. |
+| Player Development Pathway Tracker | 3 | Stage renderer and player-list renderer tested; player-select option sink needs an individual hostile check. |
 | Coach & Academy Workspace | 4 | Membership, opportunity, evidence-action and boundary sinks tested. |
-| Guardian & Consent Workspace | 5 | Case details, purposes, rules and limits tested; case-card sink needs individual hostile check. |
-| Discovery & Request Review | 5 | URL/handoff boundary has hostile-identifier coverage; summary, gates, request-list and rules sinks still need individual hostile-value checks. |
+| Guardian & Consent Workspace | 5 | Case cards, case details, purposes, rules and limits tested. |
+| Discovery & Request Review | 5 | Summary, request-list and rules tested with hostile values; URL/handoff scheme checks passed. Gate-content hostile-value coverage remains open. |
 | **Total** | **29** | **Partial coverage; not a closure claim.** |
 
 This table is a working test-coverage inventory, not a finding that every sink is vulnerable or safe. All identified sinks currently use escaping helpers or fixed/allowlisted presentation values on the inspected paths, but output-context correctness and malformed-fixture behavior remain open.
 
 Next: close the untested rows with actual-renderer hostile fixtures; then exercise null, missing, object/array and invalid-enum fixture values; finally complete the URL scheme and attribute-context review. UI-008 remains OPEN.
+
+
+## 10. Follow-up renderer coverage — 16 November 2026
+
+[GitHub Actions run 43857127472](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43857127472), commit `8c61e140c531ba32594d7b29151d7c7e584e95a5`, passed the 121-test headless suite, Discovery & Request Review, hub/navigation 8/8 and specialist workspace interactions 15/15.
+
+Additional actual-renderer checks now cover:
+- Passport timeline detail;
+- organization-list names;
+- Guardian case-card player references;
+- pathway player-list names; and
+- Discovery request-list purpose, summary player reference/purpose and workflow rules.
+
+The inventory table in section 9 has been updated to reflect those tested sinks. Remaining targeted gaps include the pathway select-option sink, discovery gate-content sink, and remaining individual fields within the evidence renderer. The 29-sink inventory remains a scoped regression map, not a security sign-off.
+
+No product code or mainline authorization changed in this follow-up; changes were limited to prototype browser tests and documentation.
