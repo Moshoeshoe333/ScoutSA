@@ -69,7 +69,21 @@ const teams = [
 ["Leke-Le-Beke FC","Sebokeng / UK Easter Tournament","2026 community tournament","Reported event participant","https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/03/28/kasi-football-fever-returns/"],
 ["Vaal Monate FC","Sebokeng / UK Easter Tournament","2026 community tournament","Reported event participant","https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/03/28/kasi-football-fever-returns/"],
 ["Black Pirates FC","Sebokeng / UK Easter Tournament","2026 community tournament","Reported event participant","https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/03/28/kasi-football-fever-returns/"],
-["Vaal Juventus FC","Sebokeng / UK Easter Tournament","2026 community tournament","Reported event participant","https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/03/28/kasi-football-fever-returns/"]
+["Vaal Juventus FC","Sebokeng / UK Easter Tournament","2026 community tournament","Reported event participant","https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/03/28/kasi-football-fever-returns/"],
+["Flair Feet Stars FC","Vanderbijlpark","Host of 2024 Nando's Tournament","Historical lead","https://www.citizen.co.za/vaalweekblad/news/news-news/2024/04/11/local-football-clubs-complete-un-the-inaugural-nandos-tournament/"],
+["Celta Academy","Evaton","2024 Nando's Tournament; U11 winner reported","Reported event participant","https://www.citizen.co.za/vaalweekblad/news/news-news/2024/04/11/local-football-clubs-complete-un-the-inaugural-nandos-tournament/"],
+["Waldrift United FC","Waldrift","2024 Nando's Tournament; outside core Emfuleni","Reported event participant","https://www.citizen.co.za/vaalweekblad/news/news-news/2024/04/11/local-football-clubs-complete-un-the-inaugural-nandos-tournament/"],
+["Future Stars Academy","Sasolburg","2024 Nando's Tournament; cross-provincial Vaal lead","Reported event participant","https://www.citizen.co.za/vaalweekblad/news/news-news/2024/04/11/local-football-clubs-complete-un-the-inaugural-nandos-tournament/"],
+["Saints FC","Vanderbijlpark","2024 Nando's Tournament","Reported event participant","https://www.citizen.co.za/vaalweekblad/news/news-news/2024/04/11/local-football-clubs-complete-un-the-inaugural-nandos-tournament/"],
+["Italian Job","Sedibeng","2021 Master Zondo Foundation tournament","Historical lead","https://www.citizen.co.za/sedibeng-ster/news/2021/05/11/master-zondo-sports-foundation-tournaments-great-success/"],
+["Home Defenders","Sedibeng","2021 Master Zondo Foundation tournament","Historical lead","https://www.citizen.co.za/sedibeng-ster/news/2021/05/11/master-zondo-sports-foundation-tournaments-great-success/"],
+["Vaal Triangle","Sedibeng","2021 Master Zondo Foundation tournament; generic name","Identity / alias review","https://www.citizen.co.za/sedibeng-ster/news/2021/05/11/master-zondo-sports-foundation-tournaments-great-success/"],
+["Real Tokyo","Sedibeng","2021 Master Zondo Foundation tournament","Historical lead","https://www.citizen.co.za/sedibeng-ster/news/2021/05/11/master-zondo-sports-foundation-tournaments-great-success/"],
+["Sharp Sporting","Sharpeville / Sedibeng","2021 Master Zondo Foundation tournament","Historical lead","https://www.citizen.co.za/sedibeng-ster/news/2021/05/11/master-zondo-sports-foundation-tournaments-great-success/"],
+["Enestro City","Sedibeng","2021 Master Zondo Foundation tournament; spelling review","Identity / alias review","https://www.citizen.co.za/sedibeng-ster/news/2021/05/11/master-zondo-sports-foundation-tournaments-great-success/"],
+["Happy Stars FC","Sedibeng","2021 Master Zondo Foundation tournament","Historical lead","https://www.citizen.co.za/sedibeng-ster/news/2021/05/11/master-zondo-sports-foundation-tournaments-great-success/"],
+["TK Rangers FC","Vanderbijlpark area","2024 Sports Against Crime Games local-team participant","Historical lead","https://www.citizen.co.za/sedibeng-ster/news/news-news/2024/06/18/vaal-high-school-soccer-team-are-sports-against-crime-champions/"],
+["River Galaxy FC","Vanderbijlpark area","2024 Sports Against Crime Games local-team participant","Historical lead","https://www.citizen.co.za/sedibeng-ster/news/news-news/2024/06/18/vaal-high-school-soccer-team-are-sports-against-crime-champions/"]
 ];
 const $=id=>document.getElementById(id);$("total").textContent=teams.length;
 const localities=[...new Set(teams.map(x=>x[1]))].sort();localities.forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;$("locality").append(o)});
