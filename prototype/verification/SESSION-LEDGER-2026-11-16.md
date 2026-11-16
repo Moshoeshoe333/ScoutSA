@@ -105,7 +105,7 @@ The rendering review continued on the isolated prototype branch after the audit-
 
 The failed intermediate runs were not counted as passes. They exposed test-harness assumptions about visible selectors and prefixed text; the assertions were corrected, and the subsequent hosted run passed.
 
-**Latest hosted verification at this checkpoint:** [GitHub Actions run 43857127472](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43857127472), head commit `8c61e140c531ba32594d7b29151d7c7e584e95a5`.
+**Latest hosted verification at this checkpoint:** [GitHub Actions run 43857430464](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43857430464), head commit `1f37eea8c455f05ff0de01c7e93fb91e90d090fd`.
 
 | Verification group | Result |
 |---|---:|
@@ -145,11 +145,11 @@ The current static inventory counts **29 `innerHTML` assignment sinks** across t
 | Player Passport | 4 | Profile fields, claims, membership content and timeline detail tested. |
 | Organization Membership Review | 2 | Organization list and membership records tested. |
 | Opportunity Management/Register | 1 | Title, organization identity, source and detail tested. |
-| Opportunity Evidence Review | 1 | Evidence label, submitter and limitation tested; remaining interpolated fields need separate review. |
+| Opportunity Evidence Review | 1 | All interpolated evidence fields tested with hostile fixture text, including source, authority, status, corroboration, dates and next action. |
 | Opportunity Decision Worksheet | 1 | Claim scope, opportunity context, reviewer and rationale tested. |
 | Safeguarded Invitation Workflow | 1 | Opportunity, gate note and hard-stop text tested. |
 | Player–Opportunity Matching Review | 2 | Pair renderer and dimension renderer tested. |
-| Player Development Pathway Tracker | 3 | Stage renderer and player-list renderer tested; player-select option sink needs an individual hostile check. |
+| Player Development Pathway Tracker | 3 | Stage, player-list and player-select option sinks tested. |
 | Coach & Academy Workspace | 4 | Membership, opportunity, evidence-action and boundary sinks tested. |
 | Guardian & Consent Workspace | 5 | Case cards, case details, purposes, rules and limits tested. |
 | Discovery & Request Review | 5 | Summary, request-list and rules tested with hostile values; URL/handoff scheme checks passed. Gate-content hostile-value coverage remains open. |
@@ -174,3 +174,12 @@ Additional actual-renderer checks now cover:
 The inventory table in section 9 has been updated to reflect those tested sinks. Remaining targeted gaps include the pathway select-option sink, discovery gate-content sink, and remaining individual fields within the evidence renderer. The 29-sink inventory remains a scoped regression map, not a security sign-off.
 
 No product code or mainline authorization changed in this follow-up; changes were limited to prototype browser tests and documentation.
+
+
+## 11. Evidence and pathway sink follow-up — 16 November 2026
+
+[GitHub Actions run 43857430464](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43857430464), commit `1f37eea8c455f05ff0de01c7e93fb91e90d090fd`, passed **121/121** headless tests, the Discovery & Request Review browser suite, hub/navigation **8/8**, and specialist interactions **15/15**.
+
+New actual-renderer hostile-fixture checks cover the full set of interpolated fields in the Opportunity Evidence renderer (label, opportunity/type, state, submitter, source, authority, checked date, corroboration, next review, limitation and next action) and the Player Development player-select option text. The sink inventory above now records those checks.
+
+The remaining explicitly identified hostile-value gap in that inventory is the Discovery & Request Review gate-content sink. URL/link scheme and handoff identifier checks remain a separate test concern. UI-008 remains OPEN pending the remaining gate-context test, final output-context review, malformed fixture-shape testing and any further issues those checks reveal.
