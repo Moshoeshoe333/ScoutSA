@@ -123,7 +123,8 @@ async function main() {
 
     // Reset and replay the valid fixture to detect stale UI state between evaluations.
     await page.selectOption("#auditScenario", "baseline");
-    assert.equal(await safeguardingGate.locator("span").innerText(), "Blocked");
+    assert.equal(await safeguardingGate.locator("span").innerText(), "Skipped — source not verified",
+      "baseline must preserve the original source-verification gate rather than invent a safeguarding failure");
     await page.selectOption("#auditScenario", "valid-history");
     assert.equal(await safeguardingGate.locator("span").innerText(), "Reviewed");
     assert.match(await disclosureGate.innerText(), /No disclosure permitted/);
