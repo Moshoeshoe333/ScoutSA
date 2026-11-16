@@ -177,7 +177,9 @@ Required safeguards:
 
 ## 7. Workstream E — Creators and football media
 
-Creators such as Vino Snaps may help document the football culture of the Vaal and produce useful footage for players, coaches, clubs and tournaments.
+Potential Vino Snaps background leads: [Daily Sun profile, 7 June 2024](https://www.snl24.com/dailysun/celebs/sports-photograper-vino-snaps-helps-young-injured-soccer-player-get-treatment-20240608/) and [Sedibeng Ster's 2022 report on the Vino Snap / Hollywood Top Sixteen Tournament](https://www.citizen.co.za/sedibeng-ster/news/2022/07/13/action-galore-all-over-sedibeng/).
+
+Creators such as Vino Snaps may help document the football culture of the Vaal and produce useful footage for players, coaches, clubs and tournaments. Public reporting identifies Vino Snaps as Pitsi Vincent Matlou, with a Vaal / Boipatong connection, and describes both football photography and tournament activity in Sebokeng; a 2022 report also describes a Top Sixteen Tournament organised by Vino Snap with Hollywood. This is a reason to explore a conversation, not evidence of current availability, consent, endorsement or partnership.
 
 Potential collaboration formats:
 - event photography and match-day coverage;
