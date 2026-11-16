@@ -20,7 +20,7 @@ The operating model has six connected workstreams:
 
 ## 2. Partnership sequence: SAFA Emfuleni first
 
-The first institutional operating target is SAFA Emfuleni / ELFA. ScoutSA must complement, not bypass, the existing football structures.
+The first institutional operating target is the Emfuleni Local Football Association (ELFA), working within the SAFA Sedibeng regional structure. Local reporting distinguishes ELFA as the local association and SAFA Sedibeng as the regional custodian; confirm the formal current names, boundaries and reporting lines directly before outreach. ScoutSA must complement, not bypass, the existing football structures.
 
 ### Proposed first engagement
 - Understand the current association structure, competitions, streams, age groups and season calendar.
