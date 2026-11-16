@@ -124,7 +124,75 @@ These are names surfaced in dated public reporting. The status column deliberate
 
 **This is a starting evidence register, not a declaration that every listed entity is currently operating or that every Vaal team has been found.** Names with spelling, alias, ownership or locality uncertainty must remain separate until reconciled.
 
-## 5. Required coverage ledger
+
+## 5. Tournament and event discovery register
+
+These events are discovery leads. Dates and formats below describe the cited edition, not a promise that the event will recur or that ScoutSA has permission to collect data.
+
+| Event / organiser | Reported locality | Reported format / divisions | Evidence / next action |
+|---|---|---|---|
+| ELFA Development League | Emfuleni; 2025/26 report names Evaton, Sebokeng, Boitshepiville and Vereeniging streams | Junior league | Request current 2026/27 streams, club lists, fixtures and approved observation process |
+| ELFA Super League | Emfuleni; Purple and Green streams in 2026/27 report | Senior amateur promotion competition | Obtain current official team list and rules from ELFA |
+| Master Zondo Foundation Easter Tournament | Sebokeng Ajax ground, Zone 12 | 2026 edition reported U11, U13, U15, U17, U19; 2025 edition included Emfuleni and Midvaal teams | Approach organiser; clarify event permission, stats, photography and participant notices |
+| UK Easter Tournament | UK soccer grounds, Zone 7, Sebokeng | 2026 community tournament; teams named in report | Identify organiser, divisions, fixture records and permissions |
+| Back-to-School Top 16 Development Tournament (Octopus) | Vaal Killers ground, Zone 8, Sebokeng | 2026 report: U11, U13, U15, U17 | Approach organiser; obtain event records and current status |
+| TINYA Foundation Tournament | Beverly Hills ground, Sebokeng | 2025 U17; four ELFA stream log leaders | Approach TINYA, ELFA and Master Zondo Foundation separately |
+| FAR Post Cup | James Ground, Sharpeville | Boys U17 and Girls U19; 2025 report | Approach FAR Post and event partners; clarify media/statistics rights |
+| Pooe Festive Tournament | Evaton / Sedibeng | 2024/25 junior U13 and U15 categories reported | Verify current organiser, schedule and participating divisions |
+| Kurra Cup | Conti ground, Evaton | 2026 Heritage Day period; event report | Verify organiser, age groups, format and current recurrence |
+| Master Zondo Foundation Heritage Day Super Cup | Sebokeng Ajax FC ground, Zone 12 | 2026 report: U13, U15, U17 | Approach organiser; request match schedule and event permission |
+| Gushadee Youth Winter Tournament | Bophelong, Sharpeville, Sebokeng and Evaton | 2022 report: U12, U15, U17 and U21 | Historical lead; confirm whether event continues |
+| Sports Against Crime Games | Vanderbijlpark / Isak Steyl Stadium | 2024 and 2025 reports name Vaal High, Suncrest High, Dr Oliphant Secondary and Hoërskool Vanderbijlpark; boys' and girls' soccer reported | Approach school principals/sports coordinators and organiser; confirm school authority |
+| Nando's Tournament / Flair Feet Stars FC | Curro Vanderbijlpark ground | 2024 report: multiple age categories, including U8/9 and U11 | Verify current status and event ownership |
+| JJ Sporting Good Luck Exams Tournament | Sedibeng; venue to confirm | 2026 report names development teams and visiting Gauteng teams | Confirm organiser, locality of each participant and permission |
+| Boitshepiville pre-season mini tournament | Cecil Oldrige Park, Vanderbijlpark | 2025 junior pre-season event | Confirm whether organiser plans recurring event and whether team list can be reconciled |
+
+### Event-source notes
+
+- [ELFA Development League 2025/26 kick-off, 2 Jul 2025](https://www.citizen.co.za/sedibeng-ster/news/news-news/2025/07/02/elfa-development-league-2025-2026-season-kicks-off/)
+- [Master Zondo 17th Easter Tournament, 23 Jan 2026](https://www.citizen.co.za/sedibeng-ster/news/news-news/2026/01/23/17th-edition-easter-tournament-to-kick-off-soon/)
+- [Master Zondo Easter 2025](https://www.citizen.co.za/sedibeng-ster/news/news-news/2025/04/23/16th-master-zondo-sports-foundation-easter-tournamet-held/)
+- [UK Easter Tournament, 28 Mar 2026](https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/03/28/kasi-football-fever-returns/)
+- [Kurra Cup and Heritage Day Super Cup, 1 Oct 2026](https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/10/01/football-razzmatazz-over-the-local-weekend-in-vaal/)
+- [Easter football recap, 8 Apr 2026](https://www.citizen.co.za/sedibeng-ster/news/news-news/2026/04/08/easter-soccer-mania-comes-to-an-end/)
+- [Pooe Festive Tournament, 3 Jan 2025](https://www.citizen.co.za/sedibeng-ster/news/news-news/2025/01/03/vgsa-victorious-at-pooe-festive-tourney/)
+- [Sports Against Crime Games, 24 Jun 2025](https://www.citizen.co.za/sedibeng-ster/news/news-news/2025/06/24/local-schools-battle-it-out-in-sports-against-crime-games/)
+- [Nando's Tournament, 11 Apr 2024](https://www.citizen.co.za/vaalweekblad/news/news-news/2024/04/11/local-football-clubs-complete-un-the-inaugural-nandos-tournament/)
+
+## 6. School football discovery register
+
+The following schools are named in public reporting connected to Vaal school football. This is not a full school census, and a tournament appearance is not a partnership.
+
+| School | Locality / context | Evidence | Next action |
+|---|---|---|---|
+| Vaal High School | Vanderbijlpark | Sports Against Crime Games, 2024 and 2025 | Identify principal / sports coordinator and current football programme |
+| Suncrest High School | Vanderbijlpark | Sports Against Crime Games, 2024 and 2025 | Identify principal / sports coordinator and current football programme |
+| Dr Oliphant Secondary / Dr Oliphant High School | Vanderbijlpark area | Sports Against Crime Games, 2024 and 2025; confirm exact official school name | Resolve name and identify authorised contact |
+| Hoërskool Vanderbijlpark | Vanderbijlpark | Sports Against Crime Games, 2024 and 2025 | Identify principal / sports coordinator and current football programme |
+| Beverly Hills Secondary School | Sebokeng | Venue reference adjacent to 2025 TINYA tournament; not evidence of a school team | Ask whether school has a team / sports programme; do not count as a participant |
+| Phoenix High School | Emfuleni venue reference in 2026 league report | Match venue named, not evidence of a school team | Verify venue role and whether a school team exists |
+
+School leads are not limited to the schools above. A complete school map must be reconciled against current district education and school-sport structures and direct school confirmation.
+
+## 7. Creator and football-media partner leads
+
+### Vino Snaps — potential creator / tournament partner
+
+Public reporting identifies Vino Snaps as Pitsi Vincent Matlou, a sports photographer with a Vaal / Boipatong connection. A 2022 report describes a Top Sixteen Tournament organised by Vino Snap with Hollywood in Sedibeng. A 2024 report describes community football support, photography and tournament activity in Sebokeng.
+
+- [Daily Sun profile, 7 Jun 2024](https://www.snl24.com/dailysun/celebs/sports-photograper-vino-snaps-helps-young-injured-soccer-player-get-treatment-20240608/)
+- [Sedibeng Ster report on Vino Snap / Hollywood Top Sixteen Tournament, 13 Jul 2022](https://www.citizen.co.za/sedibeng-ster/news/2022/07/13/action-galore-all-over-sedibeng/)
+
+**Status:** potential partner lead only. No contact, endorsement, rights agreement or collaboration is claimed.
+
+**Proposed conversation:** understand his current work, event relationships, footage ownership, preferred credit, rates/revenue model, consent practices, and whether he would consider a pilot under written media and child-safeguarding rules.
+
+### Other creator and media leads
+
+FAR Post, Molisto Media and event photographers are named in reporting around the 2025 FAR Post Cup. Treat each as a separate potential partner and verify rights/roles before using any footage or logo.
+
+
+## 8. Required coverage ledger
 
 The register must eventually be queryable by locality, stream, competition, age group, gender, affiliation and season. Each locality gets a coverage status:
 
@@ -141,7 +209,7 @@ The register must eventually be queryable by locality, stream, competition, age 
 
 A locality cannot be marked complete merely because ScoutSA has found several clubs there. Completion requires comparison against the current association register, league/competition lists, tournament organisers, school sport structures and community discovery.
 
-## 6. Reconciliation protocol
+## 9. Reconciliation protocol
 
 For each candidate:
 1. Preserve the name exactly as it appears in the source.
@@ -153,7 +221,7 @@ For each candidate:
 7. Record the date, source, reviewer and unresolved contradictions.
 8. Re-check each season; teams can fold, merge, rename, change status or move competitions.
 
-## 7. Coverage metrics
+## 10. Coverage metrics
 
 Report these separately:
 - candidate teams found;
@@ -169,7 +237,7 @@ Report these separately:
 
 Never publish “100% of Vaal teams covered” unless the denominator and source universe are defined and independently reconciled. A more honest public statement is “X teams identified and Y confirmed across Z mapped competitions/localities as of [date].”
 
-## 8. Sources used for this initial seed
+## 11. Sources used for this initial seed
 
 - [ELFA Super League 2026/27 report, 10 Nov 2026](https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/11/10/local-amateur-soccer-league-season-in-full-swing/)
 - [SAFA Sedibeng Regional League report, 11 Oct 2026](https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/10/11/local-soccer-teams-start-their-regional-league-season-this-weekend/)
@@ -182,7 +250,7 @@ Never publish “100% of Vaal teams covered” unless the denominator and source
 - [UK Easter Tournament report, 28 Mar 2026](https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/03/28/kasi-football-fever-returns/)
 - [Vino Snaps profile / community football story, 7 Jun 2024](https://www.snl24.com/dailysun/celebs/sports-photograper-vino-snaps-helps-young-injured-soccer-player-get-treatment-20240608/)
 
-## 9. Immediate next research tasks
+## 12. Immediate next research tasks
 
 1. Obtain or reconstruct the current ELFA team lists by stream and age group, with season and date.
 2. Map every current ELFA senior and junior competition, including women/girls and boys divisions.
