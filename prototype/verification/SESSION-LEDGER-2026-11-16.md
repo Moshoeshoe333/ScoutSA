@@ -105,7 +105,7 @@ The rendering review continued on the isolated prototype branch after the audit-
 
 The failed intermediate runs were not counted as passes. They exposed test-harness assumptions about visible selectors and prefixed text; the assertions were corrected, and the subsequent hosted run passed.
 
-**Latest hosted verification:** [GitHub Actions run 43856069550](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43856069550), head commit `00c15d455cf1fe5a03cc417a4af908925a2d298c`.
+**Latest hosted verification at this checkpoint:** [GitHub Actions run 43856700124](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43856700124), head commit `049dccf88be6e1c5cfbdaef7aec90640fb4654c2`.
 
 | Verification group | Result |
 |---|---:|
@@ -128,3 +128,33 @@ Still required:
 - reconcile every finding to a file/line/sink/risk/mitigation/test-evidence ledger.
 
 No real or user-supplied content may be connected to these renderers while UI-008 remains open. No mainline files, gate decisions or implementation authorizations were changed.
+
+
+## 9. Additional sink coverage and inventory — 16 November 2026
+
+The subsequent specialist browser run [43856700124](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43856700124) passed **15/15 groups** and the 121-test headless suite. It added actual-renderer hostile-fixture checks for:
+- Player Passport profile fields;
+- Player–Opportunity Matching dimension descriptions;
+- Guardian & Consent rules and limits; and
+- Opportunity Management title, organization identity, source and detail fields.
+
+The current static inventory counts **29 `innerHTML` assignment sinks** across the 11 specialist HTML workspaces. The hub has no `innerHTML` assignment in the inspected page; its modal now uses DOM construction and `textContent`.
+
+| Workspace | Sinks | Current hostile-renderer evidence |
+|---|---:|---|
+| Player Passport | 4 | Profile fields, claims and membership content tested; timeline sink remains individually untested. |
+| Organization Membership Review | 2 | Membership records tested; organization-list sink remains individually untested. |
+| Opportunity Management/Register | 1 | Title, organization identity, source and detail tested. |
+| Opportunity Evidence Review | 1 | Evidence label, submitter and limitation tested; remaining interpolated fields need separate review. |
+| Opportunity Decision Worksheet | 1 | Claim scope, opportunity context, reviewer and rationale tested. |
+| Safeguarded Invitation Workflow | 1 | Opportunity, gate note and hard-stop text tested. |
+| Player–Opportunity Matching Review | 2 | Pair renderer and dimension renderer tested. |
+| Player Development Pathway Tracker | 3 | Stage renderer and selected-player presentation tested; player-list and option sinks need individual hostile checks. |
+| Coach & Academy Workspace | 4 | Membership, opportunity, evidence-action and boundary sinks tested. |
+| Guardian & Consent Workspace | 5 | Case details, purposes, rules and limits tested; case-card sink needs individual hostile check. |
+| Discovery & Request Review | 5 | URL/handoff boundary has hostile-identifier coverage; summary, gates, request-list and rules sinks still need individual hostile-value checks. |
+| **Total** | **29** | **Partial coverage; not a closure claim.** |
+
+This table is a working test-coverage inventory, not a finding that every sink is vulnerable or safe. All identified sinks currently use escaping helpers or fixed/allowlisted presentation values on the inspected paths, but output-context correctness and malformed-fixture behavior remain open.
+
+Next: close the untested rows with actual-renderer hostile fixtures; then exercise null, missing, object/array and invalid-enum fixture values; finally complete the URL scheme and attribute-context review. UI-008 remains OPEN.
