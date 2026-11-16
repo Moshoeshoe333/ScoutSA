@@ -49,3 +49,8 @@ The review is participation-scoped because a player may participate in different
 ## Gate
 
 This model is not a database schema, legal interpretation, safeguarding approval or authority to process real player data. It does not close any mainline gate. Implementation beyond this synthetic browser prototype requires explicit ratification and the applicable privacy, security and safeguarding design.
+
+
+## Related roster controls (prototype extension)
+
+Tournament Manager now also records a synthetic roster status and optional squad number on each player participation. Squad numbers must be whole numbers from 1–99 and unique within the team entry. Pending, suspended and withdrawn roster entries are blocked from receiving new match-stat observations in this demo. These are workflow controls, not proof of registration, discipline status or eligibility under a real competition rule.
