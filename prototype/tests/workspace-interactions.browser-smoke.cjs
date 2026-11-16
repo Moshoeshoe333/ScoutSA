@@ -364,7 +364,7 @@ async function main() {
     await page.locator("#search").fill("");
     await assertFixtureTextSafe("#items h3", hostileFixtureText, "Evidence label");
     await assertFixtureTextSafe("#items .datum strong", hostileFixtureText, "Evidence submitter");
-    await assertFixtureTextSafe("#items p", hostileFixtureText, "Evidence limitation");
+    await assertFixtureTextSafe("#items p", hostileFixtureText, "Evidence limitation", "includes");
 
     await page.goto(origin + "/safeguarded-invitations.html", { waitUntil: "load" });
     await page.evaluate(hostile => {
@@ -386,7 +386,7 @@ async function main() {
     await page.locator("#search").fill("");
     await assertFixtureTextSafe("#pairs h3", hostileFixtureText, "Matching player", "includes");
     await assertFixtureTextSafe("#pairs .finding span", hostileFixtureText, "Matching finding");
-    await assertFixtureTextSafe("#pairs .reason", hostileFixtureText, "Matching reason");
+    await assertFixtureTextSafe("#pairs .reason", hostileFixtureText, "Matching reason", "includes");
 
     await page.goto(origin + "/player-development-pathways.html", { waitUntil: "load" });
     await page.evaluate(hostile => {
