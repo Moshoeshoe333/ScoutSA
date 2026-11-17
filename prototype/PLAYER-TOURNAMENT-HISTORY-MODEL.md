@@ -57,3 +57,10 @@ The page's appearance, event and statistic rows are fixed synthetic snapshots th
 - No real player or minor data may be entered.
 
 **Decision boundary:** this is a UI and relationship demonstration only. It does not ratify the model, authorize production schema work, close UI-008, or lift any mainline implementation hold.
+
+
+## Cross-record chronology conflict retained in the demo
+
+The Player 1 snapshot contains a deliberate unresolved contradiction: event `MEV-DEMO-002` is recorded at minute 67, while the linked appearance snapshot records substitution-out `SUB-DEMO-001` at minute 65. The UI surfaces both values and warns that neither should be silently reconciled. This is a fixture-data quality finding, not evidence that the real-world event occurred or that either timestamp is authoritative.
+
+The browser regression checks that both minute values remain visible in the chronology warning. A future persisted implementation should create a review finding linked to the conflicting source records, preserve the original observations and record any adjudication as a separate, attributable decision.
