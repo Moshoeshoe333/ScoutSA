@@ -61,3 +61,40 @@ Earlier successful runs remain historical evidence only. Failed runs are retaine
 First obtain and inspect the complete hosted workflow result for the latest branch head. If Node checks fail, fix the actual assertion/source mismatch without weakening the guard. If browser tests fail, inspect the exact failing suite and renderer before changing implementation. Once a green exact-head run is established, reconcile the current README and gate-status snapshots, then continue the remaining semantic and tournament decision reviews in dependency order.
 
 **Governing rule:** A correction is not complete when a commit is created; it is complete when the changed state is read back and the relevant verification evidence is observed.
+
+
+## 7. End-of-day continuation — 17 November 2026
+
+### Additional work completed
+
+- Created `docs/engineering-lessons-ledger.md` as the durable, cross-project engineering lessons register.
+- Recorded nine initial ScoutSA lessons covering documentation/CI drift, stale verification claims, cross-workspace ownership references, unsafe dynamic HTML rendering, browser-only defects, fixture/session/match grain, appearance-minute chronology, provenance versus authority, and overclaiming from passing tests.
+- Added links to the lessons ledger from the root README, prototype README and engineering-integrity protocol.
+- Extended `prototype/tests/documentation-integrity.test.js` to check that the ledger is linked, contains at least eight entries, uses unique lesson IDs and includes all required lesson fields.
+- Read the changed files back from GitHub. A faulty regular-expression escape in the new ledger test was caught during read-back and corrected in commit `6d7372cafa2c7820cbbd36b62601f137629a8862`. The correction is part of the history; it is not hidden or counted as a separate product feature.
+
+### Current revision and hosted verification snapshot
+
+- **Branch:** `prototype/internal-demo`
+- **Exact head:** `6d7372cafa2c7820cbbd36b62601f137629a8862`
+- **Workflow:** [Run #656](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44103601900)
+- **Observed status at closeout:** headless policy/documentation tests passed; Playwright and Chromium installation passed; five browser smoke steps had passed (Discovery & Request Review, unified workspace hub, player journey preview, Vaal ecosystem coverage, tournament relationship hub). Tournament Manager was still running; Tournament Day Operations, statistic reconciliation, organizer portal and specialist workspace smoke tests were pending.
+- **Conclusion:** workflow was still in progress when the session closed. This is not a green workflow and must not be reported as one. Recheck the run before relying on its final outcome.
+
+### Boundaries preserved
+
+- No tournament domain rule, schema, migration, RLS, API, authentication or production behavior was changed by this lessons-ledger work.
+- TAD-004/005/006 and other previously recorded governance dependencies remain open as documented; no gate was closed by this session.
+- No merge to `main` was attempted.
+- A committed ledger or passing subset of tests does not establish production readiness, external validation, legal compliance or complete safety.
+
+## 8. Next-session opening checklist — 18 November 2026
+
+1. Fetch workflow run #656 and its job details. Confirm the run head SHA still equals `6d7372cafa2c7820cbbd36b62601f137629a8862`; record the final conclusion and every failed, skipped or pending step.
+2. If any step failed, inspect its exact logs and reproduce the issue before changing code. Add a lesson or update an existing lesson with evidence, cause, controls and residual risk.
+3. If all configured steps passed, record the exact scope and limitations; do not translate a green CI run into a blanket quality or production-readiness claim.
+4. Reconcile README, gate-status and verification snapshots only where the observed evidence justifies a change.
+5. Resume the next ScoutSA work item without crossing unresolved TAD decision gates. Keep documentation, synthetic prototype behavior and production implementation explicitly distinct.
+6. Apply the lessons-ledger pattern to another project only after inspecting that project's own current repository state and adapting controls to its architecture.
+
+**Closeout rule:** stop with a truthful snapshot, a traceable commit and a concrete restart point. Do not leave tomorrow's work dependent on memory alone.
