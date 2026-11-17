@@ -3,7 +3,7 @@
 **Status:** Active engineering control  
 **Applies to:** Every branch, especially the isolated `prototype/internal-demo` branch  
 **Priority:** High — documentation accuracy is part of release quality  
-**Last reviewed:** 2026-11-13
+**Last reviewed:** 2026-11-17
 
 ## 1. Non-negotiable rule
 
@@ -72,6 +72,17 @@ The isolated prototype workflow `.github/workflows/prototype-policy-tests.yml` r
 Both workflows are branch-scoped and intentionally test different source-of-truth boundaries. A passing mainline documentation check does not certify the prototype; a passing prototype suite does not certify mainline governance.
 
 When a new repeated fact is introduced into documentation, either add it to the consistency test or document why it cannot be checked automatically.
+
+### DOC-007 — Prototype documentation index drift and incomplete CI path coverage
+
+- **Detected:** 2026-11-17
+- **Severity:** High — the documentation-integrity workflow failed and some later documentation changes could bypass the expected hosted check.
+- **Finding:** Runs [44091221023](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44091221023) and [44091232808](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44091232808) failed five assertions because the prototype README omitted links to the Affiliation Evidence Model Proposal, Opportunity Evidence Acceptance Matrix, Opportunity Requirement Declaration, Opportunity Validation Scenario Pack and Synthetic Audit-History Proposal. Review also found push and pull-request path filters were asymmetric: prototype HTML, several docs and the workflow directory were not consistently covered.
+- **Impact:** The README inventory was incomplete and some changes could land without the expected policy/documentation/browser workflow. Browser tests were skipped after the Node test step failed. Earlier successful browser runs remain historical and do not validate the affected commits.
+- **Correction:** Restored all five missing prototype README links. Broadened both push and pull-request filters to the same bounded repository areas (`README.md`, `docs/**`, `prototype/**`, `.github/workflows/**`) and added concurrency cancellation so an obsolete run on the same ref does not waste resources after a newer commit arrives.
+- **Preventive measure:** Keep push and pull-request coverage symmetric; changes to prototype code, contracts, tests, documentation and workflow configuration must all trigger the same complete suite. Require a successful exact-head run before updating status summaries. Preserve failed run IDs and never count skipped browser suites as passes.
+- **Correction commits:** `c4fb0cd252d19cd9ac441e5b8ada95fb3078c037`, `ecbf320d32890c6784aa8689bba87164504e9191`, `782c2adfddf93dca0c43a83c30aa629240bfdbce`, `546098fb529b66afbec19586aa66db606e0d15a1`, `ebe4f518f6359af0a588074e60439c7af3ed017c`.
+- **Status:** Corrective changes committed; awaiting successful hosted verification on the final branch head. Do not close DOC-007 until the exact-head run completes all Node and browser steps.
 
 ## 6. Incident log
 
