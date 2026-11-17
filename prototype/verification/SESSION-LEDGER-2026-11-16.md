@@ -272,3 +272,18 @@ All work above is limited to synthetic prototype fixtures on `prototype/internal
 ### Next engineering step
 
 First obtain a complete, non-cancelled browser run for the current Tournament Manager and Organizer Portal flows. If it fails, inspect the precise failing assertion and correct the test or prototype behavior before expanding scope. Once verified, the next proposed feature is Squad & Match-Day Integration: link registered roster participation IDs to lineups, starters, substitutes, captain assignments, appearances and minutes, with provenance retained through statistic reconciliation. This remains proposed work, not completed functionality.
+
+
+## 15. Tournament statistic validation regression — 17 November 2026
+
+A test-only follow-up was committed to the isolated prototype branch.
+
+| Commit | Change |
+|---|---|
+| `2f65bbf2ed1c4970cd28c81598f4e173fc40777f` | Reintroduced an explicit browser assertion for fractional count rejection, with every form field selected explicitly; asserts that rejected input creates no statistic, then checks a valid whole-number count. |
+
+The earlier Tournament Manager browser failure is now understood at the assertion level: the failed run reported that the test expected the count-validation message but received a successful statistic-recording message. The old test sequence did not explicitly re-select the metric after the preceding successful form submission/reset. The revised regression makes the metric selection explicit and checks both rejection/no-write and valid-write behavior.
+
+**Verification status:** pending. The GitHub connector did not return a workflow run or status check for commit `2f65bbf2ed1c4970cd28c81598f4e173fc40777f`. No browser pass is claimed. The Tournament Manager, Organizer Portal, Tournament Day Operations and statistic-reconciliation workflows remain unverified at this new head until a complete, non-cancelled hosted run is inspected.
+
+No application behavior, mainline file, schema, gate or implementation authorization changed in this test-only follow-up. All records remain synthetic and browser-local.
