@@ -54,6 +54,26 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await page.locator('#statValue').fill('1');
   await page.locator('#statsForm button[type="submit"]').click();
   assert.match(await page.locator('#statsMessage').textContent(), /Only a registered demo roster entry/);
+
+  // Re-select every field after the prior successful/blocked form interactions.
+  // A fractional count must be rejected without writing a statistic.
+  await page.locator('#statFixture').selectOption('FIX-DEMO-001');
+  await page.locator('#statPlayer').selectOption('PAR-DEMO-001');
+  await page.locator('#statMetric').selectOption({ label: 'Goals · count' });
+  const beforeInvalidCount = await page.locator('#statsTable tbody tr').count();
+  await page.locator('#statValue').fill('2.5');
+  await page.locator('#statsForm button[type="submit"]').click();
+  assert.match(await page.locator('#statsMessage').textContent(), /whole-number value/);
+  assert.equal(await page.locator('#statsTable tbody tr').count(), beforeInvalidCount,
+    'invalid fractional count must not create a statistic');
+
+  // A valid whole-number count is accepted and remains linked to the selected fixture and participation.
+  await page.locator('#statFixture').selectOption('FIX-DEMO-001');
+  await page.locator('#statPlayer').selectOption('PAR-DEMO-001');
+  await page.locator('#statMetric').selectOption({ label: 'Goals · count' });
+  await page.locator('#statValue').fill('2');
+  await page.locator('#statsForm button[type="submit"]').click();
+  assert.match(await page.locator('#statsMessage').textContent(), /Recorded STA-/);
   assert.deepEqual(errors, []);
   await browser.close();
 });
