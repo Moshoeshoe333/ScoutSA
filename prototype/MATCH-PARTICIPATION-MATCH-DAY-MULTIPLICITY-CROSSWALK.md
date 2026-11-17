@@ -31,7 +31,7 @@ All current ScoutSA examples inspected are synthetic. External rules are a refer
 
 - IFAB, Laws of the Game 2026/27, Law 3 — The Players: https://www.theifab.com/laws/latest/the-players/
 - IFAB, Laws of the Game 2026/27, Law 7 — The Duration of the Match: https://www.theifab.com/laws/latest/the-duration-of-the-match/
-- IFAB, Laws of the Game 2025/26, Law 10 — Determining the Outcome of a Match: https://www.theifab.com/laws/2025-26/determining-the-outcome-of-a-match/
+- IFAB, Laws of the Game 2026/27, Law 10 — Determining the Outcome of a Match: https://www.theifab.com/laws/latest/determining-the-outcome-of-a-match/
 
 The applicable edition and any national/competition modifications must be recorded for each event. The IFAB baseline does not establish the rules of a particular South African league, school competition, academy tournament or friendly.
 
