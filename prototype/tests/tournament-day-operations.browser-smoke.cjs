@@ -11,11 +11,12 @@ await page.locator('[data-section="officials"]').click();await page.locator("#of
 await page.locator('[data-section="lineups"]').click();await page.locator("#lineupPlayer").selectOption("PAR-DEMO-001");await page.locator("#lineupForm button[type=submit]").click();assert.match(await page.locator("#lineupMessage").innerText(),/already has a lineup record/);await page.locator("#lineupPlayer").selectOption("PAR-DEMO-002");await page.locator("#lineupForm button[type=submit]").click();assert.match(await page.locator("#lineupMessage").innerText(),/already has a lineup record/);
 await page.locator('[data-section="substitutions"]').click();await page.locator("#subOff").selectOption("PAR-DEMO-001");await page.locator("#subOn").selectOption("PAR-DEMO-003");await page.locator("#subForm button[type=submit]").click();assert.match(await page.locator("#subMessage").innerText(),/Recorded substitution SUB-DEMO-001 with source SRC-DEMO-002/);
 await page.locator('[data-section="appearances"]').click();
-const appearanceText=await page.locator("#appearanceTable").innerText();
-assert.match(appearanceText,/PAR-DEMO-001[\\s\\S]*?65/,"starter substituted at minute 65 must have 65 derived minutes");
-assert.match(appearanceText,/PAR-DEMO-002[\\s\\S]*?90/,"full-match starter must have 90 derived minutes");
-assert.match(appearanceText,/PAR-DEMO-003[\\s\\S]*?25/,"substitute entering at minute 65 must have 25 derived minutes");
-assert.match(await page.locator("#appearanceMessage").innerText(),/3 lineup record\\(s\\) · 3 appearance\\(s\\) · 180 player-minutes/);
+const appearanceRows=await page.locator("#appearanceTable tbody tr").allInnerTexts();
+assert.equal(appearanceRows.length,3,"one derived row is required for each fixture lineup record");
+assert.match(appearanceRows.find(row=>row.includes("PAR-DEMO-001")),/\\b65\\b/,"starter substituted at minute 65 must have 65 derived minutes");
+assert.match(appearanceRows.find(row=>row.includes("PAR-DEMO-002")),/\\b90\\b/,"full-match starter must have 90 derived minutes");
+assert.match(appearanceRows.find(row=>row.includes("PAR-DEMO-003")),/\\b25\\b/,"substitute entering at minute 65 must have 25 derived minutes");
+assert.equal(await page.locator("#appearanceMessage").innerText(),"3 lineup record(s) · 3 appearance(s) · 180 player-minutes");
 await page.locator("#matchDuration").fill("60");
 await page.locator("#refreshAppearances").click();
 assert.match(await page.locator("#appearanceMessage").innerText(),/Invalid timing/,"duration shorter than recorded substitution must fail closed");
