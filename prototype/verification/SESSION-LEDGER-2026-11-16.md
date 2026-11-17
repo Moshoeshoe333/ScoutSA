@@ -476,3 +476,38 @@ The draft proposes `edition_id` as the consistent conceptual key and `match_part
 ### Verification and boundary
 
 This was a documentation review and addition. No application code, schema, migration, database, API, RLS, authentication, shared persistence or real-data processing was changed. No browser or test execution was performed for this documentation-only change. The architecture remains **NOT RATIFIED** and grants no implementation authority. Mainline remains untouched.
+
+
+## 23. Tournament Architecture Decision Register — 17 November 2026
+
+### Delivered
+
+Added `prototype/TOURNAMENT-ARCHITECTURE-DECISION-REGISTER.md` and indexed it in the prototype README.
+
+The register contains 14 decisions grouped by priority:
+
+- P0 relationship contract: edition identifier, fixture-scoped match participation, Organizer/Organization identity, team/player participation cardinality, fixture lifecycle and match-day/session multiplicity.
+- P1 operational trust: source/evidence/provenance semantics, metric definition governance, statistic reconciliation/corrections, competition eligibility authority and organizer feature/media/publication permission.
+- P2 production controls: purpose-bound access/safeguarding, retention/correction/deletion semantics and versioned import/conflict handling.
+
+Each entry records the question, current evidence, options, candidate recommendation, decision authority required, evidence still needed, impact if unresolved and a stop condition. A dependency map and recommended decision order are included.
+
+### Control notes
+
+- Candidate directions are proposals, not ratified decisions.
+- The register is subordinate to the Constitution, canonical Domain Model and frozen Gate 2 Relationship Model.
+- No P0 relationship cardinality or schema rule is silently settled.
+- No production ERD, schema, migration, database, API, RLS, authentication, shared persistence or real-data processing is authorized.
+- No external stakeholder approval is inferred from silence.
+- The work is documentation-only on `prototype/internal-demo`; `main` remains untouched.
+
+### Commits
+
+| Commit | Change |
+|---|---|
+| `d31d9e7189e205df6eae6324740d4f87217bde4b` | Add 14-item Tournament Architecture Decision Register. |
+| `7516ce05444a8dedc0ce74bd38a40e091d0acbd8` | Index the register in prototype README. |
+
+### Verification
+
+This was a documentation-only change. No application tests or browser tests were run. The created register and README index are to be re-read from the branch before treating the update as complete. No hosted CI pass is claimed.
