@@ -435,3 +435,6 @@ The inline scripts in Tournament Day Operations and Player Tournament History, p
 - The package is synthetic-only and does not establish player identity, source authority, match truth or official statistics.
 - No real player or minor data may be entered. No public profiles, rankings, contact routes, selection predictions or placement claims are enabled.
 - Mainline, database schema, product gates and implementation authorization are unchanged.
+
+
+**Follow-up UX safeguard:** the history importer now retains the previously validated package when a subsequent file is rejected, re-renders that prior view, and provides a direct return link to Match-Day Operations. The browser smoke source asserts that a tampered package does not replace the previously imported player history. This remains unexecuted pending a browser run.
