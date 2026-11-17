@@ -84,17 +84,17 @@ Priority is a sequencing aid, not a claim that lower-priority items are optional
 **Status:** BLOCKED  
 **Question:** Is Organizer an existing Organization acting through an authorized representative, a distinct event-organizer identity, or both under explicit relationship semantics?
 
-**Observed evidence:** The root Domain Model already defines Organization. Tournament proposals separately describe Organizer and organizer authority/evidence. The organizer portal separates organizer, submission, evidence and feature-permission states.
+**Observed evidence:** The canonical Domain Model defines Organization as a football-related institution/body (including SCHOOL, CLUB, ACADEMY, UNIVERSITY, LFA, LEAGUE and OTHER), while the canonical Relationship Model's G2-SEAM-02 explicitly leaves User↔Organization affiliation/authorization unresolved and rejects role-implied authority. The tournament relationship proposal calls Organizer an Organization identity plus authority evidence; the portal model separates organizer identity, authority, submission, feature permission and publication, but still gives Organizer its own identity key. See [Organizer Identity and Authority Crosswalk](ORGANIZER-IDENTITY-AUTHORITY-CROSSWALK.md).
 
 **Options:**
 - A. Reuse Organization and model organizer capacity as a scoped relationship/role with attributable representative authority.
 - B. Retain a distinct Organizer entity linked to Organization where applicable.
 - C. Treat Organizer as a display label only (insufficient for authority-bearing operations).
 
-**Candidate recommendation:** A is the least duplicative hypothesis, but cannot be accepted without resolving organizational types, informal organizers, school/club/association structures and representative authority.
+**Candidate recommendation:** Prefer A as a conceptual boundary: reuse canonical Organization for the enduring institutional identity; treat Organizer as an event-scoped capacity/role; distinguish the submitting User from the Organization represented; and assess representative authority separately with evidence, scope and time. Do not create a second Organizer identity by default. This remains a candidate only: independent individual organizers, affiliation cardinality, delegation and authority lifecycle are unresolved under G2-SEAM-02.
 
 **Decision authority required:** Domain governance plus operational/legal review of entity and representative authority.  
-**Evidence required:** domain examples for clubs, schools, academies, leagues, associations and independent event organizers; evidence requirements for representative authority; authority expiry/revocation rules.  
+**Evidence reviewed:** canonical Organization definition, G2-SEAM-02, tournament relationship proposal, organizer portal model and synthetic handoff boundary are crosswalked in the companion document. **Evidence still required:** real-world operating examples for independent organizers and institutional representatives; permitted actor/organization cardinalities; delegation, scope, expiry, revocation, dispute and appeal rules; acceptable authority evidence and responsible review authority.  
 **Impact if unresolved:** duplicate organizations, false authority assumptions, or event submissions attributed to the wrong legal/operating body.  
 **Stop condition:** no real organizer verification, submission authorization or public event listing based solely on a linked account or organization name.
 
@@ -359,3 +359,8 @@ External stakeholder silence does not prevent further synthetic design, but it a
 ## 4. Evidence review checkpoint — 2026-11-17
 
 The [Tournament Identifier Crosswalk](TOURNAMENT-IDENTIFIER-CROSSWALK.md) records the exact source inventory and separates the two outcomes: TAD-001 is **READY FOR GOVERNANCE** as a bounded naming decision; TAD-002 is **BLOCKED** because the proposed MatchParticipation entity has not been shown to have an independent lifecycle or multiplicity beyond the current fixture/participation pair. These status changes are evidence-framing only. Neither decision is ratified, and no implementation authority is created.
+
+
+## 5. TAD-003 evidence review checkpoint — 2026-11-17
+
+The [Organizer Identity and Authority Crosswalk](ORGANIZER-IDENTITY-AUTHORITY-CROSSWALK.md) identifies a preferred conceptual boundary but does not close the decision. Reuse canonical Organization as the enduring identity; treat Organizer as an event-scoped capacity; distinguish the submitting User from the represented Organization; and evaluate representative authority separately. TAD-003 remains **BLOCKED** because G2-SEAM-02 affiliation/authorization semantics, independent individual organizers, cardinality, delegation and authority lifecycle remain unresolved. No identity entity, authorization model or implementation is ratified.
