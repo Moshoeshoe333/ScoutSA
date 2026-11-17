@@ -104,19 +104,19 @@ Priority is a sequencing aid, not a claim that lower-priority items are optional
 **Status:** OPEN  
 **Question:** What are the permitted multiplicities and lifecycle rules for TeamEntry and PlayerParticipation within one edition/division?
 
-**Observed evidence:** Current proposals link one team entry to multiple player participations and bind participation to a team entry. They do not fully settle guest players, transfers, duplicate registrations, multiple teams or cross-division entries.
+**Observed evidence:** The relationship and architecture proposals bind Player Participation to Team Entry and propose one Team Entry to many participations. The eligibility model scopes review to participation/division/edition. Tournament Manager creates a new Team ID and Team Entry together for each registration and a new Player ID for every participation; it cannot reuse Team or Player identities to demonstrate cross-division entries, dual registration or transfers. Its alias and shirt-number checks are local demo constraints only. The canonical Domain Model establishes stable Player identity and Organization–Player Membership, but does not ratify a Team/Team Entry cardinality contract. See the [Team Entry and Player Participation Cardinality Crosswalk](TEAM-ENTRY-PLAYER-PARTICIPATION-CARDINALITY-CROSSWALK.md).
 
 **Options:**
-- A. One player may have only one active participation per edition.
-- B. One player may have multiple participations, subject to division/team rules and explicit status/effective periods.
-- C. Allow multiple records but leave conflicts to manual review without a defined uniqueness rule.
+- A. Enforce one active Player Participation per Player per edition.
+- B. Permit multiple participation records where distinct team-entry/competition contexts allow them, with competition-scoped overlap and effective-period rules.
+- C. Allow multiple records but leave conflicts to manual review without defined scope or lifecycle rules.
 
-**Candidate recommendation:** B is more expressive, but uniqueness must be defined at the competition-rule scope (for example edition, division and team entry) rather than assumed globally.
+**Candidate recommendation:** B is the more expressive candidate, but it is not ratified. Define uniqueness and active-overlap constraints only at the exact scope established by the relevant competition rules. Keep Team identity separate from Team Entry only if the canonical domain owner ratifies that distinction. Separate registration, roster status, eligibility review, player/guardian permission, fixture selection and appearance.
 
-**Decision authority required:** Domain governance; competition-rule owner for each real competition.  
-**Evidence required:** representative competition regulations and cases for transfers, guest players, dual registration, age divisions, withdrawals and reinstatement.  
-**Impact if unresolved:** duplicate or contradictory player registrations, invalid roster/fixture relationships and misleading player history.  
-**Stop condition:** do not enforce global one-player/one-team assumptions or treat demo roster state as official eligibility.
+**Decision authority required:** Domain governance for Team/Team Entry/Player Participation semantics; competition-rule owner for each real competition; privacy/safeguarding authority before real player/minor processing.  
+**Evidence reviewed:** tournament relationship/architecture proposals, Tournament Manager seed and form handlers, eligibility review model, Day Operations, Match-Day Handoff, Player Tournament History and canonical root models. **Evidence still required:** representative regulations and edge cases for multi-division entries, guest players, dual registration, transfers/loans, age-group movement, replacement, registration windows, withdrawal/reinstatement, roster limits, identity conflicts, effective periods and appeals.  
+**Impact if unresolved:** duplicate or contradictory registrations, incorrect team/player histories, invalid roster/fixture relationships, or false assumptions about eligibility and permission.  
+**Stop condition:** do not enforce global one-player/one-team or one-team/one-division assumptions; do not infer identity from aliases; do not treat demo roster state as official registration or eligibility; no real player/minor processing or production constraints.
 
 ### TAD-005 — Fixture consistency and lifecycle
 
@@ -364,3 +364,8 @@ The [Tournament Identifier Crosswalk](TOURNAMENT-IDENTIFIER-CROSSWALK.md) record
 ## 5. TAD-003 evidence review checkpoint — 2026-11-17
 
 The [Organizer Identity and Authority Crosswalk](ORGANIZER-IDENTITY-AUTHORITY-CROSSWALK.md) identifies a preferred conceptual boundary but does not close the decision. Reuse canonical Organization as the enduring identity; treat Organizer as an event-scoped capacity; distinguish the submitting User from the represented Organization; and evaluate representative authority separately. TAD-003 remains **BLOCKED** because G2-SEAM-02 affiliation/authorization semantics, independent individual organizers, cardinality, delegation and authority lifecycle remain unresolved. No identity entity, authorization model or implementation is ratified.
+
+
+## 6. TAD-004 evidence review checkpoint — 2026-11-17
+
+The [Team Entry and Player Participation Cardinality Crosswalk](TEAM-ENTRY-PLAYER-PARTICIPATION-CARDINALITY-CROSSWALK.md) confirms the proposed TeamEntry → PlayerParticipation relationship but finds that the current Manager creates fresh Team and Player IDs on every entry/participation and therefore cannot demonstrate identity reuse, multi-division entries, dual registration or transfers. Registration, roster status, eligibility, permission and appearance are separate concerns. TAD-004 remains **OPEN** pending canonical Team semantics and representative competition regulations for cardinality, effective periods, transfer, guest/dual registration, duplicate resolution and appeals. No domain decision or implementation authority is created.
