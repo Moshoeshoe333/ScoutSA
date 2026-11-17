@@ -331,3 +331,13 @@ A second browser scenario now starts from a fresh page, configures a 60-minute m
 | `a4d74a4a70b54d62a677f6bab793ebb2816cc173` | Added a fresh-session browser assertion that an out-of-range substitution is rejected without a write. |
 
 **Verification remains pending:** no hosted browser run has been confirmed for these commits. The new test is committed, not reported as passed. Mainline and implementation gates remain unchanged.
+## 18. Match-day regression hardening — 17 November 2026
+
+The appearance regression now checks each participation row's displayed minute value directly, avoiding ambiguous multi-row regular-expression matching. Match-day navigation labels were renumbered so the new Appearances & Minutes step has a unique sequence number and subsequent steps follow it.
+
+| Commit | Change |
+|---|---|
+| `f663e43ed69e169d279296ee2d953dd56e8a679e` | Replaced fragile regex assertions with row-specific displayed-value assertions. |
+| `e0647789b0cb296d23e018e934366c09bd2c5a8f` | Corrected unique step numbering in the Tournament Day Operations navigation. |
+
+**Verification:** still pending. The latest commit-status query returned no status entries; no complete hosted Playwright run is confirmed. Do not state that the new browser assertions passed until a non-cancelled run is inspected.
