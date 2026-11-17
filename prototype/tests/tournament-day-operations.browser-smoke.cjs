@@ -56,6 +56,10 @@ const tampered={...packageData,appearances:packageData.appearances.map((a,i)=>i=
 await historyPage.locator("#handoffFile").setInputFiles({name:"tampered-handoff.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(tampered))});
 assert.match(await historyPage.locator("#handoffStatus").innerText(),/Import rejected: Derived appearance values do not reconcile/);
 assert.equal(await historyPage.locator("#countMinutes").innerText(),"25","rejected package must preserve the previously imported history view");
+const nonDemo={...packageData,lineups:packageData.lineups.map((lineup,i)=>i===0?{...lineup,participationId:"PAR-REAL-123"}:lineup)};
+await historyPage.locator("#handoffFile").setInputFiles({name:"non-demo-handoff.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(nonDemo))});
+assert.match(await historyPage.locator("#handoffStatus").innerText(),/synthetic participation and team entry/);
+assert.equal(await historyPage.locator("#countMinutes").innerText(),"25","non-DEMO IDs must not replace the validated history view");
 
 await historyPage.setViewportSize({width:390,height:844});
 const historyDims=await historyPage.evaluate(()=>({w:document.documentElement.clientWidth,s:document.documentElement.scrollWidth}));
