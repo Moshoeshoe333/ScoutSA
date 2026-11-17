@@ -85,7 +85,7 @@ $("playerSelect").replaceChildren(...parsed.lineups.map(l=>{const option=documen
 $("playerSelect").value=parsed.lineups.some(l=>l.participationId===previous)?previous:parsed.lineups[0].participationId;
 $("handoffStatus").textContent="Validated "+parsed.packageId+" · "+parsed.fixtureId+" · "+parsed.lineups.length+" lineup(s) · "+parsed.events.length+" event(s). Synthetic only; source authenticity is not verified.";
 render();
-}catch(error){importedHandoff=null;$("handoffStatus").textContent="Import rejected: "+error.message;e.target.value="";}
+}catch(error){$("handoffStatus").textContent="Import rejected: "+error.message;e.target.value="";render();}
 });
 $("playerSelect").addEventListener("change",render);render();
 </script>
