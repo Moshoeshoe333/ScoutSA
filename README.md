@@ -38,7 +38,7 @@ Latest hosted workflow [43848921959](https://github.com/Moshoeshoe333/ScoutSA/ac
 
 The 13 November verification [43444088668](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43444088668) and later documentation workflow [43445376478](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43445376478) remain historical checkpoints.
 
-See the [Prototype README](prototype/README.md) for scope, how to open the demo, test commands, current engine behavior and limitations. The latest prototype CI incident and remediation are recorded in the 17 November session ledger; the most recent historical green run is not evidence for later commits. See the [16 November session ledger](prototype/verification/SESSION-LEDGER-2026-11-16.md) for the latest implementation, verification evidence and next engineering sequence; the [13 November session ledger](prototype/verification/SESSION-LEDGER-2026-11-13.md) remains available as historical context.
+See the [Prototype README](prototype/README.md) for scope, how to open the demo, test commands, current engine behavior and limitations. The latest prototype CI incident and remediation are recorded in the 17 November session ledger; the most recent historical green run is not evidence for later commits. See the [17 November session ledger](prototype/verification/SESSION-LEDGER-2026-11-17.md) for the latest integrity incident, corrective work and exact-head verification stop line; the [16 November](prototype/verification/SESSION-LEDGER-2026-11-16.md) and [13 November](prototype/verification/SESSION-LEDGER-2026-11-13.md) ledgers remain historical context.
 
 ## Product principles
 
@@ -73,6 +73,7 @@ The initial focus is the Vaal Triangle and Sedibeng, with potential expansion th
 ### Engineering and prototype
 - [Documentation Integrity and Error Prevention](docs/engineering-integrity.md)
 - [Prototype README](prototype/README.md)
+- [Session Ledger — 17 November 2026](prototype/verification/SESSION-LEDGER-2026-11-17.md) — latest prototype stabilization and verification status.
 - [Session Ledger — 13 November 2026](prototype/verification/SESSION-LEDGER-2026-11-13.md)
 - [33-tier Audit-History Assessment](prototype/verification/33-tier-audit-history-assessment-2026-11-13.md)
 - [Synthetic Audit-History Proposal](prototype/SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md)
