@@ -15,9 +15,9 @@
 <button data-section="lineups">03 · Team lineups<small>Starters, substitutes and unused</small></button>
 <button data-section="substitutions">04 · Substitutions<small>Track player changes</small></button>
 <button data-section="appearances">05 · Appearances & minutes<small>Derive participation from lineups and substitutions</small></button>
-<button data-section="events">05 · Match events<small>Goals, cards and observations</small></button>
-<button data-section="reports">06 · Match report<small>Record sourced report and review state</small></button>
-<button data-section="ledger">07 · Evidence ledger<small>Inspect linked IDs and provenance</small></button>
+<button data-section="events">06 · Match events<small>Goals, cards and observations</small></button>
+<button data-section="reports">07 · Match report<small>Record sourced report and review state</small></button>
+<button data-section="ledger">08 · Evidence ledger<small>Inspect linked IDs and provenance</small></button>
 </nav><section class="panel">
 <div class="section active" id="section-overview"><h2>Match-day control</h2><p class="sub">Select the fixture and record operational state. A status change does not certify that the match occurred.</p>
 <form id="dayForm"><div class="grid"><div class="field"><label for="dayFixture">Fixture *</label><select id="dayFixture" required><option value="FIX-DEMO-001">FIX-DEMO-001 · Blue Comets FC vs Vaal United Academy</option></select></div><div class="field"><label for="dayStatus">Match-day status *</label><select id="dayStatus"><option>Scheduled</option><option>Teams checked in</option><option>Officials checked in</option><option>In progress</option><option>Half-time</option><option>Completed</option><option>Delayed</option><option>Abandoned</option></select></div><div class="field"><label for="dayKickoff">Kick-off time (demo)</label><input id="dayKickoff" type="time" value="14:00"></div><div class="field"><label for="dayVenue">Venue label *</label><input id="dayVenue" required pattern="DEMO-[A-Za-z0-9][A-Za-z0-9 _\-]{1,70}" value="DEMO-Community-Ground-A"></div><div class="field"><label for="dayCoordinator">Coordinator label *</label><input id="dayCoordinator" required pattern="DEMO-[A-Za-z0-9][A-Za-z0-9 _\-]{1,70}" value="DEMO-Coordinator-01"></div></div><div class="actions"><button class="primary" type="submit">Save match-day state</button></div><div id="dayMessage" class="message" role="status"></div></form><div id="dayTable"></div></div>
