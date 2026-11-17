@@ -41,7 +41,8 @@ function renderTable(target,headers,rows){const table=cell("table","");const the
 function validateHandoff(p){
 const fail=m=>{throw new Error(m)};
 if(!p||p.format!=="scoutsa.match-day-handoff"||p.schemaVersion!==1||p.dataClass!=="SYNTHETIC_DEMO_ONLY")fail("Unsupported package format, version or data classification.");
-const demoId=value=>typeof value==="string"&&/^[A-Z]{2,5}-DEMO-[A-Z0-9-]{1,40}$/.test(value);\nif(!demoId(p.fixtureId))fail("Fixture ID is missing or is not a synthetic DEMO ID.");
+const demoId=value=>typeof value==="string"&&/^[A-Z]{2,5}-DEMO-[A-Z0-9-]{1,40}$/.test(value);
+if(!demoId(p.fixtureId))fail("Fixture ID is missing or is not a synthetic DEMO ID.");
 if(!Number.isInteger(p.matchDurationMinutes)||p.matchDurationMinutes<1||p.matchDurationMinutes>150)fail("Match duration must be a whole number from 1 to 150.");
 for(const k of ["officials","lineups","substitutions","appearances","events","reports","sources"])if(!Array.isArray(p[k]))fail("Package is missing required array: "+k+".");
 if(!p.lineups.length)fail("Package must contain at least one lineup record.");
