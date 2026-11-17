@@ -351,9 +351,50 @@ A review of the current branch found two maintainability issues and corrected th
 
 | Commit | Change |
 |---|---|
-| Pending | Tighten the derived-minute browser assertion to the Minutes column. |
-| Pending | Restore the README tournament resource index formatting. |
+| `1a16dadd4303d316b042ada40b1567e665ca3d00` | Tighten the derived-minute browser assertion to the Minutes column. |
+| `a3de7f2625ce1ac218ef246b791d506847b86f3e` | Restore the README tournament resource index formatting. |
 
 **Verification remains pending:** these are committed source changes only. No local browser execution or complete hosted workflow run is confirmed. Do not report the browser suite as passing.
 
 Mainline, schema, gates, and implementation authorization are unchanged. All tournament data remains synthetic and session-only.
+
+
+## 20. Player Tournament History — 17 November 2026
+
+A read-only Player Tournament History page has been added to the isolated prototype branch.
+
+### Included relationship view
+
+- Player ID → PlayerParticipation ID → TeamEntry ID.
+- Tournament ID → edition ID → division ID → fixture ID.
+- Fixture result and source/review state.
+- Lineup and substitution IDs supporting a derived appearance/minutes snapshot.
+- Statistical observation IDs, event links, source IDs and review states.
+- Player selection between two fictional adult sample participations.
+- Navigation links from Tournament Manager, Tournament Day Operations and Match Statistic Reconciliation.
+
+The view does not claim live synchronization. It reuses matching synthetic IDs and fixed sample snapshots across separate pages; there is no shared session store, API or database. It is read-only and does not calculate rankings or verified player totals.
+
+### Cross-record discrepancy retained
+
+The Player 1 snapshot surfaces a chronology conflict: `MEV-DEMO-002` is recorded at minute 67, while `SUB-DEMO-001` records the player leaving at minute 65. The page preserves both source observations and warns against silently reconciling them. This is a synthetic data-quality finding, not proof of the match event or either timestamp.
+
+### Commits
+
+| Commit | Change |
+|---|---|
+| `0ba8f175b8167693fcadbc235b8a787faa5df8ac` | Add the read-only Player Tournament History page. |
+| `1e6edecb0143bbe58413cfec233a549946e1a6c9` | Surface the contradictory event/appearance chronology in the history view. |
+| `dfe0007fc7534114fd58f533077a752e24467fa6` | Add browser assertions for player switching, source states and mobile layout. |
+| `55c4169303a5b1a44ba0ed039f10c51e4e8fd1fe` | Assert the 67/65-minute chronology conflict remains visible. |
+| `a4cb2cde446df09f8f9c39626892b4cf58be2f30` | Add the proposed Player Tournament History relationship model. |
+| `2b594b95be53a55bd46bd10d8de71f22b41cb9df` | Document the chronology-conflict handling rule. |
+| `7c3b3f1b60678f88bf31fbef1e3d9436cdd77945` | Index the history page and model in the prototype README. |
+
+### Verification status
+
+The page and browser test source were syntax-parsed during this session. No Playwright browser run was executed locally, and no complete hosted workflow result or passing status was returned for the latest changes. **The browser assertions are committed but not confirmed passing.** The earlier Tournament Manager workflow failure/cancellation and the new Tournament Day Operations verification gap remain open.
+
+### Boundaries
+
+All records are synthetic and adult-labelled. The history view is not a production player profile, official match record, verified statistic, scouting verdict or placement record. No real player/minor data, contact information or media may be entered. Mainline, schema and implementation gates remain unchanged.
