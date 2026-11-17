@@ -78,6 +78,7 @@ See:
 - [Tournament Architecture Decision Register](TOURNAMENT-ARCHITECTURE-DECISION-REGISTER.md) — 14 traceable decisions with priority, status, options, proposed direction, required authority, evidence, dependencies and stop conditions; not ratified and grants no implementation authority.
 - [Tournament Identifier Crosswalk](TOURNAMENT-IDENTIFIER-CROSSWALK.md) — source-backed comparison of edition-key naming and fixture-scoped participation joins; advances TAD-001 to governance readiness and keeps TAD-002 blocked pending domain evidence.
 - [Organizer Identity and Authority Crosswalk](ORGANIZER-IDENTITY-AUTHORITY-CROSSWALK.md) — maps the canonical Organization and unresolved User-affiliation boundaries to tournament organizer submission, authority and publication; keeps TAD-003 blocked.
+- [Team Entry and Player Participation Cardinality Crosswalk](TEAM-ENTRY-PLAYER-PARTICIPATION-CARDINALITY-CROSSWALK.md) — reviews Team/Team Entry identity reuse, player participation multiplicity, registration/eligibility/permission/appearance boundaries and transfer/duplicate-registration gaps; keeps TAD-004 open.
 - [Session Ledger — 13 November 2026](verification/SESSION-LEDGER-2026-11-13.md).
 - [Session Ledger — 16 November 2026](verification/SESSION-LEDGER-2026-11-16.md).
 
