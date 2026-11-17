@@ -398,3 +398,40 @@ The page and browser test source were syntax-parsed during this session. No Play
 ### Boundaries
 
 All records are synthetic and adult-labelled. The history view is not a production player profile, official match record, verified statistic, scouting verdict or placement record. No real player/minor data, contact information or media may be entered. Mainline, schema and implementation gates remain unchanged.
+
+## 21. Versioned fixture handoff and local Player History import — 17 November 2026
+
+### Delivered on `prototype/internal-demo`
+
+- Tournament Day Operations now exports a fixture-scoped package using contract `scoutsa.match-day-handoff`, schema version 1 and explicit `SYNTHETIC_DEMO_ONLY` classification.
+- The package includes match-day state, officials, lineups, substitutions, derived appearances, events, reports and source references for one selected fixture.
+- Export refuses invalid appearance intervals, duplicate record IDs, missing source references, cross-team substitutions, missing lineup links and event/substitution minutes outside the configured match duration.
+- Player Tournament History accepts a local JSON file, limits the file to 1 MB, validates package identity/version/classification, fixture scope, unique IDs, required links, source origins, substitution relationships and event references.
+- The importer independently recalculates every appearance interval and rejects a package when supplied minutes or substitution references do not reconcile.
+- Imported event observations remain events; they are not converted into verified statistical totals. Missing competition/team labels remain explicitly unavailable rather than inferred.
+- The chronology discrepancy is retained: the smoke fixture records the event at minute 67 and the player's substitution-out at minute 65. The imported history warns that the event falls after the derived appearance interval.
+- Match event entry now rejects minutes beyond the selected match duration.
+- README and a versioned handoff contract document were updated.
+
+### Relevant commits
+
+| Commit | Change |
+|---|---|
+| `0953bcb5d151f0b1b57973e6c4e2d13311f6e751` | Fixture-scoped validated export. |
+| `05c1e50f69f3385cb88358580af3ce46d41dd5e5` | Local package validation and Player History import. |
+| `7570c1a1b2eb2ab524184b6ea69ebf44a229099c` | Reject event minutes outside match duration. |
+| `974e6b0f9214f5ee4e3bc4307bdc6da80ea8994c` | Document version 1 handoff contract. |
+| `71217f1da5a36e720c53375244cad4512e701d3d` | Add export package assertions and chronology test input. |
+| `ad1a875d6a3b3c471cf563770430c27a0fcd1e20` | Keep pre-import sample-player tests scoped to seeded options. |
+
+### Verification
+
+The inline scripts in Tournament Day Operations and Player Tournament History, plus the browser smoke-test source, were syntax-parsed. This is not a browser execution. No Playwright run was executed and no fresh hosted CI pass is confirmed for these changes. The test source includes export, package shape, successful local import, player selection, chronology warning and tampered-appearance rejection checks; these assertions remain **unverified** until a complete browser run is available.
+
+### Boundaries and open work
+
+- Local file import/export is a manual transfer, not shared state, a backend, an API, cloud storage or production synchronization.
+- JSON structure and relationships are checked, but package authenticity is not. No signature, hash, trusted timestamp, source-document capture or independent referee verification exists.
+- The package is synthetic-only and does not establish player identity, source authority, match truth or official statistics.
+- No real player or minor data may be entered. No public profiles, rankings, contact routes, selection predictions or placement claims are enabled.
+- Mainline, database schema, product gates and implementation authorization are unchanged.
