@@ -36,6 +36,7 @@ assert.equal(await historyPage.locator("#countMinutes").innerText(),"65");
 assert.equal(await historyPage.locator("#statsTable tbody tr").count(),2);
 assert.ok((await historyPage.locator("#identityFacts").innerText()).includes("PAR-DEMO-001"));
 assert.ok((await historyPage.locator("#statNote").innerText()).includes("possible duplicate candidate"));
+assert.ok((await historyPage.locator("#chronologyNote").innerText()).includes("67")&&(await historyPage.locator("#chronologyNote").innerText()).includes("65"),"cross-record chronology contradiction must remain visible");
 await historyPage.locator("#playerSelect").selectOption("PAR-DEMO-002");
 assert.equal(await historyPage.locator("#countMinutes").innerText(),"90");
 assert.equal(await historyPage.locator("#statsTable tbody tr").count(),1);
