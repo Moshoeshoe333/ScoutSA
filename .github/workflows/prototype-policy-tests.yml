@@ -6,42 +6,19 @@ on:
       - prototype/internal-demo
     paths:
       - "README.md"
-      - "docs/00-gate-status.md"
-      - "docs/engineering-integrity.md"
-      - "prototype/README.md"
-      - "prototype/index.html"
-      - "prototype/*.html"
-      - "prototype/REVIEW-ENGINE-CONTRACT.md"
-      - "prototype/review-engine.js"
-      - "prototype/audit-history.js"
-      - "prototype/SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md"
-      - "prototype/review-state.js"
-      - "prototype/handoff-filter.js"
-      - "prototype/tests/**"
-      - "prototype/data/**"
-      - "prototype/contracts/**"
-      - "prototype/verification/**"
-      - "prototype/discovery-request.html"
-      - "prototype/discovery-request-smoke-tests.html"
-      - ".github/workflows/prototype-policy-tests.yml"
+      - "docs/**"
+      - "prototype/**"
+      - ".github/workflows/**"
   pull_request:
     paths:
       - "README.md"
-      - "docs/00-gate-status.md"
-      - "docs/engineering-integrity.md"
-      - "prototype/README.md"
-      - "prototype/index.html"
-      - "prototype/REVIEW-ENGINE-CONTRACT.md"
-      - "prototype/review-engine.js"
-      - "prototype/review-state.js"
-      - "prototype/tests/**"
-      - "prototype/data/**"
-      - "prototype/contracts/**"
-      - "prototype/verification/**"
-      - "prototype/discovery-request.html"
-      - "prototype/discovery-request-smoke-tests.html"
-      - ".github/workflows/prototype-policy-tests.yml"
+      - "docs/**"
+      - "prototype/**"
+      - ".github/workflows/**"
   workflow_dispatch:
+concurrency:
+  group: scoutsa-prototype-policy-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
