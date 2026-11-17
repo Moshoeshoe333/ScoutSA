@@ -443,3 +443,36 @@ The inline scripts in Tournament Day Operations and Player Tournament History, p
 **Synthetic-ID guard:** the local importer now rejects fixture, record and relationship identifiers that do not match the prototype DEMO-ID pattern. Browser smoke source also includes a non-DEMO identifier rejection case. This is a guard against accidental real-data entry, not an identity or security verification mechanism.
 
 **Final source review:** syntax parsing caught a literal escaped line break in the importer during review; it was corrected in commit `3c71f05c6f23e77da00be626374aa5e12e6f78ad`. The final Tournament Day Operations page, Player Tournament History page and browser smoke-test source all parse. The browser suite itself remains unexecuted.
+
+
+## 22. Tournament cross-module data architecture draft — 17 November 2026
+
+### Review performed
+
+Reviewed the existing tournament relationship, organizer portal, day-operations, statistic reconciliation, Player Tournament History and match-day handoff contracts against the root Domain Model and frozen conceptual Relationship Model.
+
+### Findings recorded
+
+- The tournament proposals use both `edition_id` and `tournament_edition_id` for the edition key.
+- The relationship proposal uses `match_participation_id` for fixture-scoped player statistics, while the reconciliation proposal also models observations directly through `fixture_id + participation_id`.
+- The current match-day handoff transports `fixtureId` and `participationId`; it does not yet resolve a canonical persisted match-participation record.
+- Organizer is modeled as an organization-like entity even though the canonical domain already contains Organization; this mapping and authority relationship remain unresolved.
+- Source labels, source references, evidence artifacts, assertions, verification and review decisions require clearer separation before real ingestion.
+- Match-day session multiplicity, return substitutions, abandoned/restarted fixtures, correction history and metric-definition governance remain open.
+
+### Delivered
+
+Added `prototype/TOURNAMENT-DATA-ARCHITECTURE-DRAFT.md`, a cross-module relationship crosswalk with proposed record grain/IDs, source-of-truth boundaries, integrity requirements, inconsistencies and explicit blocked decisions. Added it to the prototype README index.
+
+The draft proposes `edition_id` as the consistent conceptual key and `match_participation_id` as the canonical fixture-scoped join target for statistic observations. These are recommendations for review only, not ratified changes. No existing proposal or canonical model was silently rewritten.
+
+### Commits
+
+| Commit | Change |
+|---|---|
+| `eda3b7e0e8151570fd29fdcf9a41e0960c137377` | Add cross-module tournament architecture draft. |
+| `2d6d31921aec215b08b83e7796bf1cf303f005cc` | Index the draft in prototype README. |
+
+### Verification and boundary
+
+This was a documentation review and addition. No application code, schema, migration, database, API, RLS, authentication, shared persistence or real-data processing was changed. No browser or test execution was performed for this documentation-only change. The architecture remains **NOT RATIFIED** and grants no implementation authority. Mainline remains untouched.
