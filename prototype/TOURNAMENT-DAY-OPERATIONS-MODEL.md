@@ -77,3 +77,20 @@ A player-facing match record references **participation ID**, not a display name
 - What role-based permissions and guardian/player authority gates apply before any real youth participation is processed?
 
 **Decision boundary:** this proposal may inform future design. It does not ratify a schema or authorize implementation on mainline. UI-008 safe-rendering work and the existing mainline gates remain open.
+
+## Derived appearance and minutes view — prototype extension (17 November 2026)
+
+The match-day prototype now displays a fixture-scoped derived appearance view using existing lineup and substitution records. It does not introduce a new persistent entity or independently sourced match statistic.
+
+| Input record | Derived interpretation |
+|---|---|
+| Lineup status `Starter` | Starts at minute 0; ends at the configured match duration unless a linked substitution records the player leaving. |
+| Lineup status `Substitute` with a linked substitution as incoming player | Starts at the recorded substitution minute; ends at configured match duration unless a later outgoing substitution exists. |
+| Lineup status `Unused` | Zero minutes and no appearance. |
+| Substitution record | Links outgoing and incoming participation IDs, fixture, minute and source record; drives the derived start/end interval. |
+
+The view reports lineup ID, participation ID, status, start/end minute, calculated minutes and the contributing lineup/substitution IDs. It is a convenience calculation, not a referee-certified appearance or official player statistic.
+
+**Fail-closed constraints:** match duration must be a whole number from 1 to 150; a substitution minute must not exceed the selected duration; if an existing substitution falls outside the configured duration or produces an invalid interval, no appearance totals are shown. Missing lineup records do not create appearances. Goals/cards/events are not used to infer playing time.
+
+**Known limitations:** the demo assumes a simple single-entry/single-exit interval, a single configured duration and no complex extra-time segments, abandoned/restarted periods, temporary dismissals or return substitutions. Competition-specific timing rules and source correction/versioning remain open design questions. The calculation is session-only and uses synthetic data. Do not treat the derived minutes as verified performance evidence or compare totals without competition, role, opponent and source-method context.
