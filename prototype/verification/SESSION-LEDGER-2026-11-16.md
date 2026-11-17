@@ -341,3 +341,19 @@ The appearance regression now checks each participation row's displayed minute v
 | `e0647789b0cb296d23e018e934366c09bd2c5a8f` | Corrected unique step numbering in the Tournament Day Operations navigation. |
 
 **Verification:** still pending. The latest commit-status query returned no status entries; no complete hosted Playwright run is confirmed. Do not state that the new browser assertions passed until a non-cancelled run is inspected.
+
+## 19. Documentation and exact-minute assertion hardening — 17 November 2026
+
+A review of the current branch found two maintainability issues and corrected them on the isolated prototype branch:
+
+- The Tournament Day Operations browser regression now reads the actual table cells and asserts the Minutes column specifically for each participation. This prevents a matching value in the start/end columns from satisfying the test accidentally.
+- The prototype README tournament index had literal escaped newline sequences and combined descriptions across separate bullets. The index has been restored to one Markdown bullet per resource, with explicit descriptions for Tournament Day Operations and Match Statistic Reconciliation.
+
+| Commit | Change |
+|---|---|
+| Pending | Tighten the derived-minute browser assertion to the Minutes column. |
+| Pending | Restore the README tournament resource index formatting. |
+
+**Verification remains pending:** these are committed source changes only. No local browser execution or complete hosted workflow run is confirmed. Do not report the browser suite as passing.
+
+Mainline, schema, gates, and implementation authorization are unchanged. All tournament data remains synthetic and session-only.
