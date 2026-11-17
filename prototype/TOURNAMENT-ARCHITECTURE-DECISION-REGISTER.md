@@ -337,15 +337,23 @@ Priority is a sequencing aid, not a claim that lower-priority items are optional
 | TAD-013 | TAD-007, TAD-012 | Real-data retention and deletion |
 | TAD-014 | TAD-001 to TAD-003, TAD-007, TAD-012 | Shared imports and synchronization |
 
-## 5. Recommended decision sequence
+## 5. Recommended decision sequence — dependency-corrected
 
-1. **Resolve TAD-001:** identifier naming is narrow and can be verified against existing contracts.
-2. **Resolve TAD-002 and TAD-006 together:** decide whether MatchParticipation is a real domain relationship and how it behaves across sessions/segments.
-3. **Resolve TAD-003:** remove the Organizer/Organization ambiguity before any real organizer workflow.
-4. **Resolve TAD-004 and TAD-005:** settle team/player registration and fixture lifecycle.
-5. **Resolve TAD-007 to TAD-009:** provenance, metric semantics and correction history.
-6. **Resolve TAD-010 and TAD-011:** competition eligibility and publication rights.
-7. **Resolve TAD-012 to TAD-014:** access, retention and future integration.
+The sequence below follows the dependency map above. Investigation may run in parallel, but a dependent decision must not be closed before its prerequisites are resolved.
+
+1. **TAD-001:** identifier inventory and naming; prepare for governance.
+2. **TAD-003:** reconcile Organizer with canonical Organization and resolve the authority-model dependency before organizer workflows.
+3. **TAD-004:** establish Team/TeamEntry and PlayerParticipation cardinality from canonical semantics and applicable competition rules.
+4. **TAD-005:** establish fixture identity and lifecycle against edition/division/entry context and competition rules.
+5. **TAD-006:** establish operational session, played attempt, periods and appearance intervals; depends on TAD-005.
+6. **TAD-002:** finalize MatchParticipation grain and statistic/event join path only after TAD-004 and TAD-006; these are its declared prerequisites.
+7. **TAD-007 and TAD-008:** govern provenance and metric definitions before source reconciliation relies on them.
+8. **TAD-009:** govern correction and adjudication using TAD-007 and TAD-008.
+9. **TAD-012:** establish purpose-bound access and safeguarding controls before any real player data or disclosure.
+10. **TAD-010 and TAD-011:** eligibility and publication decisions depend on the relevant authority, provenance and access controls.
+11. **TAD-013 and TAD-014:** retention and shared-import controls depend on the evidence, access and identity foundations above.
+
+This ordering is a planning correction, not a ratified domain decision. No item is closed by appearing in this sequence.
 
 ## 6. Current recommendation and stop line
 
