@@ -1,12 +1,15 @@
 # ScoutSA Internal Web Prototype
 
 **Branch:** `prototype/internal-demo`  
-**State as at:** 16 November 2026  
+**State as at:** 17 November 2026  
 **Purpose:** isolated synthetic-data design, workflow and policy-evaluation demonstration.
 
 This branch contains a static browser prototype and a synthetic review engine. It is deliberately separate from mainline. It does not lift any mainline implementation hold.
 
 ## Current verified state
+
+**Current verification status — 17 November 2026:** DOC-007 corrective changes are committed, but the latest exact-head hosted run must complete before the branch can be described as green. The earlier browser baseline is historical and does not validate the latest tournament changes. See the [17 November session ledger](verification/SESSION-LEDGER-2026-11-17.md) for the incident, fixes and required evidence.
+
 
 - Review engine: `review-engine.js` **v0.3.0**.
 - Synthetic audit-history validator: `audit-history.js` **v0.2.0**, integrated as a mandatory structural gate in the synthetic invitation-review evaluation.
@@ -89,6 +92,7 @@ See:
 - [Fixture Consistency and Lifecycle Crosswalk](FIXTURE-CONSISTENCY-LIFECYCLE-CROSSWALK.md) — reviews fixture identity and edition/division/team-entry consistency, schedule changes, abandoned/replayed matches, walkovers, multi-leg ties and result corrections; keeps TAD-005 open.
 - [Session Ledger — 13 November 2026](verification/SESSION-LEDGER-2026-11-13.md).
 - [Session Ledger — 16 November 2026](verification/SESSION-LEDGER-2026-11-16.md).
+- [Session Ledger — 17 November 2026](verification/SESSION-LEDGER-2026-11-17.md) — DOC-007 incident, CI path-filter repair, decision dependency correction and current verification stop line.
 
 ## Open engineering issue: UI-008
 
