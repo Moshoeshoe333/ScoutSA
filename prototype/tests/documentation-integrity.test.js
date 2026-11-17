@@ -13,6 +13,7 @@ const auditTests = read("prototype/tests/audit-history.test.js");
 const auditProposal = read("prototype/SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md");
 const contract = read("prototype/REVIEW-ENGINE-CONTRACT.md");
 const prototypeReadme = read("prototype/README.md");
+const lessonLedger = read("docs/engineering-lessons-ledger.md");
 const gateStatus = read("docs/00-gate-status.md");
 const verification = read("prototype/verification/audit-history-gate-verification-2026-11-13.md");
 const rootReadme = read("README.md");
@@ -47,6 +48,21 @@ test("current documentation reports the count derived from test declarations", (
 
 test("root README links the integrity policy and workflow directory has no empty files", () => {
   assert.ok(rootReadme.includes("docs/engineering-integrity.md"));
+  assert.ok(rootReadme.includes("docs/engineering-lessons-ledger.md"), "root README must link the engineering lessons ledger");
+  assert.ok(prototypeReadme.includes("../docs/engineering-lessons-ledger.md"), "prototype README must link the engineering lessons ledger");
+  const lessonEntries = [...lessonLedger.matchAll(/^### (LESSON-\\d{3}) — .+$/gm)];
+  const lessonIds = lessonEntries.map(match => match[1]);
+  assert.ok(lessonEntries.length >= 8, "the lessons ledger must retain the initial recorded failure patterns");
+  assert.equal(new Set(lessonIds).size, lessonIds.length, "lesson IDs must be unique");
+  for (let i = 0; i < lessonEntries.length; i++) {
+    const start = lessonEntries[i].index;
+    const end = lessonEntries[i + 1]?.index ?? lessonLedger.length;
+    const entry = lessonLedger.slice(start, end);
+    for (const field of ["Failure mode:", "Observed evidence:", "Root cause:", "Preventive control:", "Detective control:", "Regression / verification:", "Residual risk:", "Status:"]) {
+      assert.ok(entry.includes(field), lessonEntries[i][1] + " must include " + field);
+    }
+  }
+  assert.ok(lessonLedger.includes("Reusable cross-project control loop"), "ledger must preserve the cross-project transfer method");
   const workflowDir = path.join(root, ".github/workflows");
   if (fs.existsSync(workflowDir)) {
     for (const name of fs.readdirSync(workflowDir).filter(name => name.endsWith(".yml") || name.endsWith(".yaml"))) {

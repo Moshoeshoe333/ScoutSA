@@ -71,6 +71,7 @@ The initial focus is the Vaal Triangle and Sedibeng, with potential expansion th
 - [User Flows](docs/06-user-flows.md)
 
 ### Engineering and prototype
+- [Engineering Lessons Ledger](docs/engineering-lessons-ledger.md) — reusable incident-to-control practice and ScoutSA's recorded engineering lessons.
 - [Documentation Integrity and Error Prevention](docs/engineering-integrity.md)
 - [Prototype README](prototype/README.md)
 - [Session Ledger — 17 November 2026](prototype/verification/SESSION-LEDGER-2026-11-17.md) — latest prototype stabilization and verification status.

@@ -359,3 +359,8 @@ The projection also requires `allBlockingGatesSatisfied === true` plus fully pas
 - **Commits:** Test change `0d8e09d710046bf1cd5169910b2735a4ca8d9937`; corrected opaque-reference assertion `ca97424852a72d049bb5e2c969e67d249d181321`; documentation reconciliation follows on the same prototype branch.
 - **Verification:** Hosted CI result is pending. Do not report the new assertions as passed until a workflow run for the updated branch commit completes successfully.
 - **Boundary:** Mainline remains untouched. This is synthetic data consistency, not proof of real-world organization authority or affiliation.
+
+
+## 7. Cross-project engineering lessons
+
+The [Engineering Lessons Ledger](engineering-lessons-ledger.md) is the durable record for reusable failure patterns, root causes, preventive controls, detective controls, regression evidence and residual risk. Add an entry for every material incident, near miss or audit finding. Preserve failed attempts and historical evidence; do not mark a correction verified until the exact resulting commit has passed the relevant checks. Transfer control patterns to other projects only after checking that their assumptions and risk context fit.

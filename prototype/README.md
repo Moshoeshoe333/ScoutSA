@@ -22,6 +22,8 @@ The test counts above are source declarations and the cited workflow is the reco
 
 ## Open the prototype
 
+**Engineering learning control:** see the [cross-project Engineering Lessons Ledger](../docs/engineering-lessons-ledger.md) for permanent lessons, preventive controls, regression evidence and residual risks.
+
 Open `index.html` in a modern browser. No build step or package installation is required. The hub provides a separate three-screen Player Experience Preview for coach/guardian conversations, plus 11 specialist workspaces. The player preview is not counted as a specialist workspace:
 
 1. Player Passport
