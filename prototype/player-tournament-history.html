@@ -41,26 +41,26 @@ function renderTable(target,headers,rows){const table=cell("table","");const the
 function validateHandoff(p){
 const fail=m=>{throw new Error(m)};
 if(!p||p.format!=="scoutsa.match-day-handoff"||p.schemaVersion!==1||p.dataClass!=="SYNTHETIC_DEMO_ONLY")fail("Unsupported package format, version or data classification.");
-if(!/^FIX-[A-Z0-9-]{3,60}$/.test(p.fixtureId||""))fail("Fixture ID is missing or invalid.");
+const demoId=value=>typeof value==="string"&&/^[A-Z]{2,5}-DEMO-[A-Z0-9-]{1,40}$/.test(value);\nif(!demoId(p.fixtureId))fail("Fixture ID is missing or is not a synthetic DEMO ID.");
 if(!Number.isInteger(p.matchDurationMinutes)||p.matchDurationMinutes<1||p.matchDurationMinutes>150)fail("Match duration must be a whole number from 1 to 150.");
 for(const k of ["officials","lineups","substitutions","appearances","events","reports","sources"])if(!Array.isArray(p[k]))fail("Package is missing required array: "+k+".");
 if(!p.lineups.length)fail("Package must contain at least one lineup record.");
 const all=[...p.lineups,...p.substitutions,...p.events,...p.reports,...p.sources,...p.officials,...(p.matchDay?[p.matchDay]:[])],ids=all.map(x=>x.id);
-if(ids.some(x=>typeof x!=="string"||!x)||new Set(ids).size!==ids.length)fail("Record IDs must be non-empty and unique within this package.");
+if(ids.some(x=>!demoId(x))||new Set(ids).size!==ids.length)fail("Every record ID must be a unique synthetic DEMO ID.");
 for(const x of all)if(x.fixtureId!==p.fixtureId)fail("Package contains a record from another fixture.");
-if(p.lineups.some(x=>!x.participationId||!x.entryId))fail("Every lineup must identify a participation and team entry.");
+if(p.lineups.some(x=>!demoId(x.participationId)||!demoId(x.entryId)))fail("Every lineup must identify a synthetic participation and team entry.");
 if(new Set(p.lineups.map(x=>x.participationId)).size!==p.lineups.length)fail("A participation has duplicate lineup records in this fixture.");
 const sourceIds=new Set(p.sources.map(x=>x.id));
 for(const x of [...p.substitutions,...p.events,...p.reports])if(!sourceIds.has(x.sourceId))fail("A substitution, event or report has no included source record.");
-for(const x of p.substitutions){const off=p.lineups.find(l=>l.participationId===x.off),on=p.lineups.find(l=>l.participationId===x.on);if(!off||!on||off.entryId!==on.entryId||!Number.isInteger(x.minute)||x.minute<0||x.minute>p.matchDurationMinutes)fail("Substitution link, team or minute is invalid.");}
-for(const x of p.events)if(!p.lineups.some(l=>l.participationId===x.participationId)||!Number.isInteger(x.minute)||x.minute<0||x.minute>p.matchDurationMinutes)fail("Event participation link or minute is invalid.");
+for(const x of p.substitutions){if(!demoId(x.off)||!demoId(x.on)||!demoId(x.sourceId))fail("Substitution references must use synthetic DEMO IDs.");const off=p.lineups.find(l=>l.participationId===x.off),on=p.lineups.find(l=>l.participationId===x.on);if(!off||!on||off.entryId!==on.entryId||!Number.isInteger(x.minute)||x.minute<0||x.minute>p.matchDurationMinutes)fail("Substitution link, team or minute is invalid.");}
+for(const x of p.events)if(!demoId(x.participationId)||!demoId(x.sourceId)||!p.lineups.some(l=>l.participationId===x.participationId)||!Number.isInteger(x.minute)||x.minute<0||x.minute>p.matchDurationMinutes)fail("Event participation link or minute is invalid.");
 const expected=p.lineups.map(l=>{const incoming=p.substitutions.find(s=>s.on===l.participationId),outgoing=p.substitutions.find(s=>s.off===l.participationId);let start=0,end=0;if(incoming){start=incoming.minute;end=outgoing?outgoing.minute:p.matchDurationMinutes}else if(l.status==="Starter"||l.status==="Substituted"){end=outgoing?outgoing.minute:p.matchDurationMinutes;if(l.status==="Substituted"&&!outgoing)fail("Substituted lineup has no outgoing substitution.")}else if(l.status==="Entered")fail("Entered lineup has no incoming substitution.");if(start>end||end>p.matchDurationMinutes)fail("Derived appearance interval is invalid.");return {lineupId:l.id,participationId:l.participationId,teamEntryId:l.entryId,startMinute:start,endMinute:end,minutes:end-start,substitutionInId:incoming?.id||null,substitutionOutId:outgoing?.id||null}});
 if(p.appearances.length!==expected.length)fail("Derived appearance count does not match the lineup count.");
 for(const d of expected){const a=p.appearances.find(x=>x.lineupId===d.lineupId);if(!a||a.participationId!==d.participationId||a.teamEntryId!==d.teamEntryId||a.startMinute!==d.startMinute||a.endMinute!==d.endMinute||a.minutes!==d.minutes||a.substitutionInId!==d.substitutionInId||a.substitutionOutId!==d.substitutionOutId)fail("Derived appearance values do not reconcile with lineup/substitution records.");}
 }
 function importedRecord(pid){
 const p=importedHandoff,l=p.lineups.find(x=>x.participationId===pid);if(!l)return null;
-const base=records[pid]||{},a=p.appearances.find(x=>x.participationId===pid),incoming=p.substitutions.find(x=>x.on===pid),outgoing=p.substitutions.find(x=>x.off===pid);
+const candidate=records[pid]||{},base=candidate.fixture===p.fixtureId?candidate:{},a=p.appearances.find(x=>x.participationId===pid),incoming=p.substitutions.find(x=>x.on===pid),outgoing=p.substitutions.find(x=>x.off===pid);
 const events=p.events.filter(x=>x.participationId===pid).map(x=>({id:x.id,detail:x.type+" · minute "+x.minute,source:x.sourceId,review:x.review||"Unverified"}));
 const sources=p.sources.filter(x=>events.some(e=>e.source===x.id)||[incoming?.sourceId,outgoing?.sourceId].includes(x.id)).map(x=>({id:x.id,label:x.label,record:x.recordId}));
 const chronology=events.some(e=>{const m=e.detail.match(/minute ([0-9]+)/);return m&&Number(m[1])>(a?.endMinute??p.matchDurationMinutes)});
