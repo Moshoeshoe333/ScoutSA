@@ -59,7 +59,7 @@ For a substitute, the interval begins at the incoming substitution minute and en
 
 An unused named substitute has zero minutes. A contradictory status (for example, `Substituted` without an outgoing substitution, or `Entered` without an incoming substitution) invalidates the package.
 
-The importing page independently recomputes the intervals from lineups and substitutions and compares every derived field with the supplied appearance rows. A mismatch rejects the package. This is a consistency check, not proof of source authenticity.
+The importing page requires synthetic DEMO-form identifiers for the fixture and all record/reference IDs. It independently recomputes the intervals from lineups and substitutions and compares every derived field with the supplied appearance rows. A mismatch or non-DEMO identifier rejects the package. These are structural and consistency checks, not proof of source authenticity.
 
 ## What the importer does not do
 
