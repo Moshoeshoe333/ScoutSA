@@ -58,6 +58,11 @@ The audit-history model is experimental and not ratified. It is not an immutable
 Historical source-count references: Recorded 45-test CI baseline: [run 43401941704](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43401941704). Historical 46-test CI verification: [run 43403854544](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43403854544).
 
 See:
+- [Affiliation Evidence Model Proposal](AFFILIATION-EVIDENCE-MODEL-PROPOSAL.md) — non-ratified proposal for organization, community-coach and player-reported evidence classes; no implementation authority.
+- [Opportunity Evidence Acceptance Matrix](OPPORTUNITY-EVIDENCE-ACCEPTANCE-MATRIX.md) — candidate evidence handling by opportunity category; non-ratified.
+- [Opportunity Requirement Declaration](OPPORTUNITY-REQUIREMENT-DECLARATION.md) — proposed owner disclosures, mandatory criteria, preferences and independent-review controls; non-ratified.
+- [Opportunity Validation Scenario Pack](OPPORTUNITY-VALIDATION-SCENARIO-PACK.md) — fictional scenarios for adversarial validation; non-ratified.
+- [Synthetic Audit-History Proposal](SYNTHETIC-AUDIT-HISTORY-PROPOSAL.md) — experimental in-memory audit-history model; not durable, tamper-evident or production-authorized.
 - [Player Preview Validation Plan](PLAYER-PREVIEW-VALIDATION.md) — 14-day coach/parent discovery plan, open-ended price questions, stop rule and adult-pilot limitations.
 - [Vaal Football Ecosystem Register](VAAL-FOOTBALL-ECOSYSTEM-REGISTER.md) — research-seeded team, tournament, school and creator leads with provenance and verification states. It is not a complete census.
 - [Vaal-to-National Operating Model](VAAL-FOOTBALL-OPERATING-MODEL.md) — ELFA-first ecosystem, tournament statistics, internal scouting-support agent, schools, creators and national expansion.
