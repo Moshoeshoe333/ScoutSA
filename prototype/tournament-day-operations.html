@@ -47,11 +47,12 @@ if(!Number.isInteger(duration)||duration<1||duration>150){$("appearanceMessage")
 const rows=state.lineups.filter(x=>x.fixtureId===fixture).map(lineup=>{
 const entered=state.subs.find(x=>x.fixtureId===fixture&&x.on===lineup.participationId);
 const left=state.subs.find(x=>x.fixtureId===fixture&&x.off===lineup.participationId);
-let start=0,end=0,status="Unused",minutes=0;
-if(lineup.status==="Starter"||lineup.status==="Substituted"){start=0;end=left?left.minute:duration;status=left?"Started · substituted off":"Started · completed";minutes=Math.max(0,end-start)}
-else if(lineup.status==="Entered"||entered){start=entered?entered.minute:0;end=left?left.minute:duration;status=left?"Substitute · later substituted off":"Substitute · entered";minutes=Math.max(0,end-start)}
-else if(lineup.status==="Substitute"){status="Named substitute · unused"}
-const valid=end<=duration&&start<=end;
+let start=0,end=0,status="Unused",minutes=0,valid=true;
+if(entered){start=entered.minute;end=left?left.minute:duration;status=left?"Substitute · later substituted off":"Substitute · entered";minutes=Math.max(0,end-start)}
+else if(lineup.status==="Starter"||lineup.status==="Substituted"){start=0;end=left?left.minute:duration;status=left?"Started · substituted off":"Started · completed";minutes=Math.max(0,end-start);if(lineup.status==="Substituted"&&!left)valid=false}
+else if(lineup.status==="Unused"||lineup.status==="Substitute"){status="Named substitute · unused"}
+else if(lineup.status==="Entered"){valid=false}
+valid=valid&&end<=duration&&start<=end;
 return [lineup,entered,left,start,end,minutes,status,valid];
 });
 const invalid=rows.filter(x=>!x[7]);
