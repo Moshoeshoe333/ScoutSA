@@ -438,3 +438,6 @@ The inline scripts in Tournament Day Operations and Player Tournament History, p
 
 
 **Follow-up UX safeguard:** the history importer now retains the previously validated package when a subsequent file is rejected, re-renders that prior view, and provides a direct return link to Match-Day Operations. The browser smoke source asserts that a tampered package does not replace the previously imported player history. This remains unexecuted pending a browser run.
+
+
+**Synthetic-ID guard:** the local importer now rejects fixture, record and relationship identifiers that do not match the prototype DEMO-ID pattern. Browser smoke source also includes a non-DEMO identifier rejection case. This is a guard against accidental real-data entry, not an identity or security verification mechanism.
