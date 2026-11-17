@@ -319,3 +319,15 @@ The new browser regression test is committed, but the GitHub commit-status looku
 ### Boundaries
 
 This is a session-only synthetic calculation, not a new database entity, official appearance record, verified performance statistic or production feature. The simple interval model does not yet handle competition-specific extra-time periods, abandoned/restarted matches, temporary dismissals or return substitutions. Mainline, schema and gate decisions remain unchanged.
+## 17. Appearance interval correction and substitution-duration guard — 17 November 2026
+
+A follow-up review identified an edge case in the derived interval logic: if a substitute later becomes the outgoing player, the calculation must prefer the recorded entry minute over treating the changed lineup status as an original starter. The calculation now gives the linked incoming-substitution record precedence and fails closed for inconsistent `Entered`/`Substituted` states without the corresponding relationship.
+
+A second browser scenario now starts from a fresh page, configures a 60-minute match, attempts a substitution at minute 65, and asserts that the operation is rejected without creating a substitution row.
+
+| Commit | Change |
+|---|---|
+| `b15b60cb611c31e4db83647783fae7869782fac4` | Corrected derived interval precedence for a player with an incoming substitution record. |
+| `a4d74a4a70b54d62a677f6bab793ebb2816cc173` | Added a fresh-session browser assertion that an out-of-range substitution is rejected without a write. |
+
+**Verification remains pending:** no hosted browser run has been confirmed for these commits. The new test is committed, not reported as passed. Mainline and implementation gates remain unchanged.
