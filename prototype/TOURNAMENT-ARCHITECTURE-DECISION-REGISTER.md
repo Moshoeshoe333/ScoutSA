@@ -138,25 +138,25 @@ Priority is a sequencing aid, not a claim that lower-priority items are optional
 **Impact if unresolved:** duplicate or contradictory fixtures, incorrect standings and history, fabricated appearances/statistics, overwritten results and ambiguous downstream scouting evidence.  
 **Stop condition:** no production fixture state machine or uniqueness constraints; do not equate operational status with an authoritative result; no invented replay/walkover/abandonment rules; no real match/player data or production implementation.
 
-### TAD-006 — Match participation and match-day session multiplicity
+### TAD-006 — Match participation and match-day multiplicity
 
 **Priority:** P0  
 **Status:** OPEN  
-**Question:** Can one fixture have multiple match-day sessions, venues, restarts or match instances, and how do player participation and appearance intervals attach to them?
+**Question:** Can one fixture have multiple operational sessions, played attempts, playing periods or venues, and what is the correct grain for player participation and appearance intervals?
 
-**Observed evidence:** Day Operations currently models one simple configured duration and one entry/exit interval. Its model explicitly leaves sessions, abandoned/restarted segments and return substitutions open.
+**Observed evidence:** Day Operations creates/updates one session-only match-day record per fixture in its current workflow; the handoff exports `days[0]`, one configured duration and one continuous entry/exit interval per participation. Handoff v1 permits one lineup row per participation per fixture. The Day Operations model explicitly leaves multiple sessions, abandoned/restarted segments and return substitutions open. The Player Tournament History sample is a fixed synthetic snapshot and does not prove shared state. IFAB Laws of the Game 2026/27 distinguish playing periods and extra time, place substitute limits/extra-time allowances under competition rules, and permit return substitutions only in specified categories subject to national-association/confederation/FIFA agreement. IFAB Law 7 states an abandoned match is replayed unless competition rules or organisers determine otherwise. These are a baseline only; no target South African competition rule has been validated. See [Match Participation and Match-Day Multiplicity Crosswalk](MATCH-PARTICIPATION-MATCH-DAY-MULTIPLICITY-CROSSWALK.md).
 
 **Options:**
-- A. One match-day record per fixture, with revisions.
-- B. Multiple session/segment records under a fixture, each with its own timing and source records.
-- C. Separate fixture match-instance records for replayed or resumed contests.
+- A. One match-day record and one appearance interval per fixture (reject as a universal model; current demo does not prove it).
+- B. Multiple operational session/segment records under a fixture, with all play records still fixture-scoped (more flexible but may conflate replay with continuation).
+- C. Distinguish fixture, operational session, played match instance/attempt, playing periods, shoot-out phase and player appearance intervals; link attempts to the fixture under competition decisions.
 
-**Candidate recommendation:** Do not ratify one-to-one. First distinguish administrative match-day session, actual played match instance, and time segment; they may be different concepts.
+**Candidate recommendation:** C is the preferred conceptual direction for governance discussion only. Keep administrative session, played attempt, period/segment and shoot-out distinct. A player may have multiple appearance intervals within a match instance where applicable rules permit, without automatically requiring multiple participation identities. Resolve the MatchParticipation grain jointly with TAD-002 before defining uniqueness or keys. No new entity/key is ratified.
 
-**Decision authority required:** Domain governance and competition-rule owner; referee/operations expertise needed before real match records.  
-**Evidence required:** examples of postponed, abandoned, resumed, replayed, extra-time and multi-venue fixtures; rules for return substitutions and temporary dismissals.  
-**Impact if unresolved:** minutes may be wrong, event chronology may be impossible to reconcile and match reports may be overwritten.  
-**Stop condition:** keep appearance calculations limited to the documented synthetic simple-match case; no official minutes claims.
+**Decision authority required:** Domain governance and the applicable competition-rule owner; referee/match-operations expertise for real records.  
+**Evidence required:** applicable South African competition regulations and rule versions; authority for return substitutions, extra time, temporary dismissals, abandonment/resumption/replay; actual examples for multiple sessions/venues, stints and timekeeping; clock and correction semantics.  
+**Impact if unresolved:** incorrect minutes, ambiguous event chronology, duplicate/overwritten attempts and false claims about official appearances.  
+**Stop condition:** retain the current simple calculation as synthetic-demo-only; no universal one-session/one-attempt/one-interval rule or official minutes claims; no real match/player data processing or implementation.
 
 ### TAD-007 — Source, evidence and provenance model
 
