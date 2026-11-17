@@ -287,3 +287,35 @@ The earlier Tournament Manager browser failure is now understood at the assertio
 **Verification status:** pending. The GitHub connector did not return a workflow run or status check for commit `2f65bbf2ed1c4970cd28c81598f4e173fc40777f`. No browser pass is claimed. The Tournament Manager, Organizer Portal, Tournament Day Operations and statistic-reconciliation workflows remain unverified at this new head until a complete, non-cancelled hosted run is inspected.
 
 No application behavior, mainline file, schema, gate or implementation authorization changed in this test-only follow-up. All records remain synthetic and browser-local.
+
+## 16. Derived player appearances and minutes — 17 November 2026
+
+A focused match-day extension was added to the isolated prototype branch.
+
+### Changes
+
+- Added an Appearances & Minutes view to Tournament Day Operations.
+- Derives starter intervals from minute 0 to either the recorded substitution-out minute or configured match duration.
+- Derives substitute intervals from the recorded substitution-in minute to match duration; a later substitution-out is considered if present.
+- Displays fixture, lineup ID, participation ID, derived status, start/end minute, minutes and contributing lineup/substitution IDs.
+- Enforces a whole-number match duration between 1 and 150 minutes. A substitution minute beyond the selected duration, or an invalid interval, suppresses the totals.
+- Does not infer appearances from goals, cards or other events; unused players receive zero minutes.
+
+### Commits
+
+| Commit | Change |
+|---|---|
+| `12d3f94c5ccc72a2e1ec8a455df8b8599613f08b` | Added derived appearance/minutes view to Tournament Day Operations. |
+| `fd5c773d4fbfcb9316f5f9d2176aa866b4ed20f7` | Made invalid-duration and invalid-timing states explicit in the view. |
+| `ad141dba626bdb187190be1f1876039043df5a1e` | Added browser regression assertions for starter, substitute and full-match minutes plus invalid-duration fail-closed behavior. |
+| `1c9829ae618a5c7c2d285102166d590b5e34862c` | Tightened browser assertions to inspect each participation row and exact derived totals. |
+| `2c9abe0cd8de884707ab599a62848c75539eac1e` | Updated prototype README and CI verification caveat. |
+| `e82ee63fa84e86acb6132e1edbdd7428c432e431` | Documented derived minute semantics and known limitations in the Tournament Day Operations model. |
+
+### Verification status
+
+The new browser regression test is committed, but the GitHub commit-status lookup returned no status entries for the test commit and no fresh hosted workflow result has been confirmed. The test has not been executed in this session. **Do not claim this feature or the full Tournament Day Operations suite is browser-verified yet.** The earlier hosted Tournament Manager failures/cancellations recorded in section 14 remain separate and unresolved until a complete run is inspected.
+
+### Boundaries
+
+This is a session-only synthetic calculation, not a new database entity, official appearance record, verified performance statistic or production feature. The simple interval model does not yet handle competition-specific extra-time periods, abandoned/restarted matches, temporary dismissals or return substitutions. Mainline, schema and gate decisions remain unchanged.
