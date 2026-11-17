@@ -441,3 +441,5 @@ The inline scripts in Tournament Day Operations and Player Tournament History, p
 
 
 **Synthetic-ID guard:** the local importer now rejects fixture, record and relationship identifiers that do not match the prototype DEMO-ID pattern. Browser smoke source also includes a non-DEMO identifier rejection case. This is a guard against accidental real-data entry, not an identity or security verification mechanism.
+
+**Final source review:** syntax parsing caught a literal escaped line break in the importer during review; it was corrected in commit `3c71f05c6f23e77da00be626374aa5e12e6f78ad`. The final Tournament Day Operations page, Player Tournament History page and browser smoke-test source all parse. The browser suite itself remains unexecuted.
