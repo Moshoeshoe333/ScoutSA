@@ -46,4 +46,4 @@ await historyPage.setViewportSize({width:390,height:844});
 const historyDims=await historyPage.evaluate(()=>({w:document.documentElement.clientWidth,s:document.documentElement.scrollWidth}));
 assert.ok(historyDims.s<=historyDims.w,"player history mobile viewport must not overflow");
 await historyPage.close();
-assert.deepEqual(errors,[]);console.log("PASS: match-day state, officials, lineups, substitution guards, derived appearances/minutes, sourced events, match reports, provenance ledger, export and mobile layout");}finally{if(browser)await browser.close();await new Promise(resolve=>server.close(resolve))}}main().catch(e=>{console.error(e);process.exitCode=1});
+assert.deepEqual(errors,[]);console.log("PASS: match-day operations, derived appearances/minutes, player tournament history, cross-record chronology warning, reconciliation context, provenance and mobile layout");}finally{if(browser)await browser.close();await new Promise(resolve=>server.close(resolve))}}main().catch(e=>{console.error(e);process.exitCode=1});
