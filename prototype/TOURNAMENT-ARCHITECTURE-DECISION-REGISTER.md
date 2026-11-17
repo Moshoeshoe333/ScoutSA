@@ -41,10 +41,10 @@ Priority is a sequencing aid, not a claim that lower-priority items are optional
 ### TAD-001 — Canonical tournament edition identifier
 
 **Priority:** P0  
-**Status:** PROPOSED  
+**Status:** READY FOR GOVERNANCE  
 **Question:** Should the canonical conceptual identifier be `edition_id` or `tournament_edition_id`?
 
-**Observed evidence:** Existing organizer handoff and tournament models use both names. The cross-module draft identified the inconsistency.
+**Observed evidence:** The tournament relationship proposal uses `edition_id`; the organizer portal proposal uses `tournament_edition_id`; the working organizer JSON handoff and Tournament Manager use `editionId`. The evidence indicates one intended edition concept with inconsistent proposal terminology, not two demonstrated identities. See [Tournament Identifier Crosswalk](TOURNAMENT-IDENTIFIER-CROSSWALK.md).
 
 **Options:**
 - A. Use `edition_id` consistently in the conceptual model and define explicit versioned mappings for historical payload fields.
@@ -54,29 +54,29 @@ Priority is a sequencing aid, not a claim that lower-priority items are optional
 **Candidate recommendation:** A, because it is concise and already used by the organizer handoff contract. This is a naming recommendation only; it does not change identity semantics.
 
 **Decision authority required:** ScoutSA domain-model owner / governance ratifier.  
-**Evidence required:** inventory of all current references and payload versions; proof that the two names refer to the same conceptual entity.  
+**Evidence reviewed:** current proposal documents, organizer handoff export, Tournament Manager import/validation and canonical root models are inventoried in the crosswalk. The inspected payloads use `editionId`; no production payload or persisted-data compatibility requirement was identified. **Governance action:** accept or reject the conceptual naming recommendation; do not infer production migration or compatibility work.  
 **Impact if unresolved:** duplicate terminology, brittle imports and inconsistent foreign-key documentation.  
 **Stop condition:** do not create or migrate production fields until one canonical name and any compatibility mapping are ratified.
 
 ### TAD-002 — Canonical fixture-scoped player join
 
 **Priority:** P0  
-**Status:** PROPOSED  
-**Question:** Should match events and statistic observations resolve through a distinct `match_participation_id`, rather than using `fixture_id + participation_id` as their only relationship key?
+**Status:** BLOCKED  
+**Question:** Does fixture-scoped player participation have an independent domain lifecycle that warrants `match_participation_id`, or is `fixture_id + participation_id` sufficient?
 
-**Observed evidence:** The tournament relationship proposal uses PlayerMatchParticipation; the statistic reconciliation proposal directly carries fixture and participation IDs; the match-day handoff currently transports both fixture and participation IDs.
+**Observed evidence:** The relationship proposal alone defines `match_participation_id`. Tournament Manager statistics, Statistic Reconciliation, Day Operations, Player Tournament History and handoff v1 use `fixtureId + participationId`. Current handoff v1 allows one lineup per participation per fixture. No inspected module proves an independent MatchParticipation lifecycle or multiple stints. See [Tournament Identifier Crosswalk](TOURNAMENT-IDENTIFIER-CROSSWALK.md).
 
 **Options:**
 - A. Introduce a canonical fixture-scoped MatchParticipation relationship record; events and statistics reference it, while fixture and participation remain validated context.
 - B. Use the composite pair `fixture_id + participation_id` as the sole relationship identity.
 - C. Allow either shape in different modules (not recommended; increases ambiguity).
 
-**Candidate recommendation:** A, subject to proving whether the record has independent lifecycle/attributes and how uniqueness is defined. Do not create an entity solely to add a surrogate key if it has no domain meaning.
+**Candidate recommendation:** unresolved. Keep the pair in synthetic v1; do not create a separate entity solely to add a surrogate key. Reconsider a distinct MatchParticipation only if an independent domain lifecycle or multiplicity is demonstrated.
 
 **Decision authority required:** Domain-model owner / governance ratifier; technical architecture review after semantic approval.  
-**Evidence required:** compare event/stat/reconciliation/day-operations workflows; establish whether one player participation can have multiple match stints, statuses or roles within one fixture.  
+**Evidence still required:** domain decision on whether match participation is a separately reviewable record, supports multiple stints/segments, has independent status/role/eligibility lifecycle, and how it behaves across abandoned/restarted fixtures; define uniqueness and correction semantics. The current synthetic pair is transport/context only.  
 **Impact if unresolved:** event/stat joins can disagree across modules; corrections and match history become harder to scope.  
-**Stop condition:** no schema key, uniqueness constraint or importer adapter until the entity/composite-key decision and cardinality are ratified.
+**Stop condition:** no schema key, uniqueness constraint, payload expansion or importer adapter until entity meaning, cardinality and correction semantics are ratified.
 
 ### TAD-003 — Organizer identity and authority relationship
 
@@ -354,3 +354,8 @@ The register is ready for internal review, not ratification. The first low-risk 
 **Do not build a production ERD or database from this register yet.** A coherent next engineering artifact may be a proposed ERD boundary only after P0 decisions are resolved and the canonical Gate 2 owner approves the relationship changes.
 
 External stakeholder silence does not prevent further synthetic design, but it also cannot be used as validation. Continue internal work without pretending that absent authorities have approved their own rules.
+
+
+## 4. Evidence review checkpoint — 2026-11-17
+
+The [Tournament Identifier Crosswalk](TOURNAMENT-IDENTIFIER-CROSSWALK.md) records the exact source inventory and separates the two outcomes: TAD-001 is **READY FOR GOVERNANCE** as a bounded naming decision; TAD-002 is **BLOCKED** because the proposed MatchParticipation entity has not been shown to have an independent lifecycle or multiplicity beyond the current fixture/participation pair. These status changes are evidence-framing only. Neither decision is ratified, and no implementation authority is created.
