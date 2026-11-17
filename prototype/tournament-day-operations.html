@@ -43,7 +43,7 @@ function table(head,rows){if(!rows.length)return '<div class="empty">No records 
 function player(id){return id==="PAR-DEMO-001"?{entry:"TEN-DEMO-001",label:"DEMO-PLAYER-001"}:id==="PAR-DEMO-002"?{entry:"TEN-DEMO-002",label:"DEMO-PLAYER-002"}:id==="PAR-DEMO-003"?{entry:"TEN-DEMO-001",label:"DEMO-PLAYER-003"}:null}
 function renderAppearances(){
 const fixture=$("appearanceFixture").value||"FIX-DEMO-001",duration=Number($("matchDuration").value);
-if(!Number.isInteger(duration)||duration<1||duration>150){$("appearanceTable").innerHTML='<div class="empty">Enter a whole-number match duration from 1 to 150 minutes.</div>';return}
+if(!Number.isInteger(duration)||duration<1||duration>150){$("appearanceMessage").textContent="Enter a whole-number match duration from 1 to 150 minutes."; $("appearanceTable").innerHTML='<div class="empty">Appearance calculations are unavailable until the duration is valid.</div>';return}
 const rows=state.lineups.filter(x=>x.fixtureId===fixture).map(lineup=>{
 const entered=state.subs.find(x=>x.fixtureId===fixture&&x.on===lineup.participationId);
 const left=state.subs.find(x=>x.fixtureId===fixture&&x.off===lineup.participationId);
@@ -55,7 +55,7 @@ const valid=end<=duration&&start<=end;
 return [lineup,entered,left,start,end,minutes,status,valid];
 });
 const invalid=rows.filter(x=>!x[7]);
-if(invalid.length){$("appearanceTable").innerHTML='<div class="empty">A substitution minute exceeds the selected match duration or creates an invalid interval. Correct the match duration or source record before using these calculations.</div>';return}
+if(invalid.length){$("appearanceMessage").textContent="Invalid timing: at least one substitution falls outside the selected match duration. No appearance totals are displayed."; $("appearanceTable").innerHTML='<div class="empty">A substitution minute exceeds the selected match duration or creates an invalid interval. Correct the match duration or source record before using these calculations.</div>';return}
 $("appearanceTable").innerHTML=table(["Lineup ID","Participation ID","Status","Start minute","End minute","Minutes","Derived from"],rows.map(([l,en,left,start,end,minutes,status])=>[
 '<code>'+esc(l.id)+'</code>','<code>'+esc(l.participationId)+'</code>',esc(status),minutes?esc(start):"—",minutes?esc(end):"—",esc(minutes),'<code>'+esc(l.id)+'</code>'+((en||left)?' · <code>'+esc((en||left).id)+'</code>':"")
 ]));
