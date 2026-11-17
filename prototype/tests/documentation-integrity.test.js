@@ -50,7 +50,7 @@ test("root README links the integrity policy and workflow directory has no empty
   assert.ok(rootReadme.includes("docs/engineering-integrity.md"));
   assert.ok(rootReadme.includes("docs/engineering-lessons-ledger.md"), "root README must link the engineering lessons ledger");
   assert.ok(prototypeReadme.includes("../docs/engineering-lessons-ledger.md"), "prototype README must link the engineering lessons ledger");
-  const lessonEntries = [...lessonLedger.matchAll(/^### (LESSON-\\d{3}) — .+$/gm)];
+  const lessonEntries = [...lessonLedger.matchAll(/^### (LESSON-\d{3}) — .+$/gm)];
   const lessonIds = lessonEntries.map(match => match[1]);
   assert.ok(lessonEntries.length >= 8, "the lessons ledger must retain the initial recorded failure patterns");
   assert.equal(new Set(lessonIds).size, lessonIds.length, "lesson IDs must be unique");
