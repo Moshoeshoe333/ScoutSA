@@ -122,21 +122,21 @@ Priority is a sequencing aid, not a claim that lower-priority items are optional
 
 **Priority:** P0  
 **Status:** OPEN  
-**Question:** What is the canonical fixture relationship and lifecycle for division, edition, team entries, legs, postponements, walkovers, abandoned matches and replays?
+**Question:** What is the canonical fixture relationship and lifecycle for division, edition, team entries, schedule changes, legs, postponements, walkovers, abandoned matches and replays?
 
-**Observed evidence:** Current proposals scope fixtures to divisions and match records to fixtures, but do not define all exceptional competition states or multi-leg structures.
+**Observed evidence:** The relationship proposal defines Fixture by fixture_id, division_id and home/away team-entry references. The architecture draft proposes that both entries resolve to the same edition/division context, subject to ratification. Tournament Manager stores date, round, venue, scores, result source and result review state together in one synthetic fixture. Day Operations separately stores a session-only match-day status and assumes one simple configured duration. The handoff v1 is fixture-scoped and explicitly has no authoritative result or competition context. The proposals explicitly leave walkovers, abandoned/replayed fixtures, multi-leg ties and match-day multiplicity unresolved. See the [Fixture Consistency and Lifecycle Crosswalk](FIXTURE-CONSISTENCY-LIFECYCLE-CROSSWALK.md).
 
 **Options:**
-- A. One fixture is one scheduled contest; postponement and result correction are versions/status changes on that fixture.
-- B. A fixture groups one or more match instances/legs, each with its own played record.
-- C. Model all exceptional cases as unrelated new fixtures.
+- A. One fixture is one scheduled contest; schedule amendments and result corrections are versioned against it, while exceptional play/outcomes are governed by competition rules.
+- B. A fixture groups one or more played match instances/legs, each with its own sourced record and lifecycle.
+- C. Model every interruption, replay, leg and administrative outcome as an unrelated new fixture.
 
-**Candidate recommendation:** Define competition-agnostic core identity plus explicit competition-specific rules; do not decide multi-leg/abandoned semantics from the current single-fixture demo.
+**Candidate recommendation:** Preserve a stable scheduled-contest identity for schedule-only changes, but distinguish schedule revision, operational match-day session, actual played match instance, result observation and competition decision. Keep each leg's result separate from any tie-level aggregate. Treat awarded walkover/forfeit outcomes separately from played scores. Whether an ordered replay shares fixture identity or creates a new fixture, and the exact cardinalities, must be decided by the applicable competition rules. These are candidate boundaries only, not ratified entities.
 
-**Decision authority required:** Domain governance plus competition-rule owner.  
-**Evidence required:** fixture lifecycle examples and actual competition regulations.  
-**Impact if unresolved:** duplicate fixtures, incorrect results, broken history and ambiguous statistics.  
-**Stop condition:** no production fixture state machine or uniqueness constraints until lifecycle and replay rules are ratified.
+**Decision authority required:** Domain governance and competition-rule owner for each competition; match operations/referee expertise for played-instance and result semantics.  
+**Evidence reviewed:** tournament relationship and architecture proposals, Tournament Manager synthetic fixture record, Tournament Intelligence fixture display, Day Operations model/UI, Match-Day Handoff v1, Player Tournament History and Statistic Reconciliation. **Evidence still required:** published regulations and dated examples for postponement, cancellation, resumption, abandonment, replay, walkover, forfeit, multi-leg ties, aggregate progression, extra time, result correction, appeals and duplicate fixture detection.  
+**Impact if unresolved:** duplicate or contradictory fixtures, incorrect standings and history, fabricated appearances/statistics, overwritten results and ambiguous downstream scouting evidence.  
+**Stop condition:** no production fixture state machine or uniqueness constraints; do not equate operational status with an authoritative result; no invented replay/walkover/abandonment rules; no real match/player data or production implementation.
 
 ### TAD-006 — Match participation and match-day session multiplicity
 
@@ -369,3 +369,8 @@ The [Organizer Identity and Authority Crosswalk](ORGANIZER-IDENTITY-AUTHORITY-CR
 ## 6. TAD-004 evidence review checkpoint — 2026-11-17
 
 The [Team Entry and Player Participation Cardinality Crosswalk](TEAM-ENTRY-PLAYER-PARTICIPATION-CARDINALITY-CROSSWALK.md) confirms the proposed TeamEntry → PlayerParticipation relationship but finds that the current Manager creates fresh Team and Player IDs on every entry/participation and therefore cannot demonstrate identity reuse, multi-division entries, dual registration or transfers. Registration, roster status, eligibility, permission and appearance are separate concerns. TAD-004 remains **OPEN** pending canonical Team semantics and representative competition regulations for cardinality, effective periods, transfer, guest/dual registration, duplicate resolution and appeals. No domain decision or implementation authority is created.
+
+
+## 7. TAD-005 evidence review checkpoint — 2026-11-17
+
+The [Fixture Consistency and Lifecycle Crosswalk](FIXTURE-CONSISTENCY-LIFECYCLE-CROSSWALK.md) confirms the proposed fixture → division + home/away team-entry relationship, but finds that the synthetic manager stores schedule, score and result-review fields together; Day Operations has a separate session-only status; and Match-Day Handoff v1 has no authoritative result or competition context. The sources leave postponement, abandonment/resumption, replay, walkover/forfeit, multi-leg ties and result correction unresolved. Candidate boundary separates scheduled contest, schedule revision, match-day session, played match instance, result observation and competition decision. TAD-005 remains **OPEN** pending competition-rule evidence and governance. No domain decision or implementation authority is created.
