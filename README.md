@@ -10,7 +10,7 @@ ScoutSA is being designed to help grassroots football talent become discoverable
 
 The product thesis is an opportunity network, not simply a scouting database. A Player Passport is intended to bring together football identity, attributable claims and evidence, membership history, football readiness, opportunity readiness, guardian/consent context and safe opportunity pathways.
 
-## Current repository status — 16 November 2026
+## Current repository status — 17 November 2026
 
 ### Mainline: governing model and implementation boundary
 
@@ -38,7 +38,7 @@ Latest hosted workflow [43848921959](https://github.com/Moshoeshoe333/ScoutSA/ac
 
 The 13 November verification [43444088668](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43444088668) and later documentation workflow [43445376478](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43445376478) remain historical checkpoints.
 
-See the [Prototype README](prototype/README.md) for scope, how to open the demo, test commands, current engine behavior and limitations. See the [16 November session ledger](prototype/verification/SESSION-LEDGER-2026-11-16.md) for the latest implementation, verification evidence and next engineering sequence; the [13 November session ledger](prototype/verification/SESSION-LEDGER-2026-11-13.md) remains available as historical context.
+See the [Prototype README](prototype/README.md) for scope, how to open the demo, test commands, current engine behavior and limitations. The latest prototype CI incident and remediation are recorded in the 17 November session ledger; the most recent historical green run is not evidence for later commits. See the [16 November session ledger](prototype/verification/SESSION-LEDGER-2026-11-16.md) for the latest implementation, verification evidence and next engineering sequence; the [13 November session ledger](prototype/verification/SESSION-LEDGER-2026-11-13.md) remains available as historical context.
 
 ## Product principles
 
