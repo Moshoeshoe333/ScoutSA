@@ -70,7 +70,7 @@ Before selecting either a distinct entity or a composite key, decide whether mat
 - a record with independently reviewable status/role/eligibility/appearance lifecycle; or
 - a container for multiple stints/segments, where one PlayerParticipation can enter, leave and re-enter.
 
-Then define uniqueness, event/stat ownership, correction semantics and how abandoned/restarted fixtures are represented.
+Then define uniqueness, event/stat ownership, correction semantics and how abandoned/restarted fixtures are represented. The [Match Participation Grain and Identity Crosswalk](MATCH-PARTICIPATION-GRAIN-DECISION-CROSSWALK.md) now tests those options against the TAD-004/005/006 dependencies; it remains a non-ratified evidence proposal.
 
 ### Decision state recommendation
 
