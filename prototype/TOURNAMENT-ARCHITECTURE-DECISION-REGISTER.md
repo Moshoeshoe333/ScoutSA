@@ -64,17 +64,17 @@ Priority is a sequencing aid, not a claim that lower-priority items are optional
 **Status:** BLOCKED  
 **Question:** Does fixture-scoped player participation have an independent domain lifecycle that warrants `match_participation_id`, or is `fixture_id + participation_id` sufficient?
 
-**Observed evidence:** The relationship proposal alone defines `match_participation_id`. Tournament Manager statistics, Statistic Reconciliation, Day Operations, Player Tournament History and handoff v1 use `fixtureId + participationId`. Current handoff v1 allows one lineup per participation per fixture. No inspected module proves an independent MatchParticipation lifecycle or multiple stints. See [Tournament Identifier Crosswalk](TOURNAMENT-IDENTIFIER-CROSSWALK.md).
+**Observed evidence:** The relationship proposal alone defines `match_participation_id`; Tournament Manager statistics, Statistic Reconciliation, Day Operations, Player Tournament History and handoff v1 use `fixtureId + participationId`. Handoff v1 allows one lineup per participation per fixture. TAD-006 distinguishes fixture from played match instance/attempt and permits multiple appearance intervals as a candidate where rules allow. If one fixture has multiple distinct played attempts, `fixture_id + participation_id` cannot distinguish the same registration's involvement in each attempt. See [Tournament Identifier Crosswalk](TOURNAMENT-IDENTIFIER-CROSSWALK.md), [Match Participation and Match-Day Multiplicity Crosswalk](MATCH-PARTICIPATION-MATCH-DAY-MULTIPLICITY-CROSSWALK.md), and [Match Participation Grain and Identity Crosswalk](MATCH-PARTICIPATION-GRAIN-DECISION-CROSSWALK.md).
 
 **Options:**
 - A. Introduce a canonical fixture-scoped MatchParticipation relationship record; events and statistics reference it, while fixture and participation remain validated context.
 - B. Use the composite pair `fixture_id + participation_id` as the sole relationship identity.
 - C. Allow either shape in different modules (not recommended; increases ambiguity).
 
-**Candidate recommendation:** unresolved. Keep the pair in synthetic v1; do not create a separate entity solely to add a surrogate key. Reconsider a distinct MatchParticipation only if an independent domain lifecycle or multiplicity is demonstrated.
+**Candidate recommendation:** keep `fixture_id + participation_id` only as the synthetic v1 transport/context pair. For governance discussion, test the conceptual grain as one PlayerParticipation's involvement in one played match instance; the candidate uniqueness context is therefore `match_instance_id + participation_id`, conditional on TAD-004/005/006. Do not introduce a surrogate `match_participation_id` unless the approved relationship has an independent lifecycle or needs stable references for evidence/review records. This is not a ratified key, entity or schema.
 
 **Decision authority required:** Domain-model owner / governance ratifier; technical architecture review after semantic approval.  
-**Evidence still required:** domain decision on whether match participation is a separately reviewable record, supports multiple stints/segments, has independent status/role/eligibility lifecycle, and how it behaves across abandoned/restarted fixtures; define uniqueness and correction semantics. The current synthetic pair is transport/context only.  
+**Evidence still required:** ratified definition of played match instance and fixture lifecycle (TAD-005/006); PlayerParticipation cardinality/effective periods (TAD-004); whether MatchParticipation has an independent status/role/eligibility lifecycle; how continuation/replay is represented; and source correction/review semantics. The new grain crosswalk frames the options but does not close these dependencies. The current synthetic pair remains transport/context only.  
 **Impact if unresolved:** event/stat joins can disagree across modules; corrections and match history become harder to scope.  
 **Stop condition:** no schema key, uniqueness constraint, payload expansion or importer adapter until entity meaning, cardinality and correction semantics are ratified.
 
