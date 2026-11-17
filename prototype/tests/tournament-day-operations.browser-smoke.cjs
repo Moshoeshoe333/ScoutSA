@@ -11,11 +11,11 @@ await page.locator('[data-section="officials"]').click();await page.locator("#of
 await page.locator('[data-section="lineups"]').click();await page.locator("#lineupPlayer").selectOption("PAR-DEMO-001");await page.locator("#lineupForm button[type=submit]").click();assert.match(await page.locator("#lineupMessage").innerText(),/already has a lineup record/);await page.locator("#lineupPlayer").selectOption("PAR-DEMO-002");await page.locator("#lineupForm button[type=submit]").click();assert.match(await page.locator("#lineupMessage").innerText(),/already has a lineup record/);
 await page.locator('[data-section="substitutions"]').click();await page.locator("#subOff").selectOption("PAR-DEMO-001");await page.locator("#subOn").selectOption("PAR-DEMO-003");await page.locator("#subForm button[type=submit]").click();assert.match(await page.locator("#subMessage").innerText(),/Recorded substitution SUB-DEMO-001 with source SRC-DEMO-002/);
 await page.locator('[data-section="appearances"]').click();
-const appearanceRows=await page.locator("#appearanceTable tbody tr").allInnerTexts();
+const appearanceRows=await page.locator("#appearanceTable tbody tr").evaluateAll(rows=>rows.map(row=>Array.from(row.cells).map(cell=>cell.innerText.trim())));
 assert.equal(appearanceRows.length,3,"one derived row is required for each fixture lineup record");
-assert.ok(appearanceRows.find(row=>row.includes("PAR-DEMO-001"))?.includes("65"),"starter substituted at minute 65 must have 65 derived minutes");
-assert.ok(appearanceRows.find(row=>row.includes("PAR-DEMO-002"))?.includes("90"),"full-match starter must have 90 derived minutes");
-assert.ok(appearanceRows.find(row=>row.includes("PAR-DEMO-003"))?.includes("25"),"substitute entering at minute 65 must have 25 derived minutes");
+assert.equal(appearanceRows.find(row=>row[1].includes("PAR-DEMO-001"))?.[5],"65","starter substituted at minute 65 must have 65 derived minutes in the Minutes column");
+assert.equal(appearanceRows.find(row=>row[1].includes("PAR-DEMO-002"))?.[5],"90","full-match starter must have 90 derived minutes in the Minutes column");
+assert.equal(appearanceRows.find(row=>row[1].includes("PAR-DEMO-003"))?.[5],"25","substitute entering at minute 65 must have 25 derived minutes in the Minutes column");
 assert.equal(await page.locator("#appearanceMessage").innerText(),"3 lineup record(s) · 3 appearance(s) · 180 player-minutes");
 await page.locator("#matchDuration").fill("60");
 await page.locator("#refreshAppearances").click();
