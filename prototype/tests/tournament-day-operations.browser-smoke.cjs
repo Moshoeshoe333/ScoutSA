@@ -55,6 +55,7 @@ assert.ok((await historyPage.locator("#identityFacts").innerText()).includes("PA
 const tampered={...packageData,appearances:packageData.appearances.map((a,i)=>i===0?{...a,minutes:a.minutes+1}:a)};
 await historyPage.locator("#handoffFile").setInputFiles({name:"tampered-handoff.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(tampered))});
 assert.match(await historyPage.locator("#handoffStatus").innerText(),/Import rejected: Derived appearance values do not reconcile/);
+assert.equal(await historyPage.locator("#countMinutes").innerText(),"25","rejected package must preserve the previously imported history view");
 
 await historyPage.setViewportSize({width:390,height:844});
 const historyDims=await historyPage.evaluate(()=>({w:document.documentElement.clientWidth,s:document.documentElement.scrollWidth}));
