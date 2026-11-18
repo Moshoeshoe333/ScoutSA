@@ -5,6 +5,7 @@ const path = require('node:path');
 
 test('tournament manager imports organizer portal package by stable IDs and skips duplicates', async () => {
   const browser = await chromium.launch({ headless: true });
+  try {
   const page = await browser.newPage({ viewport: { width: 1365, height: 900 } });
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
@@ -18,6 +19,10 @@ test('tournament manager imports organizer portal package by stable IDs and skip
     features: [{ id: 'FTR-DEMO-501', submissionId: 'SUB-DEMO-501', scope: 'Competition name, dates and public event summary', status: 'requested' }]
   };
   await page.locator('[data-section="records"]').click();
+  const recordsPanel = page.locator('#section-records');
+  assert.equal(await recordsPanel.evaluate(el => el.classList.contains('active')), true,
+    'Records navigation must activate the Records panel before its controls are used');
+  await recordsPanel.waitFor({ state: 'visible' });
   await page.locator('#organizerHandoffFile').setInputFiles({ name: 'handoff.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(pkg)) });
   await page.locator('#importOrganizerHandoff').click();
   assert.match(await page.locator('#organizerImportMessage').textContent(), /Imported 1 tournament edition/);
@@ -75,5 +80,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await page.locator('#statsForm button[type="submit"]').click();
   assert.match(await page.locator('#statsMessage').textContent(), /Recorded STA-/);
   assert.deepEqual(errors, []);
-  await browser.close();
+  } finally {
+    await browser.close();
+  }
 });
