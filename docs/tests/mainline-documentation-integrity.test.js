@@ -14,9 +14,9 @@ const constitution = read("docs/00-constitution.md");
 const workflow = read(".github/workflows/documentation-integrity.yml");
 
 function assertActionInventoryMatches(source, registeredActions, workflowPath) {
-  const actual = [...source.matchAll(/^\\s*uses:\\s*(.*?)\\s*$/gm)].map(match => {
+  const actual = [...source.matchAll(/^\s*uses:\s*(.*?)\s*$/gm)].map(match => {
     const value = match[1];
-    const parsed = value.match(/^([^@\\s]+)@([0-9a-f]{40})\\s+#\\s*(v[^\\s#]+)$/);
+    const parsed = value.match(/^([^@\s]+)@([0-9a-f]{40})\s+#\s*(v[^\s#]+)$/);
     assert.ok(
       parsed,
       `action reference must use a full commit SHA and version comment in ${workflowPath}: ${value}`
@@ -26,8 +26,8 @@ function assertActionInventoryMatches(source, registeredActions, workflowPath) {
 
   const declared = registeredActions.map(action => {
     assert.match(action.commit, /^[0-9a-f]{40}$/, `action commit must be a full lowercase SHA: ${action.uses}`);
-    assert.match(action.uses, /^[^@\\s]+$/, `invalid action identifier: ${action.uses}`);
-    assert.match(action.version, /^v[^\\s#]+$/, `invalid action version comment: ${action.version}`);
+    assert.match(action.uses, /^[^@\s]+$/, `invalid action identifier: ${action.uses}`);
+    assert.match(action.version, /^v[^\s#]+$/, `invalid action version comment: ${action.version}`);
     return `${action.uses}@${action.commit} # ${action.version}`;
   });
 
@@ -126,7 +126,7 @@ test("CI scope register exactly inventories mainline workflow files", () => {
 test("action inventory rejects unregistered, duplicate, and malformed workflow actions", () => {
   const checkout = "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1";
   const setupNode = "actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0";
-  const fixture = `steps:\\n  - uses: ${checkout}\\n  - uses: ${setupNode}\\n`;
+  const fixture = `steps:\n  - uses: ${checkout}\n  - uses: ${setupNode}\n`;
   const registered = [
     { uses: "actions/checkout", commit: "3d3c42e5aac5ba805825da76410c181273ba90b1", version: "v7.0.1" },
     { uses: "actions/setup-node", commit: "949feb2413d6458794dcd2491c4babbbce0c15c1", version: "v7.1.0" }
@@ -138,11 +138,11 @@ test("action inventory rejects unregistered, duplicate, and malformed workflow a
     /exactly match every action/
   );
   assert.throws(
-    () => assertActionInventoryMatches(`steps:\\n  - uses: ${checkout}\\n  - uses: ${checkout}\\n`, registered.slice(0, 1), "fixture.yml"),
+    () => assertActionInventoryMatches(`steps:\n  - uses: ${checkout}\n  - uses: ${checkout}\n`, registered.slice(0, 1), "fixture.yml"),
     /duplicate action references/
   );
   assert.throws(
-    () => assertActionInventoryMatches("steps:\\n  - uses: actions/checkout@v4 # v4\\n", [], "fixture.yml"),
+    () => assertActionInventoryMatches("steps:\n  - uses: actions/checkout@v4 # v4\n", [], "fixture.yml"),
     /full commit SHA/
   );
 });
