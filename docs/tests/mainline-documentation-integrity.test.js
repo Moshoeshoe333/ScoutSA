@@ -14,7 +14,7 @@ const constitution = read("docs/00-constitution.md");
 const workflow = read(".github/workflows/documentation-integrity.yml");
 
 function extractYamlSection(source, header, indentation) {
-  const lines = source.split(/\\r?\\n/);
+  const lines = source.split(/\r?\n/);
   const prefix = " ".repeat(indentation);
   const start = lines.findIndex(line => line === `${prefix}${header}:`);
   assert.notEqual(start, -1, `missing YAML section: ${header}`);
@@ -22,11 +22,11 @@ function extractYamlSection(source, header, indentation) {
   const end = lines.findIndex((line, index) =>
     index > start && line.trim() !== "" && line.match(/^ */)[0].length <= indentation
   );
-  return lines.slice(start + 1, end === -1 ? lines.length : end).join("\\n");
+  return lines.slice(start + 1, end === -1 ? lines.length : end).join("\n");
 }
 
 function assertYamlStringList(section, key, expected, context) {
-  const lines = section.split(/\\r?\\n/);
+  const lines = section.split(/\r?\n/);
   const header = lines.findIndex(line => line === `    ${key}:`);
   assert.notEqual(header, -1, `${context}: missing ${key} list`);
   const values = [];
@@ -103,14 +103,14 @@ test("workflow trigger validation rejects event-specific omissions and extra pat
     pull_request_branches: ["main"],
     path_filters: ["README.md", "docs/**", ".github/workflows/**"]
   };
-  const valid = `on:\\n  push:\\n    branches:\\n      - main\\n    paths:\\n      - "README.md"\\n      - "docs/**"\\n      - ".github/workflows/**"\\n  pull_request:\\n    branches:\\n      - main\\n    paths:\\n      - "README.md"\\n      - "docs/**"\\n      - ".github/workflows/**"\\n`;
+  const valid = `on:\n  push:\n    branches:\n      - main\n    paths:\n      - "README.md"\n      - "docs/**"\n      - ".github/workflows/**"\n  pull_request:\n    branches:\n      - main\n    paths:\n      - "README.md"\n      - "docs/**"\n      - ".github/workflows/**"\n`;
   assert.doesNotThrow(() => assertWorkflowTriggersMatch(valid, expected, "fixture.yml"));
   assert.throws(
-    () => assertWorkflowTriggersMatch(valid.replace('      - "docs/**"\\n      - ".github/workflows/**"\\n  pull_request:', '      - "docs/**"\\n  pull_request:'), expected, "fixture.yml"),
+    () => assertWorkflowTriggersMatch(valid.replace('      - "docs/**"\n      - ".github/workflows/**"\n  pull_request:', '      - "docs/**"\n  pull_request:'), expected, "fixture.yml"),
     /paths must exactly match/
   );
   assert.throws(
-    () => assertWorkflowTriggersMatch(valid.replace('      - "docs/**"\\n      - ".github/workflows/**"\\n  pull_request:', '      - "docs/**"\\n      - ".github/workflows/**"\\n      - "extra/**"\\n  pull_request:'), expected, "fixture.yml"),
+    () => assertWorkflowTriggersMatch(valid.replace('      - "docs/**"\n      - ".github/workflows/**"\n  pull_request:', '      - "docs/**"\n      - ".github/workflows/**"\n      - "extra/**"\n  pull_request:'), expected, "fixture.yml"),
     /paths must exactly match/
   );
 });
