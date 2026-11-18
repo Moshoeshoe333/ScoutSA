@@ -81,3 +81,54 @@ test("mainline README links the integrity policy and workflow directory has no e
     }
   }
 });
+
+const ciRegister = JSON.parse(read("docs/ci-scope-register.json"));
+const safeguarding = read("docs/safeguarding-measurement-contract.md");
+
+test("CI scope register exactly inventories mainline workflow files", () => {
+  const workflowDir = path.join(root, ".github/workflows");
+  const actual = fs.readdirSync(workflowDir)
+    .filter(name => name.endsWith(".yml") || name.endsWith(".yaml"))
+    .map(name => `.github/workflows/${name}`)
+    .sort();
+  const declared = ciRegister.workflows.map(item => item.path).sort();
+  assert.deepEqual(declared, actual, "CI scope register must list every mainline workflow exactly once");
+  assert.equal(new Set(declared).size, declared.length, "CI scope register contains duplicate workflow paths");
+});
+
+test("CI scope register matches executable workflow triggers and job configuration", () => {
+  for (const item of ciRegister.workflows) {
+    const source = read(item.path);
+    assert.ok(source.includes(`name: ${item.name}`), `workflow name drift: ${item.path}`);
+    for (const branch of item.triggers.push_branches) assert.ok(source.includes(`      - ${branch}`), `push branch missing: ${branch}`);
+    for (const branch of item.triggers.pull_request_branches) assert.ok(source.includes(`      - ${branch}`), `pull request branch missing: ${branch}`);
+    for (const filter of item.triggers.path_filters) assert.ok(source.includes(`      - "${filter}"`), `path filter missing: ${filter}`);
+    for (const job of item.jobs) {
+      assert.ok(source.includes(`  ${job.id}:`), `job missing: ${job.id}`);
+      assert.ok(source.includes(`runs-on: ${job.runner}`), `runner drift: ${job.runner}`);
+      assert.ok(source.includes(`timeout-minutes: ${job.timeout_minutes}`), "job timeout drift");
+      assert.ok(source.includes(`node-version: "${job.node_version}"`), "Node runtime drift");
+      assert.ok(source.includes(`run: ${job.command}`), "workflow command drift");
+    }
+    assert.ok(item.verifies.length > 0 && item.does_not_prove.length > 0, "scope must state both coverage and limitations");
+  }
+});
+
+test("safeguarding measurement contract prevents growth metrics from overriding safety", () => {
+  for (const phrase of [
+    "NOT READY TO COLLECT",
+    "Trust and safety are constraints, not growth variables",
+    "Guardian opt-out / consent withdrawal",
+    "Unauthorized access / disclosure events",
+    "Pause the affected workflow",
+    "Synthetic results must be labelled synthetic",
+    "No real-player measurement is authorized",
+    "minimum cell-size"
+  ]) assert.ok(safeguarding.includes(phrase), `safeguarding measurement control missing: ${phrase}`);
+  assert.ok(!/target: ?[0-9]+%/i.test(safeguarding), "unratified numeric targets must not be invented");
+});
+
+test("README links the CI scope register and safeguarding measurement contract", () => {
+  assert.ok(readme.includes("docs/ci-scope-register.json"), "README must link CI scope register");
+  assert.ok(readme.includes("docs/safeguarding-measurement-contract.md"), "README must link safeguarding measurement contract");
+});

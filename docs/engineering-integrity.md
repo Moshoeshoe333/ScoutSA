@@ -167,3 +167,24 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Follow-up correction:** Align the user-flow wording with the explicit non-authority statement and material-input provenance requirement; align the test assertion with the word “supersession”. Re-run hosted CI before closing this incident.
 - **Verification:** Follow-up PR workflow [44288777061](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44288777061) passed all 9/9 mainline documentation tests on the PR merge commit containing head `ea7b08279136b4b9b8e97d1a408dfc80a4aae770`. This verifies the current proposed branch state in CI; it does not mean the change has been merged into `main`.
 - **Status:** Corrected on the review branch; prevention checks verified in hosted PR CI. Mainline adoption remains pending PR review/merge.
+
+
+### CI-002 — CI scope was not centrally inventoried
+
+- **Detected:** 2026-11-18
+- **Severity:** Medium — workflow definitions and successful runs could be described without a durable, machine-checkable statement of inventory, triggers, commands, and limitations.
+- **Finding:** The mainline had a documentation-integrity workflow, but no central machine-readable register declaring all mainline workflows, their event/path scope, job/runtime/command, verified responsibilities, and what a pass cannot prove.
+- **Correction in this branch:** Add `docs/ci-scope-register.json`; extend mainline tests to compare the register's workflow inventory against the actual workflow directory and check selected trigger, job, runner, timeout, runtime, and command values.
+- **Preventive rule:** Any workflow inventory or execution-scope change must update the register in the same pull request. CI success is always tied to a specific run, tested commit, event, job, command, and scope; a configured workflow is not evidence of a pass.
+- **Verification:** Pending hosted CI on the final PR head.
+- **Status:** Open pending hosted verification.
+
+### SAF-001 — Safeguarding measurement lacked an explicit anti-gaming contract
+
+- **Detected:** 2026-11-18
+- **Severity:** High — growth and activity metrics can create incentives to collect minors' data, pressure participation, suppress complaints, or treat outcomes as player-quality signals.
+- **Finding:** The MVP draft distinguished activity metrics from evidence of value, but did not define the safeguard denominators, provenance, ownership, misuse risks, stop conditions, or prohibited optimization targets required before a future pilot measurement plan.
+- **Correction in this branch:** Add a proposed Safeguarding Measurement Contract defining candidate indicators, numerator/denominator requirements, privacy and reporting boundaries, prohibited growth metrics, fail-closed stop conditions, and ratification blockers.
+- **Authority boundary:** This document authorizes no real-player data collection, instrumentation, dashboard, pilot, or implementation. It does not set legal basis, SLAs, retention periods, or named owners.
+- **Verification:** Automated document-presence and key-control checks are pending hosted CI; substantive safeguarding/legal review remains required and cannot be replaced by string tests.
+- **Status:** Open pending hosted verification and competent review.
