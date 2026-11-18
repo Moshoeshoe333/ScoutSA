@@ -14,7 +14,7 @@ const constitution = read("docs/00-constitution.md");
 const workflow = read(".github/workflows/documentation-integrity.yml");
 
 function assertActionInventoryMatches(source, registeredActions, workflowPath) {
-  const actual = [...source.matchAll(/^\s*uses:\s*(.*?)\s*$/gm)].map(match => {
+  const actual = [...source.matchAll(/^\s*(?:-\s*)?uses:\s*(.*?)\s*$/gm)].map(match => {
     const value = match[1];
     const parsed = value.match(/^([^@\s]+)@([0-9a-f]{40})\s+#\s*(v[^\s#]+)$/);
     assert.ok(
