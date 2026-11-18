@@ -201,3 +201,11 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Compatibility:** Keep the tested project runtime explicitly at Node.js 22; upgrading the action runtime does not silently change the Node version used by the test command.
 - **Verification:** Pending hosted CI on the updated PR head. The earlier 13/13 pass remains valid only for the previous workflow revision.
 - **Status:** Open pending hosted verification.
+
+
+### CI-003 verification attempt — test-harness syntax defect
+
+- **Run:** [44290275450](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44290275450)
+- **Commit:** `ff145c2fa5c336374364c3689c659db17dd4eec6`
+- **Result:** Failed before any assertions executed. A malformed test edit omitted the job loop declaration and a closing parenthesis in the assertion. The failure was introduced by the test-harness change, not by either pinned action.
+- **Response:** Preserve this failed run; repair the test structure without reducing coverage; rerun on the corrected commit.
