@@ -8,7 +8,7 @@ This branch contains a static browser prototype and a synthetic review engine. I
 
 ## Current verified state
 
-**Current verification status — 18 November 2026:** The latest full-workflow checkpoint is hosted run [#698](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44326398873), completed successfully against exact prototype head `bcdd4ff4745910e6ff4eea4437edf39b9e075672`. It passed **121/121 headless tests** and all **10 Playwright/Chromium browser smoke scripts** (Node.js 22.23.5). This includes the Organizer Portal handoff preservation, fail-closed imported claims, full-state rejected-import assertions and asynchronous Player History handoff checks. Earlier runs #679–#694 remain historical checkpoints. These are scoped synthetic regression results, not production-readiness, safeguarding, privacy, legal, accessibility or security certifications. TM-013's deliberate assertion-failure cleanup injection remains outstanding.
+**Current verification status — 18 November 2026:** The prototype policy workflow runs **121 headless tests** and ten Playwright/Chromium browser smoke scripts. For the current branch's latest result and exact tested commit, consult the [prototype workflow history](https://github.com/Moshoeshoe333/ScoutSA/actions/workflows/prototype-policy-tests.yml) and the reconciliation notes in [Engineering Integrity](../docs/engineering-integrity.md). Recent verified checkpoints include runs #694, #698 and #701; each is tied to its own exact head and scope. These are synthetic regression results, not production-readiness, safeguarding, privacy, legal, accessibility or security certifications. TM-013's deliberate assertion-failure cleanup injection remains outstanding.
 
 
 - Review engine: `review-engine.js` **v0.3.0**.
