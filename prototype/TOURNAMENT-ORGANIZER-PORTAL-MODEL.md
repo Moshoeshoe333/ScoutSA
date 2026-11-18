@@ -61,6 +61,18 @@ Do not charge players for visibility. Do not imply that a tournament listing is 
 - Do not claim POPIA compliance, federation endorsement, MySAFA integration or official recognition without evidence.
 - No real outreach or publication is performed by this prototype.
 
+## Organizer handoff import boundary
+
+The internal synthetic handoff preserves organizer, submission, evidence and feature-request source records across import/export. Imported source claims are not authoritative decisions:
+
+- Organizer identity and authority are operationally held at `unverified`, regardless of incoming claim strings.
+- Feature permission is operationally held at `not-requested`, regardless of incoming feature claim strings.
+- Incoming identity, authority, evidence status and feature-permission values remain traceable as source claims only; they do not authorize access, publication, player disclosure or contact.
+- Competition format and edition label are retained in the imported event record.
+- Rejected imports must leave the entire exported session state unchanged, not merely preserve record counts.
+
+This is a fail-closed synthetic prototype rule. It is not an identity-verification mechanism, evidence-expiry evaluator, permission-revocation service or ratified status contract. Semantic duplicate-competition resolution, authority conflict handling, expiry policy and permission history remain blocked pending governance decisions.
+
 ## Open questions before ratification
 
 1. What minimum evidence establishes legal identity and authority to operate an event?
