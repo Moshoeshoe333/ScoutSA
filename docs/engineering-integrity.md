@@ -94,7 +94,8 @@ When a new repeated fact is introduced into documentation, either add it to the 
 - **Impact:** The Tournament Manager browser suite stopped; later browser suites were skipped. This does not establish that the underlying eligibility record was absent or that later suites failed.
 - **Correction:** Make the test navigate explicitly to Records before asserting imported ledger rows, then navigate to Eligibility Review to assert the eligibility result in its own visible panel.
 - **Additional prevention:** Strengthen the Organizer Portal handoff importer with object-shape checks, per-collection limits, feature-link/scope validation, collision checks for existing edition IDs, and a 1 MiB file-size limit. Add browser regression cases for malformed JSON, null records, dangling feature references, conflicting edition identity and oversized files. Each rejected import must leave tournament state unchanged.
-- **Status:** Corrective change committed; hosted verification pending.
+- **Follow-up evidence:** Run [44291278666](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44291278666), commit `7effca9bdbf6c0a89a5801989f9cb4d6d952b17d`, still failed at a second ledger assertion later in the same test. The first correction fixed the post-import assertion, but the eligibility flow also queried the ledger while hidden. This repeat failure demonstrates why all matching assertions must be reviewed, not only the first failing line. The new correction explicitly navigates to Records before the second ledger assertion. The newly added import-rejection cases were not reached in this failed run.
+- **Status:** Second corrective change committed; full hosted verification pending.
 
 ## 6. Incident log
 

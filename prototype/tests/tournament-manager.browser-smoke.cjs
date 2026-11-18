@@ -70,6 +70,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await page.locator('#eligibilityForm button[type="submit"]').click();
   assert.match(await page.locator('#eligibilityMessage').textContent(), /not an eligibility certification/);
   await page.locator('#eligibilityTable').getByText('Eligible for human review').waitFor();
+  await page.locator('[data-section="records"]').click();
   await page.locator('#ledger').getByText('ELR-DEMO-001').waitFor();
   await page.locator('[data-section="player"]').click();
   await page.locator('#playerEntry').selectOption('TEN-DEMO-001');
