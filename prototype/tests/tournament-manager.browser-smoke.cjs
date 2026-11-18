@@ -37,6 +37,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await recordsPanel.waitFor({ state: 'visible' });
   await page.locator('#organizerHandoffFile').setInputFiles({ name: 'handoff.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(pkg)) });
   await page.locator('#importOrganizerHandoff').click();
+  await page.waitForFunction(() => /Imported 1 tournament edition/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
   assert.match(await page.locator('#organizerImportMessage').textContent(), /Imported 1 tournament edition/);
   assert.equal(await page.locator('#countT').textContent(), '2');
   await page.locator('#importOrganizerHandoff').click();
