@@ -110,6 +110,18 @@ When a new repeated fact is introduced into documentation, either add it to the 
 - **Prevention:** Tests for scoped uniqueness must explicitly set and assert the scope key for every competing record.
 - **Status:** Test corrected; hosted verification pending.
 
+
+
+### TM-003 — Playwright selectOption received a regular expression where a string is required
+
+- **Detected:** 2026-11-18
+- **Severity:** Low — the browser test stopped before statistic validation.
+- **Finding:** Run [44291793559](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44291793559), commit `a84d3ed27cd457887b01d7c7311018e6ce127150`, passed the earlier browser suites and reached the Tournament Manager. The test called `selectOption({ label: /DEMO-PLAYER-TEST-10/ })`; Playwright's `selectOption` requires a string label/value, not a regular expression.
+- **Impact:** The statistic workflow assertions did not execute. This was a test API misuse, not evidence of a statistic calculation defect.
+- **Correction:** Select the exact synthetic participation ID `PAR-DEMO-003`, which is the record created by the preceding controlled test setup.
+- **Prevention:** Use supported Playwright locator APIs and stable record IDs for select controls; use regex matching with locator text assertions, not option descriptors.
+- **Status:** Test corrected; hosted verification pending.
+
 ## 6. Incident log
 
 ### DOC-001 — Documentation drift: engine version and final test count

@@ -86,7 +86,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   assert.match(await page.locator('#playerMessage').textContent(), /already assigned within this team entry/);
   await page.locator('[data-section="stats"]').click();
   await page.locator('#statFixture').selectOption('FIX-DEMO-001');
-  await page.locator('#statPlayer').selectOption({ label: /DEMO-PLAYER-TEST-10/ });
+  await page.locator('#statPlayer').selectOption('PAR-DEMO-003');
   await page.locator('#statValue').fill('1');
   await page.locator('#statsForm button[type="submit"]').click();
   assert.match(await page.locator('#statsMessage').textContent(), /Only a registered demo roster entry/);
