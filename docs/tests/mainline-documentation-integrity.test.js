@@ -62,7 +62,7 @@ test("outcomes preserve attribution, disputes, correction history, and epistemic
   assert.ok(outcome.includes("assertion"), "outcomes must be treated as attributable assertions");
   assert.ok(outcome.includes("disputed"), "outcome disputes must remain explicit");
   assert.ok(outcome.includes("supersed"), "outcome correction/supersession must preserve history");
-  assert.ok(outcome.includes("not truth"), "outcome records must not be treated as automatic truth");
+  assert.ok(outcome.includes("not automatic truth"), "outcome records must not be treated as automatic truth");
 });
 
 test("Constitution retains purpose, authority, child-voice, and derived-state boundaries", () => {
