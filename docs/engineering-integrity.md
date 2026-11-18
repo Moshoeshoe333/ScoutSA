@@ -199,8 +199,8 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Correction:** Upgrade checkout to verified release `v7.0.1` (commit `3d3c42e5aac5ba805825da76410c181273ba90b1`) and setup-node to verified release `v7.1.0` (commit `949feb2413d6458794dcd2491c4babbbce0c15c1`). Pin both to full immutable commit SHAs rather than floating major tags.
 - **Prevention:** Add action name, release version, and full commit SHA to `docs/ci-scope-register.json`; automated tests require exact workflow pins and a 40-character commit hash. Action upgrades must update the register and pass CI.
 - **Compatibility:** Keep the tested project runtime explicitly at Node.js 22; upgrading the action runtime does not silently change the Node version used by the test command.
-- **Verification:** Pending hosted CI on the updated PR head. The earlier 13/13 pass remains valid only for the previous workflow revision.
-- **Status:** Open pending hosted verification.
+- **Verification:** PR run [44314517611](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44314517611) passed 14/14 tests on the PR merge commit containing head `0c68b9fb1dc520ffa93ff4d50da3d17378963438`. The job log contains neither the Node.js 20 action deprecation warning nor the `punycode` warning observed previously. This verifies the updated workflow run, not the upstream release provenance of each action SHA.
+- **Status:** Closed — updated workflow passed hosted CI; independent action-release provenance remains a human review responsibility.
 
 
 ### CI-003 verification attempt — test-harness syntax defect
@@ -209,3 +209,16 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Commit:** `ff145c2fa5c336374364c3689c659db17dd4eec6`
 - **Result:** Failed before any assertions executed. A malformed test edit omitted the job loop declaration and a closing parenthesis in the assertion. The failure was introduced by the test-harness change, not by either pinned action.
 - **Response:** Preserve this failed run; repair the test structure without reducing coverage; rerun on the corrected commit.
+
+
+### CI-005 — Action-inventory test fixture did not match YAML sequence syntax
+
+- **Detected:** 2026-11-18
+- **Affected branch/commits:** `governance/documentation-integrity-hardening-2026-11-18`; initial action-inventory test commit `5d92c5188036c0ef4fda44cb426606d4b667466b`, corrected head `0c68b9fb1dc520ffa93ff4d50da3d17378963438`.
+- **Severity:** Low — the new negative-test fixture exposed a parser/test mismatch before the action-inventory correction could be accepted.
+- **Finding:** The first action-reference matcher expected `uses:` at the beginning of a YAML line after indentation. Actual workflow step entries use YAML sequence syntax (`- uses:`), so the matcher missed valid action references and the positive fixture failed.
+- **Impact:** The proposed test could not reliably validate the actual workflow syntax. The failure was a defect in the new test harness, not evidence of an unregistered production workflow action.
+- **Correction:** Allow an optional YAML sequence dash before `uses:`; retain strict validation of full commit SHA references and version comments. Add fixture checks for a valid inventory, an unregistered action, duplicate action references, and a malformed/non-SHA reference.
+- **Verification:** Initial PR run [44314288705](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44314288705) failed 13/14 tests and is retained as evidence. Corrected PR run [44314517611](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44314517611) passed 14/14 tests on the PR merge commit containing head `0c68b9fb1dc520ffa93ff4d50da3d17378963438`.
+- **Preventive measure:** Test parsers against representative source syntax, including YAML list entries, and include positive and negative fixtures before relying on a new CI guard.
+- **Status:** Corrected and hosted-CI-verified on the review branch; mainline adoption remains pending PR review/merge.
