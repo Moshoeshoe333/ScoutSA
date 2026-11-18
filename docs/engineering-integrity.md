@@ -222,3 +222,22 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Verification:** Initial PR run [44314288705](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44314288705) failed 13/14 tests and is retained as evidence. Corrected PR run [44314517611](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44314517611) passed 14/14 tests on the PR merge commit containing head `0c68b9fb1dc520ffa93ff4d50da3d17378963438`.
 - **Preventive measure:** Test parsers against representative source syntax, including YAML list entries, and include positive and negative fixtures before relying on a new CI guard.
 - **Status:** Corrected and hosted-CI-verified on the review branch; mainline adoption remains pending PR review/merge.
+
+
+### CI-006 — Workflow-trigger assertions did not prove event-specific exact scope
+
+- **Detected:** 2026-11-18
+- **Affected branch/commits:** `governance/documentation-integrity-hardening-2026-11-18`; trigger-test implementation `4576fa89e6997a56f74d9b574d08ef5939d86baa`, fixture correction `e367c7e0323620002257907ecac4f19ae21fdb38`, branch-list parser correction `875f5e0ed9bb319a499a65a42cf7aa3715200cc4`.
+- **Severity:** Medium — the earlier workflow test established that selected strings appeared in the workflow, but did not establish that push and pull-request events each had exactly the registered branches and path filters.
+- **Finding:** A broad substring check could pass if a required filter appeared under only one event, and it would not reject an unregistered extra path. The first replacement introduced two fixture/parser defects: escaped newline expressions did not split actual lines, and the parser initially required branch values to be quoted although the workflow correctly uses an unquoted YAML scalar (`main`).
+- **Correction:** Replace substring-only trigger assertions with event-specific extraction of the `on`, `push`, and `pull_request` blocks; compare branch and path lists exactly against the CI register; add positive, missing-path, and extra-path fixtures; accept both quoted path strings and unquoted branch scalars.
+- **Parser limitation:** This remains a deliberately constrained line-oriented parser for the repository's current YAML layout, not a general YAML parser. A structural YAML change should fail closed and require an explicit parser/test update. The test also retains the existing direct command assertion; it does not claim complete semantic YAML validation.
+- **Verification:** Source read-back confirms the corrected regular expressions, fixture newlines, and branch scalar handling. Hosted CI for head `875f5e0ed9bb319a499a65a42cf7aa3715200cc4` has not yet been confirmed. Do not infer a pass from earlier run #27.
+- **Preventive measure:** For workflow controls, test both event branches independently, compare exact collections (not mere inclusion), and include negative fixtures for omissions and unauthorized additions. Preserve parser-format defects as test-harness incidents rather than weakening the intended assertion.
+- **Status:** Corrected in source; hosted verification pending.
+
+### CI-003 provenance follow-up — upstream action release commits independently inspected
+
+- **Evidence checked:** `actions/checkout` commit [3d3c42e5aac5ba805825da76410c181273ba90b1](https://github.com/actions/checkout/commit/3d3c42e5aac5ba805825da76410c181273ba90b1) has commit title "prep v7.0.1 release" and its diff adds the `v7.0.1` changelog section and updates package metadata to `7.0.1`. `actions/setup-node` commit [949feb2413d6458794dcd2491c4babbbce0c15c1](https://github.com/actions/setup-node/commit/949feb2413d6458794dcd2491c4babbbce0c15c1) updates package metadata from `7.0.0` to `7.1.0` and is the release-version commit used by the workflow pin.
+- **Scope:** This is independent upstream repository commit/diff inspection supporting the stated release versions. It is not a cryptographic signature verification, full supply-chain audit, or proof that every transitive dependency is safe.
+- **Status:** Release-version-to-commit correspondence independently inspected; broader action supply-chain assurance remains outside this CI control.
