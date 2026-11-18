@@ -151,3 +151,16 @@ Do not silently overwrite incidents. Append follow-up notes when a prevention me
 ## 8. Current boundary
 
 This control does not authorize implementation, database migration, RLS, API, authentication, real personal data, deployment or pilot activity. It governs the accuracy of the documentation and evidence for work that is already authorized.
+
+
+### DOC-005 — Mainline documentation-integrity coverage and flow authority boundary
+
+- **Detected:** 2026-11-18
+- **Affected branch/commit:** `main` at `a96cbae2df0ae30fe837264f95975fe72486406a`.
+- **Severity:** Medium–High — documentation changes outside the workflow path allowlist could bypass the mainline integrity suite; concrete proposed user flows could be mistaken for approved implementation requirements.
+- **Finding:** The workflow watched only a small set of README, gate-status, integrity-policy, test, and workflow paths. The test suite checked a small number of literal status phrases and empty workflow files. The MVP definition already carried an explicit draft/non-authority statement and the canonical gate record preserved unresolved authority holds; however, `docs/06-user-flows.md` did not carry an equally explicit non-ratification and implementation-authority banner. Its share-card, readiness, and outcome descriptions needed stronger disclosure and epistemic limits.
+- **Impact:** A change to an unlisted document could escape this workflow. A reader or implementer could also mistake illustrative flow prose for ratified requirements, especially around public share cards, derived readiness, and outcome authority.
+- **Correction proposed in this branch:** Expand push and pull-request path filters to all `docs/**` and `.github/workflows/**`; extend tests to cover draft authority, unresolved governance holds, share-card non-authorization, derived readiness, outcome assertion/dispute/supersession, and Constitution invariants; add an explicit non-ratified authority banner and risk boundaries to the user-flow document.
+- **Evidence boundary:** The existing successful mainline run #11 at commit `a96cbae2df0ae30fe837264f95975fe72486406a` proves only that the then-configured narrow suite passed. It does not establish repository-wide consistency. This incident remains open until the branch is read back and its hosted workflow succeeds.
+- **Preventive measure:** Keep the workflow broad over documentation and workflow files; add focused executable checks for repeated high-risk governance facts; require human review for semantic/legal decisions that cannot be safely reduced to string assertions.
+- **Status:** Correction prepared on `governance/documentation-integrity-hardening-2026-11-18`; hosted verification pending.

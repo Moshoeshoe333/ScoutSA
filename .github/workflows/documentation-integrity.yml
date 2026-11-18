@@ -6,10 +6,8 @@ on:
       - main
     paths:
       - "README.md"
-      - "docs/00-gate-status.md"
-      - "docs/engineering-integrity.md"
-      - "docs/tests/**"
-      - ".github/workflows/documentation-integrity.yml"
+      - "docs/**"
+      - ".github/workflows/**"
   pull_request:
     branches:
       - main
