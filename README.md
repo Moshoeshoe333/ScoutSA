@@ -101,6 +101,7 @@ No schema, RLS, API, UI, authentication, or implementation behavior is authorita
 
 - **[Tournament Organiser Adversarial Test Pack — 18 November 2026](docs/research/2026-11-18-tournament-organiser-adversarial-test-pack.md)** — proposed scenario tests and unresolved domain decisions; no implementation authority.
 - **[Tournament Domain Reconciliation — TOD-01 to TOD-05](docs/research/2026-11-18-tournament-domain-reconciliation-tod-01-to-05.md)** — proposed conceptual separation of Tournament, Team, TournamentEntry, Fixture and Result assertions; not ratified and grants no implementation authority.
+- **[Tournament Governance Decision Brief — TOD-06 to TOD-08](docs/research/2026-11-18-tournament-governance-tod-06-to-08.md)** — proposed result authority, organizer verification boundaries and player-data minimisation; not ratified and grants no implementation authority.
 
 The `docs/research/` directory contains Gate witnesses, re-witnesses, ratification reviews/records, external research anchors, contradiction audits, and the problem-solution ledger. These artifacts are evidence/provenance records; they do not independently override the governing documents.
 
