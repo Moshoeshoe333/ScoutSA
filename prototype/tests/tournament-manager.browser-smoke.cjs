@@ -12,7 +12,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   const consoleErrors = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('console', message => { if (message.type() === 'error') consoleErrors.push(message.text()); });
-  await page.goto('file://' + path.resolve('prototype/tournament-manager.html'));
+  await page.goto('file://' + path.resolve('prototype/tournament-manager.html') + '?testMode=1');
   const pkg = {
     contractVersion: '1.0',
     sourceSystem: 'scoutsa-organizer-portal',
@@ -64,12 +64,10 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await page.locator('#importOrganizerHandoff').click();
   await page.waitForFunction(() => /Imported 0 tournament edition\(s\); skipped 1 duplicate/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
   assert.match(await page.locator('#organizerImportMessage').textContent(), /Imported 0 tournament edition\(s\); skipped 1 duplicate/);
-  const exportSessionState = async () => {
-    const downloadWait = page.waitForEvent('download');
-    await page.locator('#exportButton').click();
-    const download = await downloadWait;
-    return JSON.parse(fs.readFileSync(await download.path(), 'utf8'));
-  };
+  const exportSessionState = async () => page.evaluate(() => {
+    if (typeof window.__SCOUTSA_TEST_SNAPSHOT__ !== 'function') throw new Error('Test-only state snapshot is unavailable');
+    return window.__SCOUTSA_TEST_SNAPSHOT__();
+  });
   const assertRejectedImport = async (name, payload) => {
     const beforeState = await exportSessionState();
     const before = await page.locator('#countT').textContent();
