@@ -227,9 +227,9 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Root cause:** The audit traced selected fields (dates and summary) rather than enumerating every source collection and tracing each field through the destination/export boundary. Imported claims and operational decisions were not explicitly separated.
 - **Preventive control:** Maintain a collection-and-field lineage matrix for each handoff. Preserve source records in explicitly named claim/provenance collections. Keep operational authority, identity and permission fail-closed until independent ratified review; never promote imported strings to decisions.
 - **Detective control:** Round-trip assertions for every collection and material field; adversarial fixtures containing forged `verified`, `approved` and `granted` claims; assert operational states remain unverified/not-requested.
-- **Regression / verification:** Code correction in `caadd26e2f12d1cb513d85d79dd31c7123981a3e`; browser assertions in `7f21fe268640a1beee649a29545fdc1f468f5cf4`. Exact-head hosted verification pending at entry creation.
+- **Regression / verification:** Code correction in `caadd26e2f12d1cb513d85d79dd31c7123981a3e`; browser assertions in `7f21fe268640a1beee649a29545fdc1f468f5cf4`. Exact-head hosted verification: run [44325785196](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44325785196), exact head `da769932354309f8327d50d720395d203eab5a6f`, passed the Tournament Manager handoff browser test and full workflow.
 - **Residual risk:** Preserving a claim is not validating it. Duplicate-competition semantics, organizer conflict resolution, expiry rules, revocation history and status enums require ratification.
-- **Status:** Mitigation committed; hosted verification pending.
+- **Status:** Verified for the tested synthetic handoff scope; domain and production gates remain open.
 
 ### LESSON-014 — Rejection tests must compare the complete state, not only record counts
 
@@ -238,6 +238,17 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Root cause:** The test used a convenient aggregate proxy instead of asserting the operation's full no-mutation contract.
 - **Preventive control:** Snapshot the complete relevant state before a rejected operation and compare it deeply afterward. For persisted systems, extend this to transaction boundaries and durable read-back.
 - **Detective control:** Browser helper exports full synthetic session state before and after every rejected import; adversarial malformed, incomplete, duplicate-reference, collision, oversized and date-invalid cases use the same helper.
-- **Regression / verification:** Test correction in `7f21fe268640a1beee649a29545fdc1f468f5cf4`; exact-head hosted verification pending at entry creation.
+- **Regression / verification:** Test correction in `7f21fe268640a1beee649a29545fdc1f468f5cf4`; test-only read-only snapshot seam in `5cb3f47313ee1bf273368793fb55b1776e9f3c35`; full workflow [44325785196](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44325785196), exact head `da769932354309f8327d50d720395d203eab5a6f`, passed the complete-state before/after assertions for rejected imports.
 - **Residual risk:** Browser-exported session state is not proof of backend/database atomicity.
-- **Status:** Mitigation committed; hosted verification pending.
+- **Status:** Verified for the tested synthetic browser session scope; backend transaction semantics remain untested.
+
+### LESSON-015 — Browser tests must await asynchronous file validation before asserting state
+
+- **Failure mode:** A browser test uploads a file and immediately reads a status field before asynchronous parsing/validation has completed, allowing a stale previous result to be mistaken for the current operation.
+- **Observed evidence:** Runs [44325181876](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44325181876) and [44325536793](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44325536793) exposed the race first on valid handoff import, then on tampered-package rejection. The second run showed the previous successful validation message while the rejection handler had not yet completed.
+- **Root cause:** Assertions were synchronized to the file-input action rather than the observable completion condition of the asynchronous handler.
+- **Preventive control:** After file uploads and other asynchronous browser actions, wait for a bounded, operation-specific success or rejection condition before asserting state. Do not wait for a generic non-empty message that may be stale.
+- **Detective control:** Browser smoke tests assert the exact expected status transition for valid, tampered and non-DEMO imports.
+- **Regression / verification:** Test correction in da769932354309f8327d50d720395d203eab5a6f; hosted run [44325785196](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44325785196) passed the complete Tournament Day Operations browser suite and all ten configured browser smoke steps.
+- **Residual risk:** A bounded wait proves only the specific tested browser path; it does not establish all asynchronous timing or network behavior.
+- **Status:** Verified for the tested synthetic browser path.
