@@ -61,7 +61,7 @@ test("outcomes preserve attribution, disputes, correction history, and epistemic
   const outcome = flows.split("## Flow 7")[1]?.split("## Design Principle")[0] || "";
   assert.ok(outcome.includes("assertion"), "outcomes must be treated as attributable assertions");
   assert.ok(outcome.includes("disputed"), "outcome disputes must remain explicit");
-  assert.ok(outcome.includes("supersed"), "outcome correction/supersession must preserve history");
+  assert.ok(outcome.includes("supersession"), "outcome correction/supersession must preserve history");
   assert.ok(outcome.includes("not automatic truth"), "outcome records must not be treated as automatic truth");
 });
 

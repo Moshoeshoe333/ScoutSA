@@ -2,7 +2,7 @@
 
 > **Status: PROPOSED FLOW NARRATIVE — NOT RATIFIED.**
 >
-> This document records interaction hypotheses for review. It is not an approved product contract, legal interpretation, safeguarding procedure, or implementation specification. It does not authorize schema, RLS, API, UI, migration, authentication, public disclosure, real-identity processing, deployment, or pilot implementation.
+> This document records interaction hypotheses for review. It is not an approved product contract, legal interpretation, safeguarding procedure, or implementation specification. It does not authorize schema, RLS, API, UI, migration, or production implementation; nor does it authorize authentication, public disclosure, real-identity processing, deployment, or pilot activity.
 >
 > **Authority boundary:** the Constitution and canonical Gate Status govern. The unresolved User ↔ Player cardinality/delegation, actor and organization authority, guardian conflicts, application lifecycle, outcome authority, access, disclosure, retention, and legal questions remain holds. No flow below may invent a default answer for them.
 >
@@ -90,7 +90,7 @@ Never infer that profile visibility permits republication or onward sharing. Pri
 
 ## Flow 6 — Opportunity Readiness
 
-For a specific opportunity, a future ratified evaluator may derive readiness from relevant prerequisites rather than treating readiness as a permanent player attribute. Readiness is a contextual, reproducible derived artifact—not a stored player truth, talent score, or ranking. Every evaluation must retain its opportunity, material input provenance, governing rule/context, and evaluation time. Material changes, expiry, dispute, withdrawal, or consent revocation require reassessment; stale evaluations must not be presented as current. The explanation must distinguish missing information from a negative finding.
+For a specific opportunity, a future ratified evaluator may derive readiness from relevant prerequisites rather than treating readiness as a permanent player attribute. Readiness is a contextual, reproducible derived artifact—not a stored player truth, talent score, or ranking. Every evaluation must retain its opportunity, material inputs and their provenance, governing rule/context, and evaluation time. Material changes, expiry, dispute, withdrawal, or consent revocation require reassessment; stale evaluations must not be presented as current. The explanation must distinguish missing information from a negative finding.
 
 Example:
 
