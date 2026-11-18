@@ -134,6 +134,18 @@ When a new repeated fact is introduced into documentation, either add it to the 
 - **Preventive measure:** Add browser assertions for fractional counts, percentages above 100, minutes above 150, and confirm invalid submissions do not change the statistics table. Retain a valid whole-number positive control.
 - **Status:** Code and regression tests corrected; hosted verification pending.
 
+
+
+### TM-005 — HTML pattern used invalid character-class syntax under the browser's Unicode Sets mode
+
+- **Detected:** 2026-11-18
+- **Severity:** Medium — browser console errors caused the final clean-console assertion to fail.
+- **Finding:** Run [44292249768](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44292249768), commit `c88d08bcc3c594ac89fcc1d9a6506f17f3def5c3`, exercised the corrected statistic unit validation and reached the final console-error assertion. Chromium reported that the eligibility rule and reviewer input `pattern` attributes used an unescaped hyphen in a character class. Under modern HTML pattern validation (Unicode Sets mode), the pattern was invalid.
+- **Impact:** Those two form patterns were not reliably enforcing the intended synthetic-label constraint, and the browser emitted console errors.
+- **Correction:** Escape the hyphen in both patterns; preserve the stricter DEMO-only validation.
+- **Additional prevention:** Pin the prototype workflow's checkout and setup-node actions to the same verified immutable Node 24-compatible release commits used on the governance branch. Keep the project test runtime explicitly on Node.js 22.
+- **Status:** HTML pattern and workflow action corrections committed; hosted verification pending.
+
 ## 6. Incident log
 
 ### DOC-001 — Documentation drift: engine version and final test count
