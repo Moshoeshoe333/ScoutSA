@@ -10,7 +10,9 @@
 
 ## Proposed Primary MVP Loop (non-authoritative)
 
-**Player becomes discoverable → Scout finds a viable opportunity → Guardian reviews → Safe contact / opportunity proceeds → Real-world outcome is recorded.**
+**Applicable authority and permission gates are evidenced → only the authorized, minimum-necessary discovery scope becomes available → a specific opportunity is assessed → required guardian/player review and consent occur before any further disclosure or contact → any authorized real-world outcome is recorded as an attributable assertion.**
+
+No player becomes discoverable merely by registering, completing a Passport, being verified, or appearing in this narrative. Discovery itself is a disclosure/access action and must be separately authorized for the actor, purpose, recipient scope, data fields, and time. A later guardian review cannot retroactively authorize earlier discovery or disclosure. If any required gate is unknown, missing, expired, conflicting, or withdrawn, the sequence is STOP / HOLD.
 
 Every flow must reduce uncertainty without creating unnecessary risk.
 
@@ -47,10 +49,10 @@ Verification must never imply that a coach has independently verified facts outs
    - transport feasibility
    - relevant academic eligibility
    - other legitimate opportunity requirements
-2. System returns players visible to that scout under current permissions.
-3. Results expose verification and readiness context without exposing restricted information.
+2. System returns only players whose discovery disclosure is already authorized for that scout, organization, purpose, field set, and time under the applicable ratified rules. If that authorization cannot be evidenced before search results are returned, the system returns no player-level result.
+3. Results expose only the minimum information explicitly authorized for that discovery purpose. Verification or readiness context does not expand the recipient's access scope.
 4. Scout opens an appropriate Passport view.
-5. Scout can initiate a structured contact or trial request.
+5. Scout may submit a structured request for review; discovery permission does not itself authorize direct contact, a trial invitation, or release of additional information.
 
 ## Flow 4 — Contact / Trial Request
 
