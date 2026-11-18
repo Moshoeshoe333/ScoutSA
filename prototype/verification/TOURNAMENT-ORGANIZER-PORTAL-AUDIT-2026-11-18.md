@@ -7,7 +7,7 @@
 
 ## Executive result
 
-A focused source-and-test review found a confirmed submission data-loss defect: the portal exposed start date, end date and competition summary inputs but did not copy those values into the submission record. The import side already mapped optional start/end fields, but the portal could not provide them. The importer also lacked explicit date-format and date-order checks. These defects are corrected in the current audit change and covered by browser regression assertions; hosted verification is pending until the exact resulting commit completes CI. During that run, the Organizer Portal smoke step remained in progress; source review found the test lacked guaranteed browser cleanup on assertion failure. TM-013 records the observation without guessing at the underlying assertion. A cleanup guard is now added so the next run can report the actual outcome.
+A focused source-and-test review found a confirmed submission data-loss defect: the portal exposed start date, end date and competition summary inputs but did not copy those values into the submission record. The import side already mapped optional start/end fields, but the portal could not provide them. The importer also lacked explicit date-format and date-order checks. These defects are corrected and verified by hosted workflow [run #679](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`. That run passed 121/121 headless tests and all ten browser smoke scripts. The run also verified the section-by-section 390px responsive correction. During the preceding attempt, the Organizer Portal smoke step remained in progress; source review found the test lacked guaranteed browser cleanup on assertion failure. TM-013 records the observation without guessing at the underlying assertion. The cleanup guard is now present and the next exact-head run completed successfully.
 
 This audit does not certify organizer identity, event authority, safeguarding, privacy/legal compliance, publication eligibility, security or production readiness. All records remain synthetic and browser-session-only.
 
@@ -22,7 +22,7 @@ This audit does not certify organizer identity, event authority, safeguarding, p
 | OPA-005 | Feature permission is a single mutable per-submission demo state; there is no attributed decision, version history, revocation evidence or publication authorization. | Portal updates the existing feature request in place and hard-codes publication display to `not-published`. | Accepted prototype limitation, not a bug to solve in this pass. Keep publication disabled and do not represent this as a production permission workflow. |
 | OPA-006 | Importer accepts several status/type strings as arbitrary text and does not provide an authoritative identity or authority review. | Source review of `importOrganizerPackage`; status fields are not enum-validated and source references are synthetic. | Residual prototype limitation. Before any real integration, define a ratified enum contract, reviewer/decision provenance and server-side authorization. |
 | OPA-007 | Handoff import is validated before insertion and edition-idempotent for the tested collision cases, but no persistence or cross-session transaction exists. | Importer constructs and validates collections before adding incoming submissions; browser test verifies duplicate import and selected failure no-mutation cases. | Keep session-only boundary; expand adversarial import matrix before considering a durable integration. |
-| OPA-008 | Organizer Registry section overflowed at mobile width while the Ledger section did not. | Run 44298986431 found 696px document width at 390px when Registry was active; the original test measured only Ledger. | Corrected responsive grid/panel/table sizing and expanded section-by-section viewport diagnostics; hosted verification pending. |
+| OPA-008 | Organizer Registry section overflowed at mobile width while the Ledger section did not. | Run 44298986431 found 696px document width at 390px when Registry was active; the original test measured only Ledger. | Corrected responsive grid/panel/table sizing; run #679 passed all five sections at 390px. |
 
 ## Regression coverage added
 
@@ -33,15 +33,31 @@ This audit does not certify organizer identity, event authority, safeguarding, p
 - Tournament Manager handoff import preserves start date, end date and summary in exported session state.
 - Invalid date ordering and impossible calendar dates are rejected without increasing the tournament edition count.
 
-## Existing incident review — Tournament Manager series
+## Hosted verification and incident reconciliation
 
-The 18 November hosted workflow [run 44297019349](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44297019349) passed against `2e60ff658e5288a978698179cedc52d377100e53`, including the Tournament Manager and Tournament Day Operations browser suites. That is valid evidence for the tests that existed in that commit. It does not verify the new OPA regression cases; those require a new exact-head workflow run.
+Hosted workflow [run #679](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829) completed successfully against exact commit `06204ac049ce21df6f22575d38202203c9ccec14` on `prototype/internal-demo`.
 
-TM-001–TM-011 are retained as permanent history. TM-011 has exact successful evidence for its correction. Earlier TM entries are being reconciled separately against the current test assertions and run history; no blanket closure is inferred from a later green run.
+- Headless tests: **121 passed, 0 failed, 0 skipped**.
+- Browser smoke scripts: **10/10 passed** — Discovery & Request Review, workspace hub/navigation, player journey preview, Vaal ecosystem coverage, tournament relationship hub, Tournament Manager, Tournament Day Operations, Statistic Reconciliation, Organizer Portal, and specialist workspace interactions.
+- The Organizer Portal test passed its date/summary persistence and export checks, duplicate-evidence no-mutation check, and all five sections at 390px.
+- The Tournament Manager test passed date/summary import round-trip and malformed/reversed/impossible-date rejection without mutating the edition count.
+
+### TM incident verification matrix
+
+| Incidents | Current test evidence | Result in run #679 |
+|---|---|---|
+| TM-001–TM-005 | `tournament-manager.browser-smoke.cjs` — Records navigation, same-team uniqueness, stable selector, unit-specific statistic validation and clean browser console | Passed |
+| TM-006–TM-009 | `tournament-day-operations.browser-smoke.cjs` — derived summary provenance, mobile overflow, visible-section setup and same-team substitution guard | Passed |
+| TM-010–TM-011 | Linked Player Tournament History 390px viewport check with element-level diagnostics | Passed |
+| TM-012 | Organizer submission date/summary persistence, invalid date rejection, export/import round-trip | Passed |
+| TM-013 | Browser cleanup in `finally`; successful test teardown | Passed on success path; forced failure-path injection not run |
+| TM-014 | Organizer Portal navigation and responsive check across all five sections at 390px | Passed |
+
+All TM incidents remain in the permanent ledger. TM-001–TM-012 and TM-014 are resolved for the exact synthetic regression scope described by their tests; TM-013 is mitigated, with failure-path fault injection still outstanding. These results do not close production architecture, safeguarding, legal, privacy, security or domain-model gates.
 
 ## Additional responsive finding
 
-Run [44298986431](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44298986431) exposed a 696px document width at 390px when Organizer Registry was active. This was not detected by the earlier Ledger-only width check. TM-014 and LESSON-012 record the gap. The CSS now uses zero-minimum grid tracks and shrinkable panels/table wrappers; the new test reports overflowing element geometry if the fix is incomplete. Exact-head verification remains pending.
+Run [44298986431](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44298986431) exposed a 696px document width at 390px when Organizer Registry was active. This was not detected by the earlier Ledger-only width check. TM-014 and LESSON-012 record the gap. The CSS now uses zero-minimum grid tracks and shrinkable panels/table wrappers; the new test reports overflowing element geometry if the fix is incomplete. Exact-head verification completed successfully in run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829).
 
 ## Remaining stop lines
 

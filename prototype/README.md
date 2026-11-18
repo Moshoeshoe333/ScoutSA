@@ -8,7 +8,7 @@ This branch contains a static browser prototype and a synthetic review engine. I
 
 ## Current verified state
 
-**Current verification status — 17 November 2026:** DOC-007 corrective changes are committed, but the latest exact-head hosted run must complete before the branch can be described as green. The earlier browser baseline is historical and does not validate the latest tournament changes. See the [17 November session ledger](verification/SESSION-LEDGER-2026-11-17.md) for the incident, fixes and required evidence.
+**Current verification status — 18 November 2026:** Hosted workflow [run #679](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829) completed successfully against exact prototype commit `06204ac049ce21df6f22575d38202203c9ccec14`. It passed **121/121 headless tests** and all **10 Playwright/Chromium browser smoke scripts**. This is a scoped regression checkpoint, not a production-readiness, safeguarding, privacy, legal, accessibility or security certification.
 
 
 - Review engine: `review-engine.js` **v0.3.0**.
@@ -51,8 +51,8 @@ node --test prototype/tests/*.test.js
 ```
 
 
-The appearance/minutes view is a derived calculation from fixture-specific lineup and substitution records. It is not an independently verified stat, and invalid duration/substitution timing suppresses the totals. The current change has a browser regression test committed, but a fresh complete hosted run has not yet been observed; do not claim it passed.
-Hosted CI runs ten Playwright/Chromium browser smoke scripts configured in `.github/workflows/prototype-policy-tests.yml`: Discovery & Request Review, workspace hub/navigation, player journey preview, Vaal ecosystem coverage, tournament relationship hub, tournament manager, tournament day operations, tournament statistic reconciliation, tournament organizer portal and specialist workspace interactions. Check the latest run on the `prototype/internal-demo` branch before relying on the Tournament Day Operations browser test. A passing run is regression evidence only—not safeguarding, privacy, accessibility or production-readiness approval.
+The appearance/minutes view is a derived calculation from fixture-specific lineup and substitution records. It is not an independently verified stat, and invalid duration/substitution timing suppresses the totals. Hosted run [#679](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829) passed the current Tournament Day Operations browser smoke test and the linked Player Tournament History checks at the exact commit listed above.
+Hosted CI runs ten Playwright/Chromium browser smoke scripts configured in `.github/workflows/prototype-policy-tests.yml`: Discovery & Request Review, workspace hub/navigation, player journey preview, Vaal ecosystem coverage, tournament relationship hub, tournament manager, tournament day operations, tournament statistic reconciliation, tournament organizer portal and specialist workspace interactions. The latest exact-head run is linked above. A passing run is regression evidence only—not safeguarding, privacy, accessibility or production-readiness approval.
 
 ## Review engine and invitation gate
 

@@ -96,8 +96,7 @@ When a new repeated fact is introduced into documentation, either add it to the 
 - **Additional prevention:** Strengthen the Organizer Portal handoff importer with object-shape checks, per-collection limits, feature-link/scope validation, collision checks for existing edition IDs, and a 1 MiB file-size limit. Add browser regression cases for malformed JSON, null records, dangling feature references, conflicting edition identity and oversized files. Each rejected import must leave tournament state unchanged.
 - **Follow-up evidence:** Run [44291278666](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44291278666), commit `7effca9bdbf6c0a89a5801989f9cb4d6d952b17d`, still failed at a second ledger assertion later in the same test. The first correction fixed the post-import assertion, but the eligibility flow also queried the ledger while hidden. This repeat failure demonstrates why all matching assertions must be reviewed, not only the first failing line. The new correction explicitly navigates to Records before the second ledger assertion. The newly added import-rejection cases were not reached in this failed run.
 - **Status:** Second corrective change committed; full hosted verification pending.
-
-
+- **Current verification (2026-11-18):** Hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`, completed successfully. The Records browser test explicitly activates Records before querying `#ledger`, verifies the panel is active, and navigates back to Records before the eligibility-ledger assertion. This closes the incident for the stated synthetic prototype regression scope only.
 
 ### TM-002 — Duplicate squad-number test did not hold team identity constant
 
@@ -109,8 +108,7 @@ When a new repeated fact is introduced into documentation, either add it to the 
 - **Evidence boundary:** The run passed the newly added malformed JSON, null-record, dangling feature-reference, edition-collision and oversized-file rejection cases before reaching this assertion. The full workflow remains failed; those targeted observations do not replace a successful complete run.
 - **Prevention:** Tests for scoped uniqueness must explicitly set and assert the scope key for every competing record.
 - **Status:** Test corrected; hosted verification pending.
-
-
+- **Current verification (2026-11-18):** Hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`, completed successfully. The duplicate squad-number browser test explicitly reselects `TEN-DEMO-001` before the second player submission and checks the scoped duplicate rejection. This closes the incident for the stated synthetic prototype regression scope only.
 
 ### TM-003 — Playwright selectOption received a regular expression where a string is required
 
@@ -121,8 +119,7 @@ When a new repeated fact is introduced into documentation, either add it to the 
 - **Correction:** Select the exact synthetic participation ID `PAR-DEMO-003`, which is the record created by the preceding controlled test setup.
 - **Prevention:** Use supported Playwright locator APIs and stable record IDs for select controls; use regex matching with locator text assertions, not option descriptors.
 - **Status:** Test corrected; hosted verification pending.
-
-
+- **Current verification (2026-11-18):** Hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`, completed successfully. The Tournament Manager browser test uses the stable `PAR-DEMO-003` value for the initial statistic-selection case; the browser API call completes. This closes the incident for the stated synthetic prototype regression scope only.
 
 ### TM-004 — Statistic metric and unit were destructured from a string incorrectly
 
@@ -133,8 +130,7 @@ When a new repeated fact is introduced into documentation, either add it to the 
 - **Correction:** Split the selected metric value on the explicit `|` delimiter before applying unit-specific validation.
 - **Preventive measure:** Add browser assertions for fractional counts, percentages above 100, minutes above 150, and confirm invalid submissions do not change the statistics table. Retain a valid whole-number positive control.
 - **Status:** Code and regression tests corrected; hosted verification pending.
-
-
+- **Current verification (2026-11-18):** Hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`, completed successfully. The Tournament Manager browser test rejects fractional count, percentage above 100 and minutes above 150 without adding statistic rows, then accepts a valid whole-number positive control. This closes the incident for the stated synthetic prototype regression scope only.
 
 ### TM-005 — HTML pattern used invalid character-class syntax under the browser's Unicode Sets mode
 
@@ -145,8 +141,7 @@ When a new repeated fact is introduced into documentation, either add it to the 
 - **Correction:** Escape the hyphen in both patterns; preserve the stricter DEMO-only validation.
 - **Additional prevention:** Pin the prototype workflow's checkout and setup-node actions to the same verified immutable Node 24-compatible release commits used on the governance branch. Keep the project test runtime explicitly on Node.js 22.
 - **Status:** HTML pattern and workflow action corrections committed; hosted verification pending.
-
-
+- **Current verification (2026-11-18):** Hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`, completed successfully. The Tournament Manager browser test completes with zero uncaught page errors and zero console errors, covering the invalid-pattern regression in the loaded page. This closes the incident for the stated synthetic prototype regression scope only.
 
 ### TM-006 — Match-day browser test expected an obsolete summary string
 
@@ -157,8 +152,7 @@ When a new repeated fact is introduced into documentation, either add it to the 
 - **Correction:** Update the exact expected string to include the current explanatory provenance statement.
 - **Prevention:** When a UI summary changes, inspect both the rendered source and test contract; retain exact assertions where the full text is intentional, and make provenance wording part of the expected result.
 - **Status:** Test expectation corrected; hosted verification pending.
-
-
+- **Current verification (2026-11-18):** Hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`, completed successfully. The Day Operations browser test asserts the complete appearance summary including its provenance sentence and 180 derived player-minutes. This closes the incident for the stated synthetic prototype regression scope only.
 
 ### TM-007 — Tournament Day Operations page overflowed the 390px viewport
 
@@ -169,8 +163,7 @@ When a new repeated fact is introduced into documentation, either add it to the 
 - **Correction:** Add explicit min-width containment to panels and the main content panel, constrain table wrappers to the available width with horizontal scrolling inside the table wrapper, and allow navigation labels to wrap.
 - **Diagnostic improvement:** If the viewport assertion fails again, report the first elements whose right edge exceeds the viewport, including tag, ID, class, right edge and width.
 - **Status:** Layout and diagnostic test changes committed; hosted verification pending.
-
-
+- **Current verification (2026-11-18):** Hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`, completed successfully. The Day Operations browser test checks document scroll width at 390px and reports overflowing element geometry if the check fails. This closes the incident for the stated synthetic prototype regression scope only.
 
 ### TM-008 — Match-day guard test filled a control before navigating to its section
 
@@ -462,7 +455,7 @@ The projection also requires `allBlockingGatesSatisfied === true` plus fully pas
 ## 7. Cross-project engineering lessons
 
 The [Engineering Lessons Ledger](engineering-lessons-ledger.md) is the durable record for reusable failure patterns, root causes, preventive controls, detective controls, regression evidence and residual risk. Add an entry for every material incident, near miss or audit finding. Preserve failed attempts and historical evidence; do not mark a correction verified until the exact resulting commit has passed the relevant checks. Transfer control patterns to other projects only after checking that their assumptions and risk context fit.
-
+- **Current verification (2026-11-18):** Hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`, completed successfully. The guard-page test navigates to Appearances before editing match duration, then visits Substitutions and Events before their negative validation cases. This closes the incident for the stated synthetic prototype regression scope only.
 
 ### TM-009 — Out-of-range substitution guard test selected players from different teams
 
@@ -474,7 +467,7 @@ The [Engineering Lessons Ledger](engineering-lessons-ledger.md) is the durable r
 - **Prevention:** Negative tests must satisfy all earlier preconditions before targeting a later validation rule. Explicitly set and assert fixture relationships (team, fixture, lineup status and participant identity) rather than relying on HTML option defaults.
 - **Verification:** Correction committed; hosted verification for the exact resulting commit is pending. Do not close this incident or claim the duration guard passed until the Day Operations browser suite completes successfully.
 - **Boundary:** Synthetic internal demo only. No production behavior, real-player data, persistence, authorization or safeguarding capability is implied.
-
+- **Current verification (2026-11-18):** Hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`, completed successfully. The guard-page test explicitly selects and asserts `PAR-DEMO-001` and `PAR-DEMO-003`, the same-team pair, before the out-of-range substitution assertion. This closes the incident for the stated synthetic prototype regression scope only.
 
 ### TM-010 — Player tournament history page overflowed at mobile viewport
 
@@ -485,6 +478,7 @@ The [Engineering Lessons Ledger](engineering-lessons-ledger.md) is the durable r
 - **Prevention:** Responsive tests must report actionable element-level diagnostics. Every page introduced into a cross-page workflow must be included in narrow-viewport checks; passing the originating page's mobile check does not establish that linked pages are responsive.
 - **Verification:** CSS and diagnostic changes committed; hosted verification for the exact resulting commit is pending. If overflow persists, use the new element-level report to isolate the actual source rather than adding broad overflow clipping.
 - **Boundary:** Internal synthetic demo only. No real-player data, production readiness, authorization or safeguarding capability is implied.
+- **Current verification (2026-11-18):** Hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`, completed successfully. The linked Player Tournament History page is checked at 390px after the match-day workflow. This closes the incident for the stated synthetic prototype regression scope only.
 
 ### TM-011 — Player history nested grid and selector intrinsic sizing defeated header-only mobile fix
 
@@ -497,7 +491,7 @@ The [Engineering Lessons Ledger](engineering-lessons-ledger.md) is the durable r
 - **Prevention:** When a mobile overflow report shows several ancestors and descendants sharing the same oversized right edge, inspect the full intrinsic-sizing chain (grid tracks, flex items, panels, wrappers and form controls), not only the first visible element. Keep the document-level overflow assertion and element diagnostics; do not mask failures with global `overflow:hidden`.
 - **Verification:** Resolved for the prototype regression scope. Hosted run [44297019349](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44297019349) completed successfully against exact correction commit `2e60ff658e5288a978698179cedc52d377100e53`; all 16 workflow steps completed, including the Day Operations browser suite containing the linked player-history 390px viewport check. This verifies the tested synthetic path, not every viewport/device or production readiness.
 - **Boundary:** Internal synthetic adult demo only. No real-player data, production readiness, persistence, authorization or safeguarding capability is implied.
-
+- **Current verification (2026-11-18):** Hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`, completed successfully. The Player Tournament History 390px check passes with the intrinsic grid/selector sizing correction; run #674 had already verified the correction and run #679 repeats the full path. This closes the incident for the stated synthetic prototype regression scope only.
 
 ### TM-012 — Organizer submission discarded dates and summary; date boundaries were not validated
 
@@ -510,7 +504,7 @@ The [Engineering Lessons Ledger](engineering-lessons-ledger.md) is the durable r
 - **Regression:** Expanded Organizer Portal and Tournament Manager browser smoke tests cover date correction, summary/date export, round-trip import, impossible dates and reversed-date rejection. Hosted verification is pending for the exact audit commit.
 - **Residual risk:** The handoff remains synthetic and client-side. Date validation does not establish that an event is real, authorized or scheduled.
 - **Status:** Corrective changes committed; pending exact-head hosted verification.
-
+- **Current verification (2026-11-18):** Hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`, completed successfully. The Organizer Portal test verifies reversed-date no-mutation, date/summary export, duplicate evidence no-mutation and all five sections at 390px; the Manager test verifies import round-trip and invalid-date rejection. This closes the incident for the stated synthetic prototype regression scope only.
 
 ### TM-013 — Organizer Portal browser smoke test lacked guaranteed browser cleanup
 
@@ -525,6 +519,9 @@ The [Engineering Lessons Ledger](engineering-lessons-ledger.md) is the durable r
 - **Status:** Corrective test-harness change committed; pending exact-head hosted verification.
 
 
+- **Current verification (2026-11-18):** The test-harness change is present in the exact commit tested by hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), which completed the Organizer Portal test successfully. The failure path itself was not deliberately fault-injected; retain the cleanup guard and do not claim that a forced assertion-failure test was run.
+- **Current status:** Mitigated for the Organizer Portal smoke test; failure-path injection remains unverified.
+
 ### TM-014 — Organizer Registry table caused document-level mobile overflow
 
 - **Detected:** 2026-11-18
@@ -536,3 +533,5 @@ The [Engineering Lessons Ledger](engineering-lessons-ledger.md) is the durable r
 - **Verification:** Responsive correction and richer diagnostics committed; exact-head hosted verification pending.
 - **Residual risk:** One 390px Chromium viewport does not cover every device, zoom level or browser engine.
 - **Status:** Corrective CSS committed; pending exact-head hosted verification.
+- **Current verification (2026-11-18):** Hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`, completed successfully. The Organizer Portal test navigates through all five sections at 390px and asserts document width and active navigation state on each. This closes the incident for the stated synthetic prototype regression scope only.
+

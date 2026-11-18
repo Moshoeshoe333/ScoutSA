@@ -192,9 +192,9 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Root cause:** The form handler, record shape, export payload, importer mapping and browser tests were reviewed as separate pieces rather than one end-to-end data lineage.
 - **Preventive control:** For each material field, trace input → validation → state record → export → import → destination state. Define optionality and format at both sender and receiver. Keep a positive round-trip test and a negative no-mutation test.
 - **Detective control:** Browser tests assert exact field values after export/import, reject impossible or reversed dates, and assert rejected operations leave counts/state unchanged.
-- **Regression / verification:** Added to `tournament-organizer-portal.browser-smoke.cjs` and `tournament-manager.browser-smoke.cjs`; hosted exact-head verification is pending.
+- **Regression / verification:** Hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`, passed the expanded Organizer Portal and Tournament Manager browser tests, including exact date/summary round-trip and invalid-date rejection.
 - **Residual risk:** A client-side synthetic round-trip does not prove API/database consistency, persistence, authorization or event authenticity.
-- **Status:** Mitigated in prototype code; pending hosted verification.
+- **Status:** Verified for the tested synthetic prototype scope; production integration remains unauthorized.
 
 
 ### LESSON-011 — Browser-test cleanup must survive assertion failure
@@ -216,6 +216,6 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Root cause:** Responsive assertions were coupled to one test-end navigation state rather than the page's full navigable state space.
 - **Preventive control:** Iterate through each navigation section at representative narrow widths; use shrinkable grid tracks/panels and contained horizontal table scrolling.
 - **Detective control:** Assert document scroll width after each navigation transition and include element-level bounds, width and overflow diagnostics.
-- **Regression / verification:** Expanded `tournament-organizer-portal.browser-smoke.cjs`; CSS correction in `tournament-organizer-portal.html`; hosted exact-head verification pending.
+- **Regression / verification:** Hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`, passed the section-by-section 390px Organizer Portal check after the CSS correction.
 - **Residual risk:** A single viewport and browser engine do not establish universal responsive conformance.
-- **Status:** Mitigated in prototype source; pending hosted verification.
+- **Status:** Verified for the tested 390px Chromium path; broader device coverage remains open.
