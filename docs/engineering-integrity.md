@@ -244,3 +244,16 @@ This control does not authorize implementation, database migration, RLS, API, au
 
 
 - **Hosted verification addendum (run #31):** [Run 44316265634](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44316265634) completed successfully. Job `documentation-integrity` (job `134843069730`) checked out merge commit `4aff1f3`, explicitly containing PR head `763ef51858af7a06c364e92998b62280a8d27fd4` into base `a96cbae2df0ae30fe837264f95975fe72486406a`. The log reports **15 tests, 15 passed, 0 failed**. The new event-specific trigger test and its missing/extra-path negative fixtures passed. This closes the hosted-verification item for CI-006 on that tested head; any later change requires fresh verification.
+
+
+### CI-007 — Workflow inventory checks did not reject unregistered trigger events or jobs
+
+- **Detected:** 2026-11-18
+- **Affected branch/commit:** PR #6 review head `13474f5841771c4b65139f4f2072c19a69fe6906`; mainline base `a96cbae2df0ae30fe837264f95975fe72486406a`.
+- **Severity:** Medium — the CI scope register declared trigger and job scope, but the tests did not yet prove that no additional top-level trigger event or unregistered job had been added.
+- **Finding:** Event-specific branch/path lists were compared exactly, but the event-key inventory itself was not checked. Job tests confirmed registered jobs existed and selected values appeared in the file, but did not reject an additional unregistered job.
+- **Correction in this branch:** Add exact child-key inventory checks for top-level workflow events and jobs, with negative fixtures for an extra `schedule` event and an extra job. Keep the parser deliberately limited to the current line-oriented YAML structure; unsupported structural changes require explicit parser/test review.
+- **Root cause:** Inventory validation checked that declared entries were present, but did not enforce equality in both directions at every structural boundary.
+- **Preventive measure:** Compare actual and declared sets exactly; include missing-entry and extra-entry fixtures for workflow files, trigger events, job IDs, and action references.
+- **Verification:** Pending local and hosted test execution on this branch.
+- **Status:** Open — do not close until the exact head passes hosted CI and changed files are read back.
