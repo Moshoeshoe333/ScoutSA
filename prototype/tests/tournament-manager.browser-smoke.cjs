@@ -8,7 +8,9 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   try {
   const page = await browser.newPage({ viewport: { width: 1365, height: 900 } });
   const errors = [];
+  const consoleErrors = [];
   page.on('pageerror', error => errors.push(error.message));
+  page.on('console', message => { if (message.type() === 'error') consoleErrors.push(message.text()); });
   await page.goto('file://' + path.resolve('prototype/tournament-manager.html'));
   const pkg = {
     contractVersion: '1.0',
@@ -18,10 +20,20 @@ test('tournament manager imports organizer portal package by stable IDs and skip
     evidence: [{ id: 'EVD-DEMO-501', organizerId: 'ORG-DEMO-501', type: 'Public institutional reference', ref: 'DEMO-EVIDENCE-501', status: 'pending' }],
     features: [{ id: 'FTR-DEMO-501', submissionId: 'SUB-DEMO-501', scope: 'Competition name, dates and public event summary', status: 'requested' }]
   };
-  await page.locator('[data-section="records"]').click();
+  const recordsNav = page.locator('[data-section="records"]');
+  assert.equal(await recordsNav.count(), 1, 'Records navigation control must exist exactly once');
+  await recordsNav.click();
   const recordsPanel = page.locator('#section-records');
-  assert.equal(await recordsPanel.evaluate(el => el.classList.contains('active')), true,
-    'Records navigation must activate the Records panel before its controls are used');
+  try {
+    await page.waitForFunction(() => document.querySelector('#section-records')?.classList.contains('active') === true, null, { timeout: 1000 });
+  } catch (error) {
+    const diagnostic = await page.evaluate(() => ({
+      recordsNavCurrent: document.querySelector('[data-section="records"]')?.getAttribute('aria-current'),
+      activeSections: [...document.querySelectorAll('.section.active')].map(el => el.id),
+      recordsPanelExists: Boolean(document.querySelector('#section-records'))
+    }));
+    assert.fail(`Records navigation did not activate within 1s. State=${JSON.stringify(diagnostic)}; pageErrors=${JSON.stringify(errors)}; consoleErrors=${JSON.stringify(consoleErrors)}; cause=${error.message}`);
+  }
   await recordsPanel.waitFor({ state: 'visible' });
   await page.locator('#organizerHandoffFile').setInputFiles({ name: 'handoff.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(pkg)) });
   await page.locator('#importOrganizerHandoff').click();
@@ -80,6 +92,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await page.locator('#statsForm button[type="submit"]').click();
   assert.match(await page.locator('#statsMessage').textContent(), /Recorded STA-/);
   assert.deepEqual(errors, []);
+  assert.deepEqual(consoleErrors, []);
   } finally {
     await browser.close();
   }
