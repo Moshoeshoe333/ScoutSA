@@ -548,3 +548,39 @@ The earlier TM entries preserve the status that was accurate when each incident 
 | TM-014 | Verified for all five Organizer Portal sections at 390px in the synthetic Chromium path; full run #680 passed. | Does not establish all devices, browsers, zoom levels or accessibility conformance. |
 
 **Ledger reconciliation rule:** A later successful run may supersede a pending status only when (1) its exact head contains the correction, (2) the relevant test actually ran, and (3) its scope matches the incident. Preserve the original failed-run history and label the later evidence explicitly. A green workflow does not close residual risks outside its executed assertions.
+
+## 9. Organizer handoff adversarial review — 18 November 2026
+
+**Scope:** Isolated `prototype/internal-demo` only. This review does not change mainline authority or authorize real organizer/player data, publication, contact, production integration or pilot activity.
+
+### OPA-009 — Importer discarded validated source collections and competition format
+
+- **Finding:** The Organizer Portal export contains organizer, submission, evidence and feature-request collections. The Tournament Manager importer validated the collections but retained only selected organizer/submission/feature fields in the event row; evidence records and full organizer/feature source records were discarded, and competition format/edition label were omitted.
+- **Correction:** Added `organizerSourceClaims`, `organizerEvidenceClaims` and `organizerFeaturePermissionClaims` to the synthetic session state; preserved format and edition label in imported events; retained source records by ID with conflicting same-ID content rejected.
+- **Code revision:** `caadd26e2f12d1cb513d85d79dd31c7123981a3e`.
+- **Regression:** Browser assertions verify organizer/evidence/feature records, including an expired evidence status claim, and competition format/edition label survive the handoff.
+- **Residual risk:** Preserving an expired or other evidence status string is not an expiry evaluation or authenticity check. Source claims remain untrusted.
+- **Status:** Correction committed; exact-head hosted verification pending.
+
+### OPA-010 — Imported authority and permission claims could populate operational fields
+
+- **Finding:** Incoming identity, authority and feature-permission strings were copied into operational event fields without independent attribution or review. A crafted synthetic package could claim `verified`, `approved` or `granted`.
+- **Correction:** Imported operational identity and authority states now fail closed to `unverified`; feature permission fails closed to `not-requested`. Raw incoming values are retained separately as source claims and do not confer authority or permission.
+- **Code revision:** `caadd26e2f12d1cb513d85d79dd31c7123981a3e`.
+- **Regression:** Browser fixture deliberately supplies `verified`, `approved` and `granted` claims and asserts the operational states remain fail-closed while source claims remain traceable.
+- **Residual risk:** This does not establish organizer identity, legal authority, evidence authenticity, permission validity, expiry, revocation or publication eligibility. Status semantics remain subject to ratification.
+- **Status:** Correction committed; exact-head hosted verification pending.
+
+### OPA-011 — Rejected import tests checked counts, not complete state preservation
+
+- **Finding:** The previous rejection helper compared only the tournament count. It could miss mutation of an existing event or source-claim collection without a count change.
+- **Correction:** Each rejected-import case now exports and deep-compares the entire session state before and after the rejected operation. Added incomplete-organizer and duplicate organizer/evidence-reference cases.
+- **Test revision:** `7f21fe268640a1beee649a29545fdc1f468f5cf4`.
+- **Residual risk:** The assertion covers the complete browser-exported synthetic session state; it does not prove server/database transaction semantics.
+- **Status:** Regression correction committed; exact-head hosted verification pending.
+
+### Domain decisions intentionally not invented
+
+Semantic duplicate-competition matching across distinct IDs, organizer identity conflict resolution, authoritative evidence expiry/clock rules, permission revocation/supersession history and ratified status enums remain unresolved. The prototype records these as blockers; it must not infer authority from labels, imported status strings or expired evidence references.
+
+**Verification stop line:** Do not close OPA-009–OPA-011 until a hosted workflow on the exact branch head runs the updated Tournament Manager browser smoke test and the full configured suite. The last verified pre-change checkpoint remains run [#681](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44323862443), head `8f4d3a53be5d8ee06da502cc71ca9747ec1e11b1`; it does not cover these later changes.
