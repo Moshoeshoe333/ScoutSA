@@ -178,8 +178,8 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Preventive rule:** Any workflow inventory or execution-scope change must update the register in the same pull request. CI success is always tied to a specific run, tested commit, event, job, command, and scope; a configured workflow is not evidence of a pass.
 - **Initial hosted verification:** PR run [44289683283](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44289683283) failed before test execution because the generated JSON register ended with the two literal characters `\\n` after the closing object. Node's `JSON.parse` correctly rejected the malformed file. This was a file-generation/serialization defect, not a reason to relax the parser or test.
 - **Correction:** Remove the literal escape suffix and retain a valid JSON document. The test parses the register at module load, so malformed JSON remains a hard CI failure.
-- **Verification:** Pending hosted CI on the corrected PR head.
-- **Status:** Open pending hosted verification.
+- **Verification:** Corrected PR run [44289866111](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44289866111) completed successfully on the merge commit containing head `469eca408220f28476e291f8353d471acc994ac6`; all 13/13 tests passed, including JSON parsing, workflow inventory/configuration alignment, and safeguarding measurement-contract checks. The failed runs remain preserved as incident evidence.
+- **Status:** Corrected and CI-verified on the review branch; mainline adoption remains pending PR review/merge.
 
 ### SAF-001 — Safeguarding measurement lacked an explicit anti-gaming contract
 
@@ -188,5 +188,5 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Finding:** The MVP draft distinguished activity metrics from evidence of value, but did not define the safeguard denominators, provenance, ownership, misuse risks, stop conditions, or prohibited optimization targets required before a future pilot measurement plan.
 - **Correction in this branch:** Add a proposed Safeguarding Measurement Contract defining candidate indicators, numerator/denominator requirements, privacy and reporting boundaries, prohibited growth metrics, fail-closed stop conditions, and ratification blockers.
 - **Authority boundary:** This document authorizes no real-player data collection, instrumentation, dashboard, pilot, or implementation. It does not set legal basis, SLAs, retention periods, or named owners.
-- **Verification:** Automated document-presence and key-control checks are pending hosted CI; substantive safeguarding/legal review remains required and cannot be replaced by string tests.
-- **Status:** Open pending hosted verification and competent review.
+- **Verification:** Hosted PR run [44289866111](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44289866111) passed the automated contract-presence and key-control checks (13/13 total tests). This is a documentation-control check only; substantive safeguarding/legal review, role assignment, and operational validation remain required.
+- **Status:** Automated documentation checks verified on the review branch; substantive review and ratification remain open.
