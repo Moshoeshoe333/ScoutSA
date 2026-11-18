@@ -535,3 +535,16 @@ The [Engineering Lessons Ledger](engineering-lessons-ledger.md) is the durable r
 - **Status:** Corrective CSS committed; pending exact-head hosted verification.
 - **Current verification (2026-11-18):** Hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`, completed successfully. The Organizer Portal test navigates through all five sections at 390px and asserts document width and active navigation state on each. This closes the incident for the stated synthetic prototype regression scope only.
 
+## 8. Tournament incident status reconciliation — 18 November 2026
+
+The earlier TM entries preserve the status that was accurate when each incident was first recorded. Later exact-head evidence supersedes those historical pending labels; it does not erase the failed runs or broaden the scope of what was tested.
+
+**Reconciliation evidence:** Hosted prototype workflow [run #680](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299838840) completed successfully on exact branch head `17f69f4da691bb68a3818f5071f23b49f8963657`. Job `policy-and-documentation-tests` (`134786400772`) ran on Node.js 22.23.4. The log reports **121/121 headless tests passed, 0 failed**. All ten configured Playwright/Chromium browser smoke steps completed successfully: Discovery & Request Review, workspace hub/navigation, player journey preview, Vaal ecosystem coverage, tournament relationship hub, Tournament Manager, Tournament Day Operations, Statistic Reconciliation, Organizer Portal, and specialist workspace interactions. This run is later than and includes the corrections previously verified in run #679; it provides a fresh full-workflow checkpoint on the reconciled head.
+
+| Incident | Reconciled disposition on run #680 | Remaining limitation |
+|---|---|---|
+| TM-001–TM-012 | Verified for the synthetic regression scope described in each incident's current-verification addendum; full run #680 passed. | No production, real-world authority, data authenticity or safeguarding conclusion. |
+| TM-013 | Mitigated for the Organizer Portal smoke test; successful-path teardown ran in #679 and the full browser suite passed again in #680. | Deliberate assertion-failure fault injection remains outstanding; do not call the failure path verified. |
+| TM-014 | Verified for all five Organizer Portal sections at 390px in the synthetic Chromium path; full run #680 passed. | Does not establish all devices, browsers, zoom levels or accessibility conformance. |
+
+**Ledger reconciliation rule:** A later successful run may supersede a pending status only when (1) its exact head contains the correction, (2) the relevant test actually ran, and (3) its scope matches the incident. Preserve the original failed-run history and label the later evidence explicitly. A green workflow does not close residual risks outside its executed assertions.
