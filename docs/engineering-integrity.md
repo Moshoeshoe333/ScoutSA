@@ -584,3 +584,29 @@ The earlier TM entries preserve the status that was accurate when each incident 
 Semantic duplicate-competition matching across distinct IDs, organizer identity conflict resolution, authoritative evidence expiry/clock rules, permission revocation/supersession history and ratified status enums remain unresolved. The prototype records these as blockers; it must not infer authority from labels, imported status strings or expired evidence references.
 
 **Verification stop line:** Do not close OPA-009–OPA-011 until a hosted workflow on the exact branch head runs the updated Tournament Manager browser smoke test and the full configured suite. The last verified pre-change checkpoint remains run [#681](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44323862443), head `8f4d3a53be5d8ee06da502cc71ca9747ec1e11b1`; it does not cover these later changes.
+
+## 10. Organizer handoff verification and browser-test synchronization — 18 November 2026
+
+### Preserved failed attempts and corrective actions
+
+- **Run [44324794870](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44324794870):** 121/121 headless tests passed, but the Tournament Manager browser test timed out waiting for a repeated download event while attempting full-state snapshots. This was a test-harness defect in the snapshot mechanism, not evidence of importer failure. Replaced repeated download snapshots with a read-only window.__SCOUTSA_TEST_SNAPSHOT__ hook exposed only when the synthetic page is opened with the query ?testMode=1.
+- **Run [44325181876](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44325181876):** the strengthened Tournament Manager handoff test passed, but Tournament Day Operations failed because the Player Tournament History test read the previous status before asynchronous file validation completed. Added an explicit wait for the expected validation result.
+- **Run [44325536793](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44325536793):** the valid handoff wait passed; the tampered-package rejection assertion still read the prior success status before the asynchronous rejection handler completed. Added explicit waits for both tampered and non-DEMO rejection results.
+
+These failed runs are retained as evidence. None is counted as a successful full-workflow verification.
+
+### TM-015 — Player History handoff browser assertions raced asynchronous file validation
+
+- **Finding:** The test uploaded a file and immediately asserted the status text. The application uses asynchronous file reading/validation, so the test could observe the previous status rather than the result of the new import.
+- **Root cause:** The browser test did not wait for the observable completion condition after file input.
+- **Correction:** Added bounded waitForFunction checks for successful validation and each rejected tampered/non-DEMO package before asserting the final message.
+- **Test revision:** da769932354309f8327d50d720395d203eab5a6f.
+- **Status:** Verified for the synthetic browser path by run #694 below.
+
+### Exact-head verification
+
+Hosted prototype workflow [run #694](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44325785196) completed successfully against exact branch head da769932354309f8327d50d720395d203eab5a6f. Job policy-and-documentation-tests (134876551475) ran on Node.js 22.23.4 and reports **121/121 headless tests passed, 0 failed**. All ten configured Playwright/Chromium browser smoke steps completed successfully, including Tournament Manager, Tournament Day Operations and Organizer Portal.
+
+Run #694 verifies OPA-009–OPA-011 and TM-015 for the described synthetic regression scope. The test-only snapshot seam is available only under the explicit ?testMode=1 query. The full-state no-mutation assertion covers exported browser session state, not database transactions.
+
+**Remaining domain holds:** Semantic duplicate-competition matching across different IDs, organizer identity conflict resolution, authoritative evidence expiry/clock rules, permission revocation/supersession history and ratified status enums remain unresolved. The prototype does not invent these rules. Mainline and production authorization remain unchanged.
