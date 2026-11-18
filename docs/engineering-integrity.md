@@ -158,6 +158,18 @@ When a new repeated fact is introduced into documentation, either add it to the 
 - **Prevention:** When a UI summary changes, inspect both the rendered source and test contract; retain exact assertions where the full text is intentional, and make provenance wording part of the expected result.
 - **Status:** Test expectation corrected; hosted verification pending.
 
+
+
+### TM-007 — Tournament Day Operations page overflowed the 390px viewport
+
+- **Detected:** 2026-11-18
+- **Severity:** Medium — mobile layout regression blocked the complete prototype workflow.
+- **Finding:** Run [44292684036](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44292684036), commit `6778b5ce0e0db1a35100d342f942f31de0de7036`, passed the Tournament Manager browser suite and the match-day summary assertion, then failed the 390px viewport width check on Tournament Day Operations.
+- **Impact:** The page could have horizontal page overflow on narrow screens; later browser suites were skipped.
+- **Correction:** Add explicit min-width containment to panels and the main content panel, constrain table wrappers to the available width with horizontal scrolling inside the table wrapper, and allow navigation labels to wrap.
+- **Diagnostic improvement:** If the viewport assertion fails again, report the first elements whose right edge exceeds the viewport, including tag, ID, class, right edge and width.
+- **Status:** Layout and diagnostic test changes committed; hosted verification pending.
+
 ## 6. Incident log
 
 ### DOC-001 — Documentation drift: engine version and final test count
