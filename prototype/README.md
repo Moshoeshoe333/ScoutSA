@@ -8,7 +8,7 @@ This branch contains a static browser prototype and a synthetic review engine. I
 
 ## Current verified state
 
-**Current verification status — 18 November 2026:** The latest full-workflow checkpoint is hosted run [#680](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299838840), completed successfully against exact prototype head `17f69f4da691bb68a3818f5071f23b49f8963657`. It passed **121/121 headless tests** and all **10 Playwright/Chromium browser smoke scripts** (Node.js 22.23.4). Earlier run [#679](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829) remains the focused audit-correction checkpoint. These are scoped synthetic regression results, not production-readiness, safeguarding, privacy, legal, accessibility or security certifications. TM-013's deliberate assertion-failure cleanup injection remains outstanding.
+**Current verification status — 18 November 2026:** The latest full-workflow checkpoint is hosted run [#694](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44325785196), completed successfully against exact prototype head `da769932354309f8327d50d720395d203eab5a6f`. It passed **121/121 headless tests** and all **10 Playwright/Chromium browser smoke scripts** (Node.js 22.23.4). This includes the Organizer Portal handoff preservation, fail-closed imported claims, full-state rejected-import assertions and asynchronous Player History handoff checks. Earlier runs #679–#681 remain historical checkpoints. These are scoped synthetic regression results, not production-readiness, safeguarding, privacy, legal, accessibility or security certifications. TM-013's deliberate assertion-failure cleanup injection remains outstanding.
 
 
 - Review engine: `review-engine.js` **v0.3.0**.
