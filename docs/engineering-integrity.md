@@ -462,3 +462,15 @@ The projection also requires `allBlockingGatesSatisfied === true` plus fully pas
 ## 7. Cross-project engineering lessons
 
 The [Engineering Lessons Ledger](engineering-lessons-ledger.md) is the durable record for reusable failure patterns, root causes, preventive controls, detective controls, regression evidence and residual risk. Add an entry for every material incident, near miss or audit finding. Preserve failed attempts and historical evidence; do not mark a correction verified until the exact resulting commit has passed the relevant checks. Transfer control patterns to other projects only after checking that their assumptions and risk context fit.
+
+
+### TM-009 — Out-of-range substitution guard test selected players from different teams
+
+- **Detected:** 2026-11-18
+- **Severity:** Low — a browser-test fixture selection prevented the intended duration-validation path from being exercised.
+- **Finding:** Hosted run [44293271753](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44293271753), commit `b59f383969a52a84b812c3cc9736d602d70fe676`, passed the headless suite, Chromium installation, six earlier browser suites and the Tournament Manager browser suite. The Day Operations guard test failed because its default outgoing player was `PAR-DEMO-001` (team `TEN-DEMO-001`) while its default incoming player was `PAR-DEMO-002` (team `TEN-DEMO-002`). The application correctly rejected the cross-team substitution before reaching the duration guard.
+- **Impact:** The out-of-range substitution assertion did not test the intended validation rule. This is a test-fixture setup defect; the application’s same-team validation behaved as designed.
+- **Correction:** The guard test now explicitly selects `PAR-DEMO-001` and `PAR-DEMO-003`, the two synthetic participants belonging to `TEN-DEMO-001`, and asserts both selected values before submitting the out-of-range minute.
+- **Prevention:** Negative tests must satisfy all earlier preconditions before targeting a later validation rule. Explicitly set and assert fixture relationships (team, fixture, lineup status and participant identity) rather than relying on HTML option defaults.
+- **Verification:** Correction committed; hosted verification for the exact resulting commit is pending. Do not close this incident or claim the duration guard passed until the Day Operations browser suite completes successfully.
+- **Boundary:** Synthetic internal demo only. No production behavior, real-player data, persistence, authorization or safeguarding capability is implied.
