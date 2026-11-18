@@ -297,3 +297,32 @@ The product should first prove that it can help organizers administer a competit
 **Stop condition:** if tournament utility depends on collecting player personal data, making unverified player claims, or silently resolving offline conflicts, stop and reopen the specific decision with evidence. Do not code around it.
 
 **Final principle:** make tournament administration useful first; let player-performance claims earn their way into the Passport through evidence, authority and purpose—not convenience.
+
+
+## 9. External source check — important qualification to TOD-09
+
+A limited public-source check found that some formal competition rules define a team-sheet entry as participation for the purposes of that competition's own regulations. This is a material qualification: ScoutSA must not impose one universal definition of participation across all competitions.
+
+- **SAFA Competitions Uniform Rules (approved 25 June 2016), clauses 10.1–10.2 and 11:** the published rules require team sheets and state that a player's appearance on the team sheet is deemed participation for the purposes of those rules, subject to a pre-kickoff amendment exception. The same document links eligibility to player registration. Source: https://www.safa.net/wp-content/uploads/2017/03/SAFA-COMPETITIONS-UNIFORM-RULESapproved25June2016.pdf
+- **Engen Knockout Challenge 2025 tournament rules:** the organizer's published rules specify roster requirements and competition-specific player eligibility and protest rules. Source: https://engensports.co.za/engen-knockout-challenge-tournament-rules-2025/
+- **Tshwane Regional Football Association governance page:** publishes team-sheet, match-summary and match-incident templates alongside regional and SAFA rules, illustrating that operational record types can be competition/association-specific. Source: https://tshwanerfa.org.za/governance/
+
+### Revised interpretation
+
+The earlier evidence ladder is a safety model for ScoutSA's claims, not a claim that every football authority uses the same evidentiary definition. A competition's own valid rules may define a team-sheet entry as a formal participation status for that competition. ScoutSA may record that **rule-defined status** only when it has the applicable competition rules, version, scope, effective period and authoritative record. It must label the basis precisely (for example, “deemed participated under [competition rule/version]”), rather than silently translating it into independently witnessed physical attendance, minutes played, or verified performance statistics.
+
+Accordingly:
+
+1. A team-sheet entry can support a competition-specific participation determination where the governing rules expressly say so and the relevant record is authoritative.
+2. It does not automatically prove actual minutes played, starting status, substitutions, goals, assists, or any other statistic not established by that rule or separate evidence.
+3. The definition may differ between SAFA official competitions, affiliated regional competitions, private tournaments and grassroots events. Applicability must be checked per event; the 2016 SAFA document must not be assumed to govern every current tournament.
+4. A tournament-level result still does not establish every listed player's individual performance.
+5. The system must preserve the exact rule/source and the difference between a rule-defined participation status, an observed event, an assertion, and a verified performance claim.
+
+This source check strengthens the need for competition-specific rule provenance; it does not authorize player-level data collection or processing. The source documents are leads for stakeholder/legal validation, not a legal opinion or proof of current applicability to any particular Vaal tournament.
+
+## 10. Evidence limitations and offline research status
+
+The public-source check did not establish the actual offline/connectivity conditions of Vaal/Sedibeng tournament organizers. TOD-10 remains an unvalidated product hypothesis. No field interviews, device tests, connectivity measurements, mobile-data measurements or offline prototypes were conducted.
+
+The next useful evidence is direct observation/interview with organizers using their existing paper, WhatsApp or spreadsheet processes, followed—only if separately authorized—by synthetic fault-injection tests. Do not infer offline requirements from geography alone.
