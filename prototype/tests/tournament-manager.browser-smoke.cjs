@@ -103,6 +103,20 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   assert.equal(await page.locator('#statsTable tbody tr').count(), beforeInvalidCount,
     'invalid fractional count must not create a statistic');
 
+  // Percentage and minutes limits must be enforced by their declared units.
+  await page.locator('#statMetric').selectOption('Pass completion|percent');
+  await page.locator('#statValue').fill('101');
+  await page.locator('#statsForm button[type="submit"]').click();
+  assert.match(await page.locator('#statsMessage').textContent(), /between 0 and 100/);
+  assert.equal(await page.locator('#statsTable tbody tr').count(), beforeInvalidCount,
+    'out-of-range percentage must not create a statistic');
+  await page.locator('#statMetric').selectOption('Minutes played|minutes');
+  await page.locator('#statValue').fill('151');
+  await page.locator('#statsForm button[type="submit"]').click();
+  assert.match(await page.locator('#statsMessage').textContent(), /no greater than 150/);
+  assert.equal(await page.locator('#statsTable tbody tr').count(), beforeInvalidCount,
+    'out-of-range minutes must not create a statistic');
+
   // A valid whole-number count is accepted and remains linked to the selected fixture and participation.
   await page.locator('#statFixture').selectOption('FIX-DEMO-001');
   await page.locator('#statPlayer').selectOption('PAR-DEMO-001');

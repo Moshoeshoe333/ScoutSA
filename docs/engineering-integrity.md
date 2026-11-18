@@ -122,6 +122,18 @@ When a new repeated fact is introduced into documentation, either add it to the 
 - **Prevention:** Use supported Playwright locator APIs and stable record IDs for select controls; use regex matching with locator text assertions, not option descriptors.
 - **Status:** Test corrected; hosted verification pending.
 
+
+
+### TM-004 — Statistic metric and unit were destructured from a string incorrectly
+
+- **Detected:** 2026-11-18
+- **Severity:** High for data integrity — metric-specific validation was bypassed.
+- **Finding:** Run [44292015601](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44292015601), commit `29a948e03c1b601c1b3ce74835905b68b0ddede0`, passed the earlier Tournament Manager navigation and import-rejection cases, then showed that a fractional value `2.5` was accepted for a count metric. The handler used array destructuring directly on the string value (for example `"Goals|count"`), assigning individual characters rather than the metric and unit.
+- **Impact:** Count, percentage and minutes constraints were not reliably applied; invalid observations could be recorded in the synthetic session.
+- **Correction:** Split the selected metric value on the explicit `|` delimiter before applying unit-specific validation.
+- **Preventive measure:** Add browser assertions for fractional counts, percentages above 100, minutes above 150, and confirm invalid submissions do not change the statistics table. Retain a valid whole-number positive control.
+- **Status:** Code and regression tests corrected; hosted verification pending.
+
 ## 6. Incident log
 
 ### DOC-001 — Documentation drift: engine version and final test count
