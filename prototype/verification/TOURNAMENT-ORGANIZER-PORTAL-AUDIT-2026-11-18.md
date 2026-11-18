@@ -79,3 +79,9 @@ Run [44298986431](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44298986
 - `.github/workflows/prototype-policy-tests.yml`
 - `docs/engineering-integrity.md`
 - `docs/engineering-lessons-ledger.md`
+
+## Follow-up exact-head verification — run #680
+
+The audit corrections and incident reconciliation were subsequently included in exact prototype branch head `17f69f4da691bb68a3818f5071f23b49f8963657`. Hosted workflow [run #680](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299838840) completed successfully. Job `policy-and-documentation-tests` (`134786400772`) ran under Node.js 22.23.4 and reports **121/121 headless tests passed, 0 failed**. All ten configured Playwright/Chromium browser smoke steps completed successfully, including the Organizer Portal and Tournament Manager suites. This is a fresh full-workflow verification checkpoint for the exact head stated above.
+
+Run #680 also supports reconciliation of TM-001–TM-012 and TM-014 for their documented synthetic regression scope. TM-013 remains **mitigated, not fully verified**: successful browser teardown passed, but deliberate assertion-failure injection is still outstanding. No result here establishes real organizer identity, event authority, data authenticity, legal/privacy compliance, safeguarding effectiveness, accessibility conformance, production security or production readiness.
