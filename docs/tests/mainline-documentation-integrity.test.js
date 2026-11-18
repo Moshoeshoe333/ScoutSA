@@ -25,6 +25,19 @@ function extractYamlSection(source, header, indentation) {
   return lines.slice(start + 1, end === -1 ? lines.length : end).join("\n");
 }
 
+function assertYamlChildKeysExactly(source, header, indentation, expected, context) {
+  const section = extractYamlSection(source, header, indentation);
+  const childIndent = " ".repeat(indentation + 2);
+  const actual = section.split(/\\r?\\n/)
+    .filter(line => line.startsWith(childIndent) && line.trim() !== "")
+    .map(line => {
+      const match = line.match(/^\\s{2}([A-Za-z0-9_-]+):(?:\\s|$)/);
+      return match?.[1] ?? null;
+    })
+    .filter(Boolean);
+  assert.deepEqual(actual, expected, `${context}: child keys must exactly match the declared inventory`);
+}
+
 function assertYamlStringList(section, key, expected, context) {
   const lines = section.split(/\r?\n/);
   const header = lines.findIndex(line => line === `    ${key}:`);
@@ -43,6 +56,7 @@ function assertYamlStringList(section, key, expected, context) {
 
 function assertWorkflowTriggersMatch(source, triggerRegister, workflowPath) {
   const onSection = extractYamlSection(source, "on", 0);
+  assertYamlChildKeysExactly(source, "on", 0, ["push", "pull_request"], `${workflowPath} trigger events`);
   for (const event of ["push", "pull_request"]) {
     const eventSection = extractYamlSection(onSection, event, 2);
     const context = `${workflowPath} ${event}`;
@@ -95,6 +109,38 @@ test("mainline workflow trigger blocks exactly match registered branches and pat
   assert.ok(item, "documentation-integrity workflow must be registered");
   assertWorkflowTriggersMatch(workflow, item.triggers, item.path);
   assert.ok(workflow.includes("node --test docs/tests/*.test.js"), "workflow must execute the mainline documentation test suite");
+});
+
+test("workflow trigger validation rejects unregistered events and jobs", () => {
+  const valid = `on:
+  push:
+    branches:
+      - main
+    paths:
+      - "README.md"
+      - "docs/**"
+      - ".github/workflows/**"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "README.md"
+      - "docs/**"
+      - ".github/workflows/**"
+jobs:
+  documentation-integrity:
+    runs-on: ubuntu-latest
+`;
+  assert.doesNotThrow(() => assertYamlChildKeysExactly(valid, "on", 0, ["push", "pull_request"], "fixture events"));
+  assert.throws(
+    () => assertYamlChildKeysExactly(valid.replace("  pull_request:", "  schedule:\n    cron: \"0 0 * * *\"\n  pull_request:"), "on", 0, ["push", "pull_request"], "fixture events"),
+    /child keys must exactly match/
+  );
+  assert.doesNotThrow(() => assertYamlChildKeysExactly(valid, "jobs", 0, ["documentation-integrity"], "fixture jobs"));
+  assert.throws(
+    () => assertYamlChildKeysExactly(valid.replace("jobs:\n", "jobs:\n  unregistered-job:\n    runs-on: ubuntu-latest\n"), "jobs", 0, ["documentation-integrity"], "fixture jobs"),
+    /child keys must exactly match/
+  );
 });
 
 test("workflow trigger validation rejects event-specific omissions and extra paths", () => {
@@ -219,6 +265,7 @@ test("CI scope register matches executable workflow triggers and job configurati
       assert.ok(source.includes(`node-version: "${job.node_version}"`), "Node runtime drift");
       assert.ok(source.includes(`run: ${job.command}`), "workflow command drift");
     }
+    assertYamlChildKeysExactly(source, "jobs", 0, item.jobs.map(job => job.id), item.path + " jobs");
     assert.ok(item.verifies.length > 0 && item.does_not_prove.length > 0, "scope must state both coverage and limitations");
   }
 });
