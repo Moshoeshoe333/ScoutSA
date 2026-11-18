@@ -99,6 +99,8 @@ No schema, RLS, API, UI, authentication, or implementation behavior is authorita
 
 ### Research & evidence
 
+- **[Tournament Organiser Adversarial Test Pack — 18 November 2026](docs/research/2026-11-18-tournament-organiser-adversarial-test-pack.md)** — proposed scenario tests and unresolved domain decisions; no implementation authority.
+
 The `docs/research/` directory contains Gate witnesses, re-witnesses, ratification reviews/records, external research anchors, contradiction audits, and the problem-solution ledger. These artifacts are evidence/provenance records; they do not independently override the governing documents.
 
 ## Implementation boundary
