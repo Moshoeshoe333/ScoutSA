@@ -259,3 +259,18 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Correction:** Reduce the regex escaping to the intended JavaScript regular expressions. Re-run hosted CI and read back the exact head before closing.
 - **Hosted verification:** PR run [44317671811](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44317671811) completed successfully on exact PR head `50412f0690ab98b2eb4a9a8bb0825cb888387472`, with base `a96cbae2df0ae30fe837264f95975fe72486406a`. The `documentation-integrity` job passed **16/16 tests, 0 failures**, including the extra-event and extra-job negative fixtures. The test and ledger files were read back from that exact head. This closes the CI-007 prevention-verification item for this head only.
 - **Status:** Corrected and prevention verified in hosted PR CI; mainline adoption remains pending independent review and merge.
+
+
+### SAF-002 — Discovery narrative and safeguarding metrics lacked sufficient sequencing/measurement precision
+
+- **Detected:** 2026-11-18 during independent review of PR #6.
+- **Affected review head:** `d6445a811de14d9da723650efd9d6bc65784fe34`.
+- **Severity:** High for the flow ambiguity; Medium for measurement-definition completeness.
+- **Finding A:** The proposed primary loop began with “Player becomes discoverable” and placed guardian review afterwards. Although the document was non-ratified and conditional, the sequence could be read as permitting discovery before the required permission and authority gates. A later guardian review cannot retroactively authorize an earlier disclosure.
+- **Correction A:** Reorder the proposed loop so evidenced authority and permission precede minimum-necessary discovery. Clarify that registration, Passport completion, or verification does not itself authorize discovery; require pre-authorized recipient/purpose/field/time scope; state that discovery does not authorize direct contact or further disclosure.
+- **Finding B:** Several proposed indicators lacked sufficiently operational definitions under the contract's own rule. Examples included undefined revocation intake/start events, incomplete-case treatment for elapsed-time measures, an undefined withdrawal-rate denominator, unspecified incident deduplication, and no pre-approved sampling frame for audit completeness.
+- **Correction B:** Add count/rate/elapsed-time definition requirements; specify unresolved/open/censored-case treatment; block the withdrawal rate until its eligible population and denominator are ratified; require an approved sampling frame; define incident and opportunity counting boundaries.
+- **Root cause:** Narrative ordering and metric labels were treated as adequate proxies for operationally precise gates and measurement contracts.
+- **Preventive controls:** Regression tests assert the authority-before-discovery sequence and pre-authorization semantics; measurement tests require explicit event units, denominator/clock/censoring rules, and a blocked state where policy decisions remain unresolved.
+- **Verification:** Pending hosted CI on the corrected PR head and exact-file read-back.
+- **Status:** Open — keep PR draft and unmerged; no product or real-player data work is authorized.
