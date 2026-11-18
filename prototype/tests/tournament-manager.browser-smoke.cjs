@@ -16,10 +16,10 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   const pkg = {
     contractVersion: '1.0',
     sourceSystem: 'scoutsa-organizer-portal',
-    organizers: [{ id: 'ORG-DEMO-501', name: 'DEMO-Test-Organizer', type: 'Community organization', identity: 'unverified', authority: 'pending' }],
+    organizers: [{ id: 'ORG-DEMO-501', name: 'DEMO-Test-Organizer', type: 'Community organization', identity: 'verified', authority: 'approved' }],
     submissions: [{ id: 'SUB-DEMO-501', tournamentId: 'TRN-ORG-DEMO-501', editionId: 'EDT-ORG-DEMO-501', organizerId: 'ORG-DEMO-501', name: 'DEMO-Test-Cup', edition: 'DEMO-2027-Edition', locality: 'DEMO-Sedibeng', format: '11-a-side', start: '2027-06-01', end: '2027-06-03', summary: 'DEMO imported competition summary.', status: 'pending-review' }],
-    evidence: [{ id: 'EVD-DEMO-501', organizerId: 'ORG-DEMO-501', type: 'Public institutional reference', ref: 'DEMO-EVIDENCE-501', status: 'pending' }],
-    features: [{ id: 'FTR-DEMO-501', submissionId: 'SUB-DEMO-501', scope: 'Competition name, dates and public event summary', status: 'requested' }]
+    evidence: [{ id: 'EVD-DEMO-501', organizerId: 'ORG-DEMO-501', type: 'Public institutional reference', ref: 'DEMO-EVIDENCE-501', status: 'expired' }],
+    features: [{ id: 'FTR-DEMO-501', submissionId: 'SUB-DEMO-501', scope: 'Competition name, dates and public event summary', status: 'granted' }]
   };
   const recordsNav = page.locator('[data-section="records"]');
   assert.equal(await recordsNav.count(), 1, 'Records navigation control must exist exactly once');
@@ -50,19 +50,43 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   assert.equal(imported.start, '2027-06-01', 'importer must preserve start date');
   assert.equal(imported.end, '2027-06-03', 'importer must preserve end date');
   assert.equal(imported.summary, 'DEMO imported competition summary.', 'importer must preserve summary');
+  assert.equal(imported.format, '11-a-side', 'importer must preserve competition format');
+  assert.equal(imported.editionLabel, 'DEMO-2027-Edition', 'importer must preserve the edition label');
+  assert.equal(imported.organizerIdentityState, 'unverified', 'untrusted imported identity claims must not elevate the operational state');
+  assert.equal(imported.authority, 'unverified', 'untrusted imported authority claims must fail closed');
+  assert.equal(imported.feature, 'not-requested', 'an imported feature claim must not become operational permission');
+  assert.equal(imported.organizerIdentityClaim, 'verified', 'source identity claim must remain traceable');
+  assert.equal(imported.organizerAuthorityClaim, 'approved', 'source authority claim must remain traceable');
+  assert.equal(imported.featurePermissionClaim, 'granted', 'source feature-permission claim must remain traceable');
+  assert.deepEqual(sessionData.organizerSourceClaims, pkg.organizers, 'complete organizer source records must survive import');
+  assert.deepEqual(sessionData.organizerEvidenceClaims, pkg.evidence, 'evidence records, including expired status claims, must survive import');
+  assert.deepEqual(sessionData.organizerFeaturePermissionClaims, pkg.features, 'feature permission source records must survive import');
   await page.locator('#importOrganizerHandoff').click();
   await page.waitForFunction(() => /Imported 0 tournament edition\(s\); skipped 1 duplicate/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
   assert.match(await page.locator('#organizerImportMessage').textContent(), /Imported 0 tournament edition\(s\); skipped 1 duplicate/);
+  const exportSessionState = async () => {
+    const downloadWait = page.waitForEvent('download');
+    await page.locator('#exportButton').click();
+    const download = await downloadWait;
+    return JSON.parse(fs.readFileSync(await download.path(), 'utf8'));
+  };
   const assertRejectedImport = async (name, payload) => {
+    const beforeState = await exportSessionState();
     const before = await page.locator('#countT').textContent();
     const buffer = Buffer.isBuffer(payload) ? payload : Buffer.from(typeof payload === 'string' ? payload : JSON.stringify(payload));
     await page.locator('#organizerHandoffFile').setInputFiles({ name, mimeType: 'application/json', buffer });
     await page.locator('#importOrganizerHandoff').click();
     await page.waitForFunction(() => /^Import rejected:/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
-    assert.equal(await page.locator('#countT').textContent(), before, name + ' must not partially mutate tournament state');
+    assert.equal(await page.locator('#countT').textContent(), before, name + ' must not change the tournament count');
+    const afterState = await exportSessionState();
+    assert.deepEqual(afterState, beforeState, name + ' must leave the complete exported session state unchanged');
   };
   await assertRejectedImport('malformed.json', '{not-json');
   await assertRejectedImport('null-record.json', { ...pkg, organizers: [null] });
+  const incompleteOrganizer = { ...pkg.organizers[0] }; delete incompleteOrganizer.type;
+  await assertRejectedImport('incomplete-organizer.json', { ...pkg, organizers: [incompleteOrganizer] });
+  const duplicateEvidenceRef = { ...pkg.evidence[0], id: 'EVD-DEMO-502' };
+  await assertRejectedImport('duplicate-evidence-reference.json', { ...pkg, evidence: [...pkg.evidence, duplicateEvidenceRef] });
   await assertRejectedImport('missing-feature-link.json', { ...pkg, features: [{ id: 'FTR-DEMO-502', submissionId: 'SUB-DEMO-MISSING', scope: 'DEMO-SCOPE', status: 'requested' }] });
   await assertRejectedImport('edition-collision.json', { ...pkg, submissions: [{ ...pkg.submissions[0], id: 'SUB-DEMO-502', tournamentId: 'TRN-ORG-DEMO-999' }] });
   await assertRejectedImport('oversized.json', Buffer.alloc(1024 * 1024 + 1, 32));
