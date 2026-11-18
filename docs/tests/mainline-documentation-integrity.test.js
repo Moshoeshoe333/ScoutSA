@@ -270,6 +270,28 @@ test("CI scope register matches executable workflow triggers and job configurati
   }
 });
 
+test("primary discovery flow cannot precede evidenced authority and scoped permission", () => {
+  const loop = flows.split("## Proposed Primary MVP Loop")[1]?.split("## Flow 1")[0] || "";
+  assert.ok(loop.indexOf("authority and permission gates are evidenced") < loop.indexOf("discovery scope becomes available"), "discovery must follow authority and permission gates");
+  assert.ok(loop.includes("A later guardian review cannot retroactively authorize earlier discovery"), "guardian review must not retroactively authorize discovery");
+  const discovery = flows.split("## Flow 3")[1]?.split("## Flow 4")[0] || "";
+  assert.ok(discovery.includes("already authorized"), "discovery must be pre-authorized");
+  assert.ok(discovery.includes("does not itself authorize direct contact"), "discovery must not imply contact authority");
+});
+
+test("measurement definitions specify event units, denominators, clocks, and unresolved cases", () => {
+  for (const phrase of [
+    "deduplication rule",
+    "authoritative start event",
+    "clock source/time zone",
+    "open, missing, invalid, or censored cases",
+    "BLOCKED — RATIFICATION REQUIRED",
+    "NOT READY TO COLLECT",
+    "pre-approved, reproducible sampling frame"
+  ]) assert.ok(safeguarding.includes(phrase), `measurement definition control missing: ${phrase}`);
+  assert.ok(safeguarding.includes("rate is BLOCKED until"), "withdrawal rate must not use an undefined population");
+});
+
 test("safeguarding measurement contract prevents growth metrics from overriding safety", () => {
   for (const phrase of [
     "NOT READY TO COLLECT",
