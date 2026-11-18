@@ -249,7 +249,7 @@ This control does not authorize implementation, database migration, RLS, API, au
 ### CI-007 — Workflow inventory checks did not reject unregistered trigger events or jobs
 
 - **Detected:** 2026-11-18
-- **Affected branch/commit:** PR #6 review head `13474f5841771c4b65139f4f2072c19a69fe6906`; mainline base `a96cbae2df0ae30fe837264f95975fe72486406a`.
+- **Affected branch/commit:** PR #6 review head `50412f0690ab98b2eb4a9a8bb0825cb888387472`; mainline base `a96cbae2df0ae30fe837264f95975fe72486406a`.
 - **Severity:** Medium — the CI scope register declared trigger and job scope, but the tests did not yet prove that no additional top-level trigger event or unregistered job had been added.
 - **Finding:** Event-specific branch/path lists were compared exactly, but the event-key inventory itself was not checked. Job tests confirmed registered jobs existed and selected values appeared in the file, but did not reject an additional unregistered job.
 - **Correction in this branch:** Add exact child-key inventory checks for top-level workflow events and jobs, with negative fixtures for an extra `schedule` event and an extra job. Keep the parser deliberately limited to the current line-oriented YAML structure; unsupported structural changes require explicit parser/test review.
@@ -257,4 +257,5 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Preventive measure:** Compare actual and declared sets exactly; include missing-entry and extra-entry fixtures for workflow files, trigger events, job IDs, and action references.
 - **First hosted attempt:** PR run [44317540336](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44317540336) failed 12/16. The new helper's generated regex contained double-escaped backslashes, so it failed to recognize valid indentation; the failure was in the guard implementation, not the workflow configuration. The failed run is preserved.
 - **Correction:** Reduce the regex escaping to the intended JavaScript regular expressions. Re-run hosted CI and read back the exact head before closing.
-- **Status:** Open — do not close until the exact head passes hosted CI and changed files are read back.
+- **Hosted verification:** PR run [44317671811](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44317671811) completed successfully on exact PR head `50412f0690ab98b2eb4a9a8bb0825cb888387472`, with base `a96cbae2df0ae30fe837264f95975fe72486406a`. The `documentation-integrity` job passed **16/16 tests, 0 failures**, including the extra-event and extra-job negative fixtures. The test and ledger files were read back from that exact head. This closes the CI-007 prevention-verification item for this head only.
+- **Status:** Corrected and prevention verified in hosted PR CI; mainline adoption remains pending independent review and merge.
