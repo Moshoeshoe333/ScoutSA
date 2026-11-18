@@ -28,10 +28,10 @@ function extractYamlSection(source, header, indentation) {
 function assertYamlChildKeysExactly(source, header, indentation, expected, context) {
   const section = extractYamlSection(source, header, indentation);
   const childIndent = " ".repeat(indentation + 2);
-  const actual = section.split(/\\r?\\n/)
+  const actual = section.split(/\r?\n/)
     .filter(line => line.startsWith(childIndent) && line.trim() !== "")
     .map(line => {
-      const match = line.match(/^\\s{2}([A-Za-z0-9_-]+):(?:\\s|$)/);
+      const match = line.match(/^\s{2}([A-Za-z0-9_-]+):(?:\s|$)/);
       return match?.[1] ?? null;
     })
     .filter(Boolean);
