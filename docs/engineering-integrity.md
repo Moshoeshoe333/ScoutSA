@@ -170,6 +170,18 @@ When a new repeated fact is introduced into documentation, either add it to the 
 - **Diagnostic improvement:** If the viewport assertion fails again, report the first elements whose right edge exceeds the viewport, including tag, ID, class, right edge and width.
 - **Status:** Layout and diagnostic test changes committed; hosted verification pending.
 
+
+
+### TM-008 — Match-day guard test filled a control before navigating to its section
+
+- **Detected:** 2026-11-18
+- **Severity:** Low — a browser test setup error prevented out-of-range substitution/event checks from running.
+- **Finding:** Run [44292952822](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44292952822), commit `43d6737e3fa999fd589d5dec75ff8d915a10259d`, passed the earlier match-day checks and the 390px viewport assertion after the layout correction. The secondary guard page then attempted to fill `#matchDuration` while the default Match-day section was active and the Appearances section was hidden.
+- **Impact:** The negative tests for out-of-range substitutions and match events were not reached. This was a test-navigation defect, not evidence that the control itself was broken.
+- **Correction:** Explicitly navigate to the Appearances section on the guard page before setting match duration; then navigate to Substitutions and Events for their respective negative cases.
+- **Prevention:** Browser tests must establish visible navigation state before interacting with controls in sectioned interfaces. Add an explicit navigation action to each independently initialized page context.
+- **Status:** Test corrected; hosted verification pending.
+
 ## 6. Incident log
 
 ### DOC-001 — Documentation drift: engine version and final test count
