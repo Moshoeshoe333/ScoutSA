@@ -34,9 +34,9 @@ function assertYamlStringList(section, key, expected, context) {
     const line = lines[index];
     if (line.trim() === "") continue;
     if (!/^      - /.test(line)) break;
-    const match = line.match(/^      - "([^"]+)"$/);
+    const match = line.match(/^      - (?:"([^"]+)"|([A-Za-z0-9_./*-]+))$/);
     assert.ok(match, `${context}: malformed ${key} entry: ${line}`);
-    values.push(match[1]);
+    values.push(match[1] ?? match[2]);
   }
   assert.deepEqual(values, expected, `${context}: ${key} must exactly match the register`);
 }
