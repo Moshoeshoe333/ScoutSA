@@ -103,8 +103,11 @@ test("CI scope register matches executable workflow triggers and job configurati
     for (const branch of item.triggers.push_branches) assert.ok(source.includes(`      - ${branch}`), `push branch missing: ${branch}`);
     for (const branch of item.triggers.pull_request_branches) assert.ok(source.includes(`      - ${branch}`), `pull request branch missing: ${branch}`);
     for (const filter of item.triggers.path_filters) assert.ok(source.includes(`      - "${filter}"`), `path filter missing: ${filter}`);
-    for (const job of item.jobs) {
-      assert.ok(source.includes(`  ${job.id}:`), `job missing: ${job.id}`);
+    for (const action of job.actions || []) {
+        assert.ok(source.includes(`uses: ${action.uses}@${action.commit} # ${action.version}`), `action pin drift: ${action.uses}`);
+        assert.equal(action.commit.length, 40, `action commit must be a full SHA: ${action.uses}`);
+      }
+      assert.ok(source.includes(`  ${job.id}:`, `job missing: ${job.id}`);
       assert.ok(source.includes(`runs-on: ${job.runner}`), `runner drift: ${job.runner}`);
       assert.ok(source.includes(`timeout-minutes: ${job.timeout_minutes}`), "job timeout drift");
       assert.ok(source.includes(`node-version: "${job.node_version}"`), "Node runtime drift");

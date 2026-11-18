@@ -190,3 +190,14 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Authority boundary:** This document authorizes no real-player data collection, instrumentation, dashboard, pilot, or implementation. It does not set legal basis, SLAs, retention periods, or named owners.
 - **Verification:** Hosted PR run [44289866111](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44289866111) passed the automated contract-presence and key-control checks (13/13 total tests). This is a documentation-control check only; substantive safeguarding/legal review, role assignment, and operational validation remain required.
 - **Status:** Automated documentation checks verified on the review branch; substantive review and ratification remain open.
+
+
+### CI-003 — GitHub Actions JavaScript runtime deprecation warning
+
+- **Detected:** 2026-11-18
+- **Severity:** Low — the documentation-integrity job passed, but its log warned that `actions/checkout@v4` and `actions/setup-node@v4` still target Node.js 20, which GitHub Actions has retired. The runner forced Node 24 compatibility mode. A separate `punycode` deprecation warning was also emitted; its dependency origin is not established by this evidence.
+- **Correction:** Upgrade checkout to verified release `v7.0.1` (commit `3d3c42e5aac5ba805825da76410c181273ba90b1`) and setup-node to verified release `v7.1.0` (commit `949feb2413d6458794dcd2491c4babbbce0c15c1`). Pin both to full immutable commit SHAs rather than floating major tags.
+- **Prevention:** Add action name, release version, and full commit SHA to `docs/ci-scope-register.json`; automated tests require exact workflow pins and a 40-character commit hash. Action upgrades must update the register and pass CI.
+- **Compatibility:** Keep the tested project runtime explicitly at Node.js 22; upgrading the action runtime does not silently change the Node version used by the test command.
+- **Verification:** Pending hosted CI on the updated PR head. The earlier 13/13 pass remains valid only for the previous workflow revision.
+- **Status:** Open pending hosted verification.

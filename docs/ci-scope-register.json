@@ -26,7 +26,19 @@
           "runner": "ubuntu-latest",
           "timeout_minutes": 3,
           "node_version": "22",
-          "command": "node --test docs/tests/*.test.js"
+          "command": "node --test docs/tests/*.test.js",
+          "actions": [
+            {
+              "uses": "actions/checkout",
+              "version": "v7.0.1",
+              "commit": "3d3c42e5aac5ba805825da76410c181273ba90b1"
+            },
+            {
+              "uses": "actions/setup-node",
+              "version": "v7.1.0",
+              "commit": "949feb2413d6458794dcd2491c4babbbce0c15c1"
+            }
+          ]
         }
       ],
       "verifies": [
@@ -36,7 +48,8 @@
         "Constitution semantic invariants",
         "CI workflow inventory and selected trigger/job/runtime/command configuration",
         "Safeguarding measurement contract completeness and non-coercive metric rules",
-        "Zero-byte workflow files"
+        "Zero-byte workflow files",
+        "Third-party GitHub Actions are pinned to verified immutable release commits and their versions are checked by CI"
       ],
       "does_not_prove": [
         "Every semantic contradiction across every repository document",
