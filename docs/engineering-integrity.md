@@ -84,6 +84,18 @@ When a new repeated fact is introduced into documentation, either add it to the 
 - **Correction commits:** `c4fb0cd252d19cd9ac441e5b8ada95fb3078c037`, `ecbf320d32890c6784aa8689bba87164504e9191`, `782c2adfddf93dca0c43a83c30aa629240bfdbce`, `546098fb529b66afbec19586aa66db606e0d15a1`, `ebe4f518f6359af0a588074e60439c7af3ed017c`.
 - **Status:** Corrective changes committed; awaiting successful hosted verification on the final branch head. Do not close DOC-007 until the exact-head run completes all Node and browser steps.
 
+
+
+### TM-001 — Tournament Manager browser test queried a hidden ledger
+
+- **Detected:** 2026-11-18
+- **Severity:** Medium — hosted browser verification failed after the prior workflow suites passed.
+- **Finding:** Run [44287739432](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44287739432), commit `f174d212272c8408b65f1329ba41a573a0eb7b63`, failed because the test queried `#ledger` while the Record Ledger section was hidden. Playwright resolved the existing record locator but correctly timed out waiting for visibility. The test had not navigated back from the Eligibility Review section.
+- **Impact:** The Tournament Manager browser suite stopped; later browser suites were skipped. This does not establish that the underlying eligibility record was absent or that later suites failed.
+- **Correction:** Make the test navigate explicitly to Records before asserting imported ledger rows, then navigate to Eligibility Review to assert the eligibility result in its own visible panel.
+- **Additional prevention:** Strengthen the Organizer Portal handoff importer with object-shape checks, per-collection limits, feature-link/scope validation, collision checks for existing edition IDs, and a 1 MiB file-size limit. Add browser regression cases for malformed JSON, null records, dangling feature references, conflicting edition identity and oversized files. Each rejected import must leave tournament state unchanged.
+- **Status:** Corrective change committed; hosted verification pending.
+
 ## 6. Incident log
 
 ### DOC-001 — Documentation drift: engine version and final test count

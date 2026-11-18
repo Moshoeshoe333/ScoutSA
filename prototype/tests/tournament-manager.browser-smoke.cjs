@@ -43,6 +43,21 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await page.locator('#importOrganizerHandoff').click();
   await page.waitForFunction(() => /Imported 0 tournament edition\(s\); skipped 1 duplicate/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
   assert.match(await page.locator('#organizerImportMessage').textContent(), /Imported 0 tournament edition\(s\); skipped 1 duplicate/);
+  const assertRejectedImport = async (name, payload) => {
+    const before = await page.locator('#countT').textContent();
+    const buffer = Buffer.isBuffer(payload) ? payload : Buffer.from(typeof payload === 'string' ? payload : JSON.stringify(payload));
+    await page.locator('#organizerHandoffFile').setInputFiles({ name, mimeType: 'application/json', buffer });
+    await page.locator('#importOrganizerHandoff').click();
+    await page.waitForFunction(() => /^Import rejected:/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+    assert.equal(await page.locator('#countT').textContent(), before, name + ' must not partially mutate tournament state');
+  };
+  await assertRejectedImport('malformed.json', '{not-json');
+  await assertRejectedImport('null-record.json', { ...pkg, organizers: [null] });
+  await assertRejectedImport('missing-feature-link.json', { ...pkg, features: [{ id: 'FTR-DEMO-502', submissionId: 'SUB-DEMO-MISSING', scope: 'DEMO-SCOPE', status: 'requested' }] });
+  await assertRejectedImport('edition-collision.json', { ...pkg, submissions: [{ ...pkg.submissions[0], id: 'SUB-DEMO-502', tournamentId: 'TRN-ORG-DEMO-999' }] });
+  await assertRejectedImport('oversized.json', Buffer.alloc(1024 * 1024 + 1, 32));
+  await page.locator('#organizerHandoffFile').setInputFiles({ name: 'handoff.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(pkg)) });
+  await page.locator('[data-section="records"]').click();
   await page.locator('#ledger').getByText('TRN-ORG-DEMO-501').waitFor();
   await page.locator('[data-section="eligibility"]').click();
   await page.locator('#eligibilityPlayer').selectOption('PAR-DEMO-001');
