@@ -176,7 +176,9 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Finding:** The mainline had a documentation-integrity workflow, but no central machine-readable register declaring all mainline workflows, their event/path scope, job/runtime/command, verified responsibilities, and what a pass cannot prove.
 - **Correction in this branch:** Add `docs/ci-scope-register.json`; extend mainline tests to compare the register's workflow inventory against the actual workflow directory and check selected trigger, job, runner, timeout, runtime, and command values.
 - **Preventive rule:** Any workflow inventory or execution-scope change must update the register in the same pull request. CI success is always tied to a specific run, tested commit, event, job, command, and scope; a configured workflow is not evidence of a pass.
-- **Verification:** Pending hosted CI on the final PR head.
+- **Initial hosted verification:** PR run [44289683283](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44289683283) failed before test execution because the generated JSON register ended with the two literal characters `\\n` after the closing object. Node's `JSON.parse` correctly rejected the malformed file. This was a file-generation/serialization defect, not a reason to relax the parser or test.
+- **Correction:** Remove the literal escape suffix and retain a valid JSON document. The test parses the register at module load, so malformed JSON remains a hard CI failure.
+- **Verification:** Pending hosted CI on the corrected PR head.
 - **Status:** Open pending hosted verification.
 
 ### SAF-001 — Safeguarding measurement lacked an explicit anti-gaming contract
