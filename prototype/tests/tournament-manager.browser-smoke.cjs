@@ -79,6 +79,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await page.locator('#playerRosterState').selectOption('Pending registration');
   await page.locator('#playerForm button[type="submit"]').click();
   assert.match(await page.locator('#playerMessage').textContent(), /Created synthetic player/);
+  await page.locator('#playerEntry').selectOption('TEN-DEMO-001');
   await page.locator('#playerAlias').fill('DEMO-PLAYER-TEST-11');
   await page.locator('#playerShirt').fill('10');
   await page.locator('#playerForm button[type="submit"]').click();

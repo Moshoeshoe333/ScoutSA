@@ -97,6 +97,19 @@ When a new repeated fact is introduced into documentation, either add it to the 
 - **Follow-up evidence:** Run [44291278666](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44291278666), commit `7effca9bdbf6c0a89a5801989f9cb4d6d952b17d`, still failed at a second ledger assertion later in the same test. The first correction fixed the post-import assertion, but the eligibility flow also queried the ledger while hidden. This repeat failure demonstrates why all matching assertions must be reviewed, not only the first failing line. The new correction explicitly navigates to Records before the second ledger assertion. The newly added import-rejection cases were not reached in this failed run.
 - **Status:** Second corrective change committed; full hosted verification pending.
 
+
+
+### TM-002 — Duplicate squad-number test did not hold team identity constant
+
+- **Detected:** 2026-11-18
+- **Severity:** Low — the test made an invalid inference about a scoped uniqueness rule.
+- **Finding:** Run [44291567710](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44291567710), commit `34e3a5ff49dcecc00bd70a2219a9284502fc75d2`, reached the player workflow and showed the second synthetic player was created. The test did not explicitly re-select the same team entry after the first form submission/reset. Since squad-number uniqueness is scoped to a team entry, the test had not proven both attempts used the same team.
+- **Impact:** The assertion could report a false product defect because the test failed to hold a required precondition constant.
+- **Correction:** Explicitly select `TEN-DEMO-001` again before the second submission so the duplicate-number scenario is unambiguous.
+- **Evidence boundary:** The run passed the newly added malformed JSON, null-record, dangling feature-reference, edition-collision and oversized-file rejection cases before reaching this assertion. The full workflow remains failed; those targeted observations do not replace a successful complete run.
+- **Prevention:** Tests for scoped uniqueness must explicitly set and assert the scope key for every competing record.
+- **Status:** Test corrected; hosted verification pending.
+
 ## 6. Incident log
 
 ### DOC-001 — Documentation drift: engine version and final test count
