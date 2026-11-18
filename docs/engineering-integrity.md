@@ -146,6 +146,18 @@ When a new repeated fact is introduced into documentation, either add it to the 
 - **Additional prevention:** Pin the prototype workflow's checkout and setup-node actions to the same verified immutable Node 24-compatible release commits used on the governance branch. Keep the project test runtime explicitly on Node.js 22.
 - **Status:** HTML pattern and workflow action corrections committed; hosted verification pending.
 
+
+
+### TM-006 — Match-day browser test expected an obsolete summary string
+
+- **Detected:** 2026-11-18
+- **Severity:** Low — the browser test stopped on a stale exact-text expectation.
+- **Finding:** Run [44292461657](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44292461657), commit `4588f2e4cd25f1eeb5cb8a826cc19f94e9d10f82`, passed the Tournament Manager browser suite, including import rejection and metric validation cases. The next Tournament Day Operations suite failed because the expected appearance summary omitted the explanatory sentence now present in the interface: "Derived only from lineup and substitution records."
+- **Impact:** Later suites were skipped; the observed derived total was 180 player-minutes from three appearances. This was an assertion drift, not a calculation mismatch.
+- **Correction:** Update the exact expected string to include the current explanatory provenance statement.
+- **Prevention:** When a UI summary changes, inspect both the rendered source and test contract; retain exact assertions where the full text is intentional, and make provenance wording part of the expected result.
+- **Status:** Test expectation corrected; hosted verification pending.
+
 ## 6. Incident log
 
 ### DOC-001 — Documentation drift: engine version and final test count

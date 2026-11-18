@@ -16,7 +16,7 @@ assert.equal(appearanceRows.length,3,"one derived row is required for each fixtu
 assert.equal(appearanceRows.find(row=>row[1].includes("PAR-DEMO-001"))?.[5],"65","starter substituted at minute 65 must have 65 derived minutes in the Minutes column");
 assert.equal(appearanceRows.find(row=>row[1].includes("PAR-DEMO-002"))?.[5],"90","full-match starter must have 90 derived minutes in the Minutes column");
 assert.equal(appearanceRows.find(row=>row[1].includes("PAR-DEMO-003"))?.[5],"25","substitute entering at minute 65 must have 25 derived minutes in the Minutes column");
-assert.equal(await page.locator("#appearanceMessage").innerText(),"3 lineup record(s) · 3 appearance(s) · 180 player-minutes");
+assert.equal(await page.locator("#appearanceMessage").innerText(),"3 lineup record(s) · 3 appearance(s) · 180 player-minutes. Derived only from lineup and substitution records.");
 await page.locator("#matchDuration").fill("60");
 await page.locator("#refreshAppearances").click();
 assert.match(await page.locator("#appearanceMessage").innerText(),/Invalid timing/,"duration shorter than recorded substitution must fail closed");
