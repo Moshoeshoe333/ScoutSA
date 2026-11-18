@@ -56,7 +56,7 @@ The current executive position is recorded in [Gate Status](docs/00-gate-status.
 
 **Separate prototype branch:** synthetic design and policy-evaluation work is isolated on `prototype/internal-demo`; it is not merged into this mainline tree and does not lift any mainline hold. See the [prototype branch README](https://github.com/Moshoeshoe333/ScoutSA/blob/prototype/internal-demo/prototype/README.md) for its separate scope and verification status.
 
-**Documentation integrity:** consistency across source, tests, schemas, workflows, verification records, gate status and READMEs is a high-priority engineering control. See [Documentation Integrity and Error Prevention](docs/engineering-integrity.md).
+**Documentation integrity:** consistency across source, tests, schemas, workflows, verification records, gate status and READMEs is a high-priority engineering control. See [Documentation Integrity and Error Prevention](docs/engineering-integrity.md), the [CI Scope Register](docs/ci-scope-register.json), and the [Safeguarding Measurement Contract](docs/safeguarding-measurement-contract.md).
 
 ### Gate 2 carry-forward decisions
 

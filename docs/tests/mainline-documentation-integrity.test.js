@@ -8,6 +8,89 @@ const root = path.resolve(__dirname, "../..");
 const read = relative => fs.readFileSync(path.join(root, relative), "utf8");
 const readme = read("README.md");
 const gateStatus = read("docs/00-gate-status.md");
+const mvp = read("docs/01-mvp-definition.md");
+const flows = read("docs/06-user-flows.md");
+const constitution = read("docs/00-constitution.md");
+const workflow = read(".github/workflows/documentation-integrity.yml");
+
+function extractYamlSection(source, header, indentation) {
+  const lines = source.split(/\r?\n/);
+  const prefix = " ".repeat(indentation);
+  const start = lines.findIndex(line => line === `${prefix}${header}:`);
+  assert.notEqual(start, -1, `missing YAML section: ${header}`);
+
+  const end = lines.findIndex((line, index) =>
+    index > start && line.trim() !== "" && line.match(/^ */)[0].length <= indentation
+  );
+  return lines.slice(start + 1, end === -1 ? lines.length : end).join("\n");
+}
+
+function assertYamlChildKeysExactly(source, header, indentation, expected, context) {
+  const section = extractYamlSection(source, header, indentation);
+  const childIndent = " ".repeat(indentation + 2);
+  const actual = section.split(/\r?\n/)
+    .filter(line => line.startsWith(childIndent) && line.trim() !== "")
+    .map(line => {
+      const match = line.match(/^\s{2}([A-Za-z0-9_-]+):(?:\s|$)/);
+      return match?.[1] ?? null;
+    })
+    .filter(Boolean);
+  assert.deepEqual(actual, expected, `${context}: child keys must exactly match the declared inventory`);
+}
+
+function assertYamlStringList(section, key, expected, context) {
+  const lines = section.split(/\r?\n/);
+  const header = lines.findIndex(line => line === `    ${key}:`);
+  assert.notEqual(header, -1, `${context}: missing ${key} list`);
+  const values = [];
+  for (let index = header + 1; index < lines.length; index++) {
+    const line = lines[index];
+    if (line.trim() === "") continue;
+    if (!/^      - /.test(line)) break;
+    const match = line.match(/^      - (?:"([^"]+)"|([A-Za-z0-9_./*-]+))$/);
+    assert.ok(match, `${context}: malformed ${key} entry: ${line}`);
+    values.push(match[1] ?? match[2]);
+  }
+  assert.deepEqual(values, expected, `${context}: ${key} must exactly match the register`);
+}
+
+function assertWorkflowTriggersMatch(source, triggerRegister, workflowPath) {
+  const onSection = extractYamlSection(source, "on", 0);
+  assertYamlChildKeysExactly(source, "on", 0, ["push", "pull_request"], `${workflowPath} trigger events`);
+  for (const event of ["push", "pull_request"]) {
+    const eventSection = extractYamlSection(onSection, event, 2);
+    const context = `${workflowPath} ${event}`;
+    assertYamlStringList(eventSection, "branches", triggerRegister[`${event}_branches`], context);
+    assertYamlStringList(eventSection, "paths", triggerRegister.path_filters, context);
+  }
+}
+
+function assertActionInventoryMatches(source, registeredActions, workflowPath) {
+  const actual = [...source.matchAll(/^\s*(?:-\s*)?uses:\s*(.*?)\s*$/gm)].map(match => {
+    const value = match[1];
+    const parsed = value.match(/^([^@\s]+)@([0-9a-f]{40})\s+#\s*(v[^\s#]+)$/);
+    assert.ok(
+      parsed,
+      `action reference must use a full commit SHA and version comment in ${workflowPath}: ${value}`
+    );
+    return `${parsed[1]}@${parsed[2]} # ${parsed[3]}`;
+  });
+
+  const declared = registeredActions.map(action => {
+    assert.match(action.commit, /^[0-9a-f]{40}$/, `action commit must be a full lowercase SHA: ${action.uses}`);
+    assert.match(action.uses, /^[^@\s]+$/, `invalid action identifier: ${action.uses}`);
+    assert.match(action.version, /^v[^\s#]+$/, `invalid action version comment: ${action.version}`);
+    return `${action.uses}@${action.commit} # ${action.version}`;
+  });
+
+  assert.equal(new Set(actual).size, actual.length, `workflow contains duplicate action references: ${workflowPath}`);
+  assert.equal(new Set(declared).size, declared.length, `CI register contains duplicate action references: ${workflowPath}`);
+  assert.deepEqual(
+    declared.sort(),
+    actual.sort(),
+    `CI register must exactly match every action used by ${workflowPath}`
+  );
+}
 
 test("root README and gate status carry the current status date", () => {
   assert.ok(readme.includes("Current Repository Status — 13 November 2026"), "root README status date is stale");
@@ -21,6 +104,102 @@ test("root README and gate status agree on the controlled next move and implemen
   assert.ok(gateStatus.includes("Migration/database execution, RLS, API, production implementation and pilot remain on hold or unauthorized"), "gate status must retain implementation holds");
 });
 
+test("mainline workflow trigger blocks exactly match registered branches and path filters", () => {
+  const item = ciRegister.workflows.find(entry => entry.path === ".github/workflows/documentation-integrity.yml");
+  assert.ok(item, "documentation-integrity workflow must be registered");
+  assertWorkflowTriggersMatch(workflow, item.triggers, item.path);
+  assert.ok(workflow.includes("node --test docs/tests/*.test.js"), "workflow must execute the mainline documentation test suite");
+});
+
+test("workflow trigger validation rejects unregistered events and jobs", () => {
+  const valid = `on:
+  push:
+    branches:
+      - main
+    paths:
+      - "README.md"
+      - "docs/**"
+      - ".github/workflows/**"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "README.md"
+      - "docs/**"
+      - ".github/workflows/**"
+jobs:
+  documentation-integrity:
+    runs-on: ubuntu-latest
+`;
+  assert.doesNotThrow(() => assertYamlChildKeysExactly(valid, "on", 0, ["push", "pull_request"], "fixture events"));
+  assert.throws(
+    () => assertYamlChildKeysExactly(valid.replace("  pull_request:", "  schedule:\n    cron: \"0 0 * * *\"\n  pull_request:"), "on", 0, ["push", "pull_request"], "fixture events"),
+    /child keys must exactly match/
+  );
+  assert.doesNotThrow(() => assertYamlChildKeysExactly(valid, "jobs", 0, ["documentation-integrity"], "fixture jobs"));
+  assert.throws(
+    () => assertYamlChildKeysExactly(valid.replace("jobs:\n", "jobs:\n  unregistered-job:\n    runs-on: ubuntu-latest\n"), "jobs", 0, ["documentation-integrity"], "fixture jobs"),
+    /child keys must exactly match/
+  );
+});
+
+test("workflow trigger validation rejects event-specific omissions and extra paths", () => {
+  const expected = {
+    push_branches: ["main"],
+    pull_request_branches: ["main"],
+    path_filters: ["README.md", "docs/**", ".github/workflows/**"]
+  };
+  const valid = `on:\n  push:\n    branches:\n      - main\n    paths:\n      - "README.md"\n      - "docs/**"\n      - ".github/workflows/**"\n  pull_request:\n    branches:\n      - main\n    paths:\n      - "README.md"\n      - "docs/**"\n      - ".github/workflows/**"\n`;
+  assert.doesNotThrow(() => assertWorkflowTriggersMatch(valid, expected, "fixture.yml"));
+  assert.throws(
+    () => assertWorkflowTriggersMatch(valid.replace('      - "docs/**"\n      - ".github/workflows/**"\n  pull_request:', '      - "docs/**"\n  pull_request:'), expected, "fixture.yml"),
+    /paths must exactly match/
+  );
+  assert.throws(
+    () => assertWorkflowTriggersMatch(valid.replace('      - "docs/**"\n      - ".github/workflows/**"\n  pull_request:', '      - "docs/**"\n      - ".github/workflows/**"\n      - "extra/**"\n  pull_request:'), expected, "fixture.yml"),
+    /paths must exactly match/
+  );
+});
+
+test("draft MVP and user-flow narratives cannot be mistaken for ratified implementation authority", () => {
+  assert.ok(mvp.includes("DRAFT —"), "MVP definition must remain visibly draft");
+  assert.ok(mvp.includes("does not authorize schema, RLS, API, UI, migration, or production implementation"), "MVP definition must preserve its non-authority boundary");
+  assert.ok(flows.includes("PROPOSED FLOW NARRATIVE — NOT RATIFIED"), "user flows must be visibly non-ratified");
+  assert.ok(flows.includes("does not authorize schema, RLS, API, UI, migration, or production implementation"), "user flows must explicitly deny implementation authority");
+  assert.ok(gateStatus.includes("User ↔ Player"), "gate status must preserve unresolved User-Player seam");
+  assert.ok(gateStatus.includes("multiple-Guardian conflict handling"), "gate status must preserve unresolved guardian conflict handling");
+});
+
+test("share cards remain unauthorized until disclosure and safeguarding decisions are ratified", () => {
+  const shareCard = flows.split("## Flow 5")[1]?.split("## Flow 6")[0] || "";
+  assert.ok(shareCard.includes("NOT AUTHORIZED"), "share-card section must state that it is not authorized");
+  assert.ok(shareCard.includes("public"), "share-card section must explicitly address public disclosure");
+  assert.ok(shareCard.includes("revoc"), "share-card section must preserve revocation as an unresolved control");
+});
+
+test("readiness is opportunity-specific, derived, explainable, and never a player ranking", () => {
+  const readiness = flows.split("## Flow 6")[1]?.split("## Flow 7")[0] || "";
+  assert.ok(readiness.includes("derived"), "readiness must be explicitly derived");
+  assert.ok(readiness.includes("material inputs"), "readiness must identify material inputs");
+  assert.ok(readiness.includes("evaluation time"), "readiness must identify evaluation time");
+  assert.ok(readiness.includes("ranking"), "readiness must not become a ranking");
+});
+
+test("outcomes preserve attribution, disputes, correction history, and epistemic limits", () => {
+  const outcome = flows.split("## Flow 7")[1]?.split("## Design Principle")[0] || "";
+  assert.ok(outcome.includes("assertion"), "outcomes must be treated as attributable assertions");
+  assert.ok(outcome.includes("disputed"), "outcome disputes must remain explicit");
+  assert.ok(outcome.includes("supersession"), "outcome correction/supersession must preserve history");
+  assert.ok(outcome.includes("not automatic truth"), "outcome records must not be treated as automatic truth");
+});
+
+test("Constitution retains purpose, authority, child-voice, and derived-state boundaries", () => {
+  assert.ok(constitution.includes("M2 — Scoped Authority and Conflict Preservation"), "scoped authority/conflict boundary missing");
+  assert.ok(constitution.includes("M3 — Purpose-Bound Authorization"), "purpose-bound authorization boundary missing");
+  assert.ok(constitution.includes("M5 — Derived-State Dependency"), "derived-state dependency boundary missing");
+  assert.ok(constitution.includes("M8 — Child Participation / Voice"), "child participation/voice boundary missing");
+});
+
 test("mainline README links the integrity policy and workflow directory has no empty files", () => {
   assert.ok(readme.includes("docs/engineering-integrity.md"), "root README must link the integrity policy");
   const workflowDir = path.join(root, ".github/workflows");
@@ -30,4 +209,104 @@ test("mainline README links the integrity policy and workflow directory has no e
       assert.ok(fs.statSync(file).size > 0, `workflow file is empty: ${name}`);
     }
   }
+});
+
+const ciRegister = JSON.parse(read("docs/ci-scope-register.json"));
+const safeguarding = read("docs/safeguarding-measurement-contract.md");
+
+test("CI scope register exactly inventories mainline workflow files", () => {
+  const workflowDir = path.join(root, ".github/workflows");
+  const actual = fs.readdirSync(workflowDir)
+    .filter(name => name.endsWith(".yml") || name.endsWith(".yaml"))
+    .map(name => `.github/workflows/${name}`)
+    .sort();
+  const declared = ciRegister.workflows.map(item => item.path).sort();
+  assert.deepEqual(declared, actual, "CI scope register must list every mainline workflow exactly once");
+  assert.equal(new Set(declared).size, declared.length, "CI scope register contains duplicate workflow paths");
+});
+
+test("action inventory rejects unregistered, duplicate, and malformed workflow actions", () => {
+  const checkout = "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1";
+  const setupNode = "actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0";
+  const fixture = `steps:\n  - uses: ${checkout}\n  - uses: ${setupNode}\n`;
+  const registered = [
+    { uses: "actions/checkout", commit: "3d3c42e5aac5ba805825da76410c181273ba90b1", version: "v7.0.1" },
+    { uses: "actions/setup-node", commit: "949feb2413d6458794dcd2491c4babbbce0c15c1", version: "v7.1.0" }
+  ];
+
+  assert.doesNotThrow(() => assertActionInventoryMatches(fixture, registered, "fixture.yml"));
+  assert.throws(
+    () => assertActionInventoryMatches(fixture, registered.slice(0, 1), "fixture.yml"),
+    /exactly match every action/
+  );
+  assert.throws(
+    () => assertActionInventoryMatches(`steps:\n  - uses: ${checkout}\n  - uses: ${checkout}\n`, registered.slice(0, 1), "fixture.yml"),
+    /duplicate action references/
+  );
+  assert.throws(
+    () => assertActionInventoryMatches("steps:\n  - uses: actions/checkout@v4 # v4\n", [], "fixture.yml"),
+    /full commit SHA/
+  );
+});
+
+test("CI scope register matches executable workflow triggers and job configuration", () => {
+  for (const item of ciRegister.workflows) {
+    const source = read(item.path);
+    assert.ok(source.includes(`name: ${item.name}`), `workflow name drift: ${item.path}`);
+    for (const branch of item.triggers.push_branches) assert.ok(source.includes(`      - ${branch}`), `push branch missing: ${branch}`);
+    for (const branch of item.triggers.pull_request_branches) assert.ok(source.includes(`      - ${branch}`), `pull request branch missing: ${branch}`);
+    for (const filter of item.triggers.path_filters) assert.ok(source.includes(`      - "${filter}"`), `path filter missing: ${filter}`);
+    const registeredActions = item.jobs.flatMap(job => job.actions || []);
+    assertActionInventoryMatches(source, registeredActions, item.path);
+    for (const job of item.jobs) {
+      assert.ok(source.includes(`  ${job.id}:`), `job missing: ${job.id}`);
+      assert.ok(source.includes(`runs-on: ${job.runner}`), `runner drift: ${job.runner}`);
+      assert.ok(source.includes(`timeout-minutes: ${job.timeout_minutes}`), "job timeout drift");
+      assert.ok(source.includes(`node-version: "${job.node_version}"`), "Node runtime drift");
+      assert.ok(source.includes(`run: ${job.command}`), "workflow command drift");
+    }
+    assertYamlChildKeysExactly(source, "jobs", 0, item.jobs.map(job => job.id), item.path + " jobs");
+    assert.ok(item.verifies.length > 0 && item.does_not_prove.length > 0, "scope must state both coverage and limitations");
+  }
+});
+
+test("primary discovery flow cannot precede evidenced authority and scoped permission", () => {
+  const loop = flows.split("## Proposed Primary MVP Loop")[1]?.split("## Flow 1")[0] || "";
+  assert.ok(loop.indexOf("authority and permission gates are evidenced") < loop.indexOf("discovery scope becomes available"), "discovery must follow authority and permission gates");
+  assert.ok(loop.includes("A later guardian review cannot retroactively authorize earlier discovery"), "guardian review must not retroactively authorize discovery");
+  const discovery = flows.split("## Flow 3")[1]?.split("## Flow 4")[0] || "";
+  assert.ok(discovery.includes("already authorized"), "discovery must be pre-authorized");
+  assert.ok(discovery.includes("does not itself authorize direct contact"), "discovery must not imply contact authority");
+});
+
+test("measurement definitions specify event units, denominators, clocks, and unresolved cases", () => {
+  for (const phrase of [
+    "deduplication rule",
+    "authoritative start event",
+    "clock source/time zone",
+    "open, missing, invalid, or censored cases",
+    "BLOCKED — RATIFICATION REQUIRED",
+    "NOT READY TO COLLECT",
+    "pre-approved, reproducible sampling frame"
+  ]) assert.ok(safeguarding.includes(phrase), `measurement definition control missing: ${phrase}`);
+  assert.ok(safeguarding.includes("rate is BLOCKED until"), "withdrawal rate must not use an undefined population");
+});
+
+test("safeguarding measurement contract prevents growth metrics from overriding safety", () => {
+  for (const phrase of [
+    "NOT READY TO COLLECT",
+    "Trust and safety are constraints, not growth variables",
+    "Guardian opt-out / consent withdrawal",
+    "Unauthorized access / disclosure events",
+    "Pause the affected workflow",
+    "Synthetic results must be labelled synthetic",
+    "No real-player measurement is authorized",
+    "minimum cell-size"
+  ]) assert.ok(safeguarding.includes(phrase), `safeguarding measurement control missing: ${phrase}`);
+  assert.ok(!/target: ?[0-9]+%/i.test(safeguarding), "unratified numeric targets must not be invented");
+});
+
+test("README links the CI scope register and safeguarding measurement contract", () => {
+  assert.ok(readme.includes("docs/ci-scope-register.json"), "README must link CI scope register");
+  assert.ok(readme.includes("docs/safeguarding-measurement-contract.md"), "README must link safeguarding measurement contract");
 });

@@ -1,8 +1,18 @@
 # Core User Flows
 
-## Primary MVP Loop
+> **Status: PROPOSED FLOW NARRATIVE — NOT RATIFIED.**
+>
+> This document records interaction hypotheses for review. It is not an approved product contract, legal interpretation, safeguarding procedure, or implementation specification. It does not authorize schema, RLS, API, UI, migration, or production implementation; nor does it authorize authentication, public disclosure, real-identity processing, deployment, or pilot activity.
+>
+> **Authority boundary:** the Constitution and canonical Gate Status govern. The unresolved User ↔ Player cardinality/delegation, actor and organization authority, guardian conflicts, application lifecycle, outcome authority, access, disclosure, retention, and legal questions remain holds. No flow below may invent a default answer for them.
+>
+> All flows are conditional examples. Any unresolved actor, purpose, authority, consent, scope, time, child-participation, or disclosure condition means STOP / HOLD—not an assumed approval.
 
-**Player becomes discoverable → Scout finds a viable opportunity → Guardian reviews → Safe contact / opportunity proceeds → Real-world outcome is recorded.**
+## Proposed Primary MVP Loop (non-authoritative)
+
+**Applicable authority and permission gates are evidenced → only the authorized, minimum-necessary discovery scope becomes available → a specific opportunity is assessed → required guardian/player review and consent occur before any further disclosure or contact → any authorized real-world outcome is recorded as an attributable assertion.**
+
+No player becomes discoverable merely by registering, completing a Passport, being verified, or appearing in this narrative. Discovery itself is a disclosure/access action and must be separately authorized for the actor, purpose, recipient scope, data fields, and time. A later guardian review cannot retroactively authorize earlier discovery or disclosure. If any required gate is unknown, missing, expired, conflicting, or withdrawn, the sequence is STOP / HOLD.
 
 Every flow must reduce uncertainty without creating unnecessary risk.
 
@@ -39,10 +49,10 @@ Verification must never imply that a coach has independently verified facts outs
    - transport feasibility
    - relevant academic eligibility
    - other legitimate opportunity requirements
-2. System returns players visible to that scout under current permissions.
-3. Results expose verification and readiness context without exposing restricted information.
+2. System returns only players whose discovery disclosure is already authorized for that scout, organization, purpose, field set, and time under the applicable ratified rules. If that authorization cannot be evidenced before search results are returned, the system returns no player-level result.
+3. Results expose only the minimum information explicitly authorized for that discovery purpose. Verification or readiness context does not expand the recipient's access scope.
 4. Scout opens an appropriate Passport view.
-5. Scout can initiate a structured contact or trial request.
+5. Scout may submit a structured request for review; discovery permission does not itself authorize direct contact, a trial invitation, or release of additional information.
 
 ## Flow 4 — Contact / Trial Request
 
@@ -64,11 +74,11 @@ Verification must never imply that a coach has independently verified facts outs
 7. Parties receive confirmation.
 8. The event is recorded for audit and opportunity intelligence.
 
-## Flow 5 — WhatsApp / Share Card
+## Flow 5 — WhatsApp / Share Card (PROPOSED; NOT AUTHORIZED)
 
-A player may receive a shareable, read-only Scout Card where visibility permissions allow it.
+No public, forward-shareable, or externally accessible Scout Card is authorized by this document. This section is a risk-design prompt only; do not implement or distribute a card, particularly for a minor, until disclosure, safeguarding, recipient, consent, token, expiry, revocation, media, and republication rules are explicitly decided and ratified.
 
-The card should contain only appropriate public/shareable information, such as:
+If a future ratified design permits a card, its minimum-necessary contents must be justified for a defined purpose and recipient scope. Candidate fields for review—not an approved field list—include:
 
 - Scout ID
 - player name
@@ -78,11 +88,11 @@ The card should contain only appropriate public/shareable information, such as:
 - availability
 - profile link
 
-Never expose private contact details, detailed medical information, or other restricted information through a public card.
+Never infer that profile visibility permits republication or onward sharing. Private contact details, detailed medical information, and other restricted information must not appear in a public card. Tokenization alone does not establish authorization; forwarding, expiry, revocation, screenshots, recipient scope, and copies outside ScoutSA remain unresolved.
 
 ## Flow 6 — Opportunity Readiness
 
-For a specific opportunity, ScoutSA should evaluate relevant prerequisites rather than treating readiness as a permanent player attribute.
+For a specific opportunity, a future ratified evaluator may derive readiness from relevant prerequisites rather than treating readiness as a permanent player attribute. Readiness is a contextual, reproducible derived artifact—not a stored player truth, talent score, or ranking. Every evaluation must retain its opportunity, material inputs and their provenance, governing rule/context, and evaluation time. Material changes, expiry, dispute, withdrawal, or consent revocation require reassessment; stale evaluations must not be presented as current. The explanation must distinguish missing information from a negative finding.
 
 Example:
 
@@ -111,7 +121,7 @@ Where legitimately available, ScoutSA records the pathway outcome:
 - Follow-up
 - Placement / pathway outcome
 
-Outcome data must be distinguished from claims that have not been verified.
+An outcome submission is an attributable assertion, not automatic truth. Preserve submitter, source, timestamp, authority/scope, evidence, and the relevant opportunity/fixture context. Conflicting submissions remain distinguishable and visibly disputed until an authorized resolution process exists. Corrections and supersession preserve prior assertions and their history; never use an unverified outcome as a player-quality or ranking signal. The authority to submit, confirm, dispute, resolve, or expose outcomes remains a ratification blocker.
 
 ## Design Principle
 

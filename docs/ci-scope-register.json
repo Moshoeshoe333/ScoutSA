@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "register_scope": "Mainline GitHub Actions workflows only. Prototype workflows and their evidence are documented and tested on their own branch; they are not certified by this register.",
+  "update_rule": "Any workflow addition, removal, rename, trigger change, job change, runner change, runtime change, or command change must update this register in the same pull request. CI verifies inventory and selected executable configuration fields.",
+  "evidence_rule": "A workflow definition describes configured scope, not a successful run. Every reported pass must cite the exact workflow run URL, tested commit SHA, event, conclusion, job, command, and limitations.",
+  "workflows": [
+    {
+      "path": ".github/workflows/documentation-integrity.yml",
+      "name": "ScoutSA mainline documentation integrity",
+      "triggers": {
+        "push_branches": [
+          "main"
+        ],
+        "pull_request_branches": [
+          "main"
+        ],
+        "path_filters": [
+          "README.md",
+          "docs/**",
+          ".github/workflows/**"
+        ]
+      },
+      "jobs": [
+        {
+          "id": "documentation-integrity",
+          "runner": "ubuntu-latest",
+          "timeout_minutes": 3,
+          "node_version": "22",
+          "command": "node --test docs/tests/*.test.js",
+          "actions": [
+            {
+              "uses": "actions/checkout",
+              "version": "v7.0.1",
+              "commit": "3d3c42e5aac5ba805825da76410c181273ba90b1"
+            },
+            {
+              "uses": "actions/setup-node",
+              "version": "v7.1.0",
+              "commit": "949feb2413d6458794dcd2491c4babbbce0c15c1"
+            }
+          ]
+        }
+      ],
+      "verifies": [
+        "README and canonical gate-status synchronization for explicitly tested status facts",
+        "Draft and non-ratified implementation-authority boundaries",
+        "Share-card non-authorization, derived readiness constraints, and outcome provenance/dispute semantics",
+        "Constitution semantic invariants",
+        "CI workflow inventory and selected trigger/job/runtime/command configuration",
+        "Safeguarding measurement contract completeness and non-coercive metric rules",
+        "Zero-byte workflow files",
+        "Third-party GitHub Actions use full-length commit SHA references, and their recorded version comments and references are checked against the CI scope register"
+      ],
+      "does_not_prove": [
+        "Every semantic contradiction across every repository document",
+        "Legal compliance, safeguarding effectiveness, consent validity, or operational readiness",
+        "Prototype branch correctness or runtime behavior",
+        "Production security, RLS, API, database, or UI behavior",
+        "Stakeholder validation, market demand, or real-world outcomes"
+      ]
+    }
+  ]
+}

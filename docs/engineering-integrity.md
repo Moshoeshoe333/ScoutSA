@@ -151,3 +151,127 @@ Do not silently overwrite incidents. Append follow-up notes when a prevention me
 ## 8. Current boundary
 
 This control does not authorize implementation, database migration, RLS, API, authentication, real personal data, deployment or pilot activity. It governs the accuracy of the documentation and evidence for work that is already authorized.
+
+
+### DOC-005 — Mainline documentation-integrity coverage and flow authority boundary
+
+- **Detected:** 2026-11-18
+- **Affected branch/commit:** `main` at `a96cbae2df0ae30fe837264f95975fe72486406a`.
+- **Severity:** Medium–High — documentation changes outside the workflow path allowlist could bypass the mainline integrity suite; concrete proposed user flows could be mistaken for approved implementation requirements.
+- **Finding:** The workflow watched only a small set of README, gate-status, integrity-policy, test, and workflow paths. The test suite checked a small number of literal status phrases and empty workflow files. The MVP definition already carried an explicit draft/non-authority statement and the canonical gate record preserved unresolved authority holds; however, `docs/06-user-flows.md` did not carry an equally explicit non-ratification and implementation-authority banner. Its share-card, readiness, and outcome descriptions needed stronger disclosure and epistemic limits.
+- **Impact:** A change to an unlisted document could escape this workflow. A reader or implementer could also mistake illustrative flow prose for ratified requirements, especially around public share cards, derived readiness, and outcome authority.
+- **Correction in this branch:** Expand push and pull-request path filters to all `docs/**` and `.github/workflows/**`; extend tests to cover draft authority, unresolved governance holds, share-card non-authorization, derived readiness, outcome assertion/dispute/supersession, and Constitution invariants; add an explicit non-ratified authority banner and risk boundaries to the user-flow document.
+- **Evidence boundary:** The existing successful mainline run #11 at commit `a96cbae2df0ae30fe837264f95975fe72486406a` proves only that the then-configured narrow suite passed. It does not establish repository-wide consistency. At detection, the incident remained open pending branch readback and hosted workflow verification; the follow-up verification is recorded below.
+- **Preventive measure:** Keep the workflow broad over documentation and workflow files; add focused executable checks for repeated high-risk governance facts; require human review for semantic/legal decisions that cannot be safely reduced to string assertions.
+- **Initial hosted verification:** PR check run [44288619368](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44288619368) failed: 6/9 assertions passed. Three new checks exposed mismatches between the test literals and intended flow wording (implementation-authority sentence, plural material-input wording, and the word-form used for supersession). These are test/document alignment defects, not evidence that the underlying unresolved policy has been resolved. The failed run is retained as evidence.
+- **Follow-up correction:** Align the user-flow wording with the explicit non-authority statement and material-input provenance requirement; align the test assertion with the word “supersession”. Re-run hosted CI before closing this incident.
+- **Verification:** Follow-up PR workflow [44288777061](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44288777061) passed all 9/9 mainline documentation tests on the PR merge commit containing head `ea7b08279136b4b9b8e97d1a408dfc80a4aae770`. This verifies the current proposed branch state in CI; it does not mean the change has been merged into `main`.
+- **Status:** Corrected on the review branch; prevention checks verified in hosted PR CI. Mainline adoption remains pending PR review/merge.
+
+
+### CI-002 — CI scope was not centrally inventoried
+
+- **Detected:** 2026-11-18
+- **Severity:** Medium — workflow definitions and successful runs could be described without a durable, machine-checkable statement of inventory, triggers, commands, and limitations.
+- **Finding:** The mainline had a documentation-integrity workflow, but no central machine-readable register declaring all mainline workflows, their event/path scope, job/runtime/command, verified responsibilities, and what a pass cannot prove.
+- **Correction in this branch:** Add `docs/ci-scope-register.json`; extend mainline tests to compare the register's workflow inventory against the actual workflow directory and check selected trigger, job, runner, timeout, runtime, and command values.
+- **Preventive rule:** Any workflow inventory or execution-scope change must update the register in the same pull request. CI success is always tied to a specific run, tested commit, event, job, command, and scope; a configured workflow is not evidence of a pass.
+- **Initial hosted verification:** PR run [44289683283](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44289683283) failed before test execution because the generated JSON register ended with the two literal characters `\\n` after the closing object. Node's `JSON.parse` correctly rejected the malformed file. This was a file-generation/serialization defect, not a reason to relax the parser or test.
+- **Correction:** Remove the literal escape suffix and retain a valid JSON document. The test parses the register at module load, so malformed JSON remains a hard CI failure.
+- **Verification:** Corrected PR run [44289866111](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44289866111) completed successfully on the merge commit containing head `469eca408220f28476e291f8353d471acc994ac6`; all 13/13 tests passed, including JSON parsing, workflow inventory/configuration alignment, and safeguarding measurement-contract checks. The failed runs remain preserved as incident evidence.
+- **Status:** Corrected and CI-verified on the review branch; mainline adoption remains pending PR review/merge.
+
+### SAF-001 — Safeguarding measurement lacked an explicit anti-gaming contract
+
+- **Detected:** 2026-11-18
+- **Severity:** High — growth and activity metrics can create incentives to collect minors' data, pressure participation, suppress complaints, or treat outcomes as player-quality signals.
+- **Finding:** The MVP draft distinguished activity metrics from evidence of value, but did not define the safeguard denominators, provenance, ownership, misuse risks, stop conditions, or prohibited optimization targets required before a future pilot measurement plan.
+- **Correction in this branch:** Add a proposed Safeguarding Measurement Contract defining candidate indicators, numerator/denominator requirements, privacy and reporting boundaries, prohibited growth metrics, fail-closed stop conditions, and ratification blockers.
+- **Authority boundary:** This document authorizes no real-player data collection, instrumentation, dashboard, pilot, or implementation. It does not set legal basis, SLAs, retention periods, or named owners.
+- **Verification:** Hosted PR run [44289866111](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44289866111) passed the automated contract-presence and key-control checks (13/13 total tests). This is a documentation-control check only; substantive safeguarding/legal review, role assignment, and operational validation remain required.
+- **Status:** Automated documentation checks verified on the review branch; substantive review and ratification remain open.
+
+
+### CI-003 — GitHub Actions JavaScript runtime deprecation warning
+
+- **Detected:** 2026-11-18
+- **Severity:** Low — the documentation-integrity job passed, but its log warned that `actions/checkout@v4` and `actions/setup-node@v4` still target Node.js 20, which GitHub Actions has retired. The runner forced Node 24 compatibility mode. A separate `punycode` deprecation warning was also emitted; its dependency origin is not established by this evidence.
+- **Correction:** Upgrade checkout to verified release `v7.0.1` (commit `3d3c42e5aac5ba805825da76410c181273ba90b1`) and setup-node to verified release `v7.1.0` (commit `949feb2413d6458794dcd2491c4babbbce0c15c1`). Pin both to full immutable commit SHAs rather than floating major tags.
+- **Prevention:** Add action name, release version, and full commit SHA to `docs/ci-scope-register.json`; automated tests require exact workflow pins and a 40-character commit hash. Action upgrades must update the register and pass CI.
+- **Compatibility:** Keep the tested project runtime explicitly at Node.js 22; upgrading the action runtime does not silently change the Node version used by the test command.
+- **Verification:** PR run [44314517611](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44314517611) passed 14/14 tests on the PR merge commit containing head `0c68b9fb1dc520ffa93ff4d50da3d17378963438`. The job log contains neither the Node.js 20 action deprecation warning nor the `punycode` warning observed previously. This verifies the updated workflow run, not the upstream release provenance of each action SHA.
+- **Status:** Closed — updated workflow passed hosted CI; independent action-release provenance remains a human review responsibility.
+
+
+### CI-003 verification attempt — test-harness syntax defect
+
+- **Run:** [44290275450](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44290275450)
+- **Commit:** `ff145c2fa5c336374364c3689c659db17dd4eec6`
+- **Result:** Failed before any assertions executed. A malformed test edit omitted the job loop declaration and a closing parenthesis in the assertion. The failure was introduced by the test-harness change, not by either pinned action.
+- **Response:** Preserve this failed run; repair the test structure without reducing coverage; rerun on the corrected commit.
+
+
+### CI-005 — Action-inventory test fixture did not match YAML sequence syntax
+
+- **Detected:** 2026-11-18
+- **Affected branch/commits:** `governance/documentation-integrity-hardening-2026-11-18`; initial action-inventory test commit `5d92c5188036c0ef4fda44cb426606d4b667466b`, corrected head `0c68b9fb1dc520ffa93ff4d50da3d17378963438`.
+- **Severity:** Low — the new negative-test fixture exposed a parser/test mismatch before the action-inventory correction could be accepted.
+- **Finding:** The first action-reference matcher expected `uses:` at the beginning of a YAML line after indentation. Actual workflow step entries use YAML sequence syntax (`- uses:`), so the matcher missed valid action references and the positive fixture failed.
+- **Impact:** The proposed test could not reliably validate the actual workflow syntax. The failure was a defect in the new test harness, not evidence of an unregistered production workflow action.
+- **Correction:** Allow an optional YAML sequence dash before `uses:`; retain strict validation of full commit SHA references and version comments. Add fixture checks for a valid inventory, an unregistered action, duplicate action references, and a malformed/non-SHA reference.
+- **Verification:** Initial PR run [44314288705](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44314288705) failed 13/14 tests and is retained as evidence. Corrected PR run [44314517611](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44314517611) passed 14/14 tests on the PR merge commit containing head `0c68b9fb1dc520ffa93ff4d50da3d17378963438`.
+- **Preventive measure:** Test parsers against representative source syntax, including YAML list entries, and include positive and negative fixtures before relying on a new CI guard.
+- **Status:** Corrected and hosted-CI-verified on the review branch; mainline adoption remains pending PR review/merge.
+
+
+### CI-006 — Workflow-trigger assertions did not prove event-specific exact scope
+
+- **Detected:** 2026-11-18
+- **Affected branch/commits:** `governance/documentation-integrity-hardening-2026-11-18`; trigger-test implementation `4576fa89e6997a56f74d9b574d08ef5939d86baa`, fixture correction `e367c7e0323620002257907ecac4f19ae21fdb38`, branch-list parser correction `875f5e0ed9bb319a499a65a42cf7aa3715200cc4`.
+- **Severity:** Medium — the earlier workflow test established that selected strings appeared in the workflow, but did not establish that push and pull-request events each had exactly the registered branches and path filters.
+- **Finding:** A broad substring check could pass if a required filter appeared under only one event, and it would not reject an unregistered extra path. The first replacement introduced two fixture/parser defects: escaped newline expressions did not split actual lines, and the parser initially required branch values to be quoted although the workflow correctly uses an unquoted YAML scalar (`main`).
+- **Correction:** Replace substring-only trigger assertions with event-specific extraction of the `on`, `push`, and `pull_request` blocks; compare branch and path lists exactly against the CI register; add positive, missing-path, and extra-path fixtures; accept both quoted path strings and unquoted branch scalars.
+- **Parser limitation:** This remains a deliberately constrained line-oriented parser for the repository's current YAML layout, not a general YAML parser. A structural YAML change should fail closed and require an explicit parser/test update. The test also retains the existing direct command assertion; it does not claim complete semantic YAML validation.
+- **Verification:** Source read-back confirms the corrected regular expressions, fixture newlines, and branch scalar handling. The later hosted PR run [44316265634](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44316265634) passed 15/15 tests on exact PR head `763ef51858af7a06c364e92998b62280a8d27fd4`, including the event-specific trigger checks and negative fixtures; see the run #31 addendum below. The exact intermediate parser-correction head `875f5e0ed9bb319a499a65a42cf7aa3715200cc4` is not separately identified as the tested head in that run, so no standalone verification claim is made for it. Current-head run [44321943470](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44321943470) later passed the full 18-test suite on exact PR head `9e9422e980c8edcf0b8c9d57f79c60be42bee88a`, which includes the event-specific trigger assertions.
+- **Preventive measure:** For workflow controls, test both event branches independently, compare exact collections (not mere inclusion), and include negative fixtures for omissions and unauthorized additions. Preserve parser-format defects as test-harness incidents rather than weakening the intended assertion.
+- **Status:** Corrected in source; hosted verification pending.
+
+### CI-003 provenance follow-up — upstream action release commits independently inspected
+
+- **Evidence checked:** `actions/checkout` commit [3d3c42e5aac5ba805825da76410c181273ba90b1](https://github.com/actions/checkout/commit/3d3c42e5aac5ba805825da76410c181273ba90b1) has commit title "prep v7.0.1 release" and its diff adds the `v7.0.1` changelog section and updates package metadata to `7.0.1`. `actions/setup-node` commit [949feb2413d6458794dcd2491c4babbbce0c15c1](https://github.com/actions/setup-node/commit/949feb2413d6458794dcd2491c4babbbce0c15c1) updates package metadata from `7.0.0` to `7.1.0` and is the release-version commit used by the workflow pin.
+- **Scope:** This is independent upstream repository commit/diff inspection supporting the stated release versions. It is not a cryptographic signature verification, full supply-chain audit, or proof that every transitive dependency is safe.
+- **Status:** Release-version-to-commit correspondence independently inspected; broader action supply-chain assurance remains outside this CI control.
+
+
+- **Hosted verification addendum (run #31):** [Run 44316265634](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44316265634) completed successfully. Job `documentation-integrity` (job `134843069730`) checked out merge commit `4aff1f3`, explicitly containing PR head `763ef51858af7a06c364e92998b62280a8d27fd4` into base `a96cbae2df0ae30fe837264f95975fe72486406a`. The log reports **15 tests, 15 passed, 0 failed**. The new event-specific trigger test and its missing/extra-path negative fixtures passed. This closes the hosted-verification item for CI-006 on that tested head; any later change requires fresh verification.
+
+
+### CI-007 — Workflow inventory checks did not reject unregistered trigger events or jobs
+
+- **Detected:** 2026-11-18
+- **Affected branch/commit:** PR #6 review head `50412f0690ab98b2eb4a9a8bb0825cb888387472`; mainline base `a96cbae2df0ae30fe837264f95975fe72486406a`.
+- **Severity:** Medium — the CI scope register declared trigger and job scope, but the tests did not yet prove that no additional top-level trigger event or unregistered job had been added.
+- **Finding:** Event-specific branch/path lists were compared exactly, but the event-key inventory itself was not checked. Job tests confirmed registered jobs existed and selected values appeared in the file, but did not reject an additional unregistered job.
+- **Correction in this branch:** Add exact child-key inventory checks for top-level workflow events and jobs, with negative fixtures for an extra `schedule` event and an extra job. Keep the parser deliberately limited to the current line-oriented YAML structure; unsupported structural changes require explicit parser/test review.
+- **Root cause:** Inventory validation checked that declared entries were present, but did not enforce equality in both directions at every structural boundary.
+- **Preventive measure:** Compare actual and declared sets exactly; include missing-entry and extra-entry fixtures for workflow files, trigger events, job IDs, and action references.
+- **First hosted attempt:** PR run [44317540336](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44317540336) failed 12/16. The new helper's generated regex contained double-escaped backslashes, so it failed to recognize valid indentation; the failure was in the guard implementation, not the workflow configuration. The failed run is preserved.
+- **Correction:** Reduce the regex escaping to the intended JavaScript regular expressions. Re-run hosted CI and read back the exact head before closing.
+- **Hosted verification:** PR run [44317671811](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44317671811) completed successfully on exact PR head `50412f0690ab98b2eb4a9a8bb0825cb888387472`, with base `a96cbae2df0ae30fe837264f95975fe72486406a`. The `documentation-integrity` job passed **16/16 tests, 0 failures**, including the extra-event and extra-job negative fixtures. The test and ledger files were read back from that exact head. This closes the CI-007 prevention-verification item for this head only.
+- **Status:** Corrected and prevention verified in hosted PR CI; mainline adoption remains pending independent review and merge.
+
+
+### SAF-002 — Discovery narrative and safeguarding metrics lacked sufficient sequencing/measurement precision
+
+- **Detected:** 2026-11-18 during independent review of PR #6.
+- **Affected review head:** `d6445a811de14d9da723650efd9d6bc65784fe34`.
+- **Severity:** High for the flow ambiguity; Medium for measurement-definition completeness.
+- **Finding A:** The proposed primary loop began with “Player becomes discoverable” and placed guardian review afterwards. Although the document was non-ratified and conditional, the sequence could be read as permitting discovery before the required permission and authority gates. A later guardian review cannot retroactively authorize an earlier disclosure.
+- **Correction A:** Reorder the proposed loop so evidenced authority and permission precede minimum-necessary discovery. Clarify that registration, Passport completion, or verification does not itself authorize discovery; require pre-authorized recipient/purpose/field/time scope; state that discovery does not authorize direct contact or further disclosure.
+- **Finding B:** Several proposed indicators lacked sufficiently operational definitions under the contract's own rule. Examples included undefined revocation intake/start events, incomplete-case treatment for elapsed-time measures, an undefined withdrawal-rate denominator, unspecified incident deduplication, and no pre-approved sampling frame for audit completeness.
+- **Correction B:** Add count/rate/elapsed-time definition requirements; specify unresolved/open/censored-case treatment; block the withdrawal rate until its eligible population and denominator are ratified; require an approved sampling frame; define incident and opportunity counting boundaries.
+- **Root cause:** Narrative ordering and metric labels were treated as adequate proxies for operationally precise gates and measurement contracts.
+- **Preventive controls:** Regression tests assert the authority-before-discovery sequence and pre-authorization semantics; measurement tests require explicit event units, denominator/clock/censoring rules, and a blocked state where policy decisions remain unresolved.
+- **Hosted verification:** PR run [44320272391](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44320272391) passed **18/18 tests, 0 failures** on exact head `b4fe43d76b5797e765f718d254e3463086aaff18` against base `a96cbae2df0ae30fe837264f95975fe72486406a`. The new authority-before-discovery and metric-definition regression tests passed. The flow, measurement contract, test suite, and ledger were read back from that exact head.
+- **Follow-up hosted verification:** PR run [44320367678](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44320367678) completed successfully on merge commit `f257a10606d205293350457c1256d4429759dac6`, containing exact PR head `0a313dc4d0e74439c36e79bcbbe7a58a271fcc83` into base `a96cbae2df0ae30fe837264f95975fe72486406a`. Job `documentation-integrity` (`134857392064`) ran `node --test docs/tests/*.test.js` under Node.js `22.23.4`; the log reports **18 tests, 18 passed, 0 failed**. This verifies the subsequent ledger/PR-description revision's predecessor head and the full safeguarding regression suite; the next ledger update requires a fresh hosted run.
+- **Status:** Corrections and regression controls verified on the cited heads. Independent safeguarding/legal review and ratification remain outstanding; keep PR draft and unmerged. No product or real-player data work is authorized.
