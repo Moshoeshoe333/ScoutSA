@@ -6,6 +6,7 @@ const fs = require('node:fs');
 
 test('tournament organizer portal keeps organizer, authority and feature permission separate', async () => {
   const browser = await chromium.launch({ headless: true });
+  try {
   const page = await browser.newPage({ viewport: { width: 1365, height: 900 } });
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
@@ -77,5 +78,7 @@ test('tournament organizer portal keeps organizer, authority and feature permiss
     assert.equal(await page.locator(`[data-section="${section}"]`).getAttribute('aria-current'), 'page');
   }
   assert.deepEqual(errors, []);
-  await browser.close();
+  } finally {
+    await browser.close();
+  }
 });

@@ -195,3 +195,15 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Regression / verification:** Added to `tournament-organizer-portal.browser-smoke.cjs` and `tournament-manager.browser-smoke.cjs`; hosted exact-head verification is pending.
 - **Residual risk:** A client-side synthetic round-trip does not prove API/database consistency, persistence, authorization or event authenticity.
 - **Status:** Mitigated in prototype code; pending hosted verification.
+
+
+### LESSON-011 — Browser-test cleanup must survive assertion failure
+
+- **Failure mode:** A browser smoke test closes Chromium only after all assertions succeed; a failed assertion can leave the child browser process alive and mask the real failure as a stalled CI step.
+- **Observed evidence:** During hosted run 44298372417, the Organizer Portal browser step remained in progress after prior suites completed. Source review confirmed no `try/finally` around browser cleanup. The exact assertion that stalled the run is not established because the in-progress job logs were unavailable.
+- **Root cause:** Resource lifecycle was coupled to the happy path rather than guaranteed independently of test outcome.
+- **Preventive control:** Put browser/server/process cleanup in `finally` blocks; use equivalent cleanup for every browser smoke script that owns external resources.
+- **Detective control:** Review smoke-test teardown paths and ensure a deliberate assertion failure still terminates the test process.
+- **Regression / verification:** Added `try/finally` cleanup to `tournament-organizer-portal.browser-smoke.cjs`; exact-head hosted verification pending.
+- **Residual risk:** This does not identify or fix the assertion (if any) that caused the observed stall; a clean rerun must expose the true outcome.
+- **Status:** Mitigated in the Organizer Portal test harness; pending hosted verification.

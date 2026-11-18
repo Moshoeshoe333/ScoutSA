@@ -510,3 +510,16 @@ The [Engineering Lessons Ledger](engineering-lessons-ledger.md) is the durable r
 - **Regression:** Expanded Organizer Portal and Tournament Manager browser smoke tests cover date correction, summary/date export, round-trip import, impossible dates and reversed-date rejection. Hosted verification is pending for the exact audit commit.
 - **Residual risk:** The handoff remains synthetic and client-side. Date validation does not establish that an event is real, authorized or scheduled.
 - **Status:** Corrective changes committed; pending exact-head hosted verification.
+
+
+### TM-013 — Organizer Portal browser smoke test lacked guaranteed browser cleanup
+
+- **Detected:** 2026-11-18
+- **Severity:** Medium for test reliability — an assertion failure could leave Chromium running and make CI appear stalled rather than reporting the original failure promptly.
+- **Finding:** During hosted run [44298372417](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44298372417), the Organizer Portal browser step remained in progress after all preceding suites had completed. The job log endpoint was not yet available while the step was running. Source review confirmed the test closed Chromium only on the success path and had no `try/finally`; the exact assertion or trigger for the stalled step is not established.
+- **Impact:** A future failure in this test could leave a browser process alive, delay job termination and obscure the first actionable diagnostic.
+- **Correction:** Wrap browser-test execution in `try/finally` so Chromium closes on success and assertion failure.
+- **Prevention:** Browser smoke scripts must guarantee resource cleanup for browsers, servers, temporary files and child processes. Failure-path cleanup should not depend on assertions succeeding.
+- **Verification:** Cleanup correction committed; exact-head hosted verification pending. Do not claim that the earlier run failed for a specific assertion without its log evidence.
+- **Residual risk:** This improves failure reporting; it does not prove the Organizer Portal assertions themselves pass.
+- **Status:** Corrective test-harness change committed; pending exact-head hosted verification.

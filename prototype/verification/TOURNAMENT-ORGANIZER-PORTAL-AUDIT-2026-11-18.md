@@ -7,7 +7,7 @@
 
 ## Executive result
 
-A focused source-and-test review found a confirmed submission data-loss defect: the portal exposed start date, end date and competition summary inputs but did not copy those values into the submission record. The import side already mapped optional start/end fields, but the portal could not provide them. The importer also lacked explicit date-format and date-order checks. These defects are corrected in the current audit change and covered by browser regression assertions; hosted verification is pending until the exact resulting commit completes CI.
+A focused source-and-test review found a confirmed submission data-loss defect: the portal exposed start date, end date and competition summary inputs but did not copy those values into the submission record. The import side already mapped optional start/end fields, but the portal could not provide them. The importer also lacked explicit date-format and date-order checks. These defects are corrected in the current audit change and covered by browser regression assertions; hosted verification is pending until the exact resulting commit completes CI. During that run, the Organizer Portal smoke step remained in progress; source review found the test lacked guaranteed browser cleanup on assertion failure. TM-013 records the observation without guessing at the underlying assertion. A cleanup guard is now added so the next run can report the actual outcome.
 
 This audit does not certify organizer identity, event authority, safeguarding, privacy/legal compliance, publication eligibility, security or production readiness. All records remain synthetic and browser-session-only.
 
@@ -50,7 +50,7 @@ TM-001–TM-011 are retained as permanent history. TM-011 has exact successful e
 
 - `prototype/tournament-organizer-portal.html`
 - `prototype/TOURNAMENT-ORGANIZER-PORTAL-MODEL.md`
-- `prototype/tests/tournament-organizer-portal.browser-smoke.cjs`
+- `prototype/tests/tournament-organizer-portal.browser-smoke.cjs` (now guarantees Chromium cleanup in `finally`)
 - `prototype/tournament-manager.html`
 - `prototype/tests/tournament-manager.browser-smoke.cjs`
 - `prototype/tests/tournament-day-operations.browser-smoke.cjs`
