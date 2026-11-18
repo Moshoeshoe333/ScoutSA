@@ -113,3 +113,7 @@ Domain-level adversarial cases remain deliberately unresolved where a ratified r
 | Misleading authority claims | Forged verified, approved and granted values remain traceable as source claims while operational states remain unverified/not-requested. | Fail-closed synthetic behavior tested; claims are not independently authenticated. |
 
 **Exact-head hosted verification:** run [#694](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44325785196) passed against da769932354309f8327d50d720395d203eab5a6f: 121/121 headless tests and all ten configured browser smoke steps. The two failed intermediate runs [44324794870](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44324794870), [44325181876](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44325181876) and [44325536793](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44325536793) are retained as test-harness findings and are not counted as passes.
+
+## Final documentation reconciliation checkpoint — run #698
+
+Hosted run [#698](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44326398873) passed on exact prototype head `bcdd4ff4745910e6ff4eea4437edf39b9e075672`, after the audit, engineering-integrity ledger, lessons ledger and README were reconciled. It passed **121/121 headless tests** and all ten configured browser smoke steps under Node.js 22.23.5. This supersedes run #694 as the latest full-workflow checkpoint; run #694 remains the exact code-regression checkpoint for OPA-009–OPA-011 and TM-015. Residual domain and production holds remain unchanged.
