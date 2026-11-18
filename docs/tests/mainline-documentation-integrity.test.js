@@ -8,7 +8,6 @@ const root = path.resolve(__dirname, "../..");
 const read = relative => fs.readFileSync(path.join(root, relative), "utf8");
 const readme = read("README.md");
 const gateStatus = read("docs/00-gate-status.md");
-const integrityPolicy = read("docs/engineering-integrity.md");
 const mvp = read("docs/01-mvp-definition.md");
 const flows = read("docs/06-user-flows.md");
 const constitution = read("docs/00-constitution.md");
