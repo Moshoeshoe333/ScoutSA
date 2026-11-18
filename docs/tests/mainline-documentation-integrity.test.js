@@ -13,6 +13,44 @@ const flows = read("docs/06-user-flows.md");
 const constitution = read("docs/00-constitution.md");
 const workflow = read(".github/workflows/documentation-integrity.yml");
 
+function extractYamlSection(source, header, indentation) {
+  const lines = source.split(/\\r?\\n/);
+  const prefix = " ".repeat(indentation);
+  const start = lines.findIndex(line => line === `${prefix}${header}:`);
+  assert.notEqual(start, -1, `missing YAML section: ${header}`);
+
+  const end = lines.findIndex((line, index) =>
+    index > start && line.trim() !== "" && line.match(/^ */)[0].length <= indentation
+  );
+  return lines.slice(start + 1, end === -1 ? lines.length : end).join("\\n");
+}
+
+function assertYamlStringList(section, key, expected, context) {
+  const lines = section.split(/\\r?\\n/);
+  const header = lines.findIndex(line => line === `    ${key}:`);
+  assert.notEqual(header, -1, `${context}: missing ${key} list`);
+  const values = [];
+  for (let index = header + 1; index < lines.length; index++) {
+    const line = lines[index];
+    if (line.trim() === "") continue;
+    if (!/^      - /.test(line)) break;
+    const match = line.match(/^      - "([^"]+)"$/);
+    assert.ok(match, `${context}: malformed ${key} entry: ${line}`);
+    values.push(match[1]);
+  }
+  assert.deepEqual(values, expected, `${context}: ${key} must exactly match the register`);
+}
+
+function assertWorkflowTriggersMatch(source, triggerRegister, workflowPath) {
+  const onSection = extractYamlSection(source, "on", 0);
+  for (const event of ["push", "pull_request"]) {
+    const eventSection = extractYamlSection(onSection, event, 2);
+    const context = `${workflowPath} ${event}`;
+    assertYamlStringList(eventSection, "branches", triggerRegister[`${event}_branches`], context);
+    assertYamlStringList(eventSection, "paths", triggerRegister.path_filters, context);
+  }
+}
+
 function assertActionInventoryMatches(source, registeredActions, workflowPath) {
   const actual = [...source.matchAll(/^\s*(?:-\s*)?uses:\s*(.*?)\s*$/gm)].map(match => {
     const value = match[1];
@@ -52,11 +90,29 @@ test("root README and gate status agree on the controlled next move and implemen
   assert.ok(gateStatus.includes("Migration/database execution, RLS, API, production implementation and pilot remain on hold or unauthorized"), "gate status must retain implementation holds");
 });
 
-test("mainline workflow covers all documentation and workflow changes", () => {
-  assert.ok(workflow.includes('      - "docs/**"'), "all docs changes must trigger the integrity workflow");
-  assert.ok(workflow.includes('      - ".github/workflows/**"'), "all workflow changes must trigger the integrity workflow");
-  assert.ok(workflow.includes('      - "README.md"'), "root README changes must trigger the integrity workflow");
+test("mainline workflow trigger blocks exactly match registered branches and path filters", () => {
+  const item = ciRegister.workflows.find(entry => entry.path === ".github/workflows/documentation-integrity.yml");
+  assert.ok(item, "documentation-integrity workflow must be registered");
+  assertWorkflowTriggersMatch(workflow, item.triggers, item.path);
   assert.ok(workflow.includes("node --test docs/tests/*.test.js"), "workflow must execute the mainline documentation test suite");
+});
+
+test("workflow trigger validation rejects event-specific omissions and extra paths", () => {
+  const expected = {
+    push_branches: ["main"],
+    pull_request_branches: ["main"],
+    path_filters: ["README.md", "docs/**", ".github/workflows/**"]
+  };
+  const valid = `on:\\n  push:\\n    branches:\\n      - main\\n    paths:\\n      - "README.md"\\n      - "docs/**"\\n      - ".github/workflows/**"\\n  pull_request:\\n    branches:\\n      - main\\n    paths:\\n      - "README.md"\\n      - "docs/**"\\n      - ".github/workflows/**"\\n`;
+  assert.doesNotThrow(() => assertWorkflowTriggersMatch(valid, expected, "fixture.yml"));
+  assert.throws(
+    () => assertWorkflowTriggersMatch(valid.replace('      - "docs/**"\\n      - ".github/workflows/**"\\n  pull_request:', '      - "docs/**"\\n  pull_request:'), expected, "fixture.yml"),
+    /paths must exactly match/
+  );
+  assert.throws(
+    () => assertWorkflowTriggersMatch(valid.replace('      - "docs/**"\\n      - ".github/workflows/**"\\n  pull_request:', '      - "docs/**"\\n      - ".github/workflows/**"\\n      - "extra/**"\\n  pull_request:'), expected, "fixture.yml"),
+    /paths must exactly match/
+  );
 });
 
 test("draft MVP and user-flow narratives cannot be mistaken for ratified implementation authority", () => {
