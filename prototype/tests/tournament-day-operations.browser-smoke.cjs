@@ -62,7 +62,7 @@ assert.match(await historyPage.locator("#handoffStatus").innerText(),/synthetic 
 assert.equal(await historyPage.locator("#countMinutes").innerText(),"25","non-DEMO IDs must not replace the validated history view");
 
 await historyPage.setViewportSize({width:390,height:844});
-const historyDims=await historyPage.evaluate(()=>({w:document.documentElement.clientWidth,s:document.documentElement.scrollWidth}));
-assert.ok(historyDims.s<=historyDims.w,"player history mobile viewport must not overflow");
+const historyDims=await historyPage.evaluate(()=>({w:document.documentElement.clientWidth,s:document.documentElement.scrollWidth,offenders:Array.from(document.querySelectorAll("body *")).map(el=>{const r=el.getBoundingClientRect(),cs=getComputedStyle(el);return {tag:el.tagName,id:el.id,className:typeof el.className==="string"?el.className:"",left:Math.round(r.left),right:Math.round(r.right),width:Math.round(r.width),scrollWidth:el.scrollWidth,overflowX:cs.overflowX}}).filter(x=>x.right>document.documentElement.clientWidth+1||x.left< -1).slice(0,12)}));
+assert.ok(historyDims.s<=historyDims.w,`player history mobile viewport must not overflow: ${JSON.stringify(historyDims)}`);
 await historyPage.close();
 assert.deepEqual(errors,[]);console.log("PASS: match-day operations, derived appearances/minutes, player tournament history, cross-record chronology warning, reconciliation context, provenance and mobile layout");}finally{if(browser)await browser.close();await new Promise(resolve=>server.close(resolve))}}main().catch(e=>{console.error(e);process.exitCode=1});

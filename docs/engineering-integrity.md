@@ -474,3 +474,14 @@ The [Engineering Lessons Ledger](engineering-lessons-ledger.md) is the durable r
 - **Prevention:** Negative tests must satisfy all earlier preconditions before targeting a later validation rule. Explicitly set and assert fixture relationships (team, fixture, lineup status and participant identity) rather than relying on HTML option defaults.
 - **Verification:** Correction committed; hosted verification for the exact resulting commit is pending. Do not close this incident or claim the duration guard passed until the Day Operations browser suite completes successfully.
 - **Boundary:** Synthetic internal demo only. No production behavior, real-player data, persistence, authorization or safeguarding capability is implied.
+
+
+### TM-010 — Player tournament history page overflowed at mobile viewport
+
+- **Detected:** 2026-11-18
+- **Severity:** Medium — the player-history handoff view failed its 390px responsive-layout regression check.
+- **Finding:** Run [44294296163](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44294296163), commit `a56b39d32dccab05221468ab8d225262bde0d06f`, passed the earlier browser suites and reached the player-history mobile check, which observed document horizontal overflow at a 390px viewport. The previous assertion reported only a boolean and did not identify the overflowing element.
+- **Correction:** Allow the three-part player-history header to wrap on narrow screens and prevent its brand/navigation flex items from imposing an unshrinkable minimum width. Upgrade the regression assertion to report document dimensions and the first overflowing elements (tag, ID, class, bounds, width and horizontal overflow behavior).
+- **Prevention:** Responsive tests must report actionable element-level diagnostics. Every page introduced into a cross-page workflow must be included in narrow-viewport checks; passing the originating page's mobile check does not establish that linked pages are responsive.
+- **Verification:** CSS and diagnostic changes committed; hosted verification for the exact resulting commit is pending. If overflow persists, use the new element-level report to isolate the actual source rather than adding broad overflow clipping.
+- **Boundary:** Internal synthetic demo only. No real-player data, production readiness, authorization or safeguarding capability is implied.
