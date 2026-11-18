@@ -49,7 +49,7 @@
         "CI workflow inventory and selected trigger/job/runtime/command configuration",
         "Safeguarding measurement contract completeness and non-coercive metric rules",
         "Zero-byte workflow files",
-        "Third-party GitHub Actions are pinned to verified immutable release commits and their versions are checked by CI"
+        "Third-party GitHub Actions use full-length commit SHA references, and their recorded version comments and references are checked against the CI scope register"
       ],
       "does_not_prove": [
         "Every semantic contradiction across every repository document",
