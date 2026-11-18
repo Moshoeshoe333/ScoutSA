@@ -523,3 +523,16 @@ The [Engineering Lessons Ledger](engineering-lessons-ledger.md) is the durable r
 - **Verification:** Cleanup correction committed; exact-head hosted verification pending. Do not claim that the earlier run failed for a specific assertion without its log evidence.
 - **Residual risk:** This improves failure reporting; it does not prove the Organizer Portal assertions themselves pass.
 - **Status:** Corrective test-harness change committed; pending exact-head hosted verification.
+
+
+### TM-014 — Organizer Registry table caused document-level mobile overflow
+
+- **Detected:** 2026-11-18
+- **Severity:** Medium — the Organizer Portal Registry section was not usable within a narrow viewport despite the previous single-section mobile check passing.
+- **Finding:** Hosted run [44298986431](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44298986431), commit `9e0a6404b1630bc0068177f654b27e78c6899f5e`, passed headless policy tests, Tournament Manager, Tournament Day Operations and Statistic Reconciliation browser suites. The expanded Organizer Portal mobile test then found document width 696px at a 390px viewport while the Organizer Registry section was active. The prior check only measured the Ledger section and missed this condition. Element-level diagnostics are added to the assertion; the exact overflowing descendant will be available from the next failure if the correction is incomplete.
+- **Root cause:** The section-specific responsive path exposed a wide table/descendant through nested grid/panel sizing. The original mobile grid used a bare `1fr` track and panel/table wrappers lacked explicit shrink constraints.
+- **Correction:** Use a zero-minimum mobile grid track, allow panels and table wrappers to shrink to the available width, and retain horizontal scrolling inside the table wrapper so tabular columns are not clipped.
+- **Prevention:** Test every navigable section at narrow widths, not only the section active at the end of a test. Report element-level geometry when document overflow occurs.
+- **Verification:** Responsive correction and richer diagnostics committed; exact-head hosted verification pending.
+- **Residual risk:** One 390px Chromium viewport does not cover every device, zoom level or browser engine.
+- **Status:** Corrective CSS committed; pending exact-head hosted verification.

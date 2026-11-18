@@ -22,6 +22,7 @@ This audit does not certify organizer identity, event authority, safeguarding, p
 | OPA-005 | Feature permission is a single mutable per-submission demo state; there is no attributed decision, version history, revocation evidence or publication authorization. | Portal updates the existing feature request in place and hard-codes publication display to `not-published`. | Accepted prototype limitation, not a bug to solve in this pass. Keep publication disabled and do not represent this as a production permission workflow. |
 | OPA-006 | Importer accepts several status/type strings as arbitrary text and does not provide an authoritative identity or authority review. | Source review of `importOrganizerPackage`; status fields are not enum-validated and source references are synthetic. | Residual prototype limitation. Before any real integration, define a ratified enum contract, reviewer/decision provenance and server-side authorization. |
 | OPA-007 | Handoff import is validated before insertion and edition-idempotent for the tested collision cases, but no persistence or cross-session transaction exists. | Importer constructs and validates collections before adding incoming submissions; browser test verifies duplicate import and selected failure no-mutation cases. | Keep session-only boundary; expand adversarial import matrix before considering a durable integration. |
+| OPA-008 | Organizer Registry section overflowed at mobile width while the Ledger section did not. | Run 44298986431 found 696px document width at 390px when Registry was active; the original test measured only Ledger. | Corrected responsive grid/panel/table sizing and expanded section-by-section viewport diagnostics; hosted verification pending. |
 
 ## Regression coverage added
 
@@ -37,6 +38,10 @@ This audit does not certify organizer identity, event authority, safeguarding, p
 The 18 November hosted workflow [run 44297019349](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44297019349) passed against `2e60ff658e5288a978698179cedc52d377100e53`, including the Tournament Manager and Tournament Day Operations browser suites. That is valid evidence for the tests that existed in that commit. It does not verify the new OPA regression cases; those require a new exact-head workflow run.
 
 TM-001–TM-011 are retained as permanent history. TM-011 has exact successful evidence for its correction. Earlier TM entries are being reconciled separately against the current test assertions and run history; no blanket closure is inferred from a later green run.
+
+## Additional responsive finding
+
+Run [44298986431](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44298986431) exposed a 696px document width at 390px when Organizer Registry was active. This was not detected by the earlier Ledger-only width check. TM-014 and LESSON-012 record the gap. The CSS now uses zero-minimum grid tracks and shrinkable panels/table wrappers; the new test reports overflowing element geometry if the fix is incomplete. Exact-head verification remains pending.
 
 ## Remaining stop lines
 

@@ -73,7 +73,7 @@ test('tournament organizer portal keeps organizer, authority and feature permiss
   await page.setViewportSize({ width: 390, height: 844 });
   for (const section of ['submit', 'organizers', 'evidence', 'features', 'ledger']) {
     await page.locator(`[data-section="${section}"]`).click();
-    const dims = await page.evaluate(() => ({ width: document.documentElement.clientWidth, scroll: document.documentElement.scrollWidth }));
+    const dims = await page.evaluate(() => ({ width: document.documentElement.clientWidth, scroll: document.documentElement.scrollWidth, offenders: Array.from(document.querySelectorAll('body *')).map(el => { const r = el.getBoundingClientRect(), css = getComputedStyle(el); return { tag: el.tagName, id: el.id, className: typeof el.className === 'string' ? el.className : '', left: Math.round(r.left), right: Math.round(r.right), width: Math.round(r.width), scrollWidth: el.scrollWidth, overflowX: css.overflowX }; }).filter(item => item.right > document.documentElement.clientWidth + 1 || item.left < -1).slice(0, 12) }));
     assert.ok(dims.scroll <= dims.width, `${section} section must fit a 390px viewport: ${JSON.stringify(dims)}`);
     assert.equal(await page.locator(`[data-section="${section}"]`).getAttribute('aria-current'), 'page');
   }

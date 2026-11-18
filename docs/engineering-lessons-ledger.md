@@ -207,3 +207,15 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Regression / verification:** Added `try/finally` cleanup to `tournament-organizer-portal.browser-smoke.cjs`; exact-head hosted verification pending.
 - **Residual risk:** This does not identify or fix the assertion (if any) that caused the observed stall; a clean rerun must expose the true outcome.
 - **Status:** Mitigated in the Organizer Portal test harness; pending hosted verification.
+
+
+### LESSON-012 — Responsive checks must traverse every navigable section
+
+- **Failure mode:** A multi-section page is declared mobile-safe because one active section fits, while another section exposes a wide table or content descendant and expands the document.
+- **Observed evidence:** Organizer Portal run 44298986431 measured a 696px document at a 390px viewport when the Organizer Registry section was active; the earlier test measured only the Ledger section.
+- **Root cause:** Responsive assertions were coupled to one test-end navigation state rather than the page's full navigable state space.
+- **Preventive control:** Iterate through each navigation section at representative narrow widths; use shrinkable grid tracks/panels and contained horizontal table scrolling.
+- **Detective control:** Assert document scroll width after each navigation transition and include element-level bounds, width and overflow diagnostics.
+- **Regression / verification:** Expanded `tournament-organizer-portal.browser-smoke.cjs`; CSS correction in `tournament-organizer-portal.html`; hosted exact-head verification pending.
+- **Residual risk:** A single viewport and browser engine do not establish universal responsive conformance.
+- **Status:** Mitigated in prototype source; pending hosted verification.
