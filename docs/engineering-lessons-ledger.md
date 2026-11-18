@@ -219,3 +219,25 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Regression / verification:** Hosted run [44299389829](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829), exact commit `06204ac049ce21df6f22575d38202203c9ccec14`, passed the section-by-section 390px Organizer Portal check after the CSS correction.
 - **Residual risk:** A single viewport and browser engine do not establish universal responsive conformance.
 - **Status:** Verified for the tested 390px Chromium path; broader device coverage remains open.
+
+### LESSON-013 — Cross-boundary handoffs must preserve every collection and separate source claims from operational authority
+
+- **Failure mode:** An importer validates an incoming collection but silently drops it, omits fields from the destination record, or treats an incoming status string as an authoritative operational state.
+- **Observed evidence:** Organizer Portal → Tournament Manager review found organizer, evidence and feature-request collections were validated but not retained as complete destination source records; competition format/edition label were omitted. Incoming identity/authority/feature values were copied into operational event fields without independent review.
+- **Root cause:** The audit traced selected fields (dates and summary) rather than enumerating every source collection and tracing each field through the destination/export boundary. Imported claims and operational decisions were not explicitly separated.
+- **Preventive control:** Maintain a collection-and-field lineage matrix for each handoff. Preserve source records in explicitly named claim/provenance collections. Keep operational authority, identity and permission fail-closed until independent ratified review; never promote imported strings to decisions.
+- **Detective control:** Round-trip assertions for every collection and material field; adversarial fixtures containing forged `verified`, `approved` and `granted` claims; assert operational states remain unverified/not-requested.
+- **Regression / verification:** Code correction in `caadd26e2f12d1cb513d85d79dd31c7123981a3e`; browser assertions in `7f21fe268640a1beee649a29545fdc1f468f5cf4`. Exact-head hosted verification pending at entry creation.
+- **Residual risk:** Preserving a claim is not validating it. Duplicate-competition semantics, organizer conflict resolution, expiry rules, revocation history and status enums require ratification.
+- **Status:** Mitigation committed; hosted verification pending.
+
+### LESSON-014 — Rejection tests must compare the complete state, not only record counts
+
+- **Failure mode:** A rejected operation mutates an existing record or metadata collection without changing the count, while a count-only assertion reports success.
+- **Observed evidence:** Organizer handoff rejection tests compared only the Tournament Manager event count before/after import. That did not prove that existing event fields or newly added source-claim collections were unchanged.
+- **Root cause:** The test used a convenient aggregate proxy instead of asserting the operation's full no-mutation contract.
+- **Preventive control:** Snapshot the complete relevant state before a rejected operation and compare it deeply afterward. For persisted systems, extend this to transaction boundaries and durable read-back.
+- **Detective control:** Browser helper exports full synthetic session state before and after every rejected import; adversarial malformed, incomplete, duplicate-reference, collision, oversized and date-invalid cases use the same helper.
+- **Regression / verification:** Test correction in `7f21fe268640a1beee649a29545fdc1f468f5cf4`; exact-head hosted verification pending at entry creation.
+- **Residual risk:** Browser-exported session state is not proof of backend/database atomicity.
+- **Status:** Mitigation committed; hosted verification pending.
