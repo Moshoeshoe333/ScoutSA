@@ -2,6 +2,7 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { chromium } = require('playwright');
 const path = require('node:path');
+const fs = require('node:fs');
 
 test('tournament manager imports organizer portal package by stable IDs and skips duplicates', async () => {
   const browser = await chromium.launch({ headless: true });
@@ -16,7 +17,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
     contractVersion: '1.0',
     sourceSystem: 'scoutsa-organizer-portal',
     organizers: [{ id: 'ORG-DEMO-501', name: 'DEMO-Test-Organizer', type: 'Community organization', identity: 'unverified', authority: 'pending' }],
-    submissions: [{ id: 'SUB-DEMO-501', tournamentId: 'TRN-ORG-DEMO-501', editionId: 'EDT-ORG-DEMO-501', organizerId: 'ORG-DEMO-501', name: 'DEMO-Test-Cup', edition: 'DEMO-2027-Edition', locality: 'DEMO-Sedibeng', format: '11-a-side', status: 'pending-review' }],
+    submissions: [{ id: 'SUB-DEMO-501', tournamentId: 'TRN-ORG-DEMO-501', editionId: 'EDT-ORG-DEMO-501', organizerId: 'ORG-DEMO-501', name: 'DEMO-Test-Cup', edition: 'DEMO-2027-Edition', locality: 'DEMO-Sedibeng', format: '11-a-side', start: '2027-06-01', end: '2027-06-03', summary: 'DEMO imported competition summary.', status: 'pending-review' }],
     evidence: [{ id: 'EVD-DEMO-501', organizerId: 'ORG-DEMO-501', type: 'Public institutional reference', ref: 'DEMO-EVIDENCE-501', status: 'pending' }],
     features: [{ id: 'FTR-DEMO-501', submissionId: 'SUB-DEMO-501', scope: 'Competition name, dates and public event summary', status: 'requested' }]
   };
@@ -40,6 +41,15 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await page.waitForFunction(() => /Imported 1 tournament edition/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
   assert.match(await page.locator('#organizerImportMessage').textContent(), /Imported 1 tournament edition/);
   assert.equal(await page.locator('#countT').textContent(), '2');
+  const sessionDownloadWait = page.waitForEvent('download');
+  await page.locator('#exportButton').click();
+  const sessionDownload = await sessionDownloadWait;
+  const sessionData = JSON.parse(fs.readFileSync(await sessionDownload.path(), 'utf8'));
+  const imported = sessionData.events.find(event => event.editionId === 'EDT-ORG-DEMO-501');
+  assert.ok(imported, 'imported edition must be present in exported session state');
+  assert.equal(imported.start, '2027-06-01', 'importer must preserve start date');
+  assert.equal(imported.end, '2027-06-03', 'importer must preserve end date');
+  assert.equal(imported.summary, 'DEMO imported competition summary.', 'importer must preserve summary');
   await page.locator('#importOrganizerHandoff').click();
   await page.waitForFunction(() => /Imported 0 tournament edition\(s\); skipped 1 duplicate/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
   assert.match(await page.locator('#organizerImportMessage').textContent(), /Imported 0 tournament edition\(s\); skipped 1 duplicate/);
@@ -56,6 +66,8 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await assertRejectedImport('missing-feature-link.json', { ...pkg, features: [{ id: 'FTR-DEMO-502', submissionId: 'SUB-DEMO-MISSING', scope: 'DEMO-SCOPE', status: 'requested' }] });
   await assertRejectedImport('edition-collision.json', { ...pkg, submissions: [{ ...pkg.submissions[0], id: 'SUB-DEMO-502', tournamentId: 'TRN-ORG-DEMO-999' }] });
   await assertRejectedImport('oversized.json', Buffer.alloc(1024 * 1024 + 1, 32));
+  await assertRejectedImport('invalid-date-order.json', { ...pkg, submissions: [{ ...pkg.submissions[0], id: 'SUB-DEMO-503', tournamentId: 'TRN-ORG-DEMO-503', editionId: 'EDT-ORG-DEMO-503', start: '2027-06-10', end: '2027-06-09' }] });
+  await assertRejectedImport('invalid-date-format.json', { ...pkg, submissions: [{ ...pkg.submissions[0], id: 'SUB-DEMO-504', tournamentId: 'TRN-ORG-DEMO-504', editionId: 'EDT-ORG-DEMO-504', start: '2027-02-30' }] });
   await page.locator('#organizerHandoffFile').setInputFiles({ name: 'handoff.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(pkg)) });
   await page.locator('[data-section="records"]').click();
   await page.locator('#ledger').getByText('TRN-ORG-DEMO-501').waitFor();

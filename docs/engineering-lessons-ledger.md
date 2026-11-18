@@ -183,3 +183,15 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 ```
 
 **Review cadence:** after incidents and material audits; at each milestone; and before claiming a control is complete.
+
+
+### LESSON-010 — Form-to-handoff field loss and boundary validation gaps
+
+- **Failure mode:** A visible form field is accepted by the UI but omitted from the in-memory record or export contract; the receiving boundary then cannot recover the original value.
+- **Observed evidence:** Organizer Portal baseline `ae354b20121e52f7ce1ee898b5fe89048c1b56a5` exposed start date, end date and summary inputs, while its submit handler persisted none of them. The importer accepted optional date values without ISO-calendar or chronological validation.
+- **Root cause:** The form handler, record shape, export payload, importer mapping and browser tests were reviewed as separate pieces rather than one end-to-end data lineage.
+- **Preventive control:** For each material field, trace input → validation → state record → export → import → destination state. Define optionality and format at both sender and receiver. Keep a positive round-trip test and a negative no-mutation test.
+- **Detective control:** Browser tests assert exact field values after export/import, reject impossible or reversed dates, and assert rejected operations leave counts/state unchanged.
+- **Regression / verification:** Added to `tournament-organizer-portal.browser-smoke.cjs` and `tournament-manager.browser-smoke.cjs`; hosted exact-head verification is pending.
+- **Residual risk:** A client-side synthetic round-trip does not prove API/database consistency, persistence, authorization or event authenticity.
+- **Status:** Mitigated in prototype code; pending hosted verification.

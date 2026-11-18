@@ -497,3 +497,16 @@ The [Engineering Lessons Ledger](engineering-lessons-ledger.md) is the durable r
 - **Prevention:** When a mobile overflow report shows several ancestors and descendants sharing the same oversized right edge, inspect the full intrinsic-sizing chain (grid tracks, flex items, panels, wrappers and form controls), not only the first visible element. Keep the document-level overflow assertion and element diagnostics; do not mask failures with global `overflow:hidden`.
 - **Verification:** Resolved for the prototype regression scope. Hosted run [44297019349](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44297019349) completed successfully against exact correction commit `2e60ff658e5288a978698179cedc52d377100e53`; all 16 workflow steps completed, including the Day Operations browser suite containing the linked player-history 390px viewport check. This verifies the tested synthetic path, not every viewport/device or production readiness.
 - **Boundary:** Internal synthetic adult demo only. No real-player data, production readiness, persistence, authorization or safeguarding capability is implied.
+
+
+### TM-012 — Organizer submission discarded dates and summary; date boundaries were not validated
+
+- **Detected:** 2026-11-18
+- **Severity:** Medium — organizer-entered competition context could be silently lost during handoff, and impossible/reversed date ranges could be accepted.
+- **Finding:** Focused audit baseline `ae354b20121e52f7ce1ee898b5fe89048c1b56a5`. The Organizer Portal form exposed `startDate`, `endDate` and `submissionNote`, but the submission handler persisted none of them. The Tournament Manager importer mapped optional start/end values but did not validate ISO date format or chronological order. The browser smoke test did not assert payload completeness or invalid-date no-mutation behavior.
+- **Impact:** Exported handoffs could omit data the organizer had entered; invalid date ranges could pass into synthetic tournament state.
+- **Correction:** Persist start, end and summary on the submission; reject reversed dates before creating either organizer or submission; validate optional date fields and ordering at the importer boundary; preserve summary in imported event state.
+- **Prevention:** Treat form fields, in-memory records, export contracts, import validation and browser assertions as one end-to-end data path. Add both positive round-trip and negative no-mutation tests for every material field.
+- **Regression:** Expanded Organizer Portal and Tournament Manager browser smoke tests cover date correction, summary/date export, round-trip import, impossible dates and reversed-date rejection. Hosted verification is pending for the exact audit commit.
+- **Residual risk:** The handoff remains synthetic and client-side. Date validation does not establish that an event is real, authorized or scheduled.
+- **Status:** Corrective changes committed; pending exact-head hosted verification.

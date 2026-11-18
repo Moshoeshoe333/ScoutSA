@@ -24,6 +24,8 @@ The test counts above are source declarations and the cited workflow is the reco
 
 **Engineering learning control:** see the [cross-project Engineering Lessons Ledger](../docs/engineering-lessons-ledger.md) for permanent lessons, preventive controls, regression evidence and residual risks.
 
+**Organizer Portal audit:** see [Tournament Organizer Portal Audit — 18 November 2026](verification/TOURNAMENT-ORGANIZER-PORTAL-AUDIT-2026-11-18.md) for scoped findings, corrections and remaining limits.
+
 Open `index.html` in a modern browser. No build step or package installation is required. The hub provides a separate three-screen Player Experience Preview for coach/guardian conversations, plus 11 specialist workspaces. The player preview is not counted as a specialist workspace:
 
 1. Player Passport
