@@ -43,6 +43,7 @@ assert.equal(await historyPage.locator("#statsTable tbody tr").count(),1);
 assert.ok((await historyPage.locator("#statsTable").innerText()).includes("Disputed"));
 assert.ok((await historyPage.locator("body").innerText()).includes("No rankings"));
 await historyPage.locator("#handoffFile").setInputFiles({name:"fixture-handoff.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(packageData))});
+await historyPage.waitForFunction(()=>/Validated MDO-HANDOFF-FIX-DEMO-001-V1/.test(document.querySelector("#handoffStatus")?.textContent||""),null,{timeout:3000});
 assert.match(await historyPage.locator("#handoffStatus").innerText(),/Validated MDO-HANDOFF-FIX-DEMO-001-V1/);
 assert.equal(await historyPage.locator("#playerSelect option").count(),3);
 await historyPage.locator("#playerSelect").selectOption("PAR-DEMO-001");
