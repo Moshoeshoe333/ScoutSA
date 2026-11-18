@@ -204,9 +204,9 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Root cause:** Resource lifecycle was coupled to the happy path rather than guaranteed independently of test outcome.
 - **Preventive control:** Put browser/server/process cleanup in `finally` blocks; use equivalent cleanup for every browser smoke script that owns external resources.
 - **Detective control:** Review smoke-test teardown paths and ensure a deliberate assertion failure still terminates the test process.
-- **Regression / verification:** Added `try/finally` cleanup to `tournament-organizer-portal.browser-smoke.cjs`; exact-head hosted verification pending.
-- **Residual risk:** This does not identify or fix the assertion (if any) that caused the observed stall; a clean rerun must expose the true outcome.
-- **Status:** Mitigated in the Organizer Portal test harness; pending hosted verification.
+- **Regression / verification:** The cleanup change is included in exact prototype head `17f69f4da691bb68a3818f5071f23b49f8963657`. Hosted run [44299838840](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299838840) passed all 121 headless tests and completed all ten browser smoke scripts, including Organizer Portal. The earlier exact correction checkpoint is [run #679](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829); run #680 is the later full-workflow rerun.
+- **Residual risk:** The cleanup path has been exercised on successful teardown only. A deliberately injected assertion failure has not yet demonstrated that Chromium cleanup completes while preserving the original assertion error. The original stall's precise trigger remains unknown.
+- **Status:** Mitigated and hosted-success-path verified for the Organizer Portal smoke test; failure-path fault injection remains OPEN.
 
 
 ### LESSON-012 — Responsive checks must traverse every navigable section
