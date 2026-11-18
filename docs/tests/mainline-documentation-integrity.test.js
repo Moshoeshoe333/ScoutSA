@@ -13,6 +13,33 @@ const flows = read("docs/06-user-flows.md");
 const constitution = read("docs/00-constitution.md");
 const workflow = read(".github/workflows/documentation-integrity.yml");
 
+function assertActionInventoryMatches(source, registeredActions, workflowPath) {
+  const actual = [...source.matchAll(/^\\s*uses:\\s*(.*?)\\s*$/gm)].map(match => {
+    const value = match[1];
+    const parsed = value.match(/^([^@\\s]+)@([0-9a-f]{40})\\s+#\\s*(v[^\\s#]+)$/);
+    assert.ok(
+      parsed,
+      `action reference must use a full commit SHA and version comment in ${workflowPath}: ${value}`
+    );
+    return `${parsed[1]}@${parsed[2]} # ${parsed[3]}`;
+  });
+
+  const declared = registeredActions.map(action => {
+    assert.match(action.commit, /^[0-9a-f]{40}$/, `action commit must be a full lowercase SHA: ${action.uses}`);
+    assert.match(action.uses, /^[^@\\s]+$/, `invalid action identifier: ${action.uses}`);
+    assert.match(action.version, /^v[^\\s#]+$/, `invalid action version comment: ${action.version}`);
+    return `${action.uses}@${action.commit} # ${action.version}`;
+  });
+
+  assert.equal(new Set(actual).size, actual.length, `workflow contains duplicate action references: ${workflowPath}`);
+  assert.equal(new Set(declared).size, declared.length, `CI register contains duplicate action references: ${workflowPath}`);
+  assert.deepEqual(
+    declared.sort(),
+    actual.sort(),
+    `CI register must exactly match every action used by ${workflowPath}`
+  );
+}
+
 test("root README and gate status carry the current status date", () => {
   assert.ok(readme.includes("Current Repository Status — 13 November 2026"), "root README status date is stale");
   assert.ok(gateStatus.includes("current note 2026-11-13"), "gate status current note is stale");
@@ -96,6 +123,30 @@ test("CI scope register exactly inventories mainline workflow files", () => {
   assert.equal(new Set(declared).size, declared.length, "CI scope register contains duplicate workflow paths");
 });
 
+test("action inventory rejects unregistered, duplicate, and malformed workflow actions", () => {
+  const checkout = "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1";
+  const setupNode = "actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0";
+  const fixture = `steps:\\n  - uses: ${checkout}\\n  - uses: ${setupNode}\\n`;
+  const registered = [
+    { uses: "actions/checkout", commit: "3d3c42e5aac5ba805825da76410c181273ba90b1", version: "v7.0.1" },
+    { uses: "actions/setup-node", commit: "949feb2413d6458794dcd2491c4babbbce0c15c1", version: "v7.1.0" }
+  ];
+
+  assert.doesNotThrow(() => assertActionInventoryMatches(fixture, registered, "fixture.yml"));
+  assert.throws(
+    () => assertActionInventoryMatches(fixture, registered.slice(0, 1), "fixture.yml"),
+    /exactly match every action/
+  );
+  assert.throws(
+    () => assertActionInventoryMatches(`steps:\\n  - uses: ${checkout}\\n  - uses: ${checkout}\\n`, registered.slice(0, 1), "fixture.yml"),
+    /duplicate action references/
+  );
+  assert.throws(
+    () => assertActionInventoryMatches("steps:\\n  - uses: actions/checkout@v4 # v4\\n", [], "fixture.yml"),
+    /full commit SHA/
+  );
+});
+
 test("CI scope register matches executable workflow triggers and job configuration", () => {
   for (const item of ciRegister.workflows) {
     const source = read(item.path);
@@ -103,11 +154,9 @@ test("CI scope register matches executable workflow triggers and job configurati
     for (const branch of item.triggers.push_branches) assert.ok(source.includes(`      - ${branch}`), `push branch missing: ${branch}`);
     for (const branch of item.triggers.pull_request_branches) assert.ok(source.includes(`      - ${branch}`), `pull request branch missing: ${branch}`);
     for (const filter of item.triggers.path_filters) assert.ok(source.includes(`      - "${filter}"`), `path filter missing: ${filter}`);
+    const registeredActions = item.jobs.flatMap(job => job.actions || []);
+    assertActionInventoryMatches(source, registeredActions, item.path);
     for (const job of item.jobs) {
-      for (const action of job.actions || []) {
-        assert.ok(source.includes(`uses: ${action.uses}@${action.commit} # ${action.version}`), `action pin drift: ${action.uses}`);
-        assert.equal(action.commit.length, 40, `action commit must be a full SHA: ${action.uses}`);
-      }
       assert.ok(source.includes(`  ${job.id}:`), `job missing: ${job.id}`);
       assert.ok(source.includes(`runs-on: ${job.runner}`), `runner drift: ${job.runner}`);
       assert.ok(source.includes(`timeout-minutes: ${job.timeout_minutes}`), "job timeout drift");
