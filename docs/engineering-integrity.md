@@ -610,3 +610,9 @@ Hosted prototype workflow [run #694](https://github.com/Moshoeshoe333/ScoutSA/ac
 Run #694 verifies OPA-009–OPA-011 and TM-015 for the described synthetic regression scope. The test-only snapshot seam is available only under the explicit ?testMode=1 query. The full-state no-mutation assertion covers exported browser session state, not database transactions.
 
 **Remaining domain holds:** Semantic duplicate-competition matching across different IDs, organizer identity conflict resolution, authoritative evidence expiry/clock rules, permission revocation/supersession history and ratified status enums remain unresolved. The prototype does not invent these rules. Mainline and production authorization remain unchanged.
+
+## 11. Final documentation reconciliation verification — 18 November 2026
+
+After the run #694 audit/lesson reconciliation was written back, the final documentation snapshot was verified on exact prototype head `bcdd4ff4745910e6ff4eea4437edf39b9e075672` by hosted workflow [run #698](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44326398873). Job `policy-and-documentation-tests` (`134878729488`) ran under Node.js 22.23.5; the log reports **121/121 headless tests passed, 0 failed**, and all ten configured Playwright/Chromium browser smoke steps completed successfully. This is the latest full-workflow checkpoint and covers the reconciled README, engineering-integrity ledger, lessons ledger, audit report, importer and browser tests on one exact head.
+
+Run #698 does not close the deliberate TM-013 assertion-failure injection or any unresolved domain, legal, safeguarding, identity, expiry, revocation, production or external-validation gate.
