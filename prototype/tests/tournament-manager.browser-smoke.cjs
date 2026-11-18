@@ -41,6 +41,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   assert.match(await page.locator('#organizerImportMessage').textContent(), /Imported 1 tournament edition/);
   assert.equal(await page.locator('#countT').textContent(), '2');
   await page.locator('#importOrganizerHandoff').click();
+  await page.waitForFunction(() => /Imported 0 tournament edition\(s\); skipped 1 duplicate/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
   assert.match(await page.locator('#organizerImportMessage').textContent(), /Imported 0 tournament edition\(s\); skipped 1 duplicate/);
   await page.locator('#ledger').getByText('TRN-ORG-DEMO-501').waitFor();
   await page.locator('[data-section="eligibility"]').click();
