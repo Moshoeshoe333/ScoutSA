@@ -255,5 +255,6 @@ This control does not authorize implementation, database migration, RLS, API, au
 - **Correction in this branch:** Add exact child-key inventory checks for top-level workflow events and jobs, with negative fixtures for an extra `schedule` event and an extra job. Keep the parser deliberately limited to the current line-oriented YAML structure; unsupported structural changes require explicit parser/test review.
 - **Root cause:** Inventory validation checked that declared entries were present, but did not enforce equality in both directions at every structural boundary.
 - **Preventive measure:** Compare actual and declared sets exactly; include missing-entry and extra-entry fixtures for workflow files, trigger events, job IDs, and action references.
-- **Verification:** Pending local and hosted test execution on this branch.
+- **First hosted attempt:** PR run [44317540336](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44317540336) failed 12/16. The new helper's generated regex contained double-escaped backslashes, so it failed to recognize valid indentation; the failure was in the guard implementation, not the workflow configuration. The failed run is preserved.
+- **Correction:** Reduce the regex escaping to the intended JavaScript regular expressions. Re-run hosted CI and read back the exact head before closing.
 - **Status:** Open — do not close until the exact head passes hosted CI and changed files are read back.
