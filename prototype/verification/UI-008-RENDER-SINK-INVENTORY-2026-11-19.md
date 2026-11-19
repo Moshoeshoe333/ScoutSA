@@ -3,7 +3,7 @@
 **Date:** 19 November 2026  
 **Branch:** `prototype/internal-demo`  
 **Scope:** HTML renderers and navigation/export sinks in the standalone prototype HTML pages.  
-**Status:** Partial inventory and targeted mitigations; UI-008 remains OPEN.
+**Status:** Partial inventory and targeted mitigations; UI-008 remains OPEN. The latest code-and-test checkpoint passed hosted CI as recorded below.
 
 ## Important scope correction
 
@@ -68,11 +68,25 @@ The preview reads the current page URL, and its WhatsApp action uses a fixed `ht
 2. Unknown visibility values now render an explicit blocked state instead of indexing an absent message and throwing.
 3. Added a browser regression that injects a hostile unknown visibility enum, verifies no element or handler is created, and confirms the simulated guardian action remains explicitly “not real consent”.
 4. Added HTTPS-only URL validation to Vaal ecosystem source links, with a browser regression for `javascript:`, plain HTTP and accepted HTTPS behavior.
-5. Earlier targeted regressions remain in place for discovery request rendering, evidence records, guardian consent, pathways and the hub's player metadata.
+5. Hardened the coach/academy workspace against missing organization/summary objects, malformed membership/opportunity/action collections and hostile action fields; absent evidence renders explicit empty states.
+6. Earlier targeted regressions remain in place for discovery request rendering, evidence records, guardian consent, pathways and the hub's player metadata.
+
+## Latest hosted verification checkpoint
+
+Hosted workflow [#44531132752](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44531132752) passed against exact code-and-test commit `9fa6f2002fb07987f76273040f3a10877f2fbcc1` on `prototype/internal-demo`.
+
+- 121/121 headless tests passed.
+- 8/8 general browser smoke groups passed.
+- 8/8 hub/navigation groups passed.
+- 19/19 specialist workspace interaction groups passed.
+- TM-013 deliberate assertion-failure cleanup test passed.
+- New player-preview unknown-enum, Vaal HTTPS-only source-link and coach malformed-fixture regressions passed.
+
+The earlier failed runs in this pass exposed test-harness defects (a hidden control and an assertion that counted unrelated rows), which were corrected. They were not counted as successful verification. This passing run is the exact evidence for the code and tests listed above.
 
 ## Remaining work — UI-008 stays OPEN
 
-- Run the exact-head hosted workflow for the new preview and URL regressions before calling these mitigations verified.
+- Keep the hosted checkpoint above as the verification record for the current code-and-test state; rerun after any subsequent runtime or test change.
 - Review every remaining `.innerHTML` assignment at the expression level, including conditional class fragments, fallback markup, and all dynamic attributes. A page-level statement that “the helper escapes values” is not sufficient evidence for every interpolation.
 - Expand hostile-fixture tests to every material dynamic sink, including malformed arrays/objects and unexpected enum values.
 - Review any future dynamic URL, download filename, import/export and cross-page handoff additions.
