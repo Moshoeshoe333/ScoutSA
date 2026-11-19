@@ -364,6 +364,55 @@ async function main() {
       "session-only decision must not survive page reload");
     passed.push("Decision filtering, form validation, session-only entry and reload reset");
 
+    // UI-008: malformed decision collections/rows cannot prevent the read-only list from rendering.
+    const hostileDecisionText = '<img id="ui008-decision-injection" src=x onerror="window.__ui008Decision=true">';
+    await page.addInitScript(hostile => {
+      let fixture;
+      Object.defineProperty(window, "SCOUTSA_DEMO_DECISIONS", {
+        configurable: true,
+        get: () => fixture,
+        set: value => {
+          value.decisions = [null, [], "not-a-record", {
+            id: "DEC-DEMO-HOSTILE", evidenceId: hostile, opportunity: hostile,
+            claimScope: hostile, status: { unexpected: true }, reviewer: hostile,
+            reason: hostile, recordedAt: ["unexpected"]
+          }];
+          fixture = value;
+        }
+      });
+    }, hostileDecisionText);
+    await page.goto(origin + "/opportunity-decisions.html?malformed-rows=1", { waitUntil: "load" });
+    assert.equal(await page.locator("#items article").count(), 1,
+      "null, array and scalar decisions must be excluded while a valid record remains visible");
+    assert.equal(await page.locator("#items .badge").textContent(), "Not supplied",
+      "an object-valued decision status must not be interpreted as an approved state");
+    assert.ok((await page.locator("#items").innerText()).includes(hostileDecisionText),
+      "hostile decision text must remain visible literally");
+    assert.equal(await page.locator("#items img").count(), 0,
+      "hostile decision fields must not create injected elements");
+    assert.equal(await page.evaluate(() => window.__ui008Decision || false), false,
+      "hostile decision fields must not execute event handlers");
+
+    await page.addInitScript(() => {
+      let fixture;
+      Object.defineProperty(window, "SCOUTSA_DEMO_DECISIONS", {
+        configurable: true,
+        get: () => fixture,
+        set: value => {
+          value.decisions = null;
+          fixture = value;
+        }
+      });
+    });
+    await page.goto(origin + "/opportunity-decisions.html?malformed-collection=1", { waitUntil: "load" });
+    assert.equal(await page.locator("#items article").count(), 0,
+      "a missing decision collection must not invent decision records");
+    assert.equal(await page.locator("#total").textContent(), "0",
+      "a missing decision collection must produce a zero-record statistic");
+    assert.match(await page.locator("#items .empty").textContent(), /No decision entries match/,
+      "a missing decision collection must render the explicit empty state");
+    passed.push("Claim Decision malformed collections, malformed rows and hostile field values fail closed");
+
     // 6. Safeguarded Invitations: workflow-state filter and scenario search.
     await page.goto(origin + "/safeguarded-invitations.html", { waitUntil: "load" });
     await assertFilterAndSearch(page, {

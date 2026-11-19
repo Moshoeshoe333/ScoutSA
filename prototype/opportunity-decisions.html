@@ -21,10 +21,31 @@
 <section class="panel side" style="margin-top:14px"><h2>Decision guardrails</h2><div class="rule"><strong>Claim-specific</strong><span>Decide only the named claim, never a broader identity or trust question by implication.</span></div><div class="rule"><strong>Reason required</strong><span>A status without a traceable rationale is not a defensible review.</span></div><div class="rule"><strong>Preserve disagreement</strong><span>Conflicts and dissent must remain visible; do not overwrite earlier assertions.</span></div><div class="rule"><strong>Separate authority</strong><span>A second reviewer is not a substitute for legal, safeguarding or organizational authority.</span></div><div class="rule"><strong>No automation</strong><span>The interface does not infer truth, rank people or recommend a decision.</span></div></section></aside></div>
 <footer class="footer"><strong>ScoutSA · Discover. Verify. Connect.</strong><span>Session-only worksheet · Synthetic records · Not production-ready</span></footer></div>
 <script src="./data/opportunity-decisions.demo.js"></script><script>
-const initial=window.SCOUTSA_DEMO_DECISIONS.decisions;let sessionDecisions=initial.map(x=>({...x}));const $=s=>document.querySelector(s);const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-function badgeClass(s){return ["Blocked","Rejected"].includes(s)?"red":["Needs Investigation","Second Review"].includes(s)?"amber":""}
-function renderStats(){const a=sessionDecisions;$("#total").textContent=a.length;$("#investigate").textContent=a.filter(x=>x.status==="Needs Investigation").length;$("#second").textContent=a.filter(x=>x.status==="Second Review").length;$("#blocked").textContent=a.filter(x=>x.status==="Blocked").length}
-function render(){const q=$("#search").value.trim().toLowerCase(),f=$("#filter").value;const a=sessionDecisions.filter(x=>(f==="all"||x.status===f)&&(!q||(x.id+" "+x.evidenceId+" "+x.opportunity+" "+x.claimScope+" "+x.reviewer+" "+x.reason).toLowerCase().includes(q)));$("#count").textContent=a.length+" entries";$("#items").innerHTML=a.length?a.map(x=>'<article class="item"><div class="itemtop"><div><h3>'+esc(x.claimScope)+'</h3><div class="sub">'+esc(x.opportunity)+' · '+esc(x.evidenceId)+' · '+esc(x.id)+'</div></div><span class="badge '+badgeClass(x.status)+'">'+esc(x.status)+'</span></div><div class="grid"><div class="datum"><small>Reviewer</small><strong>'+esc(x.reviewer)+'</strong></div><div class="datum"><small>Recorded</small><strong>'+esc(x.recordedAt)+'</strong></div></div><p><b>Rationale:</b> '+esc(x.reason)+'</p></article>').join(""):'<div class="empty">No decision entries match this search and filter.</div>';renderStats()}
+const source=window.SCOUTSA_DEMO_DECISIONS;
+const isRecord=value=>value!==null&&typeof value==="object"&&!Array.isArray(value);
+const initial=source&&Array.isArray(source.decisions)?source.decisions.filter(isRecord):[];
+let sessionDecisions=initial.map(x=>({...x}));
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const display=(value,fallback="Not supplied")=>{
+ if(typeof value==="string")return value.trim()?value:fallback;
+ if(typeof value==="number"&&Number.isFinite(value))return String(value);
+ if(typeof value==="boolean")return String(value);
+ return fallback;
+};
+function badgeClass(s){const status=display(s,"");return ["Blocked","Rejected"].includes(status)?"red":["Needs Investigation","Second Review"].includes(status)?"amber":""}
+function renderStats(){const a=sessionDecisions;$("#total").textContent=a.length;$("#investigate").textContent=a.filter(x=>display(x.status,"")==="Needs Investigation").length;$("#second").textContent=a.filter(x=>display(x.status,"")==="Second Review").length;$("#blocked").textContent=a.filter(x=>display(x.status,"")==="Blocked").length}
+function render(){
+ const q=$("#search").value.trim().toLowerCase(),f=$("#filter").value;
+ const a=sessionDecisions.filter(x=>{
+  const status=display(x.status,"");
+  const searchable=[x.id,x.evidenceId,x.opportunity,x.claimScope,x.reviewer,x.reason].map(value=>display(value,"")).join(" ").toLowerCase();
+  return(f==="all"||status===f)&&(!q||searchable.includes(q));
+ });
+ $("#count").textContent=a.length+" entries";
+ $("#items").innerHTML=a.length?a.map(x=>'<article class="item"><div class="itemtop"><div><h3>'+esc(display(x.claimScope))+'</h3><div class="sub">'+esc(display(x.opportunity))+' · '+esc(display(x.evidenceId))+' · '+esc(display(x.id))+'</div></div><span class="badge '+badgeClass(x.status)+'">'+esc(display(x.status))+'</span></div><div class="grid"><div class="datum"><small>Reviewer</small><strong>'+esc(display(x.reviewer))+'</strong></div><div class="datum"><small>Recorded</small><strong>'+esc(display(x.recordedAt))+'</strong></div></div><p><b>Rationale:</b> '+esc(display(x.reason))+'</p></article>').join(""):'<div class="empty">No decision entries match this search and filter.</div>';
+ renderStats();
+}
 $("#search").addEventListener("input",render);$("#filter").addEventListener("change",render);
 $("#decisionForm").addEventListener("submit",e=>{e.preventDefault();const record={id:"DEC-SESSION-"+String(sessionDecisions.length+1).padStart(3,"0"),evidenceId:$("#evidenceId").value.trim(),opportunity:"Session entry — opportunity not independently verified",claimScope:$("#claimScope").value.trim(),status:$("#status").value,reviewer:$("#reviewer").value.trim(),reason:$("#reason").value.trim(),recordedAt:"This page session only"};if(!record.evidenceId||!record.claimScope||!record.reviewer||record.reason.length<12)return;sessionDecisions.unshift(record);$("#decisionForm").reset();$("#evidenceId").value=record.evidenceId;$("#filter").value="all";$("#search").value="";render()});
 render();
