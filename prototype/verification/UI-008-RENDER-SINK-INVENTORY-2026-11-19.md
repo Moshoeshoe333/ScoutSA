@@ -74,7 +74,7 @@ The preview reads the current page URL, and its WhatsApp action uses a fixed `ht
 
 ## Latest hosted verification checkpoint
 
-Hosted workflow [#44532148414](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44532148414) passed against exact code-and-test commit `e4e3a8765e81a2ff5c9119c4e58f712a03234cec` on `prototype/internal-demo`.
+Hosted workflow [#44535391937](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44535391937) passed against exact code-and-test commit `42d207792df624ae927b2a138c73eddeb281f431` on `prototype/internal-demo`. It includes the tournament renderer hostile-fixture regressions described below. The earlier workflow [#44532148414](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44532148414) remains the prior baseline.
 
 - 121/121 headless tests passed.
 - 8/8 general browser smoke groups passed.
@@ -82,8 +82,16 @@ Hosted workflow [#44532148414](https://github.com/Moshoeshoe333/ScoutSA/actions/
 - 20/20 specialist workspace interaction groups passed.
 - TM-013 deliberate assertion-failure cleanup test passed.
 - Player-preview unknown-enum, Vaal HTTPS-only source-link, coach malformed-fixture and matching malformed-fixture regressions passed.
+- New tournament renderer checks passed for hostile division labels, report summaries, organizer labels and reconciliation event values; each remained inert text with no injected element created.
+- The specialist workspace interaction browser suite passed 21/21 groups, including the new tournament group.
 
 The earlier failed runs in this pass exposed test-harness defects (a hidden control and an assertion that counted unrelated rows), which were corrected. They were not counted as successful verification. This passing run is the exact evidence for the code and tests listed above.
+
+## Tournament workspace review — 19 November 2026
+
+A targeted expression-level pass reviewed the 8 Tournament Manager, 10 Tournament Day Operations, 5 Organizer Portal and 3 Stat Reconciliation assignments. Dynamic table-cell values were found to be escaped before insertion into trusted table markup; the manager and portal option lists use DOM text nodes or escaped option strings, and the organizer status class is selected from fixed internal categories. The four export paths create local JSON Blob URLs rather than accepting external URLs. Hostile fixture regressions now exercise one representative dynamic value path in each page. No confirmed exploitable injection was identified in this bounded pass. This is not exhaustive coverage of every interpolation or malformed collection shape in these pages.
+
+The first run of the new test failed because the test did not select a tournament edition before submitting its division form. The fixture setup was corrected, then the exact follow-up commit passed hosted CI. The failed run is not counted as verification.
 
 ## Remaining work — UI-008 stays OPEN
 
