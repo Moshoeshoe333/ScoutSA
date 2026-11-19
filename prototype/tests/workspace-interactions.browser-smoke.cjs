@@ -181,7 +181,7 @@ async function main() {
     });
     assert.equal(await page.locator("#pairs .pair").count(), 1,
       "a partial matching record should remain inspectable");
-    assert.match(await page.locator("#pairs").innerText(), /Not supplied/,
+    assert.match(await page.locator("#pairs").innerText(), /No finding evidence supplied/,
       "missing finding data must be explicit");
     assert.equal(await page.locator("#ui008-match-injection").count(), 0,
       "hostile matching labels must not create markup");
