@@ -72,7 +72,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   const reorderedPackage = { ...pkg, organizers: [reorderedOrganizer] };
   await page.locator('#organizerHandoffFile').setInputFiles({ name: 'property-order-replay.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(reorderedPackage)) });
   await page.locator('#importOrganizerHandoff').click();
-  await page.waitForFunction(() => /Import committed/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+  await page.waitForFunction(() => /organizers: \\+0 \/ skipped 1/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
   assert.match(await page.locator('#organizerImportMessage').textContent(), /organizers: \+0 \/ skipped 1/);
 
   // OPA-013: a duplicate edition may still add a new side-collection claim; report it.
