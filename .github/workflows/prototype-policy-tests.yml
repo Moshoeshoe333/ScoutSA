@@ -26,7 +26,7 @@ permissions:
 jobs:
   policy-and-documentation-tests:
     runs-on: ubuntu-24.04
-    timeout-minutes: 12
+    timeout-minutes: 20
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -39,24 +39,33 @@ jobs:
       - name: Install Playwright
         run: npm install --no-save --no-package-lock playwright@1.56.1
       - name: Install Chromium for browser smoke test
+        timeout-minutes: 7
         run: npx playwright install --with-deps chromium
-      - name: Run Discovery & Request Review browser smoke test
-        run: node prototype/tests/discovery-request.browser-smoke.cjs
-      - name: Run unified workspace hub browser smoke test
-        run: node prototype/tests/workspace-hub.browser-smoke.cjs
-      - name: Run player journey preview browser smoke test
-        run: node prototype/tests/player-preview.browser-smoke.cjs
-      - name: Run Vaal ecosystem coverage browser smoke test
-        run: node prototype/tests/vaal-ecosystem-coverage.browser-smoke.cjs
-      - name: Run tournament relationship hub browser smoke test
-        run: node prototype/tests/tournament-intelligence.browser-smoke.cjs
-      - name: Run tournament manager browser smoke test
-        run: node prototype/tests/tournament-manager.browser-smoke.cjs
-      - name: Run tournament day operations browser smoke test
-        run: node prototype/tests/tournament-day-operations.browser-smoke.cjs
-      - name: Run tournament statistic reconciliation browser smoke test
-        run: node prototype/tests/tournament-stat-reconciliation.browser-smoke.cjs
-      - name: Run tournament organizer portal browser smoke test
-        run: node prototype/tests/tournament-organizer-portal.browser-smoke.cjs
-      - name: Run specialist workspace interaction browser smoke test
-        run: node prototype/tests/workspace-interactions.browser-smoke.cjs
+      - name: Run all browser smoke tests and report every failure
+        timeout-minutes: 8
+        shell: bash
+        run: |
+          set +e
+          failed=0
+          for test in \
+            prototype/tests/discovery-request.browser-smoke.cjs \
+            prototype/tests/workspace-hub.browser-smoke.cjs \
+            prototype/tests/player-preview.browser-smoke.cjs \
+            prototype/tests/vaal-ecosystem-coverage.browser-smoke.cjs \
+            prototype/tests/tournament-intelligence.browser-smoke.cjs \
+            prototype/tests/tournament-manager.browser-smoke.cjs \
+            prototype/tests/tournament-day-operations.browser-smoke.cjs \
+            prototype/tests/tournament-stat-reconciliation.browser-smoke.cjs \
+            prototype/tests/tournament-organizer-portal.browser-smoke.cjs \
+            prototype/tests/workspace-interactions.browser-smoke.cjs
+          do
+            echo "::group::$test"
+            timeout 90s node "$test"
+            result=$?
+            echo "::endgroup::"
+            if [ "$result" -ne 0 ]; then
+              echo "::error file=$test::Browser smoke test failed or timed out (exit $result)"
+              failed=1
+            fi
+          done
+          exit "$failed"
