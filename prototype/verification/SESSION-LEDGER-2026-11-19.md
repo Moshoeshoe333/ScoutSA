@@ -146,3 +146,86 @@ Make the exact baseline available in a clean detached worktree, demonstrate the 
 - Existing hosted prototype regression checkpoint: [workflow #44544589481](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44544589481), tied to code-and-test commit `7a0adf7fa70d7c4d7f02e4259199350d9742604a`. This is not execution of the AUD verification sequence and is not evidence for the newer branch tip.
 
 **Governing rule:** Strength of claim must never exceed strength of evidence.
+
+
+## 8. Later progress checkpoint — hosted prototype regression evidence
+
+**Checkpoint captured:** 19 November 2026  
+**Workflow:** [GitHub Actions run #44544589481](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44544589481)  
+**Workflow file:** `.github/workflows/prototype-policy-tests.yml`  
+**Exact code-and-test commit:** [`7a0adf7fa70d7c4d7f02e4259199350d9742604a`](https://github.com/Moshoeshoe333/ScoutSA/commit/7a0adf7fa70d7c4d7f02e4259199350d9742604a)  
+**Run result:** `completed` / `success`  
+**Job:** `policy-and-documentation-tests` — `completed` / `success`
+
+The workflow-run record and job logs were re-opened for this ledger update. The run's `head_sha` is exactly `7a0adf7fa70d7c4d7f02e4259199350d9742604a`; the runner checked out that SHA, rather than an unpinned later branch tip.
+
+### 8.1 Observed results
+
+| Execution | Observed result |
+|---|---|
+| `node --test prototype/tests/*.test.js` | 121 tests; 121 passed; 0 failed; 0 skipped |
+| Browser smoke script invocations | 11 scripts invoked by the workflow |
+| Discovery request smoke | 8/8 groups passed |
+| Workspace hub smoke | 8/8 groups passed |
+| Player preview smoke | PASS |
+| Vaal ecosystem coverage smoke | PASS |
+| Tournament intelligence smoke | PASS |
+| Tournament Manager smoke | 1/1 test passed |
+| Tournament Day Operations smoke | PASS |
+| Tournament stat reconciliation smoke | PASS |
+| Tournament organizer portal smoke | 1/1 test passed |
+| Tournament organizer cleanup smoke | PASS |
+| Workspace interactions smoke | 23/23 groups passed |
+
+The workspace-interactions output includes targeted synthetic checks for hostile render strings, unsafe URL schemes, malformed Passport fixtures, guardian/pathway fixture failures, Opportunity stage attribute injection, and related workspace sinks. These are bounded regression checks for the exact tested prototype paths.
+
+### 8.2 What this evidence establishes
+
+- The configured policy/documentation workflow completed successfully at exact commit `7a0adf7fa70d7c4d7f02e4259199350d9742604a`.
+- The 121 declared Node tests passed in that run.
+- The 11 listed browser smoke scripts were invoked; their reported assertions passed, including 23/23 workspace-interaction groups.
+- This is valid hosted regression evidence for that exact code-and-test commit and the scenarios exercised by that workflow.
+
+### 8.3 What this evidence does not establish
+
+- It is **not** execution of the separately authorized AUD-010 → AUD-006 → AUD-009 → AUD-008 → AUD-007 adversarial verification protocol.
+- It does not verify the required baseline `a7122b1767676a4af064c7b774f60a8affc05656`.
+- It does not establish that the current branch tip was tested. The workflow record pins its tested SHA to `7a0adf7fa70d7c4d7f02e4259199350d9742604a`.
+- It does not prove production readiness, real-world safeguarding, POPIA compliance, legal authority, source authenticity, stakeholder validation or deployment safety.
+- Passing regression tests do not close the known importer, projection, lifecycle, semantic-identity or claim-revision questions.
+
+### 8.4 Branch and ledger state at this checkpoint
+
+A fresh comparison of `prototype/internal-demo` against the required audit baseline returned:
+
+- Base: `a7122b1767676a4af064c7b774f60a8affc05656`
+- Status: `ahead`
+- Ahead by: `6`
+- Behind by: `0`
+
+The six-file delta comprises:
+- `docs/engineering-lessons-ledger.md`
+- `prototype/README.md`
+- `prototype/player-passport.html`
+- `prototype/tests/workspace-interactions.browser-smoke.cjs`
+- `prototype/verification/SESSION-LEDGER-2026-11-19.md`
+- `prototype/verification/UI-008-RENDER-SINK-INVENTORY-2026-11-19.md`
+
+The later documentation commits record the preflight stop and its process mitigation; they do not change the immutable audit baseline. The most recent documentation commit verified before this ledger append was `4ac16e7b1fa7224ba09abb5c9cbe50c3aac2766f`.
+
+### 8.5 End-of-session disposition
+
+| Workstream | Status at pause |
+|---|---|
+| Hosted prototype regression checkpoint at `7a0adf7` | PASS for the exact workflow scope |
+| Baseline-pinned adversarial preflight | STOP recorded |
+| Detached-worktree recovery procedure | Documented; not yet executed |
+| AUD-010 | OPEN / runtime adversarial verification pending |
+| AUD-006 | OPEN / runtime adversarial verification pending |
+| AUD-009 | OPEN / runtime adversarial verification pending |
+| AUD-008 | OPEN / runtime adversarial verification pending |
+| AUD-007 | OPEN / runtime adversarial verification pending |
+| Mainline gate / ratification | Unchanged; no transition authorized |
+
+**Next session:** Resume by obtaining a clean detached worktree at the exact required baseline, proving SHA and clean status, then continue the previously authorized adversarial test order. Keep the successful hosted regression checkpoint as a separate evidence track.
+
