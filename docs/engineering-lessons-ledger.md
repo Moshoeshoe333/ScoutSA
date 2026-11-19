@@ -459,7 +459,7 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Residual risk:** A batch timeout may still terminate remaining tests; inspect logs and per-test outcomes.
 
 
-### LESSON-024 — Pin adversarial verification to an immutable commit, not a moving branch
+### LESSON-026 — Pin adversarial verification to an immutable commit, not a moving branch
 
 - **Failure mode:** A verification request names both a branch and a required baseline, but the branch advances before execution. An executor may test the wrong revision or confuse a remote branch reference with a local checkout.
 - **Observed evidence:** On 19 November 2026, `prototype/internal-demo` was two commits ahead of required baseline `a7122b1767676a4af064c7b774f60a8affc05656`, at `4ecafa1d6e991832de8a59f0eedc0ff0af3a7d99`. The intervening comparison included changes to `prototype/player-passport.html` and `prototype/tests/workspace-interactions.browser-smoke.cjs`, as well as documentation. The available execution environment had no ScoutSA Git checkout. The controlled audit correctly stopped; zero AUD runtime tests ran.
@@ -469,3 +469,20 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Regression / verification:** The 19 November preflight stop is recorded in `prototype/verification/SESSION-LEDGER-2026-11-19.md`. The detached-worktree recovery procedure is documented there. Runtime verification remains pending; this lesson does not claim that the procedure has yet been executed successfully.
 - **Residual risk:** A clean detached checkout proves revision identity and initial cleanliness, not test completeness, dependency integrity, runtime correctness or final repository integrity. Those require their own evidence.
 - **Status:** OPEN — procedural control documented; baseline runtime verification pending.
+
+
+### LESSON-027 — Normalize malformed fixture data before read-only rendering
+- **Status:** Derived
+- **Date discovered:** 2026-11-19
+- **Source project:** ScoutSA
+- **Source artifact:** `prototype/opportunity-decisions.html`; UI-008 rendering assurance
+- **Commit / CI run / issue:** Code/test commit `0ac9dc848554bf8fa7d397e684885892babec5b0`; CI verification pending
+- **Severity and rationale:** Moderate for prototype resilience; malformed fixture shape can stop an entire read-only workspace from rendering and conceal the declared empty/hold state.
+- **Applicability:** General; any UI projection that consumes local, imported, cached or otherwise untrusted structured data.
+- **Failure mode:** A missing collection or malformed row causes a renderer, filter, statistic or search projection to throw before the user can inspect an explicit unavailable state.
+- **Observed evidence:** Source inspection found the Claim Decision page directly calling `initial.map` on the fixture collection and dereferencing row properties in filtering/rendering without first checking collection and record shape. The new browser fixtures target null, array and scalar rows, object-valued fields and a missing collection.
+- **Root cause:** Rendering code assumed fixture contract validity at the point of use rather than normalizing the collection and field types at the boundary.
+- **Preventive control:** Normalize collections to arrays of plain records before projection; render only supported scalar field values; preserve explicit empty/unavailable states; keep status-to-class mapping allowlisted.
+- **Detective control:** Browser tests should inject malformed collection shapes and nested row values, assert no uncaught errors, compare visible counts with rendered rows, ensure hostile strings remain literal and confirm no positive status is inferred from malformed values.
+- **Regression / verification:** Hosted browser execution pending. Do not count source inspection or a green headless suite as browser proof for this rendering path.
+- **Residual risk:** Fixture normalization is not schema validation, authenticity, authorization or protection for a production trust boundary. The prototype remains synthetic and session-only.
