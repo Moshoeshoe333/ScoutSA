@@ -43,10 +43,73 @@ function h(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;",
 
 const data=window.SCOUTSA_DEMO_PLAYERS;
 const $=s=>document.querySelector(s);
-function render(key){const p=data[key];$('#initials').textContent=p.initials;$('#playerName').textContent=p.name;$('#playerArea').textContent=p.area;$('#demoId').textContent=p.id;$('#position').textContent=p.position;$('#foot').textContent=p.foot;$('#membershipSummary').textContent=p.memberships[0]?.org||"No sample membership";$('#profileFields').innerHTML=p.profile.map(([k,v])=>'<div class="field"><small>'+h(k)+'</small><strong>'+h(v)+'</strong></div>').join('');$('#claimsList').innerHTML=p.claims.map(c=>'<article class="record"><div class="record-head"><strong>'+h(c.claim)+'</strong><span class="badge">'+h(c.status)+'</span></div><p><b>Author:</b> '+h(c.author)+'</p><p><b>Supporting evidence:</b> '+h(c.evidence)+'</p></article>').join('');$('#membershipList').innerHTML=p.memberships.map(m=>'<article class="record"><div class="record-head"><strong>'+h(m.org)+'</strong><span class="badge">'+h(m.status)+'</span></div><p>'+h(m.type)+' · '+h(m.period)+'</p></article>').join('');const events=[...p.claims.map(c=>({date:c.recordedAt,title:"Player claim recorded",detail:c.claim+" · "+c.sourceType,status:c.status})),...p.memberships.map(m=>({date:m.recordedAt,title:"Membership entry recorded",detail:m.org+" · "+m.type+" · "+m.period,status:m.status}))].sort((a,b)=>a.date.localeCompare(b.date));$('#timelineList').innerHTML=events.map(e=>'<article class="record"><div class="record-head"><strong>'+h(e.title)+'</strong><span class="badge">'+h(e.status)+'</span></div><p><b>Demo record date:</b> '+h(e.date)+'</p><p>'+h(e.detail)+'</p></article>').join('');$('#verificationTitle').textContent=p.verification;$('#verificationDetail').textContent=p.verificationDetail;$('#footballReadiness').textContent=p.football;$('#opportunityReadiness').textContent=p.opportunity;$('#opportunityBrowseLink').href='./opportunities.html?player='+encodeURIComponent(p.id)}
+const recordMap=data&&typeof data==="object"&&!Array.isArray(data)?data:{};
+const isRecord=value=>value!==null&&typeof value==="object"&&!Array.isArray(value);
+const list=value=>Array.isArray(value)?value:[];
+const display=(value,fallback="Not supplied")=>{
+ if(typeof value==="string")return value.trim()?value:fallback;
+ if(typeof value==="number"&&Number.isFinite(value))return String(value);
+ if(typeof value==="boolean")return String(value);
+ return fallback;
+};
+const dated=value=>{
+ const label=display(value,"");
+ const parsed=label?Date.parse(label):NaN;
+ return Number.isFinite(parsed)?{label,sortTime:parsed}:{label:"Date not supplied",sortTime:Infinity};
+};
+function render(key){
+ const p=Object.prototype.hasOwnProperty.call(recordMap,key)?recordMap[key]:null;
+ if(!isRecord(p)){
+  $("#initials").textContent="?";$("#playerName").textContent="No Passport record available";
+  $("#playerArea").textContent="Player reference unavailable";$("#demoId").textContent="Not available";
+  $("#position").textContent="Not supplied";$("#foot").textContent="Not supplied";
+  $("#membershipSummary").textContent="No sample membership";
+  $("#profileFields").innerHTML='<p class="desc">No profile fields are available. No profile detail is inferred.</p>';
+  $("#claimsList").innerHTML='<p class="desc">No claim records are available. No claims are inferred.</p>';
+  $("#membershipList").innerHTML='<p class="desc">No membership records are available. No affiliation is inferred.</p>';
+  $("#timelineList").innerHTML='<p class="desc">No timeline events are available. No activity is inferred.</p>';
+  $("#verificationTitle").textContent="No verification record supplied";
+  $("#verificationDetail").textContent="No source, scope or verification event exists in this fictional sample.";
+  $("#footballReadiness").textContent="Evidence pending";$("#opportunityReadiness").textContent="Not assessed";
+  $("#opportunityBrowseLink").href="./opportunities.html";
+  return;
+ }
+ const profile=list(p.profile).filter(row=>Array.isArray(row)&&row.length>=2);
+ const claims=list(p.claims).filter(isRecord);
+ const memberships=list(p.memberships).filter(isRecord);
+ $("#initials").textContent=display(p.initials,"?");
+ $("#playerName").textContent=display(p.name,"Name unavailable");
+ $("#playerArea").textContent=display(p.area,"Area not supplied");
+ $("#demoId").textContent=display(p.id,"Reference unavailable");
+ $("#position").textContent=display(p.position);
+ $("#foot").textContent=display(p.foot);
+ $("#membershipSummary").textContent=memberships.length?display(memberships[0].org,"Organization not supplied"):"No sample membership";
+ $("#profileFields").innerHTML=profile.length
+  ?profile.map(([k,v])=>'<div class="field"><small>'+h(display(k,"Field unavailable"))+'</small><strong>'+h(display(v))+'</strong></div>').join('')
+  :'<p class="desc">No profile fields are available. No profile detail is inferred.</p>';
+ $("#claimsList").innerHTML=claims.length
+  ?claims.map(c=>'<article class="record"><div class="record-head"><strong>'+h(display(c.claim,"Claim unavailable"))+'</strong><span class="badge">'+h(display(c.status,"Status unavailable"))+'</span></div><p><b>Author:</b> '+h(display(c.author,"Not supplied"))+'</p><p><b>Supporting evidence:</b> '+h(display(c.evidence,"Not supplied"))+'</p></article>').join('')
+  :'<p class="desc">No claim records are available. No claims are inferred.</p>';
+ $("#membershipList").innerHTML=memberships.length
+  ?memberships.map(m=>'<article class="record"><div class="record-head"><strong>'+h(display(m.org,"Organization unavailable"))+'</strong><span class="badge">'+h(display(m.status,"Status unavailable"))+'</span></div><p>'+h(display(m.type))+' · '+h(display(m.period))+'</p></article>').join('')
+  :'<p class="desc">No membership records are available. No affiliation is inferred.</p>';
+ const events=[
+  ...claims.map(c=>{const d=dated(c.recordedAt);return {date:d.label,sortTime:d.sortTime,title:"Player claim recorded",detail:display(c.claim,"Claim unavailable")+" · "+display(c.sourceType),status:display(c.status,"Status unavailable")};}),
+  ...memberships.map(m=>{const d=dated(m.recordedAt);return {date:d.label,sortTime:d.sortTime,title:"Membership entry recorded",detail:display(m.org,"Organization unavailable")+" · "+display(m.type)+" · "+display(m.period),status:display(m.status,"Status unavailable")};})
+ ].sort((a,b)=>a.sortTime-b.sortTime);
+ $("#timelineList").innerHTML=events.length
+  ?events.map(e=>'<article class="record"><div class="record-head"><strong>'+h(e.title)+'</strong><span class="badge">'+h(e.status)+'</span></div><p><b>Demo record date:</b> '+h(e.date)+'</p><p>'+h(e.detail)+'</p></article>').join('')
+  :'<p class="desc">No timeline events are available. No activity is inferred.</p>';
+ $("#verificationTitle").textContent=display(p.verification,"No verification record supplied");
+ $("#verificationDetail").textContent=display(p.verificationDetail,"No verification detail is available.");
+ $("#footballReadiness").textContent=display(p.football,"Evidence pending");
+ $("#opportunityReadiness").textContent=display(p.opportunity,"Not assessed");
+ const passportId=typeof p.id==="string"&&p.id.trim()?p.id:null;
+ $("#opportunityBrowseLink").href=passportId?'./opportunities.html?player='+encodeURIComponent(passportId):"./opportunities.html";
+}
 function activate(tab){document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===tab)));document.querySelectorAll('.tab-panel').forEach(p=>p.hidden=p.id!==tab)}
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>activate(b.dataset.tab)));
 $('#playerSelect').addEventListener('change',e=>{render(e.target.value);activate('profile')});
-const requestedPlayerId=new URLSearchParams(window.location.search).get('player');const initialKey=Object.keys(data).find(key=>data[key].id===requestedPlayerId)||'p1';$('#playerSelect').value=initialKey;render(initialKey);
+const requestedPlayerId=new URLSearchParams(window.location.search).get('player');const initialKey=Object.keys(recordMap).find(key=>isRecord(recordMap[key])&&recordMap[key].id===requestedPlayerId)||'p1';$('#playerSelect').value=initialKey;render(initialKey);
 </script>
 </body></html>

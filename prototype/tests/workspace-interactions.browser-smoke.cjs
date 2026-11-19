@@ -278,6 +278,25 @@ async function main() {
       "an exact synthetic Passport/opportunity handoff must narrow the register to one opportunity");
     assert.equal(await page.locator("#records a[href*='discovery-request.html']").count(), 1,
       "only the exact matching request fixture may expose its review handoff");
+
+    // UI-008: stage text is inserted into a data attribute and must stay one inert attribute.
+    const hostileStageValue = '" onmouseover="window.__ui008Opportunity=true"><img id="ui008-opportunity-injection" src=x onerror="window.__ui008Opportunity=true">';
+    await page.evaluate(hostile => {
+      window.SCOUTSA_DEMO_OPPORTUNITIES.records[0].stage = hostile;
+      render();
+    }, hostileStageValue);
+    const stageRecord = page.locator("#records article").first();
+    assert.equal(await stageRecord.getAttribute("data-stage"), hostileStageValue,
+      "hostile stage value must remain confined to the intended data-stage attribute");
+    assert.equal(await page.locator("#records #ui008-opportunity-injection").count(), 0,
+      "hostile stage value must not create an injected element");
+    assert.equal(await stageRecord.evaluate(el => [...el.attributes].some(attribute => /^on/i.test(attribute.name))), false,
+      "hostile stage value must not create an event-handler attribute");
+    assert.equal(await page.evaluate(() => window.__ui008Opportunity || false), false,
+      "hostile stage value must not execute an event handler");
+    assert.equal(await stageRecord.locator(".pill").textContent(), hostileStageValue,
+      "hostile stage value must remain visible as literal text");
+    passed.push("Opportunity stage attribute rejects markup and event-handler injection");
     passed.push("Opportunity stage filter, search and exact player/opportunity request handoff");
     await page.addInitScript(() => {
       if (location.pathname !== "/opportunities.html" || location.search !== "?malformed-fixture=1") return;
@@ -534,6 +553,65 @@ async function main() {
     await assertFixtureTextSafe("#claimsList strong", hostileFixtureText, "Passport claim");
     await assertFixtureTextSafe("#membershipList strong", hostileFixtureText, "Passport membership");
     await assertFixtureTextSafe("#timelineList p:last-of-type", hostileFixtureText, "Passport timeline detail", "includes");
+
+    // UI-008: malformed Passport collections and records must render explicit empty/limited states.
+    const hostilePassportText = '<img id="ui008-passport-injection" src=x onerror="window.__ui008Passport=true">';
+    await page.evaluate(hostile => {
+      const p = window.SCOUTSA_DEMO_PLAYERS.p1;
+      p.profile = [null, [], "not-a-tuple", ["Hostile profile", hostile]];
+      p.claims = [null, [], "not-a-claim", {
+        claim: hostile, author: { unexpected: true }, evidence: null, status: ["unexpected"],
+        recordedAt: "not-a-date", sourceType: "synthetic fixture"
+      }];
+      p.memberships = [null, "not-a-membership", {
+        org: hostile, type: null, period: { unexpected: true }, status: { unexpected: true },
+        recordedAt: "not-a-date"
+      }];
+      render("p1");
+    }, hostilePassportText);
+    assert.equal(await page.locator("#profileFields .field").count(), 1,
+      "malformed profile rows must be excluded while a valid tuple remains renderable");
+    assert.equal(await page.locator("#claimsList article").count(), 1,
+      "malformed claim rows must be excluded");
+    assert.equal(await page.locator("#membershipList article").count(), 1,
+      "malformed membership rows must be excluded");
+    assert.equal(await page.locator("#timelineList article").count(), 2,
+      "invalid dates must not prevent valid claim and membership events from rendering");
+    assert.equal(await page.locator("#timelineList").innerText().then(text => (text.match(/Date not supplied/g) || []).length), 2,
+      "invalid event dates must be explicitly marked unavailable");
+    assert.ok((await page.locator("#profileFields").innerText()).includes(hostilePassportText),
+      "hostile profile values must remain visible as literal text");
+    assert.ok((await page.locator("#claimsList").innerText()).includes(hostilePassportText),
+      "hostile claim values must remain visible as literal text");
+    assert.ok((await page.locator("#membershipList").innerText()).includes(hostilePassportText),
+      "hostile membership values must remain visible as literal text");
+    assert.equal(await page.locator("#ui008-passport-injection").count(), 0,
+      "malformed and hostile Passport values must not create injected elements");
+    assert.equal(await page.evaluate(() => window.__ui008Passport || false), false,
+      "hostile Passport values must not execute event handlers");
+
+    await page.evaluate(() => {
+      const p = window.SCOUTSA_DEMO_PLAYERS.p1;
+      p.profile = null; p.claims = null; p.memberships = {};
+      render("p1");
+    });
+    assert.match(await page.locator("#profileFields").innerText(), /No profile fields are available/,
+      "missing profile collection must render an explicit empty state");
+    assert.match(await page.locator("#claimsList").innerText(), /No claim records are available/,
+      "missing claims must not invent a claim");
+    assert.match(await page.locator("#membershipList").innerText(), /No membership records are available/,
+      "missing memberships must not imply affiliation");
+    assert.match(await page.locator("#timelineList").innerText(), /No timeline events are available/,
+      "missing timeline inputs must render an explicit empty state");
+
+    await page.evaluate(() => render("MISSING-PASSPORT-RECORD"));
+    assert.match(await page.locator("#playerName").innerText(), /No Passport record available/,
+      "an unknown player key must render an unavailable state");
+    assert.match(await page.locator("#verificationTitle").innerText(), /No verification record supplied/,
+      "an unknown player key must not imply verification");
+    assert.equal(await page.locator("#opportunityBrowseLink").getAttribute("href"), "./opportunities.html",
+      "an unknown player key must not generate a player handoff");
+    passed.push("Passport malformed collections, malformed nested records, invalid dates and unknown player keys fail closed");
 
     await page.goto(origin + "/opportunity-evidence.html", { waitUntil: "load" });
     await page.evaluate(hostile => {
