@@ -110,7 +110,7 @@ function importOrganizerPackage(pkg){
   events:state.events.map(x=>({...x}))
  };
  const mergeClaims=(incomingClaims,storedClaims)=>{let added=0;for(const claim of incomingClaims){if(!storedClaims.some(x=>x.id===claim.id)){storedClaims.push({...claim});added++;}}return {added,skipped:incomingClaims.length-added};};
- const collections={
+ const collectionCounts={
   organizers:mergeClaims(pkg.organizers,staged.organizers),
   submissions:mergeClaims(pkg.submissions,staged.submissions),
   evidence:mergeClaims(pkg.evidence,staged.evidence),
@@ -124,7 +124,7 @@ function importOrganizerPackage(pkg){
  state.organizerEvidenceClaims=staged.evidence;
  state.organizerFeaturePermissionClaims=staged.features;
  state.events=staged.events;
- return {collections,editions:{added:editionsAdded,skipped:pkg.submissions.length-editionsAdded},committed:true};
+ return {collections:collectionCounts,editions:{added:editionsAdded,skipped:pkg.submissions.length-editionsAdded},committed:true};
 }
 function refresh(){ $("countT").textContent=state.events.length;$("countD").textContent=state.divisions.length;$("countE").textContent=state.teams.length;$("countC").textContent=state.coachAssignments.length;$("countP").textContent=state.players.length;$("countF").textContent=state.fixtures.length;
 optionList("divisionEvent",state.events,x=>x.editionId,x=>x.name+" · "+x.editionId);optionList("teamEvent",state.events,x=>x.editionId,x=>x.name);optionList("teamDivision",state.divisions,x=>x.id,x=>x.name+" · "+x.id);optionList("playerEntry",state.teams,x=>x.entryId,x=>x.name+" · "+x.entryId);optionList("eligibilityPlayer",state.players,x=>x.participationId,x=>x.alias+" · "+x.participationId);optionList("fixtureDivision",state.divisions,x=>x.id,x=>x.name+" · "+x.id);refreshFixtureTeams();optionList("resultFixture",state.fixtures,x=>x.id,x=>x.id+" · "+teamName(x.home)+" vs "+teamName(x.away));optionList("statFixture",state.fixtures,x=>x.id,x=>x.id+" · "+teamName(x.home)+" vs "+teamName(x.away));refreshStatPlayers();
