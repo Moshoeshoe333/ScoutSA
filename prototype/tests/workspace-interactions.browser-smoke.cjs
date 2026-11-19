@@ -162,6 +162,45 @@ async function main() {
       "hostile coach action fields must not execute");
     passed.push("Coach workspace malformed collections and hostile action fields fail closed");
 
+    // UI-008: matching review handles missing nested findings and dimensions without inferring outcomes.
+    await page.goto(origin + "/player-opportunity-matching.html", { waitUntil: "load" });
+    await page.evaluate(() => {
+      const fixture = window.SCOUTSA_MATCHING_DEMO;
+      fixture.pairs = [{
+        id: "PAIR-MALFORMED",
+        player: '<img id="ui008-match-injection" src=x onerror="window.__ui008MatchXss=1">',
+        opportunity: null,
+        findings: null,
+        disposition: null,
+        reason: null
+      }];
+      fixture.dimensions = null;
+      renderStats();
+      render();
+      renderDimensions();
+    });
+    assert.equal(await page.locator("#pairs .pair").count(), 1,
+      "a partial matching record should remain inspectable");
+    assert.match(await page.locator("#pairs").innerText(), /Not supplied/,
+      "missing finding data must be explicit");
+    assert.equal(await page.locator("#ui008-match-injection").count(), 0,
+      "hostile matching labels must not create markup");
+    assert.equal(await page.evaluate(() => window.__ui008MatchXss || false), false,
+      "hostile matching labels must not execute");
+    assert.match(await page.locator("#dimensions").innerText(), /No review dimensions are supplied/,
+      "missing dimensions must not produce an assessment");
+    await page.evaluate(() => {
+      window.SCOUTSA_MATCHING_DEMO.pairs = [];
+      window.SCOUTSA_MATCHING_DEMO.dimensions = [];
+      renderStats();
+      render();
+      renderDimensions();
+    });
+    assert.equal(await page.locator("#total").innerText(), "0");
+    assert.match(await page.locator("#pairs").innerText(), /No matching or readiness outcome is inferred/);
+    assert.match(await page.locator("#dimensions").innerText(), /No assessment or match decision is supported/);
+    passed.push("Matching review malformed nested fixtures fail closed without inventing fit or readiness");
+
     // 1. Player Passport: player selection, tab state and contextual handoff.
     await page.goto(origin + "/player-passport.html", { waitUntil: "load" });
     const passportOptions = await page.locator("#playerSelect option").count();
