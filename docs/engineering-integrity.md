@@ -618,3 +618,15 @@ After the run #694 audit/lesson reconciliation was written back, the final docum
 Run #698 does not close the deliberate TM-013 assertion-failure injection or any unresolved domain, legal, safeguarding, identity, expiry, revocation, production or external-validation gate.
 
 **Subsequent exact-head confirmation:** Hosted run [#701](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44326714770) then passed on exact head `e25101038faa39cc4ffb743bc8c2dcc77ea3859f`, which includes the README, integrity-ledger and audit-report reconciliation. It again passed 121/121 headless tests and all ten browser smoke steps under Node.js 22.23.4. The README now points to the live workflow history rather than freezing a run number that becomes stale with every documentation commit.
+### OPA-012 — Reused organizer submission/edition IDs could conceal changed source content
+
+- **Detected:** 2026-11-19
+- **Severity:** High for provenance and data integrity — a changed source submission could be silently treated as an idempotent duplicate.
+- **Finding:** At baseline `0c41fd84b37e13841a4ea65cc12b9c38ae65731f`, the Organizer Portal importer compared selected edition identity links when an edition already existed, but did not compare all source-derived event fields. The full submission was not retained in a dedicated source-claim collection. Reusing the same IDs with a changed summary or other source field could therefore be skipped without preserving the changed submission as a claim.
+- **Impact:** A sender could not rely on the import result to distinguish an exact replay from altered content under reused IDs. The existing record was not overwritten in this path, but the changed source was silently discarded.
+- **Correction:** Added `organizerSubmissionClaims`; added submission-ID-to-edition collision detection; compare the source-derived projection of an existing edition before treating it as a duplicate; reject mismatched content without mutating state. Operational human-decision fields are not assigned by this import path.
+- **Preventive tests:** Exact duplicate idempotency; altered summary with reused IDs; reused submission ID with a different edition; complete submission-claim round-trip; complete-state before/after comparison for rejected imports.
+- **Correction commits:** `536cb58a03711803f764345043b933e086884e10`, `3bd3d5bd20aa8f53f1e6e69c144efc8431ea1fd0`, `14b9477b8db79c3085ca2edeb601756bbaeecbda`.
+- **Verification:** Pending exact-head hosted workflow. Do not close this incident until all 121 headless tests and all ten configured browser smoke steps pass on the final branch head.
+- **Residual risk:** This does not resolve semantic duplicate competitions across different IDs, organizer identity conflicts, permission revocation/supersession, evidence expiry policy, trusted authority or production persistence/transactions.
+- **Status:** Correction and regression scenarios committed; hosted verification pending.
