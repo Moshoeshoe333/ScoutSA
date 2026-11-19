@@ -252,3 +252,13 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Regression / verification:** Test correction in da769932354309f8327d50d720395d203eab5a6f; hosted run [44325785196](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44325785196) passed the complete Tournament Day Operations browser suite and all ten configured browser smoke steps.
 - **Residual risk:** A bounded wait proves only the specific tested browser path; it does not establish all asynchronous timing or network behavior.
 - **Status:** Verified for the tested synthetic browser path.
+### LESSON-016 — Idempotency keys must not conceal changed source content
+
+- **Failure mode:** An import reuses an existing submission or edition ID with changed content, but the importer treats it as an ordinary duplicate and silently skips the incoming source record.
+- **Observed evidence:** Source review of `prototype/tournament-manager.html` at baseline `0c41fd84b37e13841a4ea65cc12b9c38ae65731f` found that duplicate edition handling checked selected structural IDs but did not compare the complete source-derived event content. Imported submissions also lacked a dedicated source-claim collection.
+- **Root cause:** Idempotency was defined around record identity without proving that a repeated identity carried the same source content.
+- **Preventive control:** Preserve the complete incoming submission as a separate source claim. Repeated submission IDs must remain bound to one edition. Before skipping an existing edition, compare the complete source-derived projection; reject changed content rather than silently discarding or overwriting it. Keep operational human-decision fields outside imported source claims.
+- **Detective control:** Browser tests for exact duplicate idempotency, altered content under reused IDs, reused submission IDs pointing to a different edition, source-claim round-trip and full-state no-mutation on rejection.
+- **Regression / verification:** Code and browser tests are committed on `prototype/internal-demo`; exact-head hosted verification is pending. Record the final commit and workflow result here only after all configured checks pass.
+- **Residual risk:** Structural IDs do not resolve real-world semantic duplicates or identity conflicts. This control does not establish authority, evidence authenticity, expiry policy, revocation history or backend transaction safety.
+- **Status:** Implemented; awaiting exact-head hosted verification.
