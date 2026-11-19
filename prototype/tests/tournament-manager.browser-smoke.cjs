@@ -67,6 +67,14 @@ test('tournament manager imports organizer portal package by stable IDs and skip
     return window.__SCOUTSA_TEST_SNAPSHOT__();
   });
   assert.deepEqual(sessionData.organizerSubmissionClaims, pkg.submissions, 'complete submission source records must survive import');
+  // Property order is not a semantic claim change; canonical comparison must accept replay.
+  const reorderedOrganizer = Object.fromEntries(Object.entries(pkg.organizers[0]).reverse());
+  const reorderedPackage = { ...pkg, organizers: [reorderedOrganizer] };
+  await page.locator('#organizerHandoffFile').setInputFiles({ name: 'property-order-replay.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(reorderedPackage)) });
+  await page.locator('#importOrganizerHandoff').click();
+  await page.waitForFunction(() => /Import committed/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+  assert.match(await page.locator('#organizerImportMessage').textContent(), /organizers: \+0 \/ skipped 1/);
+
   // OPA-013: a duplicate edition may still add a new side-collection claim; report it.
   const sideCollectionPackage = { ...pkg, evidence: [...pkg.evidence, { id: 'EVD-DEMO-502', organizerId: 'ORG-DEMO-501', type: 'Venue authorization', ref: 'DEMO-EVIDENCE-502', status: 'pending' }] };
   await page.locator('#organizerHandoffFile').setInputFiles({ name: 'side-collection-only.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(sideCollectionPackage)) });
