@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101b2b">
+<title>ScoutSA — Guided prototype walkthrough</title>
+<style>
+:root{--navy:#101b2b;--ink:#17263a;--muted:#68788d;--line:#e2e8ef;--paper:#f4f7f9;--green:#16845f;--greenbg:#e9f5ef;--amber:#9a6518;--amberbg:#fff4df;--red:#a43f42;--redbg:#fff0ef}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+nav{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px max(18px,calc((100% - 1120px)/2));background:var(--navy);color:#d8e1eb;font-size:12px}
+nav a{color:#fff;text-decoration:none;font-weight:700}.shell{max-width:1120px;margin:auto;padding:34px 22px 56px}
+.eyebrow{color:var(--green);font-size:11px;font-weight:850;letter-spacing:1.5px;text-transform:uppercase}
+h1{font-size:clamp(28px,4vw,40px);line-height:1.12;letter-spacing:-1px;margin:8px 0 12px}
+.lead{max-width:800px;color:var(--muted);font-size:15px;margin:0}
+.notice{margin:22px 0;padding:15px 17px;border:1px solid #f0d9ac;border-radius:12px;background:var(--amberbg);color:#79571e}
+.notice strong{display:block;margin-bottom:4px;color:#684714}
+.steps{display:grid;gap:13px;margin-top:24px}
+.step{display:grid;grid-template-columns:54px minmax(0,1fr) auto;align-items:start;gap:15px;padding:19px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 3px 12px #17263a05}
+.num{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:var(--greenbg);color:var(--green);font-size:17px;font-weight:850}
+.step h2{font-size:16px;margin:1px 0 4px}.step p{color:var(--muted);margin:0;max-width:700px;font-size:12px}
+.meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.tag{font-size:10px;padding:4px 8px;border-radius:6px;background:#f0f3f7;color:#526276}
+.link{align-self:center;white-space:nowrap;display:inline-flex;align-items:center;gap:7px;background:var(--green);color:#fff;text-decoration:none;font-weight:750;font-size:12px;padding:10px 13px;border-radius:9px}
+.link:hover{background:#107c58}.link:focus-visible{outline:3px solid #16845f55;outline-offset:3px}
+.boundaries{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:22px}
+.boundary{padding:13px;background:#fff;border:1px solid var(--line);border-radius:10px;font-size:11px;color:#526276}
+.boundary strong{display:block;color:var(--ink);font-size:12px;margin-bottom:3px}
+.stop{margin-top:22px;padding:17px;background:var(--redbg);border:1px solid #f0cecc;border-radius:12px;color:#84383b;font-size:12px}
+footer{margin-top:30px;border-top:1px solid var(--line);padding-top:15px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(max-width:700px){.shell{padding:25px 15px 40px}.step{grid-template-columns:42px minmax(0,1fr)}.num{width:36px;height:36px}.link{grid-column:2;justify-self:start}.boundaries{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav aria-label="Prototype navigation"><a href="./index.html">← ScoutSA workspace</a><span>INTERNAL DEMONSTRATION · FICTIONAL DATA ONLY</span></nav>
+<main class="shell">
+<header>
+<div class="eyebrow">Start here · Guided demonstration</div>
+<h1>One player journey. Every gate visible.</h1>
+<p class="lead">Use this walkthrough to explore how a fictional player profile, an opportunity proposal, guardian safeguards and a discovery request relate. Each link opens the existing specialist workspace; the screens remain separate, static demonstrations rather than one connected production transaction.</p>
+</header>
+<div class="notice"><strong>Demo scenario: Kabelo Mokoena · DEMO-PLAYER-001</strong>
+This is a synthetic sample record. Its football claims are unsupported, its sample organization and opportunity are unverified, consent is not given, disclosure is blocked and no trial or placement outcome is recorded. Do not enter real player, guardian or contact information.</div>
+<section class="steps" aria-label="Guided walkthrough steps">
+<article class="step"><div class="num">01</div><div><h2>Review the Player Passport</h2><p>Start with the fictional profile, football claims and membership history. Distinguish what the profile says from what evidence actually supports.</p><div class="meta"><span class="tag">Profile assertions only</span><span class="tag">Not verified</span></div></div><a class="link" href="./player-passport.html?player=DEMO-PLAYER-001">Open Passport →</a></article>
+<article class="step"><div class="num">02</div><div><h2>Inspect organization and opportunity claims</h2><p>Follow the pre-wired sample handoff to the opportunity register. The proposal is not a verified vacancy, public trial or invitation.</p><div class="meta"><span class="tag">OPP-DEMO-001</span><span class="tag">Proposal only</span></div></div><a class="link" href="./opportunities.html?player=DEMO-PLAYER-001&amp;opportunity=OPP-DEMO-001">Review opportunity →</a></article>
+<article class="step"><div class="num">03</div><div><h2>Check guardian and consent boundaries</h2><p>Inspect the matching fictional guardian scenario. Authority is not established, purpose-specific consent is not given and disclosure stays blocked.</p><div class="meta"><span class="tag">GCS-DEMO-001</span><span class="tag">Disclosure blocked</span></div></div><a class="link" href="./guardian-consent.html">Review safeguards →</a></article>
+<article class="step"><div class="num">04</div><div><h2>Review matching without ranking</h2><p>Compare the stated opportunity requirements with the sample player context. The result is a hold, not a talent score, selection or recommendation.</p><div class="meta"><span class="tag">No match decision</span><span class="tag">Human review required</span></div></div><a class="link" href="./player-opportunity-matching.html">Open matching review →</a></article>
+<article class="step"><div class="num">05</div><div><h2>Trace the discovery request</h2><p>Open the exact synthetic request fixture. Follow its organization, opportunity, consent and invitation gates; it remains non-submittable and cannot disclose information.</p><div class="meta"><span class="tag">REQ-DEMO-001</span><span class="tag">HOLD · Not submittable</span></div></div><a class="link" href="./discovery-request.html?player=DEMO-PLAYER-001&amp;opportunity=OPP-DEMO-001">Review request →</a></article>
+<article class="step"><div class="num">06</div><div><h2>Close with the pathway and outcome record</h2><p>Return to the pathway storyboard. Evidence collection is incomplete, opportunity readiness is on hold and no trial, selection or placement is recorded.</p><div class="meta"><span class="tag">Outcome not recorded</span><span class="tag">No guarantee</span></div></div><a class="link" href="./player-development-pathways.html">View pathway →</a></article>
+</section>
+<section class="boundaries" aria-label="Core product boundaries">
+<div class="boundary"><strong>Exposure ≠ opportunity</strong>Visibility does not create a real opening or a right to access.</div>
+<div class="boundary"><strong>Verification ≠ guarantee</strong>Even verified claims would not guarantee selection or safety.</div>
+<div class="boundary"><strong>Contact ≠ placement</strong>A request, invitation or conversation is not an outcome.</div>
+</section>
+<div class="stop"><strong>Hard stop for this demonstration:</strong> No account creation, real consent capture, identity checks, guardian verification, external messaging, application submission, public disclosure, live invitations or placement recording is connected. All data is fictional and session-independent.</div>
+<footer><strong>ScoutSA · Discover. Verify. Connect.</strong><span>Guided static prototype · No backend · Not production-ready</span></footer>
+</main>
+</body>
+</html>
