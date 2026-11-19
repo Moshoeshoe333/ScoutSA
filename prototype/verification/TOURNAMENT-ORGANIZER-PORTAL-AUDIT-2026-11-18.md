@@ -340,3 +340,13 @@ The following code and regression-test changes have since been committed to the 
 - **Correction:** Corrected the regex to match the literal plus sign and increased this one wait to five seconds.
 - **Preventive control:** Keep wait predicates and final assertions semantically identical; avoid manually double-escaping regex literals.
 - **Verification:** Correction committed as `bff7bf91dae02205670520f08160147e77a25a01`; rerun required. OPA-013/014/015/017 remain unverified by a passing full browser suite.
+
+
+### OPA-019 — Browser workflow stopped after the first failing browser test
+- **Detected:** 2026-11-19 while reviewing the failed run `44510341187`.
+- **Severity:** Moderate for verification coverage; a single early failure prevented later independent browser suites from executing.
+- **Evidence:** Tournament Manager failed and all subsequent browser test steps were marked skipped.
+- **Correction:** Consolidated browser execution into a bounded loop that records each test result and continues through all suites before returning a failing aggregate status.
+- **Additional guard:** Chromium installation and the browser-test batch now have explicit step timeouts; each individual browser test has a 90-second process timeout.
+- **Status:** Workflow change committed as `91a35652e63a812ae4f146cb1d862111d5507429`; exact-head CI execution pending.
+- **Limitation:** This increases diagnostic coverage; it does not make a failing test pass or reduce the need to investigate each failure.
