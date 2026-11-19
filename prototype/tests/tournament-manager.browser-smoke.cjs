@@ -79,7 +79,16 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   const sideCollectionPackage = { ...pkg, evidence: [...pkg.evidence, { id: 'EVD-DEMO-502', organizerId: 'ORG-DEMO-501', type: 'Venue authorization', ref: 'DEMO-EVIDENCE-502', status: 'pending' }] };
   await page.locator('#organizerHandoffFile').setInputFiles({ name: 'side-collection-only.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(sideCollectionPackage)) });
   await page.locator('#importOrganizerHandoff').click();
-  await page.waitForFunction(() => /evidence: \+1 \/ skipped 0/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+  try {
+    await page.waitForFunction(() => /evidence: \+1 \/ skipped 0/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+  } catch (error) {
+    const diagnostic = await page.evaluate(() => ({
+      message: document.querySelector('#organizerImportMessage')?.textContent || null,
+      evidenceClaims: window.__SCOUTSA_TEST_SNAPSHOT__?.().organizerEvidenceClaims || null,
+      pageTitle: document.title
+    }));
+    assert.fail(`Side-collection import did not report evidence addition. State=${JSON.stringify(diagnostic)}; pageErrors=${JSON.stringify(errors)}; consoleErrors=${JSON.stringify(consoleErrors)}; cause=${error.message}`);
+  }
   assert.match(await page.locator('#organizerImportMessage').textContent(), /Editions: \+0 \/ skipped 1/);
   assert.match(await page.locator('#organizerImportMessage').textContent(), /evidence: \+1 \/ skipped 0/);
   assert.equal((await exportSessionState()).organizerEvidenceClaims.length, 2);
