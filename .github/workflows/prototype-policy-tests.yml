@@ -57,6 +57,7 @@ jobs:
             prototype/tests/tournament-day-operations.browser-smoke.cjs \
             prototype/tests/tournament-stat-reconciliation.browser-smoke.cjs \
             prototype/tests/tournament-organizer-portal.browser-smoke.cjs \
+            prototype/tests/tournament-organizer-cleanup.browser-smoke.cjs \
             prototype/tests/workspace-interactions.browser-smoke.cjs
           do
             echo "::group::$test"
