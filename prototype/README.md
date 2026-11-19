@@ -8,7 +8,7 @@ This branch contains a static browser prototype and a synthetic review engine. I
 
 ## Current verified state
 
-**Verification status — 19 November 2026:** Exact-current-head hosted workflow [#44526537773](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44526537773) passed against `67c39e14969c8c91ef8bfe9c54f20faf0a493dc1` on `prototype/internal-demo`. It passed **121/121 headless tests**, all ten configured browser smoke scripts, **8/8 hub/navigation groups**, and **16/16 specialist workspace interaction groups**. The specialist suite now includes malformed guardian-consent and development-pathway fixture cases, which must render explicit blocked/empty states without inventing consent, evidence, readiness or outcomes. TM-013's deliberate assertion-failure injection also passed: the child test exits unsuccessfully as intended and confirms browser cleanup executes. This is synthetic regression evidence only—not production-readiness, safeguarding, privacy, legal, accessibility or security certification.
+**Verification status — 19 November 2026:** Exact-current-head hosted workflow [#44527165027](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44527165027) passed against `0e659e82d480d0f31aca4beaa58bfb699303c759` on `prototype/internal-demo`. It passed **121/121 headless tests**, all ten configured browser smoke scripts, **8/8 hub/navigation groups**, and **16/16 specialist workspace interaction groups**. The specialist suite includes malformed guardian-consent and development-pathway fixture cases, which render explicit blocked/empty states without inventing consent, evidence, readiness or outcomes. The hub test also opens the six-step guided walkthrough, verifies all six specialist destinations resolve, and checks the walkthrough at a 390px viewport. TM-013's deliberate assertion-failure injection is included and passed. This is synthetic regression evidence only—not production-readiness, safeguarding, privacy, legal, accessibility or security certification.
 
 
 - Review engine: `review-engine.js` **v0.3.0**.
@@ -26,7 +26,7 @@ The test counts above are source declarations and the cited workflow is the reco
 
 **Organizer Portal audit:** see [Tournament Organizer Portal Audit — 18 November 2026](verification/TOURNAMENT-ORGANIZER-PORTAL-AUDIT-2026-11-18.md) for scoped findings, corrections and remaining limits.
 
-Open `index.html` in a modern browser. No build step or package installation is required. The hub provides a separate three-screen Player Experience Preview for coach/guardian conversations, plus 11 specialist workspaces. The player preview is not counted as a specialist workspace:
+Open `index.html` in a modern browser. No build step or package installation is required. The hub provides a six-step [Guided Demo Journey](demo-journey.html), a separate three-screen Player Experience Preview for coach/guardian conversations, plus 11 specialist workspaces. The guided journey and player preview are not counted as specialist workspaces:
 
 1. Player Passport
 2. Organization Membership Review
@@ -130,7 +130,7 @@ External stakeholder responses are not a prerequisite for continued internal dev
 2. Extend malformed-fixture tests to remaining pages and nested collections, preserving explicit empty/hold states and avoiding invented consent, authority, evidence or readiness.
 3. Review URL construction and accepted schemes for every dynamic navigation and handoff destination, including any future external destinations.
 4. Record each UI-008 finding with file, line, sink, context, risk, mitigation and exact test evidence; keep UI-008 open until all required items are verified.
-5. Build and rehearse one coherent synthetic coach-to-player-to-opportunity-to-guardian/request-review walkthrough, with a limitations sheet for adult stakeholder demonstrations.
+5. Rehearse the new guided synthetic walkthrough and prepare a concise limitations sheet before any adult stakeholder demonstration; do not treat a demo reaction as validation or authorization.
 6. Keep mainline, real-data, deployment and pilot gates closed until their own evidence and authorization requirements are met.
 
 ## Governing references
