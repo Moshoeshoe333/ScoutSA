@@ -315,3 +315,15 @@ A further importer review found that an edition ID already present in the Tourna
 - TM-013 deliberate assertion-failure cleanup injection remains open.
 - No semantic duplicate detection across distinct IDs, identity resolution, permission revocation history, evidence expiry/revalidation policy, production persistence, authentication/authorization or safeguarding validation is established.
 - **Recommendation: HOLD further implementation until these findings and the versioned domain rules are reviewed.** Continue only with read-only verification or explicitly authorized documentation/test work. Do not merge to main or alter PR #6.
+
+
+## 2026-11-19 corrective implementation follow-up
+
+The following code and regression-test changes have since been committed to the isolated `prototype/internal-demo` branch:
+
+- **OPA-013:** Import result now reports added/skipped counts for organizers, submissions, evidence and features, separately from tournament-edition counts. A side-collection-only scenario is added.
+- **OPA-014:** Import preparation/commit is separated from rendering. A post-commit refresh failure is explicitly reported as committed with a failed view refresh; a controlled failure-injection scenario is added.
+- **OPA-015:** Deterministic `venueId` and `importSource` are part of duplicate projection. A test-only corruption hook and replay rejection scenario are added.
+- **OPA-016:** Proposed append-only claim lifecycle contract is documented in `prototype/ORGANIZER-CLAIM-LIFECYCLE-CONTRACT.md`. It remains non-ratified and is not implemented; same-ID content changes continue to fail closed.
+
+**Verification status:** Source changes and test scenarios are committed. No browser test or hosted workflow has been executed as part of this follow-up. Do not call these findings closed until the exact current branch head has a passing configured workflow and the new adversarial cases are observed. No production, safeguarding, privacy or authorization assurance follows from these changes.
