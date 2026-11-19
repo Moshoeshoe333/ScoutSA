@@ -8,14 +8,14 @@ This branch contains a static browser prototype and a synthetic review engine. I
 
 ## Current verified state
 
-**Verification status — 19 November 2026:** The last confirmed full-workflow baseline was run [#704](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44327123610), exact head `0c41fd84b37e13841a4ea65cc12b9c38ae65731f`: 121/121 headless tests and all ten configured browser smoke steps passed. The Tri-Tier 33 source review inspected code at `07c993648eeb386ca7c7213fd2487b64d81c2eea`; subsequent OPA-013–OPA-016 and assessment updates are documentation-only additions on this isolated branch. No exact-current-head hosted status has been retrieved. Run #704 does not verify any later code or test changes. The [Tri-Tier 33 assessment and adversarial findings](verification/TOURNAMENT-ORGANIZER-PORTAL-AUDIT-2026-11-18.md) records 99 lens dispositions and the new open issues. Consult the [prototype workflow history](https://github.com/Moshoeshoe333/ScoutSA/actions/workflows/prototype-policy-tests.yml) and [Engineering Integrity](../docs/engineering-integrity.md) for the current checkpoint. All results are synthetic regression evidence, not production-readiness, safeguarding, privacy, legal, accessibility or security certification. TM-013's deliberate assertion-failure cleanup injection remains outstanding.
+**Verification status — 19 November 2026:** Exact-current-head hosted workflow [#44526537773](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44526537773) passed against `67c39e14969c8c91ef8bfe9c54f20faf0a493dc1` on `prototype/internal-demo`. It passed **121/121 headless tests**, all ten configured browser smoke scripts, **8/8 hub/navigation groups**, and **16/16 specialist workspace interaction groups**. The specialist suite now includes malformed guardian-consent and development-pathway fixture cases, which must render explicit blocked/empty states without inventing consent, evidence, readiness or outcomes. TM-013's deliberate assertion-failure injection also passed: the child test exits unsuccessfully as intended and confirms browser cleanup executes. This is synthetic regression evidence only—not production-readiness, safeguarding, privacy, legal, accessibility or security certification.
 
 
 - Review engine: `review-engine.js` **v0.3.0**.
 - Synthetic audit-history validator: `audit-history.js` **v0.2.0**, integrated as a mandatory structural gate in the synthetic invitation-review evaluation.
 - Node test declarations: **121 total** — **79/79 review-engine tests**, 9 documentation-integrity checks (9 checks declared), 31 audit-history tests and 2 workspace-data-integrity checks.
 - Pre-preview verification checkpoint: [GitHub Actions run 43868685945](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43868685945), commit `a22a52de4a4a18166f0e2478a14c73f786b776e7`, completed successfully before the player-facing preview was added.
-- The latest fully recorded browser baseline is [GitHub Actions run 43871407060](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43871407060), tested commit `7ff31a19bcaa1c0386247dc0f5b9a197f44fdfc3`. That run completed the 121 Node tests and seven browser suites: Discovery & Request Review, workspace hub/navigation, player preview, Vaal ecosystem coverage, tournament relationship hub, tournament manager and specialist interactions. It predates the later Tournament Manager validation-pattern correction and Tournament Day Operations addition; those later changes require a fresh CI run before being described as verified.
+- Historical browser baseline: [run 43871407060](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43871407060) verified an earlier seven-suite checkpoint. It is superseded by the exact-current-head verification above.
 - The preview, coverage workbench, Tournament Manager and Tournament Day Operations exist on the isolated prototype branch only. Player-preview WhatsApp and copy-link actions stay disabled until a public HTTPS URL exists. A passing run is regression evidence, not safeguarding, privacy, accessibility or production approval. Older run links below are historical checkpoints.
 
 The test counts above are source declarations and the cited workflow is the recorded execution evidence. The 14 specialist groups include hostile URL/identifier checks and hostile fixture-string checks at actual render sinks across Passport, organization membership, opportunity, evidence, invitation, matching, pathway, consent, academy, decision and discovery-request workspaces. Targeted browser regression checks now exercise all 29 identified HTML assignment sinks, including the Discovery gate renderer; URL/handoff sinks are checked for hostile identifiers and unsafe schemes. This is not a complete security sign-off: output-context review and malformed-fixture resilience remain open. Helper-level hostile/nullish checks run across all 11 workspaces. This is targeted regression evidence, not a complete security sign-off.
@@ -52,7 +52,7 @@ node --test prototype/tests/*.test.js
 
 
 The appearance/minutes view is a derived calculation from fixture-specific lineup and substitution records. It is not an independently verified stat, and invalid duration/substitution timing suppresses the totals. Hosted run [#679](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44299389829) passed the current Tournament Day Operations browser smoke test and the linked Player Tournament History checks at the exact commit listed above.
-Hosted CI runs ten Playwright/Chromium browser smoke scripts configured in `.github/workflows/prototype-policy-tests.yml`: Discovery & Request Review, workspace hub/navigation, player journey preview, Vaal ecosystem coverage, tournament relationship hub, tournament manager, tournament day operations, tournament statistic reconciliation, tournament organizer portal and specialist workspace interactions. The latest exact-head run is linked above. A passing run is regression evidence only—not safeguarding, privacy, accessibility or production-readiness approval.
+Hosted CI runs ten Playwright/Chromium browser smoke scripts configured in `.github/workflows/prototype-policy-tests.yml`: Discovery & Request Review, workspace hub/navigation, player journey preview, Vaal ecosystem coverage, tournament relationship hub, tournament manager, tournament day operations, tournament statistic reconciliation, tournament organizer portal and specialist workspace interactions. Exact-current-head run [#44526537773](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44526537773) passed the ten configured scripts. A passing run is regression evidence only—not safeguarding, privacy, accessibility or production-readiness approval.
 
 ## Review engine and invitation gate
 
@@ -126,13 +126,12 @@ External stakeholder responses are not a prerequisite for continued internal dev
 
 ## Next engineering sequence
 
-1. Continue UI-008: complete the interpolation and output-context inventory across all 11 specialist workspaces, including the remaining individual sinks not yet covered by hostile-fixture tests.
-2. Extend actual-renderer tests to remaining profile, option, dimension, rules/limits, opportunity and discovery-gate sinks.
-3. Review URL construction and accepted schemes for every dynamic navigation and handoff destination.
-4. Test malformed and unexpected fixture shapes for resilient, fail-closed rendering without console errors.
-5. Record each UI-008 finding with file, line, sink, risk, mitigation and test evidence; keep UI-008 open until all required items are verified.
-6. Prepare a synthetic partner-demo walkthrough and limitations sheet after the UI safety review is complete.
-7. Keep mainline, real-data, deployment and pilot gates closed until their own evidence and authorization requirements are met.
+1. Continue UI-008: complete the interpolation and output-context inventory across all 11 specialist workspaces; the existing 29-sink hostile-renderer regression coverage is targeted evidence, not a complete security review.
+2. Extend malformed-fixture tests to remaining pages and nested collections, preserving explicit empty/hold states and avoiding invented consent, authority, evidence or readiness.
+3. Review URL construction and accepted schemes for every dynamic navigation and handoff destination, including any future external destinations.
+4. Record each UI-008 finding with file, line, sink, context, risk, mitigation and exact test evidence; keep UI-008 open until all required items are verified.
+5. Build and rehearse one coherent synthetic coach-to-player-to-opportunity-to-guardian/request-review walkthrough, with a limitations sheet for adult stakeholder demonstrations.
+6. Keep mainline, real-data, deployment and pilot gates closed until their own evidence and authorization requirements are met.
 
 ## Governing references
 
