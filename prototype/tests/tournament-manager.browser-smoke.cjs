@@ -83,7 +83,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await page.evaluate(() => window.__SCOUTSA_TEST_SET_OPERATIONAL_DECISION__('EDT-ORG-DEMO-501', { authority: 'human-decision-preserved-demo', feature: 'withdrawn' }));
   await page.locator('#organizerHandoffFile').setInputFiles({ name: 'handoff.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(pkg)) });
   await page.locator('#importOrganizerHandoff').click();
-  await page.waitForFunction(() => /Imported 0 tournament edition\\(s\\); skipped 1 duplicate/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+  await page.waitForFunction(() => /Imported 0 tournament edition\(s\); skipped 1 duplicate/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
   const preservedDecision = (await exportSessionState()).events.find(event => event.editionId === 'EDT-ORG-DEMO-501');
   assert.equal(preservedDecision.authority, 'human-decision-preserved-demo', 'duplicate source import must not overwrite an existing human authority decision');
   assert.equal(preservedDecision.feature, 'withdrawn', 'duplicate source import must not restore a withdrawn operational permission');
