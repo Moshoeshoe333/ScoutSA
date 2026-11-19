@@ -19,11 +19,26 @@
 <script src="./data/coach-academy-workspace.demo.js"></script><script>
 function h(value){return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));}
 
-const d=window.SCOUTSA_ACADEMY_WORKSPACE_DEMO,$=s=>document.querySelector(s);
-$("#orgName").textContent=d.organization.name;$("#orgMeta").textContent=d.organization.type+" · "+d.organization.area+" · "+d.organization.id;$("#orgScope").textContent="Workspace role: "+d.organization.workspaceRole+" · "+d.organization.scope;$("#orgIdentity").textContent="Identity: "+d.organization.identity;
-$("#memberships").textContent=d.summary.membershipClaims;$("#reviewClaims").textContent=d.summary.claimsNeedingReview;$("#opportunities").textContent=d.summary.opportunityProposals;$("#evidenceActions").textContent=d.summary.evidenceActions;
-$("#membershipList").innerHTML=d.memberships.map(x=>'<article class="item"><div class="itemtop"><strong>'+h(x.id)+'</strong><span class="state '+(x.state==="Disputed"?"red":"")+'">'+h(x.state)+'</span></div><small>'+h(x.note)+'</small><small>Affiliation verification: '+h(x.verification)+'</small></article>').join("");
-$("#opportunityList").innerHTML=d.opportunities.map(x=>'<article class="item"><div class="itemtop"><strong>'+h(x.name)+'</strong><span class="state">'+h(x.state)+'</span></div><small>'+h(x.id)+' · '+h(x.source)+'</small><small>Outstanding: '+h(x.blocker)+'</small></article>').join("");
-$("#actionList").innerHTML=d.evidenceActions.map(x=>'<div class="action"><b>'+h(x.area)+'<br><span style="color:#9a6518;font-weight:700">'+h(x.state)+'</span></b><span>'+h(x.action)+'</span></div>').join("");
-$("#boundaries").innerHTML=d.boundaries.map(x=>'<div class="principle"><span>'+h(x)+'</span></div>').join("");
+const d=window.SCOUTSA_ACADEMY_WORKSPACE_DEMO&&typeof window.SCOUTSA_ACADEMY_WORKSPACE_DEMO==="object"?window.SCOUTSA_ACADEMY_WORKSPACE_DEMO:{},$=s=>document.querySelector(s);
+function isRecord(x){return x!==null&&typeof x==="object"&&!Array.isArray(x)}
+function render(){
+ const org=isRecord(d.organization)?d.organization:{},summary=isRecord(d.summary)?d.summary:{};
+ const memberships=Array.isArray(d.memberships)?d.memberships.filter(isRecord):[];
+ const opportunities=Array.isArray(d.opportunities)?d.opportunities.filter(isRecord):[];
+ const actions=Array.isArray(d.evidenceActions)?d.evidenceActions.filter(isRecord):[];
+ const boundaries=Array.isArray(d.boundaries)?d.boundaries.filter(x=>typeof x==="string"):[];
+ $("#orgName").textContent=String(org.name??"Organization record unavailable");
+ $("#orgMeta").textContent=[org.type,org.area,org.id].filter(x=>x!==null&&x!==undefined).map(String).join(" · ")||"Organization details not supplied";
+ $("#orgScope").textContent=org.workspaceRole||org.scope?"Workspace role: "+String(org.workspaceRole??"Not supplied")+" · "+String(org.scope??"Scope not supplied"):"Organization authority and scope are not established.";
+ $("#orgIdentity").textContent="Identity: "+String(org.identity??"Not established");
+ $("#memberships").textContent=String(summary.membershipClaims??"Not supplied");
+ $("#reviewClaims").textContent=String(summary.claimsNeedingReview??"Not supplied");
+ $("#opportunities").textContent=String(summary.opportunityProposals??"Not supplied");
+ $("#evidenceActions").textContent=String(summary.evidenceActions??"Not supplied");
+ $("#membershipList").innerHTML=memberships.length?memberships.map(x=>'<article class="item"><div class="itemtop"><strong>'+h(x.id)+'</strong><span class="state '+(x.state==="Disputed"?"red":"")+'">'+h(x.state)+'</span></div><small>'+h(x.note)+'</small><small>Affiliation verification: '+h(x.verification)+'</small></article>').join(""):'<p class="muted">No synthetic membership records are available. No affiliation is inferred.</p>';
+ $("#opportunityList").innerHTML=opportunities.length?opportunities.map(x=>'<article class="item"><div class="itemtop"><strong>'+h(x.name)+'</strong><span class="state">'+h(x.state)+'</span></div><small>'+h(x.id)+' · '+h(x.source)+'</small><small>Outstanding: '+h(x.blocker)+'</small></article>').join(""):'<p class="muted">No synthetic opportunity proposals are available. No opportunity is inferred.</p>';
+ $("#actionList").innerHTML=actions.length?actions.map(x=>'<div class="action"><b>'+h(x.area)+'<br><span style="color:#9a6518;font-weight:700">'+h(x.state)+'</span></b><span>'+h(x.action)+'</span></div>').join(""):'<p class="muted">No evidence actions are supplied. Review remains unestablished.</p>';
+ $("#boundaries").innerHTML=boundaries.length?boundaries.map(x=>'<div class="principle"><span>'+h(x)+'</span></div>').join(""):'<p class="muted">No boundary fixtures are available. Do not infer authority or access.</p>';
+}
+render();
 </script></body></html>
