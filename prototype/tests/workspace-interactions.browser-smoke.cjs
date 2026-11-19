@@ -879,6 +879,54 @@ async function main() {
 
     passed.push("HTML-escape helper hostile-string and nullish-value checks across all 11 workspaces");
 
+    // UI-008: tournament renderer sinks receive hostile but synthetic fixture values.
+    const hostileTournamentText = '<img id="ui008-tournament-injection" src=x onerror=alert(1)>';
+    await page.goto(origin + "/tournament-manager.html", { waitUntil: "load" });
+    await page.locator('[data-section="division"]').click();
+    await page.locator("#divisionName").fill(hostileTournamentText);
+    await page.locator("#divisionForm button[type=submit]").click();
+    assert.equal(await page.locator("#divisionTable #ui008-tournament-injection").count(), 0,
+      "Tournament Manager division labels must not create injected elements");
+    assert.ok((await page.locator("#divisionTable").innerText()).includes(hostileTournamentText),
+      "Tournament Manager division labels must remain literal text");
+
+    await page.goto(origin + "/tournament-day-operations.html", { waitUntil: "load" });
+    await page.locator('[data-section="reports"]').click();
+    await page.locator("#reportSummary").fill(hostileTournamentText);
+    await page.locator("#reportForm button[type=submit]").click();
+    assert.equal(await page.locator("#reportTable #ui008-tournament-injection").count(), 0,
+      "Tournament Day report summaries must not create injected elements");
+    assert.ok((await page.locator("#reportTable").innerText()).includes(hostileTournamentText),
+      "Tournament Day report summaries must remain literal text");
+
+    await page.goto(origin + "/tournament-organizer-portal.html", { waitUntil: "load" });
+    for (const id of ["organizerName", "tournamentName", "editionLabel", "locality"]) {
+      await page.locator("#" + id).evaluate(el => el.removeAttribute("pattern"));
+    }
+    await page.locator("#organizerName").fill(hostileTournamentText);
+    await page.locator("#tournamentName").fill(hostileTournamentText);
+    await page.locator("#editionLabel").fill("DEMO-2027-Edition");
+    await page.locator("#locality").fill("DEMO-Sedibeng");
+    await page.locator("#submissionForm button[type=submit]").click();
+    assert.equal(await page.locator("#organizerRows #ui008-tournament-injection").count(), 0,
+      "Organizer Portal organizer labels must not create injected elements");
+    assert.ok((await page.locator("#organizerRows").innerText()).includes(hostileTournamentText),
+      "Organizer Portal organizer labels must remain literal text");
+    assert.equal(await page.locator("#ledgerCards #ui008-tournament-injection").count(), 0,
+      "Organizer Portal ledger cards must not create injected elements");
+
+    await page.goto(origin + "/tournament-stat-reconciliation.html?testMode=1", { waitUntil: "load" });
+    await page.evaluate(hostile => {
+      window.__SCOUTSA_TEST_INJECT_EVENT__(0, { metric: hostile, review: hostile, sourceId: hostile });
+    }, hostileTournamentText);
+    assert.equal(await page.locator("#eventRows #ui008-tournament-injection").count(), 0,
+      "Stat Reconciliation event values must not create injected elements");
+    assert.ok((await page.locator("#eventRows").innerText()).includes(hostileTournamentText),
+      "Stat Reconciliation event values must remain literal text");
+    assert.equal(await page.locator("#findingRows #ui008-tournament-injection").count(), 0,
+      "Stat Reconciliation findings must not create injected elements");
+    passed.push("Tournament Manager, Day Operations, Organizer Portal and Stat Reconciliation hostile renderer fixtures remain inert text");
+
     assert.deepEqual(errors, [], "browser must not emit uncaught page or console errors");
     process.stdout.write(passed.map((name, index) => "PASS " + (index + 1) + " — " + name).join("\n") +
       "\nWORKSPACE INTERACTION BROWSER SMOKE RESULT: " + passed.length + "/" + passed.length + " groups passed\n");
