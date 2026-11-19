@@ -40,7 +40,7 @@ jobs:
         run: npm install --no-save --no-package-lock playwright@1.56.1
       - name: Install Chromium for browser smoke test
         timeout-minutes: 7
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
       - name: Run all browser smoke tests and report every failure
         timeout-minutes: 8
         shell: bash
