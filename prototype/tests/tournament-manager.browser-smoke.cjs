@@ -80,8 +80,36 @@ test('tournament manager imports organizer portal package by stable IDs and skip
     const afterState = await exportSessionState();
     assert.deepEqual(afterState, beforeState, name + ' must leave the complete exported session state unchanged');
   };
+  await page.evaluate(() => window.__SCOUTSA_TEST_SET_OPERATIONAL_DECISION__('EDT-ORG-DEMO-501', { authority: 'human-decision-preserved-demo', feature: 'withdrawn' }));
+  await page.locator('#organizerHandoffFile').setInputFiles({ name: 'handoff.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(pkg)) });
+  await page.locator('#importOrganizerHandoff').click();
+  await page.waitForFunction(() => /Imported 0 tournament edition\\(s\\); skipped 1 duplicate/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+  const preservedDecision = (await exportSessionState()).events.find(event => event.editionId === 'EDT-ORG-DEMO-501');
+  assert.equal(preservedDecision.authority, 'human-decision-preserved-demo', 'duplicate source import must not overwrite an existing human authority decision');
+  assert.equal(preservedDecision.feature, 'withdrawn', 'duplicate source import must not restore a withdrawn operational permission');
   await assertRejectedImport('altered-duplicate-content.json', { ...pkg, submissions: [{ ...pkg.submissions[0], summary: 'DEMO-altered-summary' }] });
   await assertRejectedImport('reused-submission-id-new-edition.json', { ...pkg, submissions: [{ ...pkg.submissions[0], tournamentId: 'TRN-ORG-DEMO-599', editionId: 'EDT-ORG-DEMO-599' }] });
+  const collisionPage = await browser.newPage();
+  try {
+    await collisionPage.goto('file://' + path.resolve('prototype/tournament-manager.html') + '?testMode=1');
+    await collisionPage.locator('[data-section="records"]').click();
+    const beforeCollision = await collisionPage.evaluate(() => window.__SCOUTSA_TEST_SNAPSHOT__());
+    const collisionPackage = {
+      contractVersion: '1.0',
+      sourceSystem: 'scoutsa-organizer-portal',
+      organizers: [{ id: 'ORG-DEMO-001', name: 'DEMO-Conflicting-Organizer', type: 'Community organization', identity: 'unverified', authority: 'unverified' }],
+      submissions: [{ id: 'SUB-DEMO-001', tournamentId: 'TRN-DEMO-001', editionId: 'EDT-DEMO-001', organizerId: 'ORG-DEMO-001', name: 'DEMO-Conflicting-Cup', edition: 'DEMO-2026-Edition', locality: 'DEMO-Sedibeng', format: '11-a-side', status: 'pending-review' }],
+      evidence: [],
+      features: []
+    };
+    await collisionPage.locator('#organizerHandoffFile').setInputFiles({ name: 'existing-edition-conflict.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(collisionPackage)) });
+    await collisionPage.locator('#importOrganizerHandoff').click();
+    await collisionPage.waitForFunction(() => /^Import rejected:/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+    const afterCollision = await collisionPage.evaluate(() => window.__SCOUTSA_TEST_SNAPSHOT__());
+    assert.deepEqual(afterCollision, beforeCollision, 'an existing edition without a matching source submission must not be silently treated as an exact duplicate');
+  } finally {
+    await collisionPage.close();
+  }
   await assertRejectedImport('malformed.json', '{not-json');
   await assertRejectedImport('null-record.json', { ...pkg, organizers: [null] });
   const incompleteOrganizer = { ...pkg.organizers[0] }; delete incompleteOrganizer.type;
