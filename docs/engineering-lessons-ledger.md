@@ -440,3 +440,20 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Detective control:** Include timeout diagnostics with the actual UI message and test the predicate against representative result strings.
 - **Regression / verification:** Regex corrected; exact-head rerun pending.
 - **Residual risk:** A correct predicate does not prove the business behaviour; inspect both resulting UI message and persisted state snapshot.
+
+
+### LESSON-025 — One browser failure must not hide independent regression results
+- **Status:** Derived
+- **Date discovered:** 2026-11-19
+- **Source project:** ScoutSA
+- **Source artifact:** `.github/workflows/prototype-policy-tests.yml`; OPA-019
+- **Commit / CI run / issue:** Workflow correction `91a35652e63a812ae4f146cb1d862111d5507429`; exact-head CI pending
+- **Severity and rationale:** Moderate; fail-fast sequencing reduces diagnostic coverage and can leave independent regressions undiscovered.
+- **Applicability:** CI workflows with independent test suites
+- **Failure mode:** A single failing browser suite causes every later suite to be skipped.
+- **Observed evidence:** Tournament Manager failure in run `44510341187` prevented later browser suites from executing.
+- **Root cause:** Each suite was a separate fail-fast step in one sequential job.
+- **Preventive control:** Run independent suites in a bounded loop or parallel matrix while preserving a non-zero aggregate exit status.
+- **Detective control:** Publish per-suite outcomes and ensure the final workflow fails if any suite fails.
+- **Regression / verification:** New bounded loop committed; exact-head CI execution pending.
+- **Residual risk:** A batch timeout may still terminate remaining tests; inspect logs and per-test outcomes.
