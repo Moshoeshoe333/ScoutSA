@@ -78,6 +78,32 @@ async function main() {
       if (message.type() === "error") errors.push("console: " + message.text());
     });
 
+    // UI-008: player preview state must use text nodes, including an unknown enum.
+    await page.goto(origin + "/scoutsa-player-preview.html", { waitUntil: "load" });
+    await page.locator('input[name="visibility"][value="named"]').check();
+    assert.match(await page.locator("#visibilityState").innerText(), /Named-recipient sample/);
+    await page.evaluate(() => {
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = "visibility";
+      input.value = '<img id="ui008-preview-injection" src=x onerror="window.__ui008PreviewXss=1">';
+      input.checked = true;
+      document.querySelector('input[name="visibility"]').parentElement.append(input);
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+    assert.match(await page.locator("#visibilityState").innerText(), /Unrecognized visibility state/,
+      "unknown visibility enum must retain a blocked state");
+    assert.equal(await page.locator("#ui008-preview-injection").count(), 0,
+      "unknown visibility value must not create markup");
+    assert.equal(await page.evaluate(() => window.__ui008PreviewXss || false), false,
+      "unknown visibility value must not execute markup handlers");
+    await page.locator("#guardianApprove").click();
+    assert.match(await page.locator("#visibilityState").innerText(), /not real consent/i,
+      "sample approval must remain explicitly non-consensual");
+    assert.equal(await page.locator("#ui008-preview-injection").count(), 0,
+      "approval status must be rendered as text, not parsed HTML");
+    passed.push("Player preview state uses DOM text nodes and fails closed on unknown visibility values");
+
     // 1. Player Passport: player selection, tab state and contextual handoff.
     await page.goto(origin + "/player-passport.html", { waitUntil: "load" });
     const passportOptions = await page.locator("#playerSelect option").count();
