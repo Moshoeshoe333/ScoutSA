@@ -674,7 +674,7 @@ Run #698 does not close the deliberate TM-013 assertion-failure injection or any
 - Import outcome now reports added/skipped counts for organizers, submissions, evidence and features, plus tournament editions.
 - Parsing/validation/commit errors are reported as pre-commit rejection. A later rendering failure is reported as committed-but-view-refresh-failed.
 - Duplicate edition equivalence now includes deterministic `venueId` and `importSource`; operational decision fields remain excluded.
-- Browser regression scenarios cover side-collection-only import, injected refresh failure, and corrupted deterministic metadata replay. These scenarios are committed but not yet executed in this session.
+- Browser regression scenarios cover side-collection-only import, injected refresh failure, corrupted deterministic metadata replay, and reordered-key replay. The exact-head browser run executed the suite but failed at the reordered-key wait assertion (OPA-018); no successful completion of the new cases is yet established.
 - **Verification boundary:** No browser tests or hosted workflow were run here. Do not mark OPA-013/014/015 closed until exact-head CI passes and the failure-injection scenarios are observed. OPA-016 remains a non-ratified design proposal.
 
 
@@ -687,3 +687,10 @@ Run #698 does not close the deliberate TM-013 assertion-failure injection or any
 - **Preventive / detective control:** Replay the same organizer claim with reversed property insertion order and assert it is counted as an exact skip.
 - **Status:** Canonical comparison and browser regression scenario committed on `prototype/internal-demo`; exact-head execution pending.
 - **Limitation:** This is deterministic serialization for the current JSON data model, not a cryptographic digest or a complete cross-language canonicalization standard.
+
+
+### OPA-018 — Browser replay assertion regex mismatch
+- **Evidence:** Run `44510341187` passed headless tests, browser installation, and five preceding browser suites; Tournament Manager failed at line 75 with a 3-second wait timeout.
+- **Root cause:** Wait predicate used an over-escaped plus sign, so it searched for a literal backslash rather than the intended literal plus.
+- **Correction:** Replaced the wait predicate with the same regex semantics as the assertion and raised that wait to five seconds.
+- **Status:** Corrected in commit `bff7bf91dae02205670520f08160147e77a25a01`; rerun pending. Do not close OPA-013/014/015/017 until exact-head browser suite passes.
