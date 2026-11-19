@@ -133,6 +133,26 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   } finally {
     await collisionPage.close();
   }
+
+  // OPA-015: deterministic importer metadata is part of duplicate identity.
+  const metadataPage = await browser.newPage();
+  try {
+    await metadataPage.goto('file://' + path.resolve('prototype/tournament-manager.html') + '?testMode=1');
+    const beforePackage = Buffer.from(JSON.stringify(pkg));
+    await metadataPage.locator('#organizerHandoffFile').setInputFiles({ name: 'metadata-baseline.json', mimeType: 'application/json', buffer: beforePackage });
+    await metadataPage.locator('#importOrganizerHandoff').click();
+    await metadataPage.waitForFunction(() => /Import committed/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+    const beforeCorrupt = await metadataPage.evaluate(() => window.__SCOUTSA_TEST_SNAPSHOT__());
+    await metadataPage.evaluate(() => window.__SCOUTSA_TEST_CORRUPT_IMPORT_METADATA__('EDT-ORG-DEMO-501', 'venueId', 'VEN-CORRUPTED'));
+    const corruptedState = await metadataPage.evaluate(() => window.__SCOUTSA_TEST_SNAPSHOT__());
+    await metadataPage.locator('#organizerHandoffFile').setInputFiles({ name: 'metadata-replay.json', mimeType: 'application/json', buffer: beforePackage });
+    await metadataPage.locator('#importOrganizerHandoff').click();
+    await metadataPage.waitForFunction(() => /^Import rejected before commit:/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+    assert.deepEqual(await metadataPage.evaluate(() => window.__SCOUTSA_TEST_SNAPSHOT__()), corruptedState, 'replay must reject corrupted deterministic venue metadata without mutation');
+    assert.notDeepEqual(corruptedState, beforeCorrupt, 'the deliberate corruption must be present in the test fixture');
+  } finally {
+    await metadataPage.close();
+  }
   await assertRejectedImport('malformed.json', '{not-json');
   await assertRejectedImport('null-record.json', { ...pkg, organizers: [null] });
   const incompleteOrganizer = { ...pkg.organizers[0] }; delete incompleteOrganizer.type;
