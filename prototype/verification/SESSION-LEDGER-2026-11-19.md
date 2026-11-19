@@ -229,3 +229,16 @@ The later documentation commits record the preflight stop and its process mitiga
 
 **Next session:** Resume by obtaining a clean detached worktree at the exact required baseline, proving SHA and clean status, then continue the previously authorized adversarial test order. Keep the successful hosted regression checkpoint as a separate evidence track.
 
+
+
+## 9. Final handoff snapshot — pause for next session
+
+After the hosted-run evidence was recorded, the prototype README's browser-script count was corrected from ten to eleven based on the actual workflow command list and logs.
+
+The latest verified documentation commit before this final ledger append was:
+[`9292ca0545b800e759931548e9ebf2443e2d2cc3`](https://github.com/Moshoeshoe333/ScoutSA/commit/9292ca0545b800e759931548e9ebf2443e2d2cc3).
+
+A fresh baseline comparison immediately before this final append reported the branch eight commits ahead of `a7122b1767676a4af064c7b774f60a8affc05656`, zero commits behind. The additional commits since the six-ahead checkpoint in §8 were documentation-only ledger/README updates. No AUD runtime verification was executed during this session.
+
+**Handoff state:** The evidence ledger is current through the successful hosted regression run at `7a0adf7fa70d7c4d7f02e4259199350d9742604a` and the preflight stop. Tomorrow's first task remains the detached-worktree preflight at the immutable required baseline. Do not resume the AUD test sequence until the exact SHA and clean working tree are demonstrated.
+
