@@ -630,3 +630,40 @@ Run #698 does not close the deliberate TM-013 assertion-failure injection or any
 - **Verification:** Pending exact-head hosted workflow. Do not close this incident until all 121 headless tests and all ten configured browser smoke steps pass on the final branch head.
 - **Residual risk:** This does not resolve semantic duplicate competitions across different IDs, organizer identity conflicts, permission revocation/supersession, evidence expiry policy, trusted authority or production persistence/transactions.
 - **Status:** Correction and regression scenarios committed; hosted verification pending.
+
+### OPA-013 — Import result omits side-collection mutations
+- **Detected:** 2026-11-19
+- **Severity:** Moderate — user-facing operation result can under-report state changes.
+- **Evidence:** `prototype/tournament-manager.html` merges organizer, submission, evidence and feature claims, but `importOrganizerPackage` returns only submission-derived `added`/`skipped` counts; the UI message reports tournament edition counts only.
+- **Impact:** A package with zero new editions can still add source claims while the UI reports zero editions imported. A duplicate edition can also carry newly added evidence claims without disclosing that mutation.
+- **Required correction:** Return and display per-collection added/skipped counts. Add tests for zero-submission packages and duplicate editions carrying new evidence/organizer claims.
+- **Status:** Static source finding; runtime reproduction and correction pending.
+
+### OPA-014 — Post-commit refresh failure can be reported as import rejection
+- **Detected:** 2026-11-19
+- **Severity:** Moderate — the UI can contradict already-mutated session state.
+- **Evidence:** The import click handler wraps `importOrganizerPackage(pkg)`, `refresh()` and success messaging in one `try/catch`. The importer mutates arrays before `refresh()` runs.
+- **Impact:** If refresh throws after mutation, the catch reports “Import rejected” although the state may have changed.
+- **Required correction:** Separate import/commit errors from post-commit rendering errors. Report a committed import with a failed refresh distinctly; add a controlled refresh-failure test and full-state snapshot.
+- **Status:** Static control-flow finding; failure injection and correction pending.
+
+### OPA-015 — Duplicate comparison omits deterministic importer metadata
+- **Detected:** 2026-11-19
+- **Severity:** Low to moderate — altered derived metadata can remain undetected on replay.
+- **Evidence:** The duplicate expected projection omits deterministic `venueId` and `importSource`, although both are assigned when a new event is created.
+- **Impact:** A changed/corrupted value in either field does not prevent the package from being treated as an exact duplicate.
+- **Required correction:** Include deterministic importer-derived provenance fields in the duplicate projection; continue excluding operational human-decision fields such as `authority` and `feature`.
+- **Status:** Static source finding; regression test pending.
+
+### OPA-016 — Mutable source claims lack a revision/supersession protocol
+- **Detected:** 2026-11-19
+- **Severity:** High for workflow completeness and auditability; no unauthorized promotion was observed.
+- **Evidence:** Existing claim IDs are compared by `JSON.stringify` and changed content is rejected. The Organizer Portal updates an existing feature record's status in place under the same ID.
+- **Impact:** A permission withdrawal/status change under a stable feature ID is rejected by the Manager. Evidence status changes under a stable evidence ID are likewise rejected. New IDs can avoid the conflict but no explicit supersedes/revokes relationship or attributable history exists.
+- **Required correction:** Ratify an append-only revision/event model with stable subject ID, revision/event ID, supersedes/revokes reference, actor/time/source provenance and separation from operational authority. Do not silently overwrite or promote claims.
+- **Status:** Static integration/domain finding; withdrawal/expiry regression scenarios pending.
+
+**Additional lower-priority observations (not yet assigned separate OPA IDs):**
+- Claim equality via `JSON.stringify` is property-order-sensitive and can reject semantically equivalent JSON objects. Define exact-byte versus canonical semantic equality before changing it.
+- `validDemoId` permits repeated/trailing hyphens in the suffix; tighten only against a ratified grammar.
+- Uniqueness of `tournamentId` within one package may prevent multiple editions under one competition ID. This remains a domain question, not a confirmed defect.
