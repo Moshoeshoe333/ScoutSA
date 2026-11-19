@@ -104,13 +104,13 @@ async function main() {
 
     // UI-008: externally sourced research links accept HTTPS only.
     await page.goto(origin + "/vaal-ecosystem-coverage.html", { waitUntil: "load" });
-    const originalSource = await page.locator("#rows a.source").first().getAttribute("href");
+    const originalSource = await page.locator("#rows tr:first-child a.source").getAttribute("href");
     assert.match(originalSource, /^https:\/\//, "seed research source must be HTTPS");
     await page.evaluate(() => {
       teams[0][4] = "javascript:window.__ui008SourceXss=1";
       render();
     });
-    assert.equal(await page.locator("#rows a.source").count(), 0,
+    assert.equal(await page.locator("#rows tr:first-child a.source").count(), 0,
       "javascript: source must not become a clickable link");
     assert.match(await page.locator("#rows tr").first().innerText(), /Source unavailable/,
       "rejected source must be explained without creating a link");
@@ -120,13 +120,13 @@ async function main() {
       teams[0][4] = "http://example.invalid/report";
       render();
     });
-    assert.equal(await page.locator("#rows a.source").count(), 0,
+    assert.equal(await page.locator("#rows tr:first-child a.source").count(), 0,
       "plain HTTP source must not become a clickable link");
     await page.evaluate(original => {
       teams[0][4] = original;
       render();
     }, originalSource);
-    const safeSource = page.locator("#rows a.source").first();
+    const safeSource = page.locator("#rows tr:first-child a.source");
     assert.match(await safeSource.getAttribute("href"), /^https:\/\//);
     assert.match(await safeSource.getAttribute("rel"), /noopener/);
     assert.match(await safeSource.getAttribute("rel"), /noreferrer/);
