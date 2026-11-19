@@ -74,18 +74,17 @@ The preview reads the current page URL, and its WhatsApp action uses a fixed `ht
 
 ## Latest hosted verification checkpoint
 
-Hosted workflow [#44535391937](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44535391937) passed against exact code-and-test commit `42d207792df624ae927b2a138c73eddeb281f431` on `prototype/internal-demo`. It includes the tournament renderer hostile-fixture regressions described below. The earlier workflow [#44532148414](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44532148414) remains the prior baseline.
+Hosted workflow [#44544589481](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44544589481) passed against exact code-and-test commit `7a0adf7fa70d7c4d7f02e4259199350d9742604a` on `prototype/internal-demo`.
 
 - 121/121 headless tests passed.
-- 8/8 general browser smoke groups passed.
+- 8/8 Discovery & Request Review browser groups passed.
 - 8/8 hub/navigation groups passed.
-- 20/20 specialist workspace interaction groups passed.
+- All ten configured Playwright/Chromium browser smoke scripts completed successfully.
+- The specialist workspace interaction suite passed 23/23 groups, including the new Opportunity stage-attribute injection regression and Player Passport malformed-collection, malformed-row, invalid-date and unknown-player regressions.
+- Existing player-preview unknown-enum, Vaal HTTPS-only source-link, coach/matching malformed-fixture, hostile renderer and tournament regression checks remained green.
 - TM-013 deliberate assertion-failure cleanup test passed.
-- Player-preview unknown-enum, Vaal HTTPS-only source-link, coach malformed-fixture and matching malformed-fixture regressions passed.
-- New tournament renderer checks passed for hostile division labels, report summaries, organizer labels and reconciliation event values; each remained inert text with no injected element created.
-- The specialist workspace interaction browser suite passed 21/21 groups, including the new tournament group.
 
-The earlier failed runs in this pass exposed test-harness defects (a hidden control and an assertion that counted unrelated rows), which were corrected. They were not counted as successful verification. This passing run is the exact evidence for the code and tests listed above.
+This exact run is regression evidence for the code and tests on commit `7a0adf7`; it is not production security or safeguarding certification.
 
 ## Tournament workspace review — 19 November 2026
 
@@ -104,3 +103,13 @@ The first run of the new test failed because the test did not select a tournamen
 ## Boundaries
 
 All fixtures are synthetic. This work does not establish production security, authentication, authorization, POPIA compliance, safeguarding effectiveness, identity verification, accessibility conformance or legal compliance. No real player or guardian data should be entered.
+
+
+## Player Passport and Opportunity stage follow-up — 19 November 2026
+
+The exact code-and-test checkpoint `7a0adf7fa70d7c4d7f02e4259199350d9742604a` adds two bounded UI-008 regression areas:
+
+1. **Player Passport:** the renderer now normalizes missing/non-array collections, excludes malformed collection rows, safely displays supported scalar values, marks invalid timeline dates as unavailable, provides explicit empty states, and avoids creating a player handoff for an unknown or malformed Passport record. The browser regression exercises hostile text in profile, claim and membership values alongside malformed rows, missing collections, invalid dates and an unknown key.
+2. **Opportunity Register:** the browser regression injects a value containing an attribute break-out, event-handler text and HTML markup into the rendered stage value. It asserts that the value remains in the intended `data-stage` attribute, is displayed as literal text, creates no extra element or event-handler attribute and executes no handler. The Opportunity page implementation was unchanged in this checkpoint; this is evidence for its existing escaping behavior.
+
+The assignment count remains **55 `.innerHTML =` assignments across 15 pages**. The new tests do not close UI-008: output-context review and dedicated hostile fixtures for every material assignment remain outstanding. The exact code-and-test evidence is hosted run [#44544589481](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44544589481).
