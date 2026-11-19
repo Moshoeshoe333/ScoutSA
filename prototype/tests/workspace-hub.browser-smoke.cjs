@@ -58,6 +58,21 @@ async function main() {
     assert.equal(hubResponse.status(), 200, "workspace hub must load");
     const cards = page.locator(".workspace-card");
     assert.equal(await cards.count(), 11, "hub must expose exactly eleven specialist workspace cards");
+    const guidedLink = page.locator("#guidedDemoLink");
+    assert.equal(await guidedLink.getAttribute("href"), "./demo-journey.html",
+      "hub must expose the guided demo entry point");
+    await guidedLink.click();
+    await page.waitForLoadState("load");
+    assert.match(await page.locator("h1").innerText(), /One player journey\. Every gate visible/);
+    assert.equal(await page.locator(".step").count(), 6,
+      "guided walkthrough must present six ordered steps");
+    const journeyLinks = await page.locator(".step a.link").evaluateAll(nodes => nodes.map(node => node.getAttribute("href")));
+    assert.equal(journeyLinks.length, 6, "each walkthrough step must link to its specialist screen");
+    for (const href of journeyLinks) {
+      const response = await page.request.get(new URL(href, page.url()).toString());
+      assert.equal(response.status(), 200, "walkthrough destination must resolve: " + href);
+    }
+    await page.goto(hub, { waitUntil: "load" });
 
     // The hub's own navigation and primary call-to-action must be live.
     await page.locator('button[data-view="workspaces"]').click();
@@ -149,7 +164,7 @@ async function main() {
     // Mobile viewport check across the hub and all specialist workspaces.
     const mobileWidths = [];
     await page.setViewportSize({ width: 390, height: 844 });
-    for (const file of ["index.html", ...expected]) {
+    for (const file of ["index.html", "demo-journey.html", ...expected]) {
       await page.goto(origin + "/" + file, { waitUntil: "load" });
       const dimensions = await page.evaluate(() => {
         const viewport = document.documentElement.clientWidth;
