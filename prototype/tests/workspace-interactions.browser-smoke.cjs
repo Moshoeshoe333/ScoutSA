@@ -883,6 +883,7 @@ async function main() {
     const hostileTournamentText = '<img id="ui008-tournament-injection" src=x onerror=alert(1)>';
     await page.goto(origin + "/tournament-manager.html", { waitUntil: "load" });
     await page.locator('[data-section="division"]').click();
+    await page.locator("#divisionEvent").selectOption({ index: 1 });
     await page.locator("#divisionName").fill(hostileTournamentText);
     await page.locator("#divisionForm button[type=submit]").click();
     assert.equal(await page.locator("#divisionTable #ui008-tournament-injection").count(), 0,
