@@ -457,3 +457,15 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Detective control:** Publish per-suite outcomes and ensure the final workflow fails if any suite fails.
 - **Regression / verification:** New bounded loop committed; exact-head CI execution pending.
 - **Residual risk:** A batch timeout may still terminate remaining tests; inspect logs and per-test outcomes.
+
+
+### LESSON-024 — Pin adversarial verification to an immutable commit, not a moving branch
+
+- **Failure mode:** A verification request names both a branch and a required baseline, but the branch advances before execution. An executor may test the wrong revision or confuse a remote branch reference with a local checkout.
+- **Observed evidence:** On 19 November 2026, `prototype/internal-demo` was two commits ahead of required baseline `a7122b1767676a4af064c7b774f60a8affc05656`, at `4ecafa1d6e991832de8a59f0eedc0ff0af3a7d99`. The intervening comparison included changes to `prototype/player-passport.html` and `prototype/tests/workspace-interactions.browser-smoke.cjs`, as well as documentation. The available execution environment had no ScoutSA Git checkout. The controlled audit correctly stopped; zero AUD runtime tests ran.
+- **Root cause:** The verification environment did not contain an isolated checkout pinned to the immutable authorized SHA. A branch name is a mutable reference and cannot substitute for a commit identity.
+- **Preventive control:** Treat the required full commit SHA as the controlling target. Fetch that commit and use a separate detached worktree. Never reset, switch, stash or test the existing working branch to satisfy a baseline requirement.
+- **Detective control:** Before execution, assert exact `git rev-parse HEAD`, empty `git status --porcelain=v1`, record the branch/worktree context and compare the remote branch ref to the authorized SHA. Stop if the immutable target or clean state cannot be demonstrated.
+- **Regression / verification:** The 19 November preflight stop is recorded in `prototype/verification/SESSION-LEDGER-2026-11-19.md`. The detached-worktree recovery procedure is documented there. Runtime verification remains pending; this lesson does not claim that the procedure has yet been executed successfully.
+- **Residual risk:** A clean detached checkout proves revision identity and initial cleanliness, not test completeness, dependency integrity, runtime correctness or final repository integrity. Those require their own evidence.
+- **Status:** OPEN — procedural control documented; baseline runtime verification pending.
