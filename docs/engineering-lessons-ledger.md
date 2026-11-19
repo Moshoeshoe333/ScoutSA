@@ -365,3 +365,21 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Preventive / detective control:** Test a duplicate primary entity carrying a new side-collection record and assert the message discloses it.
 - **Regression verification:** Scenario committed; exact-head execution pending.
 - **Residual risk and limitations:** Counts do not prove authenticity, authority, or downstream correctness.
+
+
+### LESSON-023 — Compare structured claims canonically, not by incidental object insertion order
+- **Status:** Derived
+- **Date discovered:** 2026-11-19
+- **Source project:** ScoutSA
+- **Source artifact:** `prototype/tournament-manager.html`; OPA-017
+- **Commit / CI run / issue:** Branch `prototype/internal-demo`; exact-head browser execution pending
+- **Severity and rationale:** Low to moderate; false conflict on a valid idempotent replay.
+- **Applicability:** General for JSON-based imports and synchronization
+- **Event:** Same-ID source claims were compared using raw `JSON.stringify`.
+- **Expected behaviour:** Semantically equivalent JSON objects should compare equally when object-key order is not part of the contract.
+- **Actual behaviour:** Property insertion order could produce different serialized strings.
+- **Root cause:** Serialization representation was mistaken for semantic equality.
+- **Corrective action:** Recursively sort object keys before equality comparison; preserve array ordering.
+- **Preventive / detective control:** Replay a claim with reversed object-key insertion order and assert a skip rather than conflict.
+- **Regression verification:** Scenario committed; exact-head execution pending.
+- **Residual risk and limitations:** Current helper is limited to the JSON data model and is not a cryptographic canonicalization standard.
