@@ -157,6 +157,8 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   const metadataPage = await browser.newPage();
   try {
     await metadataPage.goto('file://' + path.resolve('prototype/tournament-manager.html') + '?testMode=1');
+    await metadataPage.locator('[data-section="records"]').click();
+    await metadataPage.locator('#section-records').waitFor({ state: 'visible' });
     const beforePackage = Buffer.from(JSON.stringify(pkg));
     await metadataPage.locator('#organizerHandoffFile').setInputFiles({ name: 'metadata-baseline.json', mimeType: 'application/json', buffer: beforePackage });
     await metadataPage.locator('#importOrganizerHandoff').click();
