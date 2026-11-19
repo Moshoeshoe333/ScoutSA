@@ -127,7 +127,7 @@ A further importer review found that an edition ID already present in the Tourna
 - Before treating an existing edition as an idempotent duplicate, compare the incoming source-derived event fields with the existing imported event. Changed content is rejected instead of silently skipped or overwriting the existing record.
 - Existing operational decision fields (including authority and feature state) are deliberately excluded from the source comparison and are not assigned during the duplicate path; the importer does not promote incoming claims into human decisions.
 
-**New browser scenarios:** exact duplicate remains idempotent; altered summary under the same IDs is rejected; a reused submission ID with a different edition is rejected; the existing complete-state rejection helper checks no mutation; complete submission source records are asserted after export.
+**New browser scenarios:** exact duplicate remains idempotent; altered summary under the same IDs is rejected; a reused submission ID with a different edition is rejected; an existing seeded edition without a matching source submission is rejected with full-state no-mutation; a duplicate import preserves an existing synthetic human-decision sentinel and withdrawn permission state; the existing complete-state rejection helper checks no mutation; complete submission source records are asserted after export. The decision-preservation seam is available only on the synthetic `?testMode=1` page.
 
 **Status:** Correction and regression tests committed; exact-head hosted verification is pending. Do not mark OPA-012 verified until the full workflow passes against the final commit. The test scope remains synthetic and browser-session-only.
 
