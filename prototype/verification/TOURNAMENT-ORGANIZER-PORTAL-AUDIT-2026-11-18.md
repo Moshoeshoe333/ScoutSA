@@ -327,3 +327,6 @@ The following code and regression-test changes have since been committed to the 
 - **OPA-016:** Proposed append-only claim lifecycle contract is documented in `prototype/ORGANIZER-CLAIM-LIFECYCLE-CONTRACT.md`. It remains non-ratified and is not implemented; same-ID content changes continue to fail closed.
 
 **Verification status:** Source changes and test scenarios are committed. No browser test or hosted workflow has been executed as part of this follow-up. Do not call these findings closed until the exact current branch head has a passing configured workflow and the new adversarial cases are observed. No production, safeguarding, privacy or authorization assurance follows from these changes.
+
+
+- **OPA-017:** Same-ID claim comparison now canonicalizes nested object keys before equality checks, avoiding false conflicts from property insertion order while preserving array order. A reordered-key replay scenario is added. Exact-head execution remains pending.
