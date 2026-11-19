@@ -168,7 +168,16 @@ test('tournament manager imports organizer portal package by stable IDs and skip
     const corruptedState = await metadataPage.evaluate(() => window.__SCOUTSA_TEST_SNAPSHOT__());
     await metadataPage.locator('#organizerHandoffFile').setInputFiles({ name: 'metadata-replay.json', mimeType: 'application/json', buffer: beforePackage });
     await metadataPage.locator('#importOrganizerHandoff').click();
-    await metadataPage.waitForFunction(() => /^Import rejected before commit:/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+    try {
+      await metadataPage.waitForFunction(() => /^Import rejected before commit:/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+    } catch (error) {
+      const diagnostic = await metadataPage.evaluate(() => ({
+        message: document.querySelector('#organizerImportMessage')?.textContent || null,
+        corruptedEvent: window.__SCOUTSA_TEST_SNAPSHOT__?.().events.find(event => event.editionId === 'EDT-ORG-DEMO-501') || null,
+        pageTitle: document.title
+      }));
+      assert.fail(`Metadata replay did not reject corrupted deterministic metadata. State=${JSON.stringify(diagnostic)}; cause=${error.message}`);
+    }
     assert.deepEqual(await metadataPage.evaluate(() => window.__SCOUTSA_TEST_SNAPSHOT__()), corruptedState, 'replay must reject corrupted deterministic venue metadata without mutation');
     assert.notDeepEqual(corruptedState, beforeCorrupt, 'the deliberate corruption must be present in the test fixture');
   } finally {
@@ -258,4 +267,3 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   } finally {
     await browser.close();
   }
-});
