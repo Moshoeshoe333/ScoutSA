@@ -104,6 +104,37 @@ async function main() {
       "approval status must be rendered as text, not parsed HTML");
     passed.push("Player preview state uses DOM text nodes and fails closed on unknown visibility values");
 
+    // UI-008: externally sourced research links accept HTTPS only.
+    await page.goto(origin + "/vaal-ecosystem-coverage.html", { waitUntil: "load" });
+    const originalSource = await page.locator("#rows a.source").first().getAttribute("href");
+    assert.match(originalSource, /^https:\/\//, "seed research source must be HTTPS");
+    await page.evaluate(() => {
+      teams[0][4] = "javascript:window.__ui008SourceXss=1";
+      render();
+    });
+    assert.equal(await page.locator("#rows a.source").count(), 0,
+      "javascript: source must not become a clickable link");
+    assert.match(await page.locator("#rows tr").first().innerText(), /Source unavailable/,
+      "rejected source must be explained without creating a link");
+    assert.equal(await page.evaluate(() => window.__ui008SourceXss || false), false,
+      "rejected source scheme must not execute");
+    await page.evaluate(() => {
+      teams[0][4] = "http://example.invalid/report";
+      render();
+    });
+    assert.equal(await page.locator("#rows a.source").count(), 0,
+      "plain HTTP source must not become a clickable link");
+    await page.evaluate(original => {
+      teams[0][4] = original;
+      render();
+    }, originalSource);
+    const safeSource = page.locator("#rows a.source").first();
+    assert.match(await safeSource.getAttribute("href"), /^https:\/\//);
+    assert.match(await safeSource.getAttribute("rel"), /noopener/);
+    assert.match(await safeSource.getAttribute("rel"), /noreferrer/);
+    assert.equal(await safeSource.getAttribute("referrerpolicy"), "no-referrer");
+    passed.push("Vaal ecosystem external source links reject javascript/http and use HTTPS with opener/referrer protections");
+
     // 1. Player Passport: player selection, tab state and contextual handoff.
     await page.goto(origin + "/player-passport.html", { waitUntil: "load" });
     const passportOptions = await page.locator("#playerSelect option").count();
