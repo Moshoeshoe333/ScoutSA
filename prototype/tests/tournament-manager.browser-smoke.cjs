@@ -92,10 +92,6 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await page.locator('#importOrganizerHandoff').click();
   await page.waitForFunction(() => /Import committed\\. Editions: \\+0 \/ skipped 1/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
   assert.match(await page.locator('#organizerImportMessage').textContent(), /Import committed\\. Editions: \\+0 \/ skipped 1/);
-  const exportSessionState = async () => page.evaluate(() => {
-    if (typeof window.__SCOUTSA_TEST_SNAPSHOT__ !== 'function') throw new Error('Test-only state snapshot is unavailable');
-    return window.__SCOUTSA_TEST_SNAPSHOT__();
-  });
   const assertRejectedImport = async (name, payload) => {
     const beforeState = await exportSessionState();
     const before = await page.locator('#countT').textContent();
