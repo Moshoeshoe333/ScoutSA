@@ -267,3 +267,4 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   } finally {
     await browser.close();
   }
+});
