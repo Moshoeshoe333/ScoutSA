@@ -330,3 +330,38 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Preventive / detective control:** Mutate each derived field and assert duplicate replay rejects the mismatch without state mutation.
 - **Regression verification:** Pending.
 - **Residual risk and limitations:** Semantic duplicate identity across different IDs remains unresolved.
+
+
+### LESSON-021 — Stage complete import plans before mutating live state
+- **Status:** Derived
+- **Date discovered:** 2026-11-19
+- **Source project:** ScoutSA
+- **Source artifact:** `prototype/tournament-manager.html`; OPA-013/014
+- **Commit / CI run / issue:** Branch `prototype/internal-demo`; exact-head browser execution pending
+- **Severity and rationale:** High; partial mutation makes outcomes ambiguous and complicates rollback.
+- **Applicability:** General; every multi-collection import, sync, migration and batch mutation
+- **Event:** Import logic validated input, then mutated multiple arrays in sequence.
+- **Expected behaviour:** Build and validate a complete staged result before a single explicit commit boundary.
+- **Actual behaviour:** Mutation could begin before later presentation work, while the UI reported one undifferentiated outcome.
+- **Root cause:** No explicit prepare/commit/report phases.
+- **Corrective action:** Stage all affected collections, commit only after planning succeeds, and keep rendering outside the commit function.
+- **Preventive / detective control:** Full-state snapshots for rejected input; inject post-commit display failure; assert commit state and outcome text independently.
+- **Regression verification:** Scenarios committed; exact-head execution pending.
+- **Residual risk and limitations:** Array replacement is only a synchronous in-memory demo boundary, not a durable database transaction.
+
+### LESSON-022 — Import summaries must account for every affected collection
+- **Status:** Derived
+- **Date discovered:** 2026-11-19
+- **Source project:** ScoutSA
+- **Source artifact:** `prototype/tournament-manager.html`; OPA-013
+- **Commit / CI run / issue:** Branch `prototype/internal-demo`; exact-head browser execution pending
+- **Severity and rationale:** Moderate; incomplete result messages hide material mutations.
+- **Applicability:** General; imports, syncs, bulk operations and multi-entity workflows
+- **Event:** The operation changed organizer, submission, evidence and feature-claim collections but reported only edition counts.
+- **Expected behaviour:** Every affected collection has explicit added/skipped/rejected accounting.
+- **Actual behaviour:** Side-collection changes were invisible in the success message.
+- **Root cause:** User-facing result schema was modelled around the primary entity only.
+- **Corrective action:** Return and render a per-collection outcome map, separately from derived entity counts.
+- **Preventive / detective control:** Test a duplicate primary entity carrying a new side-collection record and assert the message discloses it.
+- **Regression verification:** Scenario committed; exact-head execution pending.
+- **Residual risk and limitations:** Counts do not prove authenticity, authority, or downstream correctness.
