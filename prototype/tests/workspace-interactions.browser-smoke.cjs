@@ -80,6 +80,7 @@ async function main() {
 
     // UI-008: player preview state must use text nodes, including an unknown enum.
     await page.goto(origin + "/scoutsa-player-preview.html", { waitUntil: "load" });
+    await page.locator('[data-go="1"]').click();
     await page.locator('input[name="visibility"][value="named"]').check();
     assert.match(await page.locator("#visibilityState").innerText(), /Named-recipient sample/);
     await page.evaluate(() => {
