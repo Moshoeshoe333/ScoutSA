@@ -330,3 +330,13 @@ The following code and regression-test changes have since been committed to the 
 
 
 - **OPA-017:** Same-ID claim comparison now canonicalizes nested object keys before equality checks, avoiding false conflicts from property insertion order while preserving array order. A reordered-key replay scenario is added. Exact-head execution remains pending.
+
+
+### OPA-018 — Browser replay assertion used an over-escaped regular expression
+- **Detected:** 2026-11-19 in GitHub Actions run 44510341187.
+- **Severity:** Moderate for verification reliability; the test failed to recognize the expected success message.
+- **Evidence:** The browser run passed the headless suite and five earlier browser suites, then timed out at `tournament-manager.browser-smoke.cjs:75`. Inspection showed the wait regex matched a literal backslash before the plus sign.
+- **Impact:** A valid import result could be present while the test timed out; the test failure did not establish importer failure.
+- **Correction:** Corrected the regex to match the literal plus sign and increased this one wait to five seconds.
+- **Preventive control:** Keep wait predicates and final assertions semantically identical; avoid manually double-escaping regex literals.
+- **Verification:** Correction committed as `bff7bf91dae02205670520f08160147e77a25a01`; rerun required. OPA-013/014/015/017 remain unverified by a passing full browser suite.
