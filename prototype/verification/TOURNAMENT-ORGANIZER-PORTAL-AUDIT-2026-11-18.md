@@ -117,3 +117,18 @@ Domain-level adversarial cases remain deliberately unresolved where a ratified r
 ## Final documentation reconciliation checkpoint — run #698
 
 Hosted run [#698](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44326398873) passed on exact prototype head `bcdd4ff4745910e6ff4eea4437edf39b9e075672`, after the audit, engineering-integrity ledger, lessons ledger and README were reconciled. It passed **121/121 headless tests** and all ten configured browser smoke steps under Node.js 22.23.5. This supersedes run #694 as the latest full-workflow checkpoint; run #694 remains the exact code-regression checkpoint for OPA-009–OPA-011 and TM-015. Residual domain and production holds remain unchanged. A subsequent exact-head check, [run #701](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44326714770), passed after this audit/README/integrity reconciliation on commit `e25101038faa39cc4ffb743bc8c2dcc77ea3859f` (121/121 headless tests and all ten browser smoke steps).
+## Follow-up adversarial finding — OPA-012: altered duplicate submission content
+
+A further importer review found that an edition ID already present in the Tournament Manager could be treated as a duplicate based only on its structural links. If the same edition/submission IDs were reused with changed source content (for example, a different summary), the import could be skipped without preserving or explicitly rejecting the changed submission. The original submission record also had no dedicated source-claim collection, unlike the organizer, evidence and feature-permission collections.
+
+**Correction prepared on `prototype/internal-demo`:**
+- Added `organizerSubmissionClaims` to retain complete imported submission records as source claims.
+- Added submission-ID collision detection when a submission ID is reused for a different edition.
+- Before treating an existing edition as an idempotent duplicate, compare the incoming source-derived event fields with the existing imported event. Changed content is rejected instead of silently skipped or overwriting the existing record.
+- Existing operational decision fields (including authority and feature state) are deliberately excluded from the source comparison and are not assigned during the duplicate path; the importer does not promote incoming claims into human decisions.
+
+**New browser scenarios:** exact duplicate remains idempotent; altered summary under the same IDs is rejected; a reused submission ID with a different edition is rejected; the existing complete-state rejection helper checks no mutation; complete submission source records are asserted after export.
+
+**Status:** Correction and regression tests committed; exact-head hosted verification is pending. Do not mark OPA-012 verified until the full workflow passes against the final commit. The test scope remains synthetic and browser-session-only.
+
+**Residual domain questions remain open:** different IDs can still describe the same real-world competition; organizer identity conflicts across distinct IDs; competition/edition identity rules; evidence expiry/revalidation; permission withdrawal/supersession; and authoritative human decision provenance. These require ratified rules and are not solved by structural ID checks.
