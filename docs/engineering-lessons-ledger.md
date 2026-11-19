@@ -423,3 +423,19 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Detective control:** Add adversarial regression cases that compare the visible outcome with a complete before/after state snapshot, including injected failures and replay conflicts.
 - **Regression / verification:** Regression scenarios are committed on prototype/internal-demo; this exact-head hosted run failed in documentation-integrity validation before browser tests, so these scenarios have not yet executed.
 - **Residual risk:** The prototype is synthetic and session-only. These controls do not establish durable transaction guarantees, source authenticity, legal authority or production readiness.
+
+
+### LESSON-024 — A browser wait predicate must match the assertion's actual result semantics
+- **Status:** Derived
+- **Date discovered:** 2026-11-19
+- **Source project:** ScoutSA
+- **Source artifact:** `prototype/tests/tournament-manager.browser-smoke.cjs`; OPA-018
+- **Commit / CI run / issue:** Failure in run `44510341187`; correction commit `bff7bf91dae02205670520f08160147e77a25a01`; rerun pending
+- **Severity and rationale:** Moderate; a test can fail despite a correct application result, blocking later regression coverage.
+- **Applicability:** Browser automation and asynchronous UI tests
+- **Failure mode:** A wait regex can be over-escaped and never match the visible success message.
+- **Observed evidence:** The canonical replay wait timed out because the regex expected a literal backslash before a plus sign.
+- **Preventive control:** Define one shared predicate or reuse equivalent regex semantics for both wait and assertion; avoid separate manually escaped patterns.
+- **Detective control:** Include timeout diagnostics with the actual UI message and test the predicate against representative result strings.
+- **Regression / verification:** Regex corrected; exact-head rerun pending.
+- **Residual risk:** A correct predicate does not prove the business behaviour; inspect both resulting UI message and persisted state snapshot.
