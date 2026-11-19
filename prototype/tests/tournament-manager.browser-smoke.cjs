@@ -116,7 +116,16 @@ test('tournament manager imports organizer portal package by stable IDs and skip
     const buffer = Buffer.isBuffer(payload) ? payload : Buffer.from(typeof payload === 'string' ? payload : JSON.stringify(payload));
     await page.locator('#organizerHandoffFile').setInputFiles({ name, mimeType: 'application/json', buffer });
     await page.locator('#importOrganizerHandoff').click();
-    await page.waitForFunction(() => /^Import rejected before commit:/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+    try {
+      await page.waitForFunction(() => /^Import rejected before commit:/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+    } catch (error) {
+      const diagnostic = await page.evaluate(() => ({
+        message: document.querySelector('#organizerImportMessage')?.textContent || null,
+        tournamentCount: document.querySelector('#countT')?.textContent || null,
+        eventCount: window.__SCOUTSA_TEST_SNAPSHOT__?.().events?.length ?? null
+      }));
+      assert.fail(`Expected pre-commit rejection for ${name}. State=${JSON.stringify(diagnostic)}; cause=${error.message}`);
+    }
     assert.equal(await page.locator('#countT').textContent(), before, name + ' must not change the tournament count');
     const afterState = await exportSessionState();
     assert.deepEqual(afterState, beforeState, name + ' must leave the complete exported session state unchanged');
