@@ -134,6 +134,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   try {
     await collisionPage.goto('file://' + path.resolve('prototype/tournament-manager.html') + '?testMode=1');
     await collisionPage.locator('[data-section="records"]').click();
+    await collisionPage.locator('#section-records').waitFor({ state: 'visible' });
     const beforeCollision = await collisionPage.evaluate(() => window.__SCOUTSA_TEST_SNAPSHOT__());
     const collisionPackage = {
       contractVersion: '1.0',
