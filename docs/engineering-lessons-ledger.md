@@ -279,6 +279,12 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Preventive / detective control:** Tests for zero-submission imports and duplicate editions carrying new side claims.
 - **Regression verification:** Pending exact-head browser execution.
 - **Residual risk and limitations:** Counts alone do not prove claim authenticity or authority.
+- **Failure mode:** The operation's result, replay behaviour or lifecycle semantics can diverge from the actual state change for operation summaries must report every collection changed.
+- **Observed evidence:** Static source inspection and the OPA corrective review identified the mismatch; exact-head runtime verification remains pending.
+- **Preventive control:** Define the complete mutation/result contract before implementation; stage state changes, preserve explicit authority boundaries, and require deterministic comparisons.
+- **Detective control:** Add adversarial regression cases that compare the visible outcome with a complete before/after state snapshot, including injected failures and replay conflicts.
+- **Regression / verification:** Regression scenarios are committed on prototype/internal-demo; this exact-head hosted run failed in documentation-integrity validation before browser tests, so these scenarios have not yet executed.
+- **Residual risk:** The prototype is synthetic and session-only. These controls do not establish durable transaction guarantees, source authenticity, legal authority or production readiness.
 
 ### LESSON-018 — Separate commit outcome from post-commit presentation outcome
 - **Status:** Derived
@@ -296,6 +302,12 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Preventive / detective control:** Inject refresh failure after mutation and compare full state with the UI outcome.
 - **Regression verification:** Pending.
 - **Residual risk and limitations:** This is a synthetic in-memory workflow; it does not prove database transaction behaviour.
+- **Failure mode:** The operation's result, replay behaviour or lifecycle semantics can diverge from the actual state change for separate commit outcome from post-commit presentation outcome.
+- **Observed evidence:** Static source inspection and the OPA corrective review identified the mismatch; exact-head runtime verification remains pending.
+- **Preventive control:** Define the complete mutation/result contract before implementation; stage state changes, preserve explicit authority boundaries, and require deterministic comparisons.
+- **Detective control:** Add adversarial regression cases that compare the visible outcome with a complete before/after state snapshot, including injected failures and replay conflicts.
+- **Regression / verification:** Regression scenarios are committed on prototype/internal-demo; this exact-head hosted run failed in documentation-integrity validation before browser tests, so these scenarios have not yet executed.
+- **Residual risk:** The prototype is synthetic and session-only. These controls do not establish durable transaction guarantees, source authenticity, legal authority or production readiness.
 
 ### LESSON-019 — Stable claim IDs need explicit revision and supersession semantics
 - **Status:** Derived
@@ -313,6 +325,12 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Preventive / detective control:** Test grant→withdrawal, accepted→expired/disputed, and corrected evidence sequences while preserving history and operational decision boundaries.
 - **Regression verification:** Pending.
 - **Residual risk and limitations:** The event model and legal/domain rules must be ratified before implementation.
+- **Failure mode:** The operation's result, replay behaviour or lifecycle semantics can diverge from the actual state change for stable claim ids need explicit revision and supersession semantics.
+- **Observed evidence:** Static source inspection and the OPA corrective review identified the mismatch; exact-head runtime verification remains pending.
+- **Preventive control:** Define the complete mutation/result contract before implementation; stage state changes, preserve explicit authority boundaries, and require deterministic comparisons.
+- **Detective control:** Add adversarial regression cases that compare the visible outcome with a complete before/after state snapshot, including injected failures and replay conflicts.
+- **Regression / verification:** Regression scenarios are committed on prototype/internal-demo; this exact-head hosted run failed in documentation-integrity validation before browser tests, so these scenarios have not yet executed.
+- **Residual risk:** The prototype is synthetic and session-only. These controls do not establish durable transaction guarantees, source authenticity, legal authority or production readiness.
 
 ### LESSON-020 — Idempotency checks must include deterministic importer metadata
 - **Status:** Derived
@@ -330,7 +348,12 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Preventive / detective control:** Mutate each derived field and assert duplicate replay rejects the mismatch without state mutation.
 - **Regression verification:** Pending.
 - **Residual risk and limitations:** Semantic duplicate identity across different IDs remains unresolved.
-
+- **Failure mode:** The operation's result, replay behaviour or lifecycle semantics can diverge from the actual state change for idempotency checks must include deterministic importer metadata.
+- **Observed evidence:** Static source inspection and the OPA corrective review identified the mismatch; exact-head runtime verification remains pending.
+- **Preventive control:** Define the complete mutation/result contract before implementation; stage state changes, preserve explicit authority boundaries, and require deterministic comparisons.
+- **Detective control:** Add adversarial regression cases that compare the visible outcome with a complete before/after state snapshot, including injected failures and replay conflicts.
+- **Regression / verification:** Regression scenarios are committed on prototype/internal-demo; this exact-head hosted run failed in documentation-integrity validation before browser tests, so these scenarios have not yet executed.
+- **Residual risk:** The prototype is synthetic and session-only. These controls do not establish durable transaction guarantees, source authenticity, legal authority or production readiness.
 
 ### LESSON-021 — Stage complete import plans before mutating live state
 - **Status:** Derived
@@ -348,6 +371,12 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Preventive / detective control:** Full-state snapshots for rejected input; inject post-commit display failure; assert commit state and outcome text independently.
 - **Regression verification:** Scenarios committed; exact-head execution pending.
 - **Residual risk and limitations:** Array replacement is only a synchronous in-memory demo boundary, not a durable database transaction.
+- **Failure mode:** The operation's result, replay behaviour or lifecycle semantics can diverge from the actual state change for stage complete import plans before mutating live state.
+- **Observed evidence:** Static source inspection and the OPA corrective review identified the mismatch; exact-head runtime verification remains pending.
+- **Preventive control:** Define the complete mutation/result contract before implementation; stage state changes, preserve explicit authority boundaries, and require deterministic comparisons.
+- **Detective control:** Add adversarial regression cases that compare the visible outcome with a complete before/after state snapshot, including injected failures and replay conflicts.
+- **Regression / verification:** Regression scenarios are committed on prototype/internal-demo; this exact-head hosted run failed in documentation-integrity validation before browser tests, so these scenarios have not yet executed.
+- **Residual risk:** The prototype is synthetic and session-only. These controls do not establish durable transaction guarantees, source authenticity, legal authority or production readiness.
 
 ### LESSON-022 — Import summaries must account for every affected collection
 - **Status:** Derived
@@ -365,7 +394,12 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Preventive / detective control:** Test a duplicate primary entity carrying a new side-collection record and assert the message discloses it.
 - **Regression verification:** Scenario committed; exact-head execution pending.
 - **Residual risk and limitations:** Counts do not prove authenticity, authority, or downstream correctness.
-
+- **Failure mode:** The operation's result, replay behaviour or lifecycle semantics can diverge from the actual state change for import summaries must account for every affected collection.
+- **Observed evidence:** Static source inspection and the OPA corrective review identified the mismatch; exact-head runtime verification remains pending.
+- **Preventive control:** Define the complete mutation/result contract before implementation; stage state changes, preserve explicit authority boundaries, and require deterministic comparisons.
+- **Detective control:** Add adversarial regression cases that compare the visible outcome with a complete before/after state snapshot, including injected failures and replay conflicts.
+- **Regression / verification:** Regression scenarios are committed on prototype/internal-demo; this exact-head hosted run failed in documentation-integrity validation before browser tests, so these scenarios have not yet executed.
+- **Residual risk:** The prototype is synthetic and session-only. These controls do not establish durable transaction guarantees, source authenticity, legal authority or production readiness.
 
 ### LESSON-023 — Compare structured claims canonically, not by incidental object insertion order
 - **Status:** Derived
@@ -383,3 +417,9 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Preventive / detective control:** Replay a claim with reversed object-key insertion order and assert a skip rather than conflict.
 - **Regression verification:** Scenario committed; exact-head execution pending.
 - **Residual risk and limitations:** Current helper is limited to the JSON data model and is not a cryptographic canonicalization standard.
+- **Failure mode:** The operation's result, replay behaviour or lifecycle semantics can diverge from the actual state change for compare structured claims canonically, not by incidental object insertion order.
+- **Observed evidence:** Static source inspection and the OPA corrective review identified the mismatch; exact-head runtime verification remains pending.
+- **Preventive control:** Define the complete mutation/result contract before implementation; stage state changes, preserve explicit authority boundaries, and require deterministic comparisons.
+- **Detective control:** Add adversarial regression cases that compare the visible outcome with a complete before/after state snapshot, including injected failures and replay conflicts.
+- **Regression / verification:** Regression scenarios are committed on prototype/internal-demo; this exact-head hosted run failed in documentation-integrity validation before browser tests, so these scenarios have not yet executed.
+- **Residual risk:** The prototype is synthetic and session-only. These controls do not establish durable transaction guarantees, source authenticity, legal authority or production readiness.
