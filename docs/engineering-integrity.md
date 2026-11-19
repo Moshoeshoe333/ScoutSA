@@ -694,3 +694,10 @@ Run #698 does not close the deliberate TM-013 assertion-failure injection or any
 - **Root cause:** Wait predicate used an over-escaped plus sign, so it searched for a literal backslash rather than the intended literal plus.
 - **Correction:** Replaced the wait predicate with the same regex semantics as the assertion and raised that wait to five seconds.
 - **Status:** Corrected in commit `bff7bf91dae02205670520f08160147e77a25a01`; rerun pending. Do not close OPA-013/014/015/017 until exact-head browser suite passes.
+
+
+### OPA-019 — Preserve independent browser-test diagnostics after an individual failure
+- **Evidence:** Run `44510341187` stopped at the Tournament Manager failure; later browser suites were skipped.
+- **Correction:** Workflow now executes every browser smoke test in a bounded loop, reports each failure, and fails the aggregate step only after all suites have run.
+- **Resource controls:** Chromium installation has a seven-minute step timeout; the browser batch has an eight-minute timeout; each test process is bounded to 90 seconds; overall job timeout is 20 minutes.
+- **Status:** Committed as `91a35652e63a812ae4f146cb1d862111d5507429`; exact-head workflow run pending.
