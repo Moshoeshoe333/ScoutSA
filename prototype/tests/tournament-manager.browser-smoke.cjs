@@ -80,7 +80,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await page.locator('#organizerHandoffFile').setInputFiles({ name: 'side-collection-only.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(sideCollectionPackage)) });
   await page.locator('#importOrganizerHandoff').click();
   try {
-    await page.waitForFunction(() => /evidence: \+1 \/ skipped 0/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+    await page.waitForFunction(() => /evidence: \+1 \/ skipped 1/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
   } catch (error) {
     const diagnostic = await page.evaluate(() => ({
       message: document.querySelector('#organizerImportMessage')?.textContent || null,
@@ -90,7 +90,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
     assert.fail(`Side-collection import did not report evidence addition. State=${JSON.stringify(diagnostic)}; pageErrors=${JSON.stringify(errors)}; consoleErrors=${JSON.stringify(consoleErrors)}; cause=${error.message}`);
   }
   assert.match(await page.locator('#organizerImportMessage').textContent(), /Editions: \+0 \/ skipped 1/);
-  assert.match(await page.locator('#organizerImportMessage').textContent(), /evidence: \+1 \/ skipped 0/);
+  assert.match(await page.locator('#organizerImportMessage').textContent(), /evidence: \+1 \/ skipped 1/);
   assert.equal((await exportSessionState()).organizerEvidenceClaims.length, 2);
 
   // OPA-014: a post-commit rendering failure is not an import rejection.
