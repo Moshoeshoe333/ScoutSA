@@ -38,8 +38,8 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await recordsPanel.waitFor({ state: 'visible' });
   await page.locator('#organizerHandoffFile').setInputFiles({ name: 'handoff.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(pkg)) });
   await page.locator('#importOrganizerHandoff').click();
-  await page.waitForFunction(() => /Imported 1 tournament edition/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
-  assert.match(await page.locator('#organizerImportMessage').textContent(), /Imported 1 tournament edition/);
+  await page.waitForFunction(() => /Import committed\\. Editions: \\+1/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+  assert.match(await page.locator('#organizerImportMessage').textContent(), /Import committed\\. Editions: \\+1/);\n  assert.match(await page.locator('#organizerImportMessage').textContent(), /organizers: \\+1 \/ skipped 0; submissions: \\+1 \/ skipped 0; evidence: \\+1 \/ skipped 0; features: \\+1 \/ skipped 0/, 'import summary must disclose every source collection');
   assert.equal(await page.locator('#countT').textContent(), '2');
   const sessionDownloadWait = page.waitForEvent('download');
   await page.locator('#exportButton').click();
@@ -61,10 +61,37 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   assert.deepEqual(sessionData.organizerSourceClaims, pkg.organizers, 'complete organizer source records must survive import');
   assert.deepEqual(sessionData.organizerEvidenceClaims, pkg.evidence, 'evidence records, including expired status claims, must survive import');
   assert.deepEqual(sessionData.organizerFeaturePermissionClaims, pkg.features, 'feature permission source records must survive import');
+  const exportSessionState = async () => page.evaluate(() => {
+    if (typeof window.__SCOUTSA_TEST_SNAPSHOT__ !== 'function') throw new Error('Test-only state snapshot is unavailable');
+    return window.__SCOUTSA_TEST_SNAPSHOT__();
+  });
   assert.deepEqual(sessionData.organizerSubmissionClaims, pkg.submissions, 'complete submission source records must survive import');
+  // OPA-013: a duplicate edition may still add a new side-collection claim; report it.
+  const sideCollectionPackage = { ...pkg, evidence: [...pkg.evidence, { id: 'EVD-DEMO-502', organizerId: 'ORG-DEMO-501', type: 'Venue authorization', ref: 'DEMO-EVIDENCE-502', status: 'pending' }] };
+  await page.locator('#organizerHandoffFile').setInputFiles({ name: 'side-collection-only.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(sideCollectionPackage)) });
   await page.locator('#importOrganizerHandoff').click();
-  await page.waitForFunction(() => /Imported 0 tournament edition\(s\); skipped 1 duplicate/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
-  assert.match(await page.locator('#organizerImportMessage').textContent(), /Imported 0 tournament edition\(s\); skipped 1 duplicate/);
+  await page.waitForFunction(() => /evidence: \+1 \/ skipped 0/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+  assert.match(await page.locator('#organizerImportMessage').textContent(), /Editions: \+0 \/ skipped 1/);
+  assert.match(await page.locator('#organizerImportMessage').textContent(), /evidence: \+1 \/ skipped 0/);
+  assert.equal((await exportSessionState()).organizerEvidenceClaims.length, 2);
+
+  // OPA-014: a post-commit rendering failure is not an import rejection.
+  const refreshFailurePackage = {
+    ...pkg,
+    organizers: [{ id: 'ORG-DEMO-503', name: 'DEMO-Refresh-Failure-Organizer', type: 'Community organization', identity: 'unverified', authority: 'unverified' }],
+    submissions: [{ id: 'SUB-DEMO-503', tournamentId: 'TRN-ORG-DEMO-503', editionId: 'EDT-ORG-DEMO-503', organizerId: 'ORG-DEMO-503', name: 'DEMO-Refresh-Failure-Cup', edition: 'DEMO-2028-Edition', locality: 'DEMO-Sedibeng', format: '11-a-side', status: 'pending-review' }],
+    evidence: [], features: []
+  };
+  await page.evaluate(() => window.__SCOUTSA_TEST_FAIL_NEXT_REFRESH__());
+  await page.locator('#organizerHandoffFile').setInputFiles({ name: 'refresh-failure.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(refreshFailurePackage)) });
+  await page.locator('#importOrganizerHandoff').click();
+  await page.waitForFunction(() => /^Import committed, but the view did not refresh/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+  assert.ok((await exportSessionState()).events.some(event => event.editionId === 'EDT-ORG-DEMO-503'));
+  assert.doesNotMatch(await page.locator('#organizerImportMessage').textContent(), /Import rejected/);
+
+  await page.locator('#importOrganizerHandoff').click();
+  await page.waitForFunction(() => /Import committed\\. Editions: \\+0 \/ skipped 1/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+  assert.match(await page.locator('#organizerImportMessage').textContent(), /Import committed\\. Editions: \\+0 \/ skipped 1/);
   const exportSessionState = async () => page.evaluate(() => {
     if (typeof window.__SCOUTSA_TEST_SNAPSHOT__ !== 'function') throw new Error('Test-only state snapshot is unavailable');
     return window.__SCOUTSA_TEST_SNAPSHOT__();
@@ -75,7 +102,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
     const buffer = Buffer.isBuffer(payload) ? payload : Buffer.from(typeof payload === 'string' ? payload : JSON.stringify(payload));
     await page.locator('#organizerHandoffFile').setInputFiles({ name, mimeType: 'application/json', buffer });
     await page.locator('#importOrganizerHandoff').click();
-    await page.waitForFunction(() => /^Import rejected:/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+    await page.waitForFunction(() => /^Import rejected before commit:/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
     assert.equal(await page.locator('#countT').textContent(), before, name + ' must not change the tournament count');
     const afterState = await exportSessionState();
     assert.deepEqual(afterState, beforeState, name + ' must leave the complete exported session state unchanged');
@@ -83,7 +110,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await page.evaluate(() => window.__SCOUTSA_TEST_SET_OPERATIONAL_DECISION__('EDT-ORG-DEMO-501', { authority: 'human-decision-preserved-demo', feature: 'withdrawn' }));
   await page.locator('#organizerHandoffFile').setInputFiles({ name: 'handoff.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(pkg)) });
   await page.locator('#importOrganizerHandoff').click();
-  await page.waitForFunction(() => /Imported 0 tournament edition\(s\); skipped 1 duplicate/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+  await page.waitForFunction(() => /Import committed. Editions: +0 / skipped 1/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
   const preservedDecision = (await exportSessionState()).events.find(event => event.editionId === 'EDT-ORG-DEMO-501');
   assert.equal(preservedDecision.authority, 'human-decision-preserved-demo', 'duplicate source import must not overwrite an existing human authority decision');
   assert.equal(preservedDecision.feature, 'withdrawn', 'duplicate source import must not restore a withdrawn operational permission');
@@ -104,7 +131,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
     };
     await collisionPage.locator('#organizerHandoffFile').setInputFiles({ name: 'existing-edition-conflict.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(collisionPackage)) });
     await collisionPage.locator('#importOrganizerHandoff').click();
-    await collisionPage.waitForFunction(() => /^Import rejected:/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+    await collisionPage.waitForFunction(() => /^Import rejected before commit:/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
     const afterCollision = await collisionPage.evaluate(() => window.__SCOUTSA_TEST_SNAPSHOT__());
     assert.deepEqual(afterCollision, beforeCollision, 'an existing edition without a matching source submission must not be silently treated as an exact duplicate');
   } finally {
