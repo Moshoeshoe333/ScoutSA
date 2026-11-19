@@ -697,6 +697,60 @@ async function main() {
     assert.equal(await page.locator("#ui008-fixture-injection").count(), 0,
       "malformed scalar values must not create executable elements");
 
+    // Malformed nested consent fixtures must render explicit blocked/empty states.
+    await page.goto(origin + "/guardian-consent.html", { waitUntil: "load" });
+    await page.evaluate(() => {
+      window.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases = [
+        { id: "CASE-MALFORMED", playerRef: null, ageState: null, purposes: null }
+      ];
+      window.SCOUTSA_GUARDIAN_CONSENT_DEMO.rules = null;
+      window.SCOUTSA_GUARDIAN_CONSENT_DEMO.limits = {};
+      render();
+    });
+    assert.equal(await page.locator("#caseGrid .case").count(), 1,
+      "a partial consent case must remain inspectable");
+    assert.match(await page.locator("#purposeList").innerText(), /No purpose-specific scenario records/,
+      "missing purpose records must not imply permission");
+    assert.match(await page.locator("#ruleList").innerText(), /Disclosure remains blocked/,
+      "missing rules must retain the disclosure stop line");
+    assert.match(await page.locator("#caseDetails").innerText(), /Age state/,
+      "partial consent case must show its review dimensions");
+    await page.evaluate(() => {
+      window.SCOUTSA_GUARDIAN_CONSENT_DEMO.cases = [];
+      render();
+    });
+    assert.match(await page.locator("#caseTitle").innerText(), /No fictional consent scenarios/,
+      "empty consent collection must render an explicit empty state");
+    assert.match(await page.locator("#caseDetails").innerText(), /remain unestablished and blocked/,
+      "empty consent collection must not imply consent or disclosure");
+
+    // Incomplete pathway structures must not invent stages or readiness.
+    await page.goto(origin + "/player-development-pathways.html", { waitUntil: "load" });
+    await page.evaluate(() => {
+      window.SCOUTSA_PATHWAYS_DEMO.players = [
+        { id: "PLAYER-MALFORMED", name: null, position: null, stages: null }
+      ];
+      window.SCOUTSA_PATHWAYS_DEMO.stages = [
+        { id: "STAGE-1", name: null, description: null }
+      ];
+      render("PLAYER-MALFORMED");
+    });
+    assert.match(await page.locator("#stages").innerText(), /Not supplied/,
+      "missing pathway evidence must be explicit");
+    assert.match(await page.locator("#stages").innerText(), /Human review required/,
+      "missing next step must not be inferred");
+    assert.match(await page.locator("#stages").innerText(), /Unassessed/,
+      "missing pathway state must remain unassessed");
+    await page.evaluate(() => {
+      window.SCOUTSA_PATHWAYS_DEMO.players = [];
+      render();
+    });
+    assert.match(await page.locator("#playerName").innerText(), /No pathway record available/,
+      "empty player collection must render a safe empty state");
+    assert.match(await page.locator("#stages").innerText(), /No stage evidence is available/,
+      "empty player collection must not infer a pathway or outcome");
+    passed.push("Malformed guardian consent and development pathway fixtures fail closed with explicit empty states");
+
     passed.push("Additional hostile fixture checks cover Passport profile, matching dimensions, guardian rules/limits and opportunity register sinks");
     passed.push("Hostile fixture strings remain literal at Passport, evidence, invitation, matching, pathway, consent, academy and decision render sinks");
 
