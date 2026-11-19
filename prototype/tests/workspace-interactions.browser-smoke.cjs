@@ -83,12 +83,9 @@ async function main() {
     await page.locator('input[name="visibility"][value="named"]').check();
     assert.match(await page.locator("#visibilityState").innerText(), /Named-recipient sample/);
     await page.evaluate(() => {
-      const input = document.createElement("input");
-      input.type = "radio";
-      input.name = "visibility";
+      const input = document.querySelector('input[name="visibility"][value="named"]');
       input.value = '<img id="ui008-preview-injection" src=x onerror="window.__ui008PreviewXss=1">';
       input.checked = true;
-      document.querySelector('input[name="visibility"]').parentElement.append(input);
       input.dispatchEvent(new Event("change", { bubbles: true }));
     });
     assert.match(await page.locator("#visibilityState").innerText(), /Unrecognized visibility state/,
