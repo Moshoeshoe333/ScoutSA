@@ -7,6 +7,9 @@ const fs = require('node:fs');
 test('tournament organizer portal keeps organizer, authority and feature permission separate', async () => {
   const browser = await chromium.launch({ headless: true });
   try {
+  if (process.env.SCOUTSA_TM013_FORCE_ASSERTION_FAILURE === "1") {
+    assert.fail("TM-013 deliberate assertion-failure injection.");
+  }
   const page = await browser.newPage({ viewport: { width: 1365, height: 900 } });
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
@@ -80,5 +83,8 @@ test('tournament organizer portal keeps organizer, authority and feature permiss
   assert.deepEqual(errors, []);
   } finally {
     await browser.close();
+    if (process.env.SCOUTSA_TM013_CLEANUP_SENTINEL) {
+      fs.writeFileSync(process.env.SCOUTSA_TM013_CLEANUP_SENTINEL, "browser-close-finally-reached", { flag: "w" });
+    }
   }
 });
