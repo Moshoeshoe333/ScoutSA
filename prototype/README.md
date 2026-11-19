@@ -8,6 +8,8 @@ This branch contains a static browser prototype and a synthetic review engine. I
 
 ## Current verified state
 
+**Controlled adversarial verification — 19 November 2026:** The requested baseline-pinned audit stopped at preflight. The required baseline `a7122b1767676a4af064c7b774f60a8affc05656` exists, but `prototype/internal-demo` is two commits ahead at `4ecafa1d6e991832de8a59f0eedc0ff0af3a7d99`. The intervening branch delta includes Player Passport source and browser-test changes. The available execution environment had no local ScoutSA checkout. **Zero AUD runtime tests were executed.** See [Session Ledger — 19 November 2026](verification/SESSION-LEDGER-2026-11-19.md). This is a verification-scope stop, not a confirmed application defect.
+
 **Verification status — 19 November 2026:** Hosted workflow [#44544589481](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44544589481) passed against exact code-and-test commit `7a0adf7fa70d7c4d7f02e4259199350d9742604a` on `prototype/internal-demo`. It passed **121/121 headless tests**, all ten configured browser smoke scripts, and **23/23 specialist workspace interaction groups**. The latest specialist run includes the new Player Passport malformed-fixture and Opportunity stage-attribute regressions, alongside the prior hostile-render, unsafe-URL, workspace and tournament checks. This is synthetic regression evidence only—not production-readiness, safeguarding, privacy, legal, accessibility or security certification.
 
 
@@ -15,7 +17,7 @@ This branch contains a static browser prototype and a synthetic review engine. I
 - Synthetic audit-history validator: `audit-history.js` **v0.2.0**, integrated as a mandatory structural gate in the synthetic invitation-review evaluation.
 - Node test declarations: **121 total** — **79/79 review-engine tests**, 9 documentation-integrity checks (9 checks declared), 31 audit-history tests and 2 workspace-data-integrity checks.
 - Pre-preview verification checkpoint: [GitHub Actions run 43868685945](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43868685945), commit `a22a52de4a4a18166f0e2478a14c73f786b776e7`, completed successfully before the player-facing preview was added.
-- Historical browser baseline: [run 43871407060](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43871407060) verified an earlier seven-suite checkpoint. It is superseded by the exact-current-head verification above.
+- Historical browser baseline: [run 43871407060](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/43871407060) verified an earlier seven-suite checkpoint. It is superseded by the later hosted code-and-test checkpoint cited above; that checkpoint is tied to its exact commit, not a claim that the current branch tip has been tested.
 - The preview, coverage workbench, Tournament Manager and Tournament Day Operations exist on the isolated prototype branch only. Player-preview WhatsApp and copy-link actions stay disabled until a public HTTPS URL exists. A passing run is regression evidence, not safeguarding, privacy, accessibility or production approval. Older run links below are historical checkpoints.
 
 The test counts above are source declarations and the cited workflow is the recorded execution evidence. The specialist browser suite now contains 23 groups, including hostile URL/identifier checks and hostile fixture-string checks at actual render paths across Passport, organization membership, opportunity, evidence, invitation, matching, pathway, consent, academy, decision, discovery-request and four tournament workspaces. The 55-assignment inventory is a source count; these regressions exercise selected paths and do not mean every assignment has a dedicated hostile fixture. URL/handoff sinks are checked separately for hostile identifiers and unsafe schemes. This is not a complete security sign-off: output-context review and malformed-fixture resilience remain open. Helper-level hostile/nullish checks run across all 11 workspaces. This is targeted regression evidence, not a complete security sign-off.
@@ -99,7 +101,8 @@ See:
 - [TAD-005 Fixture Lifecycle Adversarial Test Matrix](TAD-005-FIXTURE-LIFECYCLE-ADVERSARIAL-TEST-MATRIX.md) — 32 fictional scenarios covering schedule revisions, duplicates, postponements, abandonment, resumption, replay, walkovers, forfeits, multi-leg ties, result corrections and downstream history; non-ratified and no implementation authority.
 - [Session Ledger — 13 November 2026](verification/SESSION-LEDGER-2026-11-13.md).
 - [Session Ledger — 16 November 2026](verification/SESSION-LEDGER-2026-11-16.md).
-- [Session Ledger — 17 November 2026](verification/SESSION-LEDGER-2026-11-17.md) — DOC-007 incident, CI path-filter repair, decision dependency correction and current verification stop line.
+- [Session Ledger — 17 November 2026](verification/SESSION-LEDGER-2026-11-17.md) — DOC-007 incident, CI path-filter repair and decision dependency correction.
+- [Session Ledger — 19 November 2026](verification/SESSION-LEDGER-2026-11-19.md) — baseline-pinned adversarial audit preflight stop, branch drift and detached-worktree recovery control.
 
 ## Open engineering issue: UI-008
 
