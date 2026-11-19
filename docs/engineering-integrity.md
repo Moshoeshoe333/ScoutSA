@@ -637,7 +637,7 @@ Run #698 does not close the deliberate TM-013 assertion-failure injection or any
 - **Evidence:** `prototype/tournament-manager.html` merges organizer, submission, evidence and feature claims, but `importOrganizerPackage` returns only submission-derived `added`/`skipped` counts; the UI message reports tournament edition counts only.
 - **Impact:** A package with zero new editions can still add source claims while the UI reports zero editions imported. A duplicate edition can also carry newly added evidence claims without disclosing that mutation.
 - **Required correction:** Return and display per-collection added/skipped counts. Add tests for zero-submission packages and duplicate editions carrying new evidence/organizer claims.
-- **Status:** Static source finding; runtime reproduction and correction pending.
+- **Status:** Code correction and adversarial browser scenarios committed on `prototype/internal-demo`; exact-head hosted execution pending.
 
 ### OPA-014 — Post-commit refresh failure can be reported as import rejection
 - **Detected:** 2026-11-19
@@ -645,7 +645,7 @@ Run #698 does not close the deliberate TM-013 assertion-failure injection or any
 - **Evidence:** The import click handler wraps `importOrganizerPackage(pkg)`, `refresh()` and success messaging in one `try/catch`. The importer mutates arrays before `refresh()` runs.
 - **Impact:** If refresh throws after mutation, the catch reports “Import rejected” although the state may have changed.
 - **Required correction:** Separate import/commit errors from post-commit rendering errors. Report a committed import with a failed refresh distinctly; add a controlled refresh-failure test and full-state snapshot.
-- **Status:** Static control-flow finding; failure injection and correction pending.
+- **Status:** Commit/display boundaries corrected and controlled refresh-failure scenario added on `prototype/internal-demo`; exact-head hosted execution pending.
 
 ### OPA-015 — Duplicate comparison omits deterministic importer metadata
 - **Detected:** 2026-11-19
@@ -653,7 +653,7 @@ Run #698 does not close the deliberate TM-013 assertion-failure injection or any
 - **Evidence:** The duplicate expected projection omits deterministic `venueId` and `importSource`, although both are assigned when a new event is created.
 - **Impact:** A changed/corrupted value in either field does not prevent the package from being treated as an exact duplicate.
 - **Required correction:** Include deterministic importer-derived provenance fields in the duplicate projection; continue excluding operational human-decision fields such as `authority` and `feature`.
-- **Status:** Static source finding; regression test pending.
+- **Status:** Deterministic `venueId` and `importSource` projection checks added; corruption/replay browser scenario committed; exact-head hosted execution pending.
 
 ### OPA-016 — Mutable source claims lack a revision/supersession protocol
 - **Detected:** 2026-11-19
@@ -661,9 +661,18 @@ Run #698 does not close the deliberate TM-013 assertion-failure injection or any
 - **Evidence:** Existing claim IDs are compared by `JSON.stringify` and changed content is rejected. The Organizer Portal updates an existing feature record's status in place under the same ID.
 - **Impact:** A permission withdrawal/status change under a stable feature ID is rejected by the Manager. Evidence status changes under a stable evidence ID are likewise rejected. New IDs can avoid the conflict but no explicit supersedes/revokes relationship or attributable history exists.
 - **Required correction:** Ratify an append-only revision/event model with stable subject ID, revision/event ID, supersedes/revokes reference, actor/time/source provenance and separation from operational authority. Do not silently overwrite or promote claims.
-- **Status:** Static integration/domain finding; withdrawal/expiry regression scenarios pending.
+- **Status:** Proposed contract documented in `prototype/ORGANIZER-CLAIM-LIFECYCLE-CONTRACT.md`; NOT RATIFIED and not implemented. Existing same-ID conflict rejection remains fail-closed.
 
 **Additional lower-priority observations (not yet assigned separate OPA IDs):**
 - Claim equality via `JSON.stringify` is property-order-sensitive and can reject semantically equivalent JSON objects. Define exact-byte versus canonical semantic equality before changing it.
 - `validDemoId` permits repeated/trailing hyphens in the suffix; tighten only against a ratified grammar.
 - Uniqueness of `tournamentId` within one package may prevent multiple editions under one competition ID. This remains a domain question, not a confirmed defect.
+
+
+### Import integrity controls installed — 2026-11-19
+- Organizer handoff now stages source-claim arrays and derived edition records before the commit point, then swaps the staged arrays into session state only after validation/planning completes.
+- Import outcome now reports added/skipped counts for organizers, submissions, evidence and features, plus tournament editions.
+- Parsing/validation/commit errors are reported as pre-commit rejection. A later rendering failure is reported as committed-but-view-refresh-failed.
+- Duplicate edition equivalence now includes deterministic `venueId` and `importSource`; operational decision fields remain excluded.
+- Browser regression scenarios cover side-collection-only import, injected refresh failure, and corrupted deterministic metadata replay. These scenarios are committed but not yet executed in this session.
+- **Verification boundary:** No browser tests or hosted workflow were run here. Do not mark OPA-013/014/015 closed until exact-head CI passes and the failure-injection scenarios are observed. OPA-016 remains a non-ratified design proposal.
