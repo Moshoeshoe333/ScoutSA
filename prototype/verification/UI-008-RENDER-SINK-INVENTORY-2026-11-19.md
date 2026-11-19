@@ -69,18 +69,19 @@ The preview reads the current page URL, and its WhatsApp action uses a fixed `ht
 3. Added a browser regression that injects a hostile unknown visibility enum, verifies no element or handler is created, and confirms the simulated guardian action remains explicitly “not real consent”.
 4. Added HTTPS-only URL validation to Vaal ecosystem source links, with a browser regression for `javascript:`, plain HTTP and accepted HTTPS behavior.
 5. Hardened the coach/academy workspace against missing organization/summary objects, malformed membership/opportunity/action collections and hostile action fields; absent evidence renders explicit empty states.
-6. Earlier targeted regressions remain in place for discovery request rendering, evidence records, guardian consent, pathways and the hub's player metadata.
+6. Hardened matching review against missing pair/dimension collections, malformed nested findings and hostile labels. Missing evidence now renders an explicit empty state and cannot become an implied match or readiness outcome.
+7. Earlier targeted regressions remain in place for discovery request rendering, evidence records, guardian consent, pathways and the hub's player metadata.
 
 ## Latest hosted verification checkpoint
 
-Hosted workflow [#44531132752](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44531132752) passed against exact code-and-test commit `9fa6f2002fb07987f76273040f3a10877f2fbcc1` on `prototype/internal-demo`.
+Hosted workflow [#44532148414](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44532148414) passed against exact code-and-test commit `e4e3a8765e81a2ff5c9119c4e58f712a03234cec` on `prototype/internal-demo`.
 
 - 121/121 headless tests passed.
 - 8/8 general browser smoke groups passed.
 - 8/8 hub/navigation groups passed.
-- 19/19 specialist workspace interaction groups passed.
+- 20/20 specialist workspace interaction groups passed.
 - TM-013 deliberate assertion-failure cleanup test passed.
-- New player-preview unknown-enum, Vaal HTTPS-only source-link and coach malformed-fixture regressions passed.
+- Player-preview unknown-enum, Vaal HTTPS-only source-link, coach malformed-fixture and matching malformed-fixture regressions passed.
 
 The earlier failed runs in this pass exposed test-harness defects (a hidden control and an assertion that counted unrelated rows), which were corrected. They were not counted as successful verification. This passing run is the exact evidence for the code and tests listed above.
 
