@@ -262,3 +262,71 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Regression / verification:** Code and browser tests are committed on `prototype/internal-demo`; exact-head hosted verification is pending. Record the final commit and workflow result here only after all configured checks pass.
 - **Residual risk:** Structural IDs do not resolve real-world semantic duplicates or identity conflicts. This control does not establish authority, evidence authenticity, expiry policy, revocation history or backend transaction safety.
 - **Status:** Implemented; awaiting exact-head hosted verification.
+
+### LESSON-017 — Operation summaries must report every collection changed
+- **Status:** Derived
+- **Date discovered:** 2026-11-19
+- **Source project:** ScoutSA
+- **Source artifact:** `prototype/tournament-manager.html`; OPA-013
+- **Commit / CI run / issue:** Branch `prototype/internal-demo`; exact-head runtime verification pending
+- **Severity and rationale:** Moderate; UI result can under-report side effects.
+- **Applicability:** General
+- **Event:** An import merges multiple source-claim collections but reports only the count of primary tournament editions.
+- **Expected behaviour:** The operation result must disclose all material state changes, including side collections and zero-primary-record imports.
+- **Actual behaviour:** Organizer/evidence/feature claims can be added while the UI reports zero editions imported.
+- **Root cause:** Result contract is narrower than the mutation contract.
+- **Corrective action:** Return per-collection counts and expose them in the UI.
+- **Preventive / detective control:** Tests for zero-submission imports and duplicate editions carrying new side claims.
+- **Regression verification:** Pending exact-head browser execution.
+- **Residual risk and limitations:** Counts alone do not prove claim authenticity or authority.
+
+### LESSON-018 — Separate commit outcome from post-commit presentation outcome
+- **Status:** Derived
+- **Date discovered:** 2026-11-19
+- **Source project:** ScoutSA
+- **Source artifact:** `prototype/tournament-manager.html`; OPA-014
+- **Commit / CI run / issue:** Branch `prototype/internal-demo`; failure-injection verification pending
+- **Severity and rationale:** Moderate; a UI refresh failure can misstate committed state.
+- **Applicability:** General
+- **Event:** The import handler catches both state mutation and subsequent UI refresh in one block.
+- **Expected behaviour:** A post-commit display failure must not be described as a rejected/rolled-back operation.
+- **Actual behaviour:** If `refresh()` throws after mutation, the catch reports rejection while arrays may already have changed.
+- **Root cause:** Commit and presentation failure boundaries are conflated.
+- **Corrective action:** Separate commit error handling from post-commit rendering; report committed-but-view-refresh-failed distinctly.
+- **Preventive / detective control:** Inject refresh failure after mutation and compare full state with the UI outcome.
+- **Regression verification:** Pending.
+- **Residual risk and limitations:** This is a synthetic in-memory workflow; it does not prove database transaction behaviour.
+
+### LESSON-019 — Stable claim IDs need explicit revision and supersession semantics
+- **Status:** Derived
+- **Date discovered:** 2026-11-19
+- **Source project:** ScoutSA
+- **Source artifact:** Organizer Portal feature update handler and Manager claim conflict check; OPA-016
+- **Commit / CI run / issue:** Branch `prototype/internal-demo`; withdrawal/expiry scenario tests pending
+- **Severity and rationale:** High for workflow completeness and traceability.
+- **Applicability:** General, especially evidence, consent, permission and verification workflows
+- **Event:** The source portal mutates a feature status under the same ID, while the importer rejects changed content for an existing claim ID.
+- **Expected behaviour:** Legitimate changes such as withdrawal, expiry, dispute or correction should be represented as attributable new events/revisions without overwriting history or promoting authority.
+- **Actual behaviour:** Same-ID updates are rejected; new IDs lack an explicit supersedes/revokes relationship.
+- **Root cause:** Stable subject identity and immutable event/revision identity are not separated.
+- **Corrective action:** Ratify a revision/event envelope with actor, time, source, revision ID and supersedes/revokes links.
+- **Preventive / detective control:** Test grant→withdrawal, accepted→expired/disputed, and corrected evidence sequences while preserving history and operational decision boundaries.
+- **Regression verification:** Pending.
+- **Residual risk and limitations:** The event model and legal/domain rules must be ratified before implementation.
+
+### LESSON-020 — Idempotency checks must include deterministic importer metadata
+- **Status:** Derived
+- **Date discovered:** 2026-11-19
+- **Source project:** ScoutSA
+- **Source artifact:** `prototype/tournament-manager.html`; OPA-015
+- **Commit / CI run / issue:** Branch `prototype/internal-demo`; regression verification pending
+- **Severity and rationale:** Low to moderate; replay may conceal altered derived metadata.
+- **Applicability:** General
+- **Event:** Duplicate comparison omits generated `venueId` and `importSource` fields.
+- **Expected behaviour:** Replaying a source record should validate the full deterministic projection while preserving operational human decisions.
+- **Actual behaviour:** Altered derived metadata is not part of duplicate equivalence.
+- **Root cause:** The comparison projection was not exhaustive.
+- **Corrective action:** Include deterministic importer metadata; explicitly exclude only mutable operational decision fields.
+- **Preventive / detective control:** Mutate each derived field and assert duplicate replay rejects the mismatch without state mutation.
+- **Regression verification:** Pending.
+- **Residual risk and limitations:** Semantic duplicate identity across different IDs remains unresolved.
