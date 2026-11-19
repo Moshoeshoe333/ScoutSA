@@ -142,3 +142,8 @@ External stakeholder responses are not a prerequisite for continued internal dev
 - [Relationship Model](../docs/02-relationship-model.md)
 - [Documentation Integrity and Error Prevention](../docs/engineering-integrity.md)
 - [Development Boundary](DEVELOPMENT-BOUNDARY.md)
+
+
+## Organizer handoff lifecycle contract
+
+See [Organizer Claim Lifecycle Contract](ORGANIZER-CLAIM-LIFECYCLE-CONTRACT.md) for the proposed append-only revision, withdrawal, supersession, idempotency and authority-separation model. It is not ratified and does not authorize implementation.
