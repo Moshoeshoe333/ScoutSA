@@ -8,7 +8,7 @@ This branch contains a static browser prototype and a synthetic review engine. I
 
 ## Current verified state
 
-**Verification status — 19 November 2026:** The most recent full code-and-test workflow [#44527165027](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44527165027) passed against `0e659e82d480d0f31aca4beaa58bfb699303c759` on `prototype/internal-demo`. Subsequent commits only reconcile this README and do not alter runtime or test code. It passed **121/121 headless tests**, all ten configured browser smoke scripts, **8/8 hub/navigation groups**, and **16/16 specialist workspace interaction groups**. The specialist suite includes malformed guardian-consent and development-pathway fixture cases, which render explicit blocked/empty states without inventing consent, evidence, readiness or outcomes. The hub test also opens the six-step guided walkthrough, verifies all six specialist destinations resolve, and checks the walkthrough at a 390px viewport. TM-013's deliberate assertion-failure injection is included and passed. This is synthetic regression evidence only—not production-readiness, safeguarding, privacy, legal, accessibility or security certification.
+**Verification status — 19 November 2026:** The most recent full code-and-test workflow [#44531132752](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44531132752) passed against code-and-test commit `9fa6f2002fb07987f76273040f3a10877f2fbcc1` on `prototype/internal-demo`. It passed **121/121 headless tests**, **8/8 general browser groups**, **8/8 hub/navigation groups**, and **19/19 specialist workspace interaction groups**. The specialist suite includes malformed guardian-consent, pathway and coach-workspace fixture cases; player-preview unknown-state rendering; and Vaal research-link scheme restrictions. The six-step guided walkthrough and TM-013 deliberate assertion-failure cleanup regression are also covered by the passing suite. Subsequent commits in this verification note and README update documentation only. This is synthetic regression evidence only—not production-readiness, safeguarding, privacy, legal, accessibility or security certification.
 
 
 - Review engine: `review-engine.js` **v0.3.0**.
@@ -103,7 +103,7 @@ See:
 
 ## Open engineering issue: UI-008
 
-**UI-008 safe-rendering audit remains OPEN.** Identified dynamic HTML-string interpolations have scoped escaping mitigations and hostile-markup regression checks, but this is not proof that every renderer and output context is safe. A complete interpolation/context audit, URL scheme policy review and malformed-fixture resilience work remain outstanding.
+**UI-008 safe-rendering audit remains OPEN.** The current source inventory identifies 55 `.innerHTML` assignments across 15 prototype pages, alongside internal handoffs, export URLs and one external source-link family. Targeted mitigations and regression tests have passed, but this is not proof that every renderer and output context is safe. The [UI-008 Rendering and Navigation Sink Inventory](verification/UI-008-RENDER-SINK-INVENTORY-2026-11-19.md) records the current inventory, mitigations, evidence and outstanding review work.
 
 Do not connect external or user-supplied content to these renderers while UI-008 is open.
 
@@ -126,7 +126,7 @@ External stakeholder responses are not a prerequisite for continued internal dev
 
 ## Next engineering sequence
 
-1. Continue UI-008: complete the interpolation and output-context inventory across all 11 specialist workspaces; the existing 29-sink hostile-renderer regression coverage is targeted evidence, not a complete security review.
+1. Continue UI-008: complete expression-level review of all 55 `.innerHTML` assignments and the remaining dynamic output contexts; the current hostile-renderer regressions are targeted evidence, not a complete security review.
 2. Extend malformed-fixture tests to remaining pages and nested collections, preserving explicit empty/hold states and avoiding invented consent, authority, evidence or readiness.
 3. Review URL construction and accepted schemes for every dynamic navigation and handoff destination, including any future external destinations.
 4. Record each UI-008 finding with file, line, sink, context, risk, mitigation and exact test evidence; keep UI-008 open until all required items are verified.
