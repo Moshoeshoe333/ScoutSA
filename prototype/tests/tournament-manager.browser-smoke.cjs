@@ -61,6 +61,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   assert.deepEqual(sessionData.organizerSourceClaims, pkg.organizers, 'complete organizer source records must survive import');
   assert.deepEqual(sessionData.organizerEvidenceClaims, pkg.evidence, 'evidence records, including expired status claims, must survive import');
   assert.deepEqual(sessionData.organizerFeaturePermissionClaims, pkg.features, 'feature permission source records must survive import');
+  assert.deepEqual(sessionData.organizerSubmissionClaims, pkg.submissions, 'complete submission source records must survive import');
   await page.locator('#importOrganizerHandoff').click();
   await page.waitForFunction(() => /Imported 0 tournament edition\(s\); skipped 1 duplicate/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
   assert.match(await page.locator('#organizerImportMessage').textContent(), /Imported 0 tournament edition\(s\); skipped 1 duplicate/);
@@ -79,6 +80,8 @@ test('tournament manager imports organizer portal package by stable IDs and skip
     const afterState = await exportSessionState();
     assert.deepEqual(afterState, beforeState, name + ' must leave the complete exported session state unchanged');
   };
+  await assertRejectedImport('altered-duplicate-content.json', { ...pkg, submissions: [{ ...pkg.submissions[0], summary: 'DEMO-altered-summary' }] });
+  await assertRejectedImport('reused-submission-id-new-edition.json', { ...pkg, submissions: [{ ...pkg.submissions[0], tournamentId: 'TRN-ORG-DEMO-599', editionId: 'EDT-ORG-DEMO-599' }] });
   await assertRejectedImport('malformed.json', '{not-json');
   await assertRejectedImport('null-record.json', { ...pkg, organizers: [null] });
   const incompleteOrganizer = { ...pkg.organizers[0] }; delete incompleteOrganizer.type;
