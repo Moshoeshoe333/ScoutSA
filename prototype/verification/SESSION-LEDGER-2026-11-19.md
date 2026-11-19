@@ -242,3 +242,39 @@ A fresh baseline comparison immediately before this final append reported the br
 
 **Handoff state:** The evidence ledger is current through the successful hosted regression run at `7a0adf7fa70d7c4d7f02e4259199350d9742604a` and the preflight stop. Tomorrow's first task remains the detached-worktree preflight at the immutable required baseline. Do not resume the AUD test sequence until the exact SHA and clean working tree are demonstrated.
 
+
+
+## 10. User-directed UI-008 mitigation resumed — 19 November 2026
+
+After the handoff snapshot in §9, the user directed continued mitigation and ledger updates. This work resumed the separate UI-008 rendering-assurance track; it did **not** execute the baseline-pinned AUD-010 → AUD-006 → AUD-009 → AUD-008 → AUD-007 runtime sequence.
+
+### 10.1 Claim Decision workspace change
+
+- Code/test commit: `0ac9dc848554bf8fa7d397e684885892babec5b0`
+- Files changed: `prototype/opportunity-decisions.html` and `prototype/tests/workspace-interactions.browser-smoke.cjs`
+- Mitigation: normalize the initial decision collection, filter malformed rows, render only supported scalar values, retain allowlisted status styling and show explicit empty/unavailable values.
+- New browser group: malformed collection, null/array/scalar rows, object-valued status, hostile text and handler non-execution.
+
+### 10.2 Engineering lessons ledger correction
+
+- Commit: `3c00836e75d1d912871d8d7f87ce6f7629d42a19`
+- Corrected the duplicate lesson heading by renumbering the immutable-baseline verification lesson to `LESSON-026`.
+- Added `LESSON-027` for normalizing malformed fixture data before read-only rendering.
+- The documentation-integrity test was retained; it was not weakened.
+
+### 10.3 Hosted verification
+
+Hosted workflow [#44548354734](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44548354734) completed successfully against exact verification head `3c00836e75d1d912871d8d7f87ce6f7629d42a19`.
+
+- Node tests: 121/121 passed; 0 failed.
+- Discovery browser: 8/8 groups passed.
+- Workspace hub/navigation: 8/8 groups passed.
+- Specialist workspace interactions: 24/24 groups passed.
+- The new Claim Decision malformed-fixture browser group passed.
+- All eleven configured browser smoke scripts completed successfully.
+
+The earlier failed run `44548064274` is not counted as verification; it exposed duplicate lesson IDs in the engineering lessons ledger. The duplicate was corrected in the verified tree, and the documentation-integrity test passed.
+
+### 10.4 Boundaries preserved
+
+This UI-008 work does not verify the required AUD baseline, execute the separate AUD test sequence, close UI-008, ratify OPA-016, authorize production implementation, or change mainline gates. The detached-worktree preflight requirement for the separate AUD sequence remains unchanged.

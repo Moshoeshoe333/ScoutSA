@@ -19,7 +19,7 @@ The inventory does not include HTML pages whose role is explicitly smoke-test do
 | `discovery-request.html` | 5 | Dynamic summary, gate, request, rule and link labels are escaped. Internal handoff paths are fixed relative paths; player/opportunity identifiers are encoded with `encodeURIComponent`. Existing browser test checks rendered links remain relative and rejects protocol-relative destinations. |
 | `guardian-consent.html` | 5 | Dynamic fixture values are escaped. Empty/malformed consent and purpose collections now render explicit blocked states; targeted browser tests added. |
 | `opportunities.html` | 1 | Register rows are rendered through escaped fixture text. Passport handoff uses a fixed local path with encoded player ID. |
-| `opportunity-decisions.html` | 1 | Decision-list fields use the local HTML-escape helper. |
+| `opportunity-decisions.html` | 1 | Decision-list fields use escaped text; initial collections and rows are normalized before filtering/rendering, malformed scalar values use explicit unavailable text, and status styling remains allowlisted. Hostile and malformed-fixture browser regression added. |
 | `opportunity-evidence.html` | 1 | Evidence-list fields use the local HTML-escape helper and nullish values are normalized before filtering/rendering. Hostile and malformed fixture coverage exists. |
 | `organization-memberships.html` | 2 | Organization and membership display fields use escaped text; unresolved organization references have a fallback label. |
 | `player-development-pathways.html` | 3 | Player/stage display fields use escaped text. Missing players/stages/evidence now produce explicit empty or unassessed states; targeted browser tests added. |
@@ -71,20 +71,21 @@ The preview reads the current page URL, and its WhatsApp action uses a fixed `ht
 5. Hardened the coach/academy workspace against missing organization/summary objects, malformed membership/opportunity/action collections and hostile action fields; absent evidence renders explicit empty states.
 6. Hardened matching review against missing pair/dimension collections, malformed nested findings and hostile labels. Missing evidence now renders an explicit empty state and cannot become an implied match or readiness outcome.
 7. Earlier targeted regressions remain in place for discovery request rendering, evidence records, guardian consent, pathways and the hub's player metadata.
+8. Hardened the Claim Decision workspace against missing/non-array decision collections, malformed rows and object/array-valued fields; unavailable values remain explicit and unrecognized statuses cannot become styled decision states.
 
 ## Latest hosted verification checkpoint
 
-Hosted workflow [#44544589481](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44544589481) passed against exact code-and-test commit `7a0adf7fa70d7c4d7f02e4259199350d9742604a` on `prototype/internal-demo`.
+Hosted workflow [#44548354734](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44548354734) passed against exact verification commit `3c00836e75d1d912871d8d7f87ce6f7629d42a19` on `prototype/internal-demo`. The verified tree includes code-and-test commit `0ac9dc848554bf8fa7d397e684885892babec5b0` and the engineering-lessons ledger ID correction.
 
 - 121/121 headless tests passed.
 - 8/8 Discovery & Request Review browser groups passed.
 - 8/8 hub/navigation groups passed.
-- All ten configured Playwright/Chromium browser smoke scripts completed successfully.
-- The specialist workspace interaction suite passed 23/23 groups, including the new Opportunity stage-attribute injection regression and Player Passport malformed-collection, malformed-row, invalid-date and unknown-player regressions.
+- All eleven configured Playwright/Chromium browser smoke scripts completed successfully.
+- The specialist workspace interaction suite passed 24/24 groups, including the new Claim Decision malformed-collection, malformed-row and hostile-field regression, plus the earlier Opportunity stage-attribute and Player Passport resilience regressions.
 - Existing player-preview unknown-enum, Vaal HTTPS-only source-link, coach/matching malformed-fixture, hostile renderer and tournament regression checks remained green.
 - TM-013 deliberate assertion-failure cleanup test passed.
 
-This exact run is regression evidence for the code and tests on commit `7a0adf7`; it is not production security or safeguarding certification.
+This exact run is regression evidence for the tested synthetic prototype tree; it is not production security or safeguarding certification.
 
 ## Tournament workspace review — 19 November 2026
 
@@ -113,3 +114,16 @@ The exact code-and-test checkpoint `7a0adf7fa70d7c4d7f02e4259199350d9742604a` ad
 2. **Opportunity Register:** the browser regression injects a value containing an attribute break-out, event-handler text and HTML markup into the rendered stage value. It asserts that the value remains in the intended `data-stage` attribute, is displayed as literal text, creates no extra element or event-handler attribute and executes no handler. The Opportunity page implementation was unchanged in this checkpoint; this is evidence for its existing escaping behavior.
 
 The assignment count remains **55 `.innerHTML =` assignments across 15 pages**. The new tests do not close UI-008: output-context review and dedicated hostile fixtures for every material assignment remain outstanding. The exact code-and-test evidence is hosted run [#44544589481](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44544589481).
+
+
+## Claim Decision workspace follow-up — 19 November 2026
+
+Code/test commit `0ac9dc848554bf8fa7d397e684885892babec5b0` hardens `opportunity-decisions.html` at its fixture boundary:
+
+1. Missing, non-array or malformed `decisions` collections normalize to an empty list.
+2. Null, array and scalar rows are excluded before filtering or projection.
+3. Search and visible fields accept supported scalar values only; malformed object/array values display as `Not supplied` rather than throwing or being interpreted as a status.
+4. Decision badge styling remains limited to the fixed `Blocked`, `Rejected`, `Needs Investigation` and `Second Review` categories.
+5. The browser regression injects hostile HTML text, malformed rows, object-valued status and a missing collection; it checks literal text, absence of injected elements/handler execution and the explicit zero-record state.
+
+Hosted workflow [#44548354734](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44548354734) passed against verification head `3c00836e75d1d912871d8d7f87ce6f7629d42a19`: 121/121 headless tests and 24/24 specialist workspace interaction groups passed. This does not close UI-008; the 55-assignment source inventory still requires complete expression-level and output-context review.

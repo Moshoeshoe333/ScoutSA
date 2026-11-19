@@ -476,7 +476,7 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Date discovered:** 2026-11-19
 - **Source project:** ScoutSA
 - **Source artifact:** `prototype/opportunity-decisions.html`; UI-008 rendering assurance
-- **Commit / CI run / issue:** Code/test commit `0ac9dc848554bf8fa7d397e684885892babec5b0`; CI verification pending
+- **Commit / CI run / issue:** Code/test commit `0ac9dc848554bf8fa7d397e684885892babec5b0`; hosted verification run `44548354734` passed at exact verification head `3c00836e75d1d912871d8d7f87ce6f7629d42a19`
 - **Severity and rationale:** Moderate for prototype resilience; malformed fixture shape can stop an entire read-only workspace from rendering and conceal the declared empty/hold state.
 - **Applicability:** General; any UI projection that consumes local, imported, cached or otherwise untrusted structured data.
 - **Failure mode:** A missing collection or malformed row causes a renderer, filter, statistic or search projection to throw before the user can inspect an explicit unavailable state.
@@ -484,5 +484,5 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Root cause:** Rendering code assumed fixture contract validity at the point of use rather than normalizing the collection and field types at the boundary.
 - **Preventive control:** Normalize collections to arrays of plain records before projection; render only supported scalar field values; preserve explicit empty/unavailable states; keep status-to-class mapping allowlisted.
 - **Detective control:** Browser tests should inject malformed collection shapes and nested row values, assert no uncaught errors, compare visible counts with rendered rows, ensure hostile strings remain literal and confirm no positive status is inferred from malformed values.
-- **Regression / verification:** Hosted browser execution pending. Do not count source inspection or a green headless suite as browser proof for this rendering path.
+- **Regression / verification:** Hosted workflow `44548354734` passed at exact verification head `3c00836e75d1d912871d8d7f87ce6f7629d42a19`: 121/121 Node tests and 24/24 specialist workspace interaction groups passed. The new Claim Decision malformed-fixture browser group is explicitly reported as PASS.
 - **Residual risk:** Fixture normalization is not schema validation, authenticity, authorization or protection for a production trust boundary. The prototype remains synthetic and session-only.
