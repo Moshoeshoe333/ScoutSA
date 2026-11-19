@@ -39,7 +39,8 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await page.locator('#organizerHandoffFile').setInputFiles({ name: 'handoff.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(pkg)) });
   await page.locator('#importOrganizerHandoff').click();
   await page.waitForFunction(() => /Import committed\. Editions: \+1/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
-  assert.match(await page.locator('#organizerImportMessage').textContent(), /Import committed\. Editions: \+1/);\n  assert.match(await page.locator('#organizerImportMessage').textContent(), /organizers: \+1 \/ skipped 0; submissions: \+1 \/ skipped 0; evidence: \+1 \/ skipped 0; features: \+1 \/ skipped 0/, 'import summary must disclose every source collection');
+  assert.match(await page.locator('#organizerImportMessage').textContent(), /Import committed\. Editions: \+1/);
+  assert.match(await page.locator('#organizerImportMessage').textContent(), /organizers: \+1 \/ skipped 0; submissions: \+1 \/ skipped 0; evidence: \+1 \/ skipped 0; features: \+1 \/ skipped 0/, 'import summary must disclose every source collection');
   assert.equal(await page.locator('#countT').textContent(), '2');
   const sessionDownloadWait = page.waitForEvent('download');
   await page.locator('#exportButton').click();
@@ -106,7 +107,7 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   await page.evaluate(() => window.__SCOUTSA_TEST_SET_OPERATIONAL_DECISION__('EDT-ORG-DEMO-501', { authority: 'human-decision-preserved-demo', feature: 'withdrawn' }));
   await page.locator('#organizerHandoffFile').setInputFiles({ name: 'handoff.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(pkg)) });
   await page.locator('#importOrganizerHandoff').click();
-  await page.waitForFunction(() => /Import committed. Editions: +0 / skipped 1/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+  await page.waitForFunction(() => /Import committed\. Editions: \+0 \/ skipped 1/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
   const preservedDecision = (await exportSessionState()).events.find(event => event.editionId === 'EDT-ORG-DEMO-501');
   assert.equal(preservedDecision.authority, 'human-decision-preserved-demo', 'duplicate source import must not overwrite an existing human authority decision');
   assert.equal(preservedDecision.feature, 'withdrawn', 'duplicate source import must not restore a withdrawn operational permission');
