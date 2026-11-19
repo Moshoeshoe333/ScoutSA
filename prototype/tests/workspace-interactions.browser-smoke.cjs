@@ -133,6 +133,35 @@ async function main() {
     assert.equal(await safeSource.getAttribute("referrerpolicy"), "no-referrer");
     passed.push("Vaal ecosystem external source links reject javascript/http and use HTTPS with opener/referrer protections");
 
+    // UI-008: organization workspace tolerates missing collections and hostile nested values.
+    await page.goto(origin + "/coach-academy-workspace.html", { waitUntil: "load" });
+    await page.evaluate(() => {
+      const fixture = window.SCOUTSA_ACADEMY_WORKSPACE_DEMO;
+      fixture.organization = null;
+      fixture.summary = null;
+      fixture.memberships = null;
+      fixture.opportunities = {};
+      fixture.evidenceActions = [{
+        area: '<img id="ui008-coach-injection" src=x onerror="window.__ui008CoachXss=1">',
+        state: null,
+        action: '<svg id="ui008-coach-svg" onload="window.__ui008CoachXss=2">'
+      }];
+      fixture.boundaries = null;
+      render();
+    });
+    assert.match(await page.locator("#orgName").innerText(), /Organization record unavailable/);
+    assert.match(await page.locator("#memberships").innerText(), /Not supplied/);
+    assert.match(await page.locator("#membershipList").innerText(), /No synthetic membership records/);
+    assert.match(await page.locator("#opportunityList").innerText(), /No synthetic opportunity proposals/);
+    assert.match(await page.locator("#boundaries").innerText(), /Do not infer authority or access/);
+    assert.equal(await page.locator("#ui008-coach-injection, #ui008-coach-svg").count(), 0,
+      "hostile coach action fields must remain text");
+    assert.match(await page.locator("#actionList").innerText(), /<img id="ui008-coach-injection"/,
+      "hostile coach action text must remain visible literally");
+    assert.equal(await page.evaluate(() => window.__ui008CoachXss || false), false,
+      "hostile coach action fields must not execute");
+    passed.push("Coach workspace malformed collections and hostile action fields fail closed");
+
     // 1. Player Passport: player selection, tab state and contextual handoff.
     await page.goto(origin + "/player-passport.html", { waitUntil: "load" });
     const passportOptions = await page.locator("#playerSelect option").count();
