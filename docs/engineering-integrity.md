@@ -676,3 +676,14 @@ Run #698 does not close the deliberate TM-013 assertion-failure injection or any
 - Duplicate edition equivalence now includes deterministic `venueId` and `importSource`; operational decision fields remain excluded.
 - Browser regression scenarios cover side-collection-only import, injected refresh failure, and corrupted deterministic metadata replay. These scenarios are committed but not yet executed in this session.
 - **Verification boundary:** No browser tests or hosted workflow were run here. Do not mark OPA-013/014/015 closed until exact-head CI passes and the failure-injection scenarios are observed. OPA-016 remains a non-ratified design proposal.
+
+
+### OPA-017 — Source-claim equality is sensitive to JSON object key order
+- **Detected:** 2026-11-19 during corrective implementation review
+- **Severity:** Low to moderate — semantically identical replay payloads may be rejected as conflicts.
+- **Evidence:** The original same-ID claim check compared raw `JSON.stringify` output.
+- **Impact:** Equivalent objects with different insertion order can produce different serialized strings, causing false conflicts.
+- **Correction:** Compare recursively key-sorted canonical JSON for the current JSON-only handoff contract; array order remains significant.
+- **Preventive / detective control:** Replay the same organizer claim with reversed property insertion order and assert it is counted as an exact skip.
+- **Status:** Canonical comparison and browser regression scenario committed on `prototype/internal-demo`; exact-head execution pending.
+- **Limitation:** This is deterministic serialization for the current JSON data model, not a cryptographic digest or a complete cross-language canonicalization standard.
