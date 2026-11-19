@@ -435,6 +435,7 @@ Copy this template into the relevant project's ledger and assign a permanent pro
 - **Applicability:** Browser automation and asynchronous UI tests
 - **Failure mode:** A wait regex can be over-escaped and never match the visible success message.
 - **Observed evidence:** The canonical replay wait timed out because the regex expected a literal backslash before a plus sign.
+- **Root cause:** The wait predicate and the assertion were authored with different escaping semantics, and no focused check exercised the regex against the rendered message before CI.
 - **Preventive control:** Define one shared predicate or reuse equivalent regex semantics for both wait and assertion; avoid separate manually escaped patterns.
 - **Detective control:** Include timeout diagnostics with the actual UI message and test the predicate against representative result strings.
 - **Regression / verification:** Regex corrected; exact-head rerun pending.
