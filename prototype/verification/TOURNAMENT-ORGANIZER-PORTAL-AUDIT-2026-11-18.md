@@ -350,3 +350,12 @@ The following code and regression-test changes have since been committed to the 
 - **Additional guard:** Chromium installation and the browser-test batch now have explicit step timeouts; each individual browser test has a 90-second process timeout.
 - **Status:** Workflow change committed as `91a35652e63a812ae4f146cb1d862111d5507429`; exact-head CI execution pending.
 - **Limitation:** This increases diagnostic coverage; it does not make a failing test pass or reduce the need to investigate each failure.
+
+
+## TM-013 failure-path verification — 19 November 2026
+
+The deliberate cleanup fault-injection test is now implemented and verified on the isolated prototype branch. The organizer browser test accepts an explicit test-only environment flag that forces an assertion failure; its `finally` block closes Chromium and writes a cleanup sentinel. A separate child-process regression asserts the expected non-zero child exit, confirms the deliberate assertion is the cause, and verifies the sentinel was written after cleanup.
+
+Hosted workflow [#44526537773](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44526537773) passed against exact head `67c39e14969c8c91ef8bfe9c54f20faf0a493dc1`. The log explicitly reports: **“PASS: TM-013 deliberate assertion failure exits non-zero and reaches browser cleanup.”** TM-013 is therefore closed for this specific browser-test cleanup path. This does not prove cleanup behavior for every test, browser crash, process kill or infrastructure failure.
+
+The same exact-head workflow passed 121/121 headless tests, all ten configured browser smoke scripts, 8/8 hub/navigation groups and 16/16 specialist workspace interaction groups. No production, security, privacy, safeguarding or legal certification is implied.
