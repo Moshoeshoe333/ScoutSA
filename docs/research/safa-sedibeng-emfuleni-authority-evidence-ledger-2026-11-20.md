@@ -428,3 +428,10 @@ The Gazette explicitly presents the School Sport Policy as a draft and invites p
 - **R-ELFA-13:** Event-specific school policy/resolution or written delegation identifying who may approve school-ground use and school-team participation, where a pilot event involves a school.
 - **R-ELFA-14:** Current final national School Sport Policy or other operative national/provincial instruments, with publication/effective dates and supersession history. Do not substitute the 2011 draft.
 
+
+
+### O-18 — One-off event versus formation of a football-related structure
+**Scenario:** An organiser submits a one-day community festival, then later creates a recurring competition with teams, rules, standings, membership or a season calendar. The organiser assumes the original event verification covers the new structure.
+**Expected handling:** Do not infer that approval/verification for a one-off event automatically covers a later league or competition structure. Reassess the activity classification, structure recognition, competition recognition, participant affiliation and match sanctioning against the authenticated current rules. Preserve the earlier event record and its evidence; create a separately reviewable claim for the new structure/competition.
+**Evidence basis:** The located SAFA-hosted 2004 Rules on the Application of the Statutes distinguish formation of football-related structures (Rule 5), competitions/participation (Rule 6) and sanctioning of matches (Rule 7). Current applicability and classification remain to be confirmed.
+**Status:** Proposed scenario only; not an executed test or ratified rule.
