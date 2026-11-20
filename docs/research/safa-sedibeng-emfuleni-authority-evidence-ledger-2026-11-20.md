@@ -419,3 +419,12 @@ The Gazette explicitly presents the School Sport Policy as a draft and invites p
 **Expected handling:** Verify school participation approval through the appropriate school process; separately verify team affiliation, applicable football permissions, guardian/learner permissions and publication permissions. A coach's role alone does not establish all of these.
 
 **Status:** O-16 and O-17 are proposed validation scenarios, not executed tests or ratified policy.
+
+
+## 2I. Additional primary evidence requests
+
+- **R-ELFA-11:** Written SAFA confirmation of the current status, amendment history and applicable interpretation of the Rules on the Application of the Statutes approved 4 December 2004, especially Rules 5–7 and Rule 6.3.
+- **R-ELFA-12:** Current Gauteng Department of Education and relevant Sedibeng district requirements for school teams entering external tournaments, school-hosted external events, venue hire/use, staff delegation, learner safety and guardian permissions.
+- **R-ELFA-13:** Event-specific school policy/resolution or written delegation identifying who may approve school-ground use and school-team participation, where a pilot event involves a school.
+- **R-ELFA-14:** Current final national School Sport Policy or other operative national/provincial instruments, with publication/effective dates and supersession history. Do not substitute the 2011 draft.
+
