@@ -333,3 +333,89 @@ The SAFA Statutes copy hosted on SAFA's website and labelled last amended by the
 **Expected handling:** Preserve the foundation's organiser verification separately. Mark affected team participation/competition permission PENDING; do not invalidate the organiser identity merely because participant permission is unresolved, and do not allow organiser verification to stand in for participant permission.
 
 **Status:** These are proposed validation scenarios, not executed tests or ratified rules.
+
+
+## 2G. Primary-source provenance correction and expanded governance evidence
+
+### E-ELFA-012 — SAFA-hosted Rules on the Application of the Statutes (official-hosted copy; 2004 approval date)
+
+**Source:** SAFA website, “Rules on the Application of the Statutes,” PDF:  
+https://www.safa.net/wp-content/uploads/2017/03/RegulationsRulesonApplicationoftheStatutes.pdf
+
+The document itself states: “Approved by the SAFA SGM on 4 December 2004.” The copy is hosted on the official SAFA website. This is materially stronger provenance than the previously located copy on a third-party football-club website.
+
+Relevant provisions in the official-hosted copy:
+- Rule 4.2: a club may not affiliate to a Regional Member or District Association outside the area in which its home ground is situated.
+- Rule 5.1: no Association, League, Competition or other structure having a connection or relation to football shall be formed without consent of SAFA or the Regional Member with jurisdiction over the area.
+- Rule 5.2: persons, teams, clubs or associations connected with an unrecognised structure may be exposed to suspension at the discretion described in the rule.
+- Rule 6.1: SAFA may organise international or national competitions in which Members, District Associations or Clubs may participate, controlled by SAFA or Member/District Associations under SAFA jurisdiction.
+- Rule 6.2: subject to the Rule 6.1 exception, clubs and/or District Associations may participate in competitions and/or official matches only with clubs and/or District Associations affiliated to the same Regional Member.
+- Rule 6.3: age-group qualification in a competition is based on the player's age on 1 January of each year.
+- Rule 7.1: a match involving clubs affiliated to a Member, or their players, that is not part of a competition recognised by SAFA or the relevant Member/District Association may not be played unless sanctioned by SAFA or the relevant Member/District Association.
+- Rule 7.2: the described match involving a team affiliated to one Regional Member and played within another Regional Member's jurisdiction requires prior written consent of both Regional Members and SAFA.
+- Rule 7.3: matches arranged by private individuals for speculative purposes shall not be sanctioned.
+
+**Important distinction:** Rules 5, 6 and 7 address related but different subjects:
+1. formation/recognition of a football-related structure;
+2. competition and participation boundaries;
+3. sanctioning of particular matches outside a recognised competition.
+
+Do not collapse these into one generic “event approval” flag. In particular, Rule 5.1's wording is broad, but application to a specific community event depends on whether the activity constitutes the formation of an Association, League, Competition or other football-related structure, and on the current applicable rules and interpretation. Rule 7.1 is specifically framed around matches involving affiliated clubs or their players outside recognised competitions.
+
+**Current-status limitation:** Official SAFA hosting authenticates the provenance of the located copy as an SAFA-hosted publication; it does not by itself establish that the 2004-approved text remains unamended, unrepealed or currently operative in every relevant context. No current SAFA confirmation of its status or amendment history has yet been obtained.
+
+**ScoutSA consequence:** Maintain separate evidence claims for:
+- formation/recognition of a football structure;
+- recognition of a competition;
+- match-specific sanctioning;
+- club affiliation and regional jurisdiction;
+- age eligibility under the applicable competition rules.
+
+Do not implement Rule 6.3's 1 January age calculation as a universal ScoutSA rule until current competition-specific rules are confirmed. Treat it as a source-backed historical rule in this instrument, not an automatically current product requirement.
+
+### E-ELFA-013 — DBE school governance and principalship sources: bounded venue/participation authority leads
+
+**Source A:** Department of Basic Education, “What does an SGB do?”  
+https://www.education.gov.za/Informationfor/ParentsandGuardians/SGBs/SGB3.aspx
+
+The DBE states that a School Governing Body (SGB) must promote the school's best interests and administer/control school property, buildings and grounds. This supports treating school property governance as a distinct authority question. It does not, by itself, establish which person or body may approve every external tournament, filming activity, commercial use or after-hours venue booking.
+
+**Source B:** DBE, Policy on the South African Standard for Principalship (2015).  
+https://www.education.gov.za/Portals/0/Documents/Publications/Principals/POLICY%20ON%20THE%20SASP.pdf?ver=2018-06-08-094806-820
+
+The policy describes the principal as having overall responsibility for leading and managing the school and being accountable to the employer and, through the SGB, to the school community. Its extramural-activities section identifies knowledge and management responsibilities relating to school sport, parent involvement, school tours, safety and partnerships with clubs/professional sporting bodies.
+
+**What these sources support:** School venue/property governance and school participation/extra-mural management are relevant, distinct verification dimensions. A coach, teacher or team manager's involvement should not automatically be treated as proof of authority to commit school property or learners to an external event.
+
+**Limitations:** These general DBE sources do not provide a complete, event-specific approval workflow for an external football tournament. The current Gauteng Department of Education/district requirements, school's own policies, delegated authority, event arrangements and applicable learner-safety/consent requirements must be checked.
+
+**ScoutSA consequence:** For school-linked events, keep separate:
+- authority to use the school venue;
+- school approval for learner/team participation;
+- authority of the staff member or representative communicating with ScoutSA;
+- guardian/learner permissions where applicable;
+- event organiser's own mandate;
+- football affiliation/sanctioning and publication permissions where applicable.
+
+### E-ELFA-014 — 2011 Draft School Sport Policy: explicitly excluded as binding authority
+
+**Source:** Government Gazette 34830, Government Notice 1025, 9 December 2011:  
+https://www.gov.za/sites/default/files/gcis_document/201409/34830gon1025.pdf
+
+The Gazette explicitly presents the School Sport Policy as a draft and invites public comments by 30 March 2012. The attached policy text is marked “DRAFT”.
+
+**Use:** Research lead only. It may help identify historic stakeholder roles and questions to ask.
+
+**Exclusion:** Do not cite this draft as an operative national school sport policy, binding event-approval rule or current delegation of authority. Obtain the final/current policy and applicable provincial/district instruments before relying on those propositions.
+
+## 2H. Additional proposed school-linked adversarial scenarios
+
+### O-16 — External organiser uses a school venue
+**Scenario:** An independent organiser claims a school has approved use of its grounds, relying only on a teacher's, coach's or caretaker's verbal assurance.
+**Expected handling:** Verify the school's actual venue permission and the authority of the person granting it. Keep organiser identity and football sanctioning separate. Do not infer venue authority from staff affiliation or school participation.
+
+### O-17 — School team participates in an external event
+**Scenario:** A teacher or coach submits a school team to an external tournament, but the scope of their authority and the school's approval are unclear.
+**Expected handling:** Verify school participation approval through the appropriate school process; separately verify team affiliation, applicable football permissions, guardian/learner permissions and publication permissions. A coach's role alone does not establish all of these.
+
+**Status:** O-16 and O-17 are proposed validation scenarios, not executed tests or ratified policy.
