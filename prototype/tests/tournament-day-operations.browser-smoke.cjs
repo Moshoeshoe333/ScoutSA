@@ -75,4 +75,18 @@ assert.ok((await page.locator("#eventTable").innerText()).includes(hostileOutput
 assert.equal(await page.locator("#officialTable img, #officialTable svg, #eventTable img, #eventTable svg").count(),0,"official and event fields must not create elements");
 await page.waitForTimeout(50);
 assert.equal(await page.evaluate(()=>window.__SCOUTSA_XSS__===true),false,"hostile official and event fields must not execute");
+await page.evaluate(value=>{
+ state.days[0].venue=value;state.days[0].coordinator=value;
+ state.lineups[0].id=value;state.lineups[0].status=value;state.lineups[0].position=value;
+ state.subs.push({id:"SUB-DEMO-XSS",fixtureId:"FIX-DEMO-001",minute:64,off:value,on:value,sourceId:value});
+ state.reports[0].author=value;state.reports[0].sourceId=value;state.reports[0].review=value;state.reports[0].summary=value;
+ state.sources[0].type=value;state.sources[0].recordId=value;
+ refresh();
+},hostileOutput);
+for(const selector of ["#dayTable","#lineupTable","#subTable","#appearanceTable","#reportTable","#ledger"]){
+ assert.ok((await page.locator(selector).innerText()).includes(hostileOutput),selector+" must preserve hostile fixture values as literal text");
+}
+assert.equal(await page.locator("#dayTable img, #lineupTable img, #subTable img, #appearanceTable img, #reportTable img, #ledger img, #dayTable svg, #lineupTable svg, #subTable svg, #appearanceTable svg, #reportTable svg, #ledger svg").count(),0,"hostile Day Operations table values must not create elements");
+await page.waitForTimeout(50);
+assert.equal(await page.evaluate(()=>window.__SCOUTSA_XSS__===true),false,"hostile Day Operations table values must not execute event handlers");
 assert.deepEqual(errors,[]);console.log("PASS: match-day operations, derived appearances/minutes, player tournament history, cross-record chronology warning, reconciliation context, provenance and mobile layout");}finally{if(browser)await browser.close();await new Promise(resolve=>server.close(resolve))}}main().catch(e=>{console.error(e);process.exitCode=1});

@@ -67,6 +67,46 @@ test('tournament manager imports organizer portal package by stable IDs and skip
     return window.__SCOUTSA_TEST_SNAPSHOT__();
   });
   assert.deepEqual(sessionData.organizerSubmissionClaims, pkg.submissions, 'complete submission source records must survive import');
+
+  // UI-008: challenge every remaining Tournament Manager data table with hostile fixture text.
+  const managerSinkPage = await browser.newPage();
+  try {
+    await managerSinkPage.goto('file://' + path.resolve('prototype/tournament-manager.html') + '?testMode=1');
+    const hostileTableText = '<img id="ui008-manager-table-injection" src=x onerror="window.__SCOUTSA_MANAGER_XSS__=true">';
+    await managerSinkPage.evaluate(value => {
+      state.divisions[0].name = value;
+      state.teams[0].name = value;
+      state.players[0].alias = value;
+      state.fixtures[0].round = value;
+      state.fixtures[0].resultSource = value;
+      state.fixtures[0].resultState = value;
+      state.stats.push({
+        id: 'STA-DEMO-XSS', participationId: 'PAR-DEMO-001', fixtureId: 'FIX-DEMO-001',
+        metric: value, unit: 'count', value, source: value, review: value
+      });
+      state.eligibilityReviews.push({
+        id: 'ELR-DEMO-XSS', participationId: 'PAR-DEMO-001', divisionId: 'DIV-DEMO-001',
+        ageCategory: value, evidenceState: value, decision: value, ruleRef: value, reviewer: value
+      });
+      state.events[0].tournamentId = value;
+      refresh();
+    }, hostileTableText);
+    const managerTables = [
+      '#divisionTable', '#teamTable', '#playerTable', '#fixtureTable',
+      '#resultTable', '#statsTable', '#eligibilityTable', '#ledger'
+    ];
+    for (const selector of managerTables) {
+      assert.ok((await managerSinkPage.locator(selector).innerText()).includes(hostileTableText),
+        selector + ' must preserve hostile fixture data as literal text');
+    }
+    assert.equal(await managerSinkPage.locator(managerTables.map(selector => selector + ' img, ' + selector + ' svg').join(',')).count(), 0,
+      'hostile Manager table values must not create elements');
+    await managerSinkPage.waitForTimeout(50);
+    assert.equal(await managerSinkPage.evaluate(() => window.__SCOUTSA_MANAGER_XSS__ === true), false,
+      'hostile Manager table values must not execute event handlers');
+  } finally {
+    await managerSinkPage.close();
+  }
   // Property order is not a semantic claim change; canonical comparison must accept replay.
   const reorderedOrganizer = Object.fromEntries(Object.entries(pkg.organizers[0]).reverse());
   const reorderedPackage = { ...pkg, organizers: [reorderedOrganizer] };

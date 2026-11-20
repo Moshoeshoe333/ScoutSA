@@ -1042,6 +1042,14 @@ async function main() {
       "Organizer Portal organizer labels must remain literal text");
     assert.equal(await page.locator("#ledgerCards #ui008-tournament-injection").count(), 0,
       "Organizer Portal ledger cards must not create injected elements");
+    assert.ok((await page.locator("#evidenceOrganizer option").allTextContents()).some(text => text.includes(hostileTournamentText)),
+      "evidence-organizer options must render a hostile organizer label as literal text");
+    assert.ok((await page.locator("#featureSubmission option").allTextContents()).some(text => text.includes(hostileTournamentText)),
+      "feature-submission options must render a hostile submission label as literal text");
+    assert.ok((await page.locator("#ledgerCards").innerText()).includes(hostileTournamentText),
+      "Organizer Portal ledger cards must preserve hostile organizer labels as literal text");
+    assert.equal(await page.locator("#evidenceOrganizer img, #featureSubmission img, #ledgerCards img, #evidenceOrganizer svg, #featureSubmission svg, #ledgerCards svg").count(), 0,
+      "optionList and ledger-card values must not create elements");
 
     await page.goto(origin + "/tournament-stat-reconciliation.html?testMode=1", { waitUntil: "load" });
     await page.evaluate(hostile => {
