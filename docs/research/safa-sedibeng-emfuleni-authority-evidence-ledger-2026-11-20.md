@@ -200,3 +200,61 @@ The report describes the ELFA Super League 2026/2027 season as underway across V
 **ScoutSA implication:** Local verification should be scoped to the actual competition and locality; a generic “SAFA verified” flag is inadequate. Verify the current LFA, its governing authority, the event/competition, the authorised representative and venue independently. Treat named grounds as research leads, not endorsements or venue permissions.
 
 **Evidence class:** Secondary local reporting; recent and geographically specific, but not a primary governance instrument.
+
+
+## 2B. Further local governance and event evidence — research extension
+
+### E-ELFA-008 — Reported ELFA membership petition and governance pressure (October 2025)
+
+**Source:** Sedibeng Ster, “Gatvol ELFA teams demand immediate meeting,” 18 October 2025:  
+https://www.citizen.co.za/sedibeng-ster/news/news-news/2025/10/18/gatvol-elfa-teams-demand-immediate-meeting/
+
+The report describes a petition by ELFA teams requesting an extraordinary general meeting and reporting that the petition was supported by member clubs said to constitute more than one-third of total LFA membership. The reported concerns included unpaid league prizes and outstanding prize monies.
+
+**What this supports:** Local reporting describes member-club collective action and a claimed constitutional threshold for requesting an extraordinary meeting. It is another reason to model governance challenges, member standing and organisational decisions as dated, source-attributed evidence rather than static profile fields.
+
+**What it does not establish:** Whether the petition was validly submitted, whether the claimed threshold was correctly calculated under the applicable constitution, whether an EGM was convened, or the outcome. The petition and constitution have not been obtained.
+
+**ScoutSA implication:** A governance challenge or petition is a signal for review, not proof that office-bearers have lost authority. The system must distinguish allegation/request, formal notice, competent decision and implemented outcome.
+
+### E-ELFA-009 — Reported competition nullification and appeal/override dispute (2024)
+
+**Sources:**
+1. Sedibeng Ster, “ELFA and Midvaal Super League declared null and void,” 16 August 2024:  
+   https://www.citizen.co.za/sedibeng-ster/news/news-news/2024/08/16/elfa-and-midvaal-super-league-declared-null-and-void/
+2. Sedibeng Ster, “Gabone FC and 016 Magista FC promoted to Hollywoodbets Regional League,” 21 September 2024:  
+   https://www.citizen.co.za/sedibeng-ster/news/news-news/2024/09/21/gabone-fc-and-016-magista-fc-promoted-to-hollywoodbets-regional-league/
+3. FARPost, “SAFA leadership squabbles in Gauteng delay promotion playoffs,” 28 August 2024:  
+   https://farpost.co.za/2024/08/28/safa-leadership-squabbles-in-gauteng-delay-promotion-playoffs/
+
+The reports describe a dispute around Emfuleni and Midvaal promotional leagues and regional play-offs. The September report quotes a regional leagues coordinator's letter stating that a Regional Executive Committee resolution cancelled the regional play-offs because the LFAs had registered players outside the period stipulated by SAFA Competition Uniform Rules. It also reports that the regional president subsequently withdrew the cancellation letter and that the play-offs proceeded.
+
+**What this supports:** Local competition outcomes and authority decisions can be contested across different levels of the regional structure; a purported decision, a later withdrawal and the final competition outcome must be chronologically distinguished.
+
+**What it does not establish:** The complete official record, legal validity of each decision, final appeal/adjudication, or the current rules applicable in 2026. The underlying letter, REC minutes, presidential withdrawal and any adjudication documents have not been obtained.
+
+**ScoutSA implication:** Competition status should be modelled as a lifecycle with attributed decisions, effective dates, reasons, supersession/appeal and finality—not as a single editable “approved” boolean. Do not let a later report erase the earlier decision or imply that the earlier decision remains operative.
+
+### E-ELFA-010 — Third-party event organiser and LFA-qualified teams (September 2025)
+
+**Source:** Sedibeng Ster, “Hive of football activities took place in Sharpeville over the weekend,” 17 September 2025:  
+https://www.citizen.co.za/sedibeng-ster/news/news-news/2025/09/17/hive-of-football-activities-take-place-in-sharpeville-over-the-weekend/
+
+The report describes FARPost, in conjunction with Lucky Star, FUTPRO and Molisto Media, hosting a FAR Post Cup for boys U17 and girls U19 at James Ground in Sharpeville. It says participating teams had qualified by topping their respective LFA streams and quotes an ELFA Head of Development praising the initiative.
+
+**What this supports:** A second local example of an event hosted by external media/commercial partners with teams whose route into the event was through LFA competition streams. This reinforces the need to represent event host, partners/sponsors, qualification pathway, participating teams and LFA affiliation as separate relationships.
+
+**What it does not establish:** Formal sanctioning status, contract/venue permission, commercial rights, media permissions, player/guardian consent or the exact legal identity and authority of each partner.
+
+**ScoutSA implication:** Event provenance should capture the organiser, partners, qualification source and participating team affiliation independently. An LFA official's positive comment or teams' qualification does not by itself establish all event permissions.
+
+## 2C. Additional primary-source lead — SAFA Competition Uniform Rules
+
+**Source discovered:** “SAFA Competitions Uniform Rules,” PDF copy hosted on a third-party CDN, with the document stating approval by the SAFA NEC on 23 August 2021:  
+https://assets.nicepagecdn.com/d81ad268/3203015/files/NewSAFACompetitionUniformRulesPrintno4edited2021.pdf
+
+Search-indexed text includes rules on entry into SAFA-administered competitions, promotion/relegation, team entry documentation, and submission of disputes/administrative matters under SAFA rules and regulations.
+
+**Evidence limitation:** This is not an authenticated copy from an official SAFA domain, and its current status/amendments have not been verified. Treat it as a research lead, not the current definitive competition rulebook. Obtain the official current version and relevant competition regulations from SAFA/SAFA Sedibeng.
+
+**Research consequence:** Add an explicit request for the current SAFA Competition Uniform Rules, applicable competition regulations and any local ELFA/SAFA Sedibeng supplementary rules to the primary-document request list.
