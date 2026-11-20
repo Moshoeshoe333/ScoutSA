@@ -193,3 +193,42 @@ These are proposed test additions, not tests claimed as executed:
 5. **Final sink ledger:** record each remaining material assignment's source field, exact output context, sanitization/allowlist, exploitability assessment and specific test ID. Keep UI-008 open until this mapping and the applicable test coverage are complete.
 
 No application code, workflow, prototype behaviour, schema or gate status was changed by this reconciliation. No implementation, production-readiness, legal-compliance or safeguarding claim is made.
+
+## UI-008 regression follow-through — 20 November 2026
+
+**Test commit:** `6b029ab0db68c6c9f90ca9cdd924fdaeda0c55e6`  
+**Fixture-quoting correction:** `3f833ca2372bff877e9163c963f7b4761a1c0b43`  
+**Verification head:** `3f833ca2372bff877e9163c963f7b4761a1c0b43`  
+**Hosted workflow #834:** [run 44750805587](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44750805587) — completed successfully on 20 November 2026.
+
+### Test additions and observed results
+
+| Test file | Added challenge | Observed result |
+|---|---|---|
+| `prototype/tests/tournament-manager.browser-smoke.cjs` | Imports a valid package containing hostile text in organizer type/identity/authority, evidence type/status and feature scope/status; verifies source claims are preserved, no elements or handler execution result, and these side-collection values are not surfaced into visible HTML. A hostile organizer display name outside the synthetic-label grammar is rejected without partial mutation. | Passed. |
+| `prototype/tests/tournament-stat-reconciliation.browser-smoke.cjs` | Injects hostile values into statistic fields and into a statistic ID copied into a derived finding; checks literal text, no injected elements/handler execution and the fixed `pending` badge class. | Passed. |
+| `prototype/tests/tournament-day-operations.browser-smoke.cjs` | Injects synthetic hostile values into an official assignment and match event/source state, then calls the existing render path; checks literal text, no injected elements and no handler execution. | Passed. |
+| `prototype/tests/tournament-organizer-portal.browser-smoke.cjs` | Adds hostile options to evidence and feature selects in the browser fixture, then uses the normal form submission and render handlers; checks literal text, fixed `pending` badge class, no injected elements/handler execution and data preservation in export. | Passed. |
+
+**Important scope clarification — Tournament Manager:** the organizer, evidence and feature side-collection claims imported by this package are stored in the session state and export, but the current Manager interface does not render those side-collection strings into HTML. The new test therefore verifies inert data preservation and separately checks rejection of a hostile organizer display name. It is not evidence that an HTML escaping sink was exercised for those side-collection fields. The actual Manager HTML sinks remain the existing table and option-list paths documented above.
+
+**Test-fixture limitations:** the Day Operations regression mutates synthetic page state directly to challenge the rendering path; it does not claim that hostile strings pass normal form validation. The Organizer Portal regression adds non-standard options to test selects and then exercises the actual submit/render handlers; it is an adversarial render fixture, not a claim that those values are available through the unmodified option lists.
+
+### Hosted CI evidence
+
+Workflow #834 ran against the exact verification head `3f833ca2372bff877e9163c963f7b4761a1c0b43` and reported:
+
+- Node headless suite: **121/121 passed; 0 failed, 0 cancelled, 0 skipped**.
+- Discovery & Request Review browser groups: **8/8 passed**.
+- Workspace-hub browser groups: **8/8 passed**.
+- Configured Playwright/Chromium browser smoke scripts: **11/11 invoked and completed successfully**, including all four modified scripts.
+- Specialist workspace interaction groups: **24/24 passed**.
+
+This verifies the tested synthetic prototype paths at this commit. It is not a complete expression-by-expression review of all 59 inventoried assignments, a penetration test, a production security assessment, an authentication/authorization review, a POPIA finding, or a safeguarding certification.
+
+### Remaining UI-008 work
+
+UI-008 remains **OPEN**. The next evidence requirement is the final sink ledger: for each material assignment, map its dynamic source, output context, escaping or allowlist, exact caller, and dedicated test (or an evidence-based explanation of why no untrusted dynamic value reaches that sink). The shared raw-cell table helper remains a caller-contract maintenance risk; no refactor or application-code change is justified by these test results alone.
+
+No application code, UI behaviour, schema, workflow, MVP boundary, or gate status changed. No implementation or certification is claimed.
+
