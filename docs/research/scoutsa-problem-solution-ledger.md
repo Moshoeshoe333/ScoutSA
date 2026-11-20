@@ -2815,3 +2815,27 @@ Findings: contextual, role-specific and provenance-labelled evidence is justifie
 Research-derived direction only: build a progressive, low-bandwidth Player Passport; make contextual video and match evidence useful without making expensive footage mandatory; show source, sample size and measurement method for statistics; keep physical data and coach observations qualified; do not expose youth identity documents or full DOB publicly; independently confirm any claimed trial through the receiving organisation's official channel.
 
 Limits: no direct Vaal Triangle coach validation; no proof of exact PSL/NFD/ABC Motsepe submission thresholds; no quantified local bandwidth study; no legal opinion or POPIA compliance claim. No schema, gate, RLS, migration, or production authority changed. Existing freezes and holds remain unchanged.
+
+
+## 10.65 — SAFA Sedibeng / Emfuleni LFA Authority Evidence Ledger — 2026-11-20
+
+**Supporting artifact:** [SAFA Sedibeng / Emfuleni LFA — Authority and Event Evidence Ledger](safa-sedibeng-emfuleni-authority-evidence-ledger-2026-11-20.md)  
+**Initial artifact commit:** `c31d3e7d1279fcb208b1733accf6f96c7f6f9780`
+
+Desk research consolidated the 2022 SAFA Statutes copy reviewed (Articles 10.1.1–10.1.3, 22.2, 39.4, 66.1–66.2, 68 and 69) with Sedibeng Ster reporting on the 2026 ELFA election dispute/re-election and Master Zondo Foundation tournaments involving ELFA-affiliated teams.
+
+**Bounded findings:**
+- The 2022 Statutes list Sedibeng (Vereeniging) as a Gauteng Regional Association and place LFA recognition/representation/powers within the relevant regional constitution.
+- Article 22.2 provides an appointment/election and written-proof precedent for SAFA delegates; it is not assumed to govern every club, school, academy or community organiser.
+- Articles 39.4 and 66 establish formal competition approval/delegation mechanisms in the SAFA structure. Article 39.4's wording concerns proposed new competitions by Members; it is not treated as proof that every informal community festival requires the same approval.
+- Articles 68–69 make competition/event rights and image/sound/data-carrier distribution authorisation a distinct rights question for events under the relevant SAFA/member jurisdiction.
+- Local press reports describe the 19 July 2026 ELFA election as nullified by SAFA Sedibeng and a subsequent elective congress in which Mfanafuthi Masondo was reported re-elected. The original SAFA resolution, ELFA constitution, congress minutes and current office-bearer confirmation have not been obtained; the reports are secondary evidence, not definitive current authority proof.
+- Local press reports describe the Master Zondo Foundation as tournament host/organiser with ELFA-affiliated teams participating. This supports separating event organiser from participating-club affiliation, but does not establish foundation legal form, formal sanctioning, venue permission or publication rights.
+
+**TAD-003 impact:** Added proposed adversarial scenarios O-11 (contested/invalidated organisational election) and O-12 (external foundation organiser with affiliated teams). Proposed design implications include temporal authority, dispute-aware status, historical preservation, actor separation and scope-specific permissions.
+
+**Evidence still required:** current ELFA constitution; SAFA Sedibeng election resolution; subsequent congress minutes/results; current office-bearer confirmation; ELFA affiliation/competition rules; external-organiser guidance; and event-specific foundation, sanctioning, venue and media/consent evidence.
+
+**Disposition:** TAD-003 remains **BLOCKED**. Option A remains a candidate, not ratified. No external interviews have been conducted. No schema, implementation, RLS, API, publication or gate-transition authority changed.
+
+**Source limitation:** The SAFA Statutes PDF reviewed is a third-party-hosted copy stating that it was last amended on 26 March 2022; obtain an authenticated current copy from SAFA before legal or operational reliance. Press reports are discovery/secondary evidence and must not be promoted to official resolutions.
