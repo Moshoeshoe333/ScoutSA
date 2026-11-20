@@ -127,3 +127,69 @@ Code/test commit `0ac9dc848554bf8fa7d397e684885892babec5b0` hardens `opportunity
 5. The browser regression injects hostile HTML text, malformed rows, object-valued status and a missing collection; it checks literal text, absence of injected elements/handler execution and the explicit zero-record state.
 
 Hosted workflow [#44548354734](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44548354734) passed against verification head `3c00836e75d1d912871d8d7f87ce6f7629d42a19`: 121/121 headless tests and 24/24 specialist workspace interaction groups passed. This does not close UI-008; the 55-assignment source inventory still requires complete expression-level and output-context review.
+
+
+## Current-branch reconciliation — 20 November 2026
+
+**Snapshot ref:** `prototype/internal-demo` at `3d571866694b0d72f5c14a89d07b7e398664d6e4`  
+**Purpose:** Reconcile the 19 November source inventory and review remaining material output contexts. This section supplements the dated 19 November record; it does not rewrite that historical snapshot.
+
+### Recount
+
+A fresh source-text scan of the same 21 prototype HTML pages listed above, pinned to this commit, finds **59 `.innerHTML =` assignments across 15 pages**. The other six listed pages have zero assignments.
+
+The difference from the 19 November count of 55 is confined to `prototype/player-passport.html`:
+
+| Page | 19 November inventory | 20 November snapshot | Difference |
+|---|---:|---:|---:|
+| `player-passport.html` | 4 | 8 | +4 |
+| All other inventoried pages with assignments | 51 | 51 | 0 |
+| **Total** | **55** | **59** | **+4** |
+
+The four additional Passport assignments are fixed fallback markup for unavailable profile, claim, membership and timeline records. They do not interpolate fixture values. The four populated render paths continue to pass supported dynamic values through the page's `h()` escape helper. This is a source-count correction, not evidence of four new vulnerabilities.
+
+### Hosted regression evidence at the snapshot ref
+
+Workflow [#44739238739](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44739238739) (run #831) completed successfully against the exact snapshot commit above on 20 November 2026.
+
+- 121/121 Node headless tests passed.
+- 8/8 Discovery & Request Review browser groups passed.
+- 8/8 workspace-hub browser groups passed.
+- All 11 configured Playwright/Chromium browser smoke scripts completed successfully.
+- The specialist workspace interaction suite passed 24/24 groups.
+- The specialist run includes hostile-fixture regressions for Player Passport, the opportunity stage attribute, Guardian & Consent, Discovery & Request, and representative render paths in Tournament Manager, Tournament Day Operations, Tournament Organizer Portal and Match Statistic Reconciliation.
+
+This is hosted regression evidence for the tested synthetic prototype at the exact commit. It is not a production security assessment, penetration test, authentication or authorization assessment, POPIA compliance finding, or safeguarding certification.
+
+### Bounded output-context review
+
+The following source paths were inspected at the snapshot ref. Line numbers refer to that commit.
+
+| Area | Source observation | Test coverage and remaining limitation |
+|---|---|---|
+| Tournament Manager | `tournament-manager.html` lines 83, 130–145: the shared table renderer inserts prebuilt cell strings. Reviewed callers escape dynamic cell values with `esc()`; trusted `<code>` wrappers are static. The option-list renderer uses DOM nodes and `textContent`. The organizer-package importer stages records and bounds/validates key fields before committing state (lines 85–128). | Existing browser tests cover import/replay/collision behaviour and a hostile division-label form value. The specialist hostile-fixture regression does not yet exercise accepted hostile strings arriving through imported package fields. The table helper remains a caller-contract maintenance risk, not a confirmed injection defect in reviewed call sites. |
+| Tournament Day Operations | `tournament-day-operations.html` lines 42, 60–74: the table helper inserts cell strings supplied by callers. Reviewed row builders escape dynamic fields; the appearance view also uses escaped values. Export serializes synthetic session data to a local JSON Blob with a fixed filename. | The specialist hostile-fixture regression exercises a match-report summary. It does not independently exercise every official, venue, coordinator, lineup, substitution, event and source field. No unescaped dynamic value was identified in the reviewed row builders. |
+| Tournament Organizer Portal | `tournament-organizer-portal.html` lines 55–66: dynamic display values pass through `esc()`; `tag()` selects only fixed `good`, `no` or `pending` CSS classes and escapes the label. The option-list helper escapes both option values and labels. Export uses a local JSON Blob and fixed filename. | The specialist regression exercises hostile organizer and competition-name form values, including the ledger card. Other evidence and feature fields are escaped in the reviewed source but are not each independently challenged by that test. |
+| Match Statistic Reconciliation | `tournament-stat-reconciliation.html` lines 14–18: event, stat and finding text is escaped; the review badge class is chosen from fixed internal categories; the review identifier is escaped before insertion into a data attribute. Export uses a local JSON Blob and fixed filename. | The dedicated browser test injects hostile event fields and checks literal text/no injected element. It does not yet independently inject hostile values into every statistic row and derived finding field. |
+| Discovery & Request | `discovery-request.html` lines 87–121: review-stage cards are built with DOM nodes and `textContent`; the stage tone is derived from fixed values in `review-state.js` (`info`, `hold`, `waiting`, `pass`, `prohibited`). Dynamic summaries, gates, request queue fields and link labels are escaped. Link destinations are fixed relative paths; player/opportunity identifiers are encoded with `encodeURIComponent`. | Existing browser tests exercise hostile URL schemes/identifiers, handoff matching and hold behaviour. These are constrained prototype routes, not authorization checks. |
+| Opportunity Register | `opportunities.html` line 26: dynamic text and the `data-stage` attribute are escaped; request handoff uses a fixed relative path and encoded identifiers. | A browser regression checks attribute breakout, injected element creation and event-handler execution. A query parameter does not grant access. |
+| Vaal Ecosystem Coverage | `vaal-ecosystem-coverage.html` lines 90–91: external source URLs must parse as HTTPS, have a hostname and contain no username/password. New anchors use `noopener noreferrer` and `no-referrer`; row text is inserted using DOM nodes and `textContent`. | The browser regression checks rejected `javascript:` and HTTP schemes plus accepted HTTPS behaviour and opener/referrer protections. HTTPS validation is not a guarantee that every destination is reputable; sources remain research leads. |
+| Export actions | The four tournament workspaces create JSON Blob URLs locally and use fixed download filenames. | The reviewed actions do not accept an externally supplied download URL or filename. This does not establish the safety of any future import/export feature. |
+
+### Risk classification
+
+**No confirmed exploitable injection was identified in the bounded paths reviewed at this snapshot.**
+
+A maintainability risk remains in the shared table helpers: they accept raw HTML strings, so safety depends on each caller escaping dynamic fields and limiting raw markup to trusted static fragments. The reviewed callers observed here satisfy that convention. A typed-node or structured-cell renderer could reduce future caller error, but a refactor is not justified solely by the presence of `innerHTML` and is not proposed as an immediate change.
+
+### Next test-only evidence to obtain
+
+These are proposed test additions, not tests claimed as executed:
+
+1. **Organizer-package import into Tournament Manager:** construct a schema-valid synthetic handoff whose free-text fields (for example organizer type/identity/authority, evidence type/status, or feature scope/status) contain hostile markup. Verify the data is shown literally, no element/handler is created, and the import's state change remains consistent. Separately verify fields that violate the importer’s explicit synthetic-label grammar are rejected without a partial import.
+2. **Match Statistic Reconciliation:** inject hostile values into statistic-row fields and values that flow into derived findings, then verify literal text, fixed badge classes, no executable elements and no handler execution.
+3. **Tournament Day Operations:** extend hostile fixtures beyond report summary to at least one representative official assignment and one match event/source path. The source review indicates their dynamic fields are escaped, but the current regression does not independently challenge them.
+4. **Organizer Portal:** test hostile evidence and feature-scope/status values through their actual form-to-render paths, including the fixed status-class mapping.
+5. **Final sink ledger:** record each remaining material assignment's source field, exact output context, sanitization/allowlist, exploitability assessment and specific test ID. Keep UI-008 open until this mapping and the applicable test coverage are complete.
+
+No application code, workflow, prototype behaviour, schema or gate status was changed by this reconciliation. No implementation, production-readiness, legal-compliance or safeguarding claim is made.
