@@ -314,3 +314,22 @@ The SAFA Statutes copy hosted on SAFA's website and labelled last amended by the
 **Scope caution:** Article 11.2.7–11.2.8 concern an applicant Member's admission documentation; Article 13.1.7 concerns Member obligations; Article 39.4 concerns proposed new competitions by Members. These provisions are useful governance context but are not, without further analysis, universal requirements for every community organiser.
 
 **ScoutSA implication:** The SAFA framework itself recognises the importance of current official lists and authorised signatories. For an organisation represented in ScoutSA, seek a current appointment/delegation or confirmation from an independently verified organisational channel; do not rely solely on a display name, email domain or imported status.
+
+
+## 2F. Proposed TAD-003 / competition-boundary adversarial cases
+
+### O-13 — Cross-regional participation
+**Scenario:** A club affiliated to one SAFA Regional Member participates in a match or tournament played within another Regional Member's jurisdiction.
+**Expected handling:** Do not infer permission from the organiser's invitation. Mark cross-regional permission PENDING until the applicable current rule and required written consents are verified.
+**Evidence basis:** The located 2004 Rules on the Application of the Statutes, Rule 7.2, states a written-consent requirement for the described match. Current applicability is unverified.
+
+### O-14 — Affiliated club/player in a match outside a recognised competition
+**Scenario:** An external organiser invites an affiliated club or registered players to a match that is not part of a competition recognised by SAFA or the relevant Member/District Association.
+**Expected handling:** Hold the sanctioning claim pending confirmation under the authenticated current rules; never infer sanctioning from the organiser's identity, venue booking or team participation.
+**Evidence basis:** Located 2004 Rules on the Application of the Statutes, Rule 7.1; current applicability and interpretation require primary confirmation.
+
+### O-15 — Organiser authority and participant permission diverge
+**Scenario:** A foundation has verified authority to organise its event, but one or more invited affiliated clubs have not established any required LFA/SAFA permission.
+**Expected handling:** Preserve the foundation's organiser verification separately. Mark affected team participation/competition permission PENDING; do not invalidate the organiser identity merely because participant permission is unresolved, and do not allow organiser verification to stand in for participant permission.
+
+**Status:** These are proposed validation scenarios, not executed tests or ratified rules.
