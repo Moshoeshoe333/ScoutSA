@@ -2857,3 +2857,6 @@ Desk research consolidated the 2022 SAFA Statutes copy reviewed (Articles 10.1.1
 
 
 **Outstanding evidence requests added:** R-ELFA-11 (current SAFA rules/status and Rules 5–7 interpretation), R-ELFA-12 (Gauteng/Sedibeng school-sport and external-event requirements), R-ELFA-13 (school-specific venue/participation authority and delegation), and R-ELFA-14 (current final national/provincial school-sport instruments and supersession history). No current operative school-sport approval procedure has been established by the sources reviewed.
+
+
+**Additional boundary scenario:** O-18 now tests whether a one-off community event is later converted into a recurring league/competition or other football-related structure. The earlier event's organiser verification must not be inherited as approval of the new structure. This is a proposed test derived from the distinct subjects of Rules 5–7 in the official-SAFA-hosted 2004 instrument; it is not executed or ratified.
