@@ -258,3 +258,59 @@ Search-indexed text includes rules on entry into SAFA-administered competitions,
 **Evidence limitation:** This is not an authenticated copy from an official SAFA domain, and its current status/amendments have not been verified. Treat it as a research lead, not the current definitive competition rulebook. Obtain the official current version and relevant competition regulations from SAFA/SAFA Sedibeng.
 
 **Research consequence:** Add an explicit request for the current SAFA Competition Uniform Rules, applicable competition regulations and any local ELFA/SAFA Sedibeng supplementary rules to the primary-document request list.
+
+
+## 2D. SAFA Rules on the Application of the Statutes — sanctioning and unrecognised structures (2004 text; current status unverified)
+
+### E-ELFA-011 — Rules 5–7: football structures, competitions and match sanctioning
+
+**Source:** SAFA Regulations, “Rules on the Application of the Statutes,” stated in the document to have been approved by the SAFA Special General Meeting on 4 December 2004. Copy located at a third-party football club website:  
+https://www.meadowridgeafc.co.za/wp-content/uploads/2024/11/SAFA-Regulations.pdf
+
+Relevant text in the copy:
+- Rule 5.1: no Association, League, Competition or other structure having a connection or relation to football shall be formed without consent of SAFA or the Regional Member with jurisdiction over the area.
+- Rule 5.2: participation in an unrecognised structure may expose a person, team, club or association to suspension from football under SAFA and its Members, at NEC discretion.
+- Rule 6.1: SAFA may organise international or national competitions in which Member Associations, District Associations or Clubs may participate, controlled directly by SAFA or by Member and/or District Associations under SAFA jurisdiction.
+- Rule 6.2: subject to the stated exception, clubs and/or District Associations may only participate in competitions and/or official matches with other clubs and/or District Associations affiliated to the same Regional Member.
+- Rule 7.1: a match involving clubs affiliated to a Member, or their players, that is not part of a competition recognised by SAFA or the relevant Member/District Association may not be played unless sanctioned by SAFA or the relevant Member/District Association.
+- Rule 7.2: a match involving a team affiliated to one Regional Member and played in another Regional Member's jurisdiction requires prior written consent of both Regional Members and SAFA.
+- Rule 7.3: matches arranged by private individuals for speculative purposes shall not be sanctioned.
+
+**What this supports:** The located SAFA regulatory text distinguishes event/competition structures, affiliation, recognised competitions and sanctioning of matches. In particular, an external organiser's identity does not by itself answer whether affiliated clubs or registered players may participate in a particular match or event without approval.
+
+**Critical limitations:**
+1. The copy is hosted by a third-party club website, not an official SAFA domain.
+2. It states approval on 4 December 2004; no evidence has yet established whether it remains current, has been amended, replaced or repealed.
+3. The provisions must be interpreted in context and with the current SAFA Statutes, current competition rules, regional and LFA instruments, and the precise event facts.
+4. This record does not conclude that every informal community festival, recreational activity or event involving unaffiliated participants requires the same approval.
+5. Rule 7.3 concerns matches arranged by private individuals for speculative purposes; it must not be broadened to all private or community organisers.
+
+**ScoutSA implication:** Add separate verification dimensions:
+- event organiser identity and representative authority;
+- event/competition structure recognition where applicable;
+- match-specific sanctioning where required;
+- participating club affiliation and any required permission;
+- cross-regional consent where applicable;
+- venue permission;
+- publication/media rights and player/guardian consent.
+
+Do not display “independent organiser = unsanctioned” or “affiliated team = event sanctioned.” Both would overstate the evidence.
+
+**Follow-up request:** Obtain an authenticated current SAFA copy of the Rules on the Application of the Statutes and written clarification from SAFA Sedibeng/ELFA on the application of Rules 5–7 to (a) friendly matches, (b) community tournaments, (c) external foundation-hosted events involving ELFA-affiliated clubs, and (d) youth festivals.
+
+**Evidence class:** Text of a stated SAFA-approved 2004 instrument in a third-party-hosted copy; authenticity of this copy and present legal/football-regulatory force remain unverified.
+
+## 2E. Cross-check against the 2022 SAFA Statutes copy
+
+The SAFA Statutes copy hosted on SAFA's website and labelled last amended by the Ordinary Congress on 26 March 2022 adds related governance context:
+- Article 11.2.7 requests a list of officials identifying authorised signatories with the right to enter legally binding agreements with third parties.
+- Article 11.2.8 includes a declaration by an applicant Member concerning prior written SAFA consent for friendly matches.
+- Article 13.1.7 requires Members to communicate amendments to statutes/regulations and lists of officials or persons authorised to sign legally binding agreements to SAFA.
+- Article 39.4 gives the SAFA Organising Committee responsibility to examine and approve applications for proposed new amateur and non-amateur competitions by Members within SAFA's jurisdiction.
+- Article 25.22 says SAFA office-bearers hold office until successors have been elected at an elective Congress.
+
+**Source:** SAFA Statutes PDF hosted at https://safootball.net/wp-content/uploads/2025/11/2022-03-26-2022-SAFA-Statutes.pdf
+
+**Scope caution:** Article 11.2.7–11.2.8 concern an applicant Member's admission documentation; Article 13.1.7 concerns Member obligations; Article 39.4 concerns proposed new competitions by Members. These provisions are useful governance context but are not, without further analysis, universal requirements for every community organiser.
+
+**ScoutSA implication:** The SAFA framework itself recognises the importance of current official lists and authorised signatories. For an organisation represented in ScoutSA, seek a current appointment/delegation or confirmation from an independently verified organisational channel; do not rely solely on a display name, email domain or imported status.
