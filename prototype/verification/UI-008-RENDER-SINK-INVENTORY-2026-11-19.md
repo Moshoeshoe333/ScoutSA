@@ -232,3 +232,15 @@ UI-008 remains **OPEN**. The next evidence requirement is the final sink ledger:
 
 No application code, UI behaviour, schema, workflow, MVP boundary, or gate status changed. No implementation or certification is claimed.
 
+## Detailed sink register — 20 November 2026
+
+The per-assignment mapping is now recorded in [UI-008-SINK-EVIDENCE-LEDGER-2026-11-20.md](./UI-008-SINK-EVIDENCE-LEDGER-2026-11-20.md). It enumerates all 59 assignments with stable sink IDs S001–S059, source targets, data fields, output contexts, escaping/allowlist controls and test evidence.
+
+Reconciled at source/test head `c82e46d4147790ff2af33dc528763db44b2b0ce1`:
+- 59 `.innerHTML =` assignments across 15 of the 21 inventoried HTML pages.
+- 53 data-bearing assignments and six fixed fallback assignments (four Passport and two Day Operations timing fallbacks).
+- The six pages with zero assignments are separately recorded; this is not a blanket security finding.
+- Tournament Manager's eight tables, Day Operations' remaining tables/derived ledger, and Organizer Portal option/ledger renderers now have expanded hostile-fixture coverage.
+- Hosted workflow [#836](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44752258562) passed against the exact source/test head above.
+
+The map is completed, not a closure certificate. UI-008 remains OPEN because representative hostile-field coverage is not an exhaustive test of every property/context, the shared raw-cell table helpers retain a caller-contract maintenance risk, and future changes must be reconciled to the inventory.
