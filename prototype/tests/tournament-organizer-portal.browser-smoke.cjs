@@ -53,12 +53,45 @@ test('tournament organizer portal keeps organizer, authority and feature permiss
   assert.equal(await page.locator('#countEvidence').textContent(), '3');
   assert.match(await page.locator('#evidenceMessage').textContent(), /not independently verified/i);
 
+  const hostile = '<img src=x onerror=window.__SCOUTSA_XSS__=true>';
+  const addHostileOption = async (selector) => page.locator(selector).evaluate((select, value) => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = value;
+    select.append(option);
+    select.value = value;
+  }, hostile);
+  await addHostileOption('#evidenceType');
+  await addHostileOption('#evidenceStatus');
+  await page.locator('#evidenceRef').fill('DEMO-EVIDENCE-XSS');
+  await page.locator('#evidenceForm button[type="submit"]').click();
+  const hostileEvidenceRow = page.locator('#evidenceRows tr').filter({ hasText: hostile });
+  assert.equal(await hostileEvidenceRow.count(), 1, 'hostile evidence category and state must be visible as literal text');
+  assert.equal(await hostileEvidenceRow.locator('.tag').getAttribute('class'), 'tag pending',
+    'unrecognized evidence status must use the fixed pending class');
+  assert.equal(await page.locator('#evidenceRows img, #evidenceRows svg').count(), 0,
+    'hostile evidence values must not create elements');
+
   await page.locator('[data-section="features"]').click();
   await page.locator('#featureSubmission').selectOption('SUB-DEMO-004');
   await page.locator('#featureState').selectOption('granted-demo');
   await page.locator('#featureForm button[type="submit"]').click();
   assert.match(await page.locator('#featureRows').innerText(), /not-published/);
   assert.equal(await page.locator('#countFeatures').textContent(), '2');
+
+  await addHostileOption('#featureScope');
+  await addHostileOption('#featureState');
+  await page.locator('#featureSubmission').selectOption('SUB-DEMO-004');
+  await page.locator('#featureForm button[type="submit"]').click();
+  const hostileFeatureRow = page.locator('#featureRows tr').filter({ hasText: hostile });
+  assert.equal(await hostileFeatureRow.count(), 1, 'hostile feature scope and state must be visible as literal text');
+  assert.equal(await hostileFeatureRow.locator('.tag').first().getAttribute('class'), 'tag pending',
+    'unrecognized feature status must use the fixed pending class');
+  assert.equal(await page.locator('#featureRows img, #featureRows svg').count(), 0,
+    'hostile feature values must not create elements');
+  await page.waitForTimeout(50);
+  assert.equal(await page.evaluate(() => window.__SCOUTSA_XSS__ === true), false,
+    'hostile evidence and feature values must not execute');
 
   await page.locator('[data-section="ledger"]').click();
   const exportWait = page.waitForEvent('download');
@@ -72,6 +105,14 @@ test('tournament organizer portal keeps organizer, authority and feature permiss
   assert.equal(created.summary, 'DEMO community tournament summary.', 'competition summary must survive export');
   assert.equal(created.organizerId, 'ORG-DEMO-003', 'submission must retain its organizer relationship');
   assert.match(await page.locator('#exportMessage').textContent(), /Exported the synthetic organizer handoff package/);
+  assert.equal(packageData.evidence.find(item => item.ref === 'DEMO-EVIDENCE-XSS')?.type, hostile,
+    'export must preserve the submitted evidence category as data');
+  assert.equal(packageData.evidence.find(item => item.ref === 'DEMO-EVIDENCE-XSS')?.status, hostile,
+    'export must preserve the submitted evidence state as data');
+  assert.equal(packageData.features.find(item => item.submissionId === 'SUB-DEMO-004')?.scope, hostile,
+    'export must preserve the submitted feature scope as data');
+  assert.equal(packageData.features.find(item => item.submissionId === 'SUB-DEMO-004')?.status, hostile,
+    'export must preserve the submitted feature state as data');
   assert.match(await page.locator('#ledgerCards').innerText(), /ORG-DEMO-/);
   await page.setViewportSize({ width: 390, height: 844 });
   for (const section of ['submit', 'organizers', 'evidence', 'features', 'ledger']) {

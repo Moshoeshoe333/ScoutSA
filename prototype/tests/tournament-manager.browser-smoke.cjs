@@ -192,6 +192,43 @@ test('tournament manager imports organizer portal package by stable IDs and skip
   } finally {
     await metadataPage.close();
   }
+  // UI-008: imported side-collection claims are accepted as source data but are not currently
+  // rendered into HTML. Confirm they remain inert and are preserved without being reinterpreted.
+  const hostileClaim = '<img src=x onerror=window.x=1>';
+  const hostileClaimsPackage = {
+    ...pkg,
+    organizers: [{ ...pkg.organizers[0], type: hostileClaim, identity: hostileClaim, authority: hostileClaim }],
+    evidence: [{ ...pkg.evidence[0], type: hostileClaim, status: hostileClaim }],
+    features: [{ ...pkg.features[0], scope: hostileClaim, status: hostileClaim }]
+  };
+  const claimsPage = await browser.newPage();
+  try {
+    await claimsPage.goto('file://' + path.resolve('prototype/tournament-manager.html') + '?testMode=1');
+    await claimsPage.locator('[data-section="records"]').click();
+    await claimsPage.locator('#section-records').waitFor({ state: 'visible' });
+    await claimsPage.locator('#organizerHandoffFile').setInputFiles({
+      name: 'hostile-source-claims.json',
+      mimeType: 'application/json',
+      buffer: Buffer.from(JSON.stringify(hostileClaimsPackage))
+    });
+    await claimsPage.locator('#importOrganizerHandoff').click();
+    await claimsPage.waitForFunction(() => /^Import committed/.test(document.querySelector('#organizerImportMessage')?.textContent || ''), null, { timeout: 3000 });
+    const importedClaims = await claimsPage.evaluate(() => window.__SCOUTSA_TEST_SNAPSHOT__());
+    assert.deepEqual(importedClaims.organizerSourceClaims, hostileClaimsPackage.organizers);
+    assert.deepEqual(importedClaims.organizerEvidenceClaims, hostileClaimsPackage.evidence);
+    assert.deepEqual(importedClaims.organizerFeaturePermissionClaims, hostileClaimsPackage.features);
+    assert.equal(await claimsPage.locator('img, svg').count(), 0, 'non-rendered source claims must not create elements');
+    assert.equal(await claimsPage.evaluate(() => window.x === 1), false, 'non-rendered source claims must not execute handlers');
+    assert.equal((await claimsPage.locator('body').innerText()).includes(hostileClaim), false,
+      'side-collection claim strings are retained as data and are not currently surfaced into HTML');
+  } finally {
+    await claimsPage.close();
+  }
+
+  await assertRejectedImport('markup-organizer-name.json', {
+    ...pkg,
+    organizers: [{ ...pkg.organizers[0], name: hostileClaim }]
+  });
   await assertRejectedImport('malformed.json', '{not-json');
   await assertRejectedImport('null-record.json', { ...pkg, organizers: [null] });
   const incompleteOrganizer = { ...pkg.organizers[0] }; delete incompleteOrganizer.type;
