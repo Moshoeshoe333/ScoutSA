@@ -244,3 +244,18 @@ Reconciled at source/test head `c82e46d4147790ff2af33dc528763db44b2b0ce1`:
 - Hosted workflow [#836](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44752258562) passed against the exact source/test head above.
 
 The map is completed, not a closure certificate. UI-008 remains OPEN because representative hostile-field coverage is not an exhaustive test of every property/context, the shared raw-cell table helpers retain a caller-contract maintenance risk, and future changes must be reconciled to the inventory.
+
+## Navigation and local data-transfer review — 20 November 2026
+
+The bounded review of internal handoffs, external research links, Player Preview sharing, four local JSON export paths and two local JSON import paths is recorded in [UI-008-NAVIGATION-EXPORT-REVIEW-2026-11-20.md](./UI-008-NAVIGATION-EXPORT-REVIEW-2026-11-20.md).
+
+Reconciled against source/test head `196014529c9866f9ed16db0fe10ec8db9dfb7fae`:
+- Internal page handoffs use fixed relative destinations and encoded identifiers.
+- Vaal research links require HTTPS, hostname and no embedded credentials; accepted links use opener/referrer protections. The validator has no host allowlist.
+- Player Preview shares the complete current URL through a fixed WhatsApp origin when its HTTPS gate is satisfied; query/fragment data would also be shared.
+- Day Operations → Player Tournament History already has end-to-end export/import coverage, including tampered-appearance and non-DEMO-ID rejection.
+- Portal, Manager, Day Operations and Statistic Reconciliation use local JSON Blob downloads; import handlers read files locally.
+- Tournament Manager preserves unrecognized imported source-claim properties into session state and its whole-session export. This is recorded as a schema/data-minimisation question, not a confirmed external disclosure.
+- Hosted workflow [#839](https://github.com/Moshoeshoe333/ScoutSA/actions/runs/44756872937) passed against the exact source/test head above.
+
+UI-008 remains OPEN. The remaining items are design decisions and bounded review limitations, not grounds for an unratified behaviour change.
