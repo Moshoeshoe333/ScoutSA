@@ -2839,3 +2839,6 @@ Desk research consolidated the 2022 SAFA Statutes copy reviewed (Articles 10.1.1
 **Disposition:** TAD-003 remains **BLOCKED**. Option A remains a candidate, not ratified. No external interviews have been conducted. No schema, implementation, RLS, API, publication or gate-transition authority changed.
 
 **Source limitation:** The SAFA Statutes PDF reviewed is a third-party-hosted copy stating that it was last amended on 26 March 2022; obtain an authenticated current copy from SAFA before legal or operational reliance. Press reports are discovery/secondary evidence and must not be promoted to official resolutions.
+
+
+**Addendum — current-season local evidence (10 November 2026):** The supporting ledger now also records Sedibeng Ster's 10 November report that the ELFA Super League 2026/2027 season was underway in two streams across Vaal localities and was operating under SAFA structures, with SAFA Sedibeng described as regional custodian. The report names several local venues but does not establish venue permission, validate every fixture, resolve the ELFA election record, or replace primary governance evidence. See E-ELFA-007 in the supporting ledger. Source: https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/11/10/local-amateur-soccer-league-season-in-full-swing/
