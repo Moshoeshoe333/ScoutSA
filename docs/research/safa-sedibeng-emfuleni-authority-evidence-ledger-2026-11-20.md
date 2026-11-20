@@ -182,3 +182,21 @@ Do not identify any person as the definitively current ELFA office-bearer solely
 ---
 
 **Record integrity:** This document records desk research available on 20 November 2026. It does not amend the canonical Domain Model, Relationship Model, Gate Status, tournament decision status or any ratified governance artifact.
+
+
+## 2A. Additional current-season local reporting — 10 November 2026
+
+### E-ELFA-007 — ELFA 2026/2027 Super League operating under SAFA structures
+
+**Source:** Sedibeng Ster, “Local amateur soccer league season in full swing,” 10 November 2026:  
+https://www.citizen.co.za/sedibeng-ster/sport/sport-sport/2026/11/10/local-amateur-soccer-league-season-in-full-swing/
+
+The report describes the ELFA Super League 2026/2027 season as underway across Vaal venues. It describes two streams: Purple (Sharpeville, Boipatong, Bophelong and Vanderbijlpark) and Green (Sebokeng and Evaton). It states that the competition operates under SAFA structures, with SAFA Sedibeng as regional custodian, and names George Thabe Stadium, Boipatong Stadium, Zone 3 Stadium, Qetilizwe Ground, Phoenix High School and Isak Steyl Stadium among venues.
+
+**What this supports:** As of the report's publication date, local reporting describes an active ELFA Super League season operating within SAFA structures and identifies a two-stream local competition footprint. This is useful operational context for ScoutSA's Vaal validation plan.
+
+**What it does not establish:** The current ELFA constitution, exact legal/delegated authority of each body, the validity of every specific fixture or venue arrangement, current office-bearer authority, or official confirmation beyond the journalist's account. The report does not resolve the earlier election documentation gap.
+
+**ScoutSA implication:** Local verification should be scoped to the actual competition and locality; a generic “SAFA verified” flag is inadequate. Verify the current LFA, its governing authority, the event/competition, the authorised representative and venue independently. Treat named grounds as research leads, not endorsements or venue permissions.
+
+**Evidence class:** Secondary local reporting; recent and geographically specific, but not a primary governance instrument.
